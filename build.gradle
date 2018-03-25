@@ -22,7 +22,7 @@ dependencies {
 
 // Checkstyle configuration
 checkstyle {
-    toolVersion = '8.8'
+    toolVersion "8.8"
 }
 
 // FindBugs configuration
