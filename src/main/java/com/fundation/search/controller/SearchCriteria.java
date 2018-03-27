@@ -16,7 +16,7 @@ public class SearchCriteria {
 
     /**
      * Setter for name attribute.
-     * @param name
+     * @param name .
      */
     public void setName(String name) {
         this.name = name;
@@ -24,7 +24,7 @@ public class SearchCriteria {
 
     /**
      * Setter for path attribute.
-     * @param path
+     * @param path .
      */
     public void setPath(String path) {
         this.path = path;
