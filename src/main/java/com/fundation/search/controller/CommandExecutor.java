@@ -1,47 +1,40 @@
-package com.fundation.search.model;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 /**
- *
- Class CommandExecutor to execute cmd commands.
- *
+ * @(#)Validator.java  03/27/18.
+ * Copyright (c) 2018 Jala Foundation.
+ * Cochabamba, Bolivia.
+ * Project Search for Prog102.
+ */
+package com.fundation.search.controller;
+/**
  * @version
-0.0 27 Mar 2018  * @autor
-Maria Canqui  */
+ * 27 Mar 2018  * @Maria Canqui
+ */
 
 public class CommandExecutor {
     /**
-     * @param comandString command
+     * @param commandString command
      * @return results command execution
      */
-    private String exeCmd(String comandString) {
-        String messaje = "";
-        try {
+    public String exeCmd(String commandString) {
 
-            Process p = Runtime.getRuntime().exec("javac Printer.java", null, new File("C:/Users/Administrator/katas/src"));
-            p = Runtime.getRuntime().exec(comandString, null, new File("C:/Users/Administrator/katas/src"));
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+        SearchCriteria criteria = new SearchCriteria();
+        String[] commandArray = commandString.split(" ");
 
-            while ((messaje = stdInput.readLine()) != null) {
-                System.out.println("output: " + messaje);
+        for (int i = 0; i < commandArray.length; i++) {
+            if (commandArray[i].contains("-n")) { /* Search by name*/
+                criteria.setName(commandArray[i + 1]);
+                System.out.println("get name: " + criteria.getName());
             }
-
-            while ((messaje = stdError.readLine()) != null) {
-                System.out.println("error:" + messaje);
+            if (commandArray[i].contains("-p")) { /* Search by path*/
+                criteria.setPath(commandArray[i + 1]);
+                System.out.println("get path: " + criteria.getPath());
             }
-
-            System.exit(0);
-        } catch (IOException e) {
-            System.out.println("exception: ");
-            e.printStackTrace();
-            System.exit(-1);
+            if (commandArray[i].contains("-h")) { /* Search by files hidden*/
+                System.out.println("set hidden: " + commandArray[i + 1]);
+            }
         }
+        return "list";
 
-        return messaje;
     }
 
 }
