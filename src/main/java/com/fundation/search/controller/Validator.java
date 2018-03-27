@@ -56,8 +56,8 @@ public class Validator {
      * @return boolean value is valid.
      */
     public boolean pathExists(String path) {
-        File folder = new File(path);
-        return folder.exists();
+        File file = new File(path);
+        return file.exists();
     }
 
     /**
@@ -69,7 +69,7 @@ public class Validator {
         if (path.length() > MAX_PATH_VALUE) {
             return false;
         }
-        if (!pathExists(path.substring(0, 2))) {
+        if (!pathExists(path.substring(0, path.indexOf("\\")))) {
             return false;
         }
         if (!isAValidName(path.substring(INDEX_THREE))) {

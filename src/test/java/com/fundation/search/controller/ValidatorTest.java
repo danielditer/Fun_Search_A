@@ -107,7 +107,8 @@ public class ValidatorTest {
      */
     @Test
     public void testPathExists() {
-        assertTrue("Path C:\\Users does not exist", validator.pathExists("C:\\Users\\"));
+        final String param = "src\\test\\java\\com\\fundation\\search\\test-file";
+        assertTrue("Path C:\\Users does not exist", validator.pathExists(param));
     }
 
     /**
@@ -115,8 +116,8 @@ public class ValidatorTest {
      */
     @Test
     public void testPathExistsDoesNotExist() {
-        final String param = "C:\\Users\\Administrator\\Doc\\";
-        assertFalse("Path C:\\Users\\Administrator\\Doc doesn't exist", validator.pathExists(param));
+        final String param = "src\\test\\java\\com\\fundation\\s\\test-file";
+        assertFalse("Path src\\test\\java\\com\\fundation\\s\\test-file doesn't exist", validator.pathExists(param));
     }
 
     /**
@@ -124,8 +125,8 @@ public class ValidatorTest {
      */
     @Test
     public void testIsAValidPath() {
-        final String param = "C:\\Users\\manuelvaldez\\";
-        assertTrue("Path c:\\Users", validator.isAValidPath(param));
+        final String param = "src\\test\\java\\com\\fundation\\s\\test-file";
+        assertTrue("Path src\\test\\java\\com\\fundation\\search\\test-file", validator.isAValidPath(param));
     }
 
     /**
@@ -133,7 +134,28 @@ public class ValidatorTest {
      */
     @Test
     public void testIsAValidPathInvalidPath() {
-        final String param = "C:\\Users\\manuel*al:dez\\";
+        final String param = "src\\test\\java\\com\\funda*/\\s\\test:file";
         assertFalse("Path c:\\Users", validator.isAValidPath(param));
+    }
+
+    /**
+     * Fourteenth test, validate if a path is valid.
+     */
+    @Test
+    public void testIsAValidPathInvalidDrive() {
+        final String param = "xxx\\test\\java\\com\\funda*/\\s\\test:file";
+        assertFalse("Path c:\\Users", validator.isAValidPath(param));
+    }
+
+    /**
+     * Fifteenth test, validate if a path is valid.
+     */
+    @Test
+    public void testIsAValidPathInvalidLength() {
+        final String param = "xxx\\test\\java\\com\\funda\\s\\test-file\\xxx\\test\\java\\com\\funda\\s\\test-file\\";
+        final String param1 = "xxx\\test\\java\\com\\funda\\s\\test-file\\xxx\\test\\java\\com\\funda\\s\\test-file\\";
+        final String param2 = "xxx\\test\\java\\com\\funda\\s\\test-file\\xxx\\test\\java\\com\\funda\\s\\test-file\\";
+        final String param3 = "xxx\\test\\java\\com\\funda\\s\\test-file\\xxx\\test\\java\\com\\funda\\s\\test-file\\";
+        assertFalse("Path c:\\Users", validator.isAValidPath(param.concat(param1).concat(param2).concat(param3)));
     }
 }
