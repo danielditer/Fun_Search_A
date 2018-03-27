@@ -19,6 +19,7 @@ import static org.junit.Assert.assertTrue;
  * 25 Mar 2018  * @Juan Manuel
  */
 public class ValidatorTest {
+
     private Validator validator;
 
     /**
@@ -38,7 +39,7 @@ public class ValidatorTest {
     }
 
     /**
-     * First test.
+     * Second test.
      */
     @Test
     public void testIsValidNameTwoPoints() {
@@ -46,7 +47,7 @@ public class ValidatorTest {
     }
 
     /**
-     * First test.
+     * Third test.
      */
     @Test
     public void testIsValidNameAsterisk() {
@@ -54,7 +55,7 @@ public class ValidatorTest {
     }
 
     /**
-     * First test.
+     * Fourth test.
      */
     @Test
     public void testIsValidNameQuestionMark() {
@@ -62,7 +63,7 @@ public class ValidatorTest {
     }
 
     /**
-     * First test.
+     * Fifth test.
      */
     @Test
     public void testIsValidNameLessThan() {
@@ -70,7 +71,7 @@ public class ValidatorTest {
     }
 
     /**
-     * First test.
+     * Sixth test.
      */
     @Test
     public void testIsValidNameMoreThan() {
@@ -78,7 +79,7 @@ public class ValidatorTest {
     }
 
     /**
-     * First test.
+     * Seventh test.
      */
     @Test
     public void testIsValidNamePipe() {
@@ -86,7 +87,7 @@ public class ValidatorTest {
     }
 
     /**
-     * First test.
+     * Eight test.
      */
     @Test
     public void testIsValidNameWithTwoPoints() {
@@ -94,10 +95,45 @@ public class ValidatorTest {
     }
 
     /**
-     * First test.
+     * Nineth test.
      */
     @Test
     public void testIsValidNameValidFileName() {
         assertTrue("file_name is a valid name", validator.isAValidName("file_name"));
+    }
+
+    /**
+     * Tenth test, validate a path that exists.
+     */
+    @Test
+    public void testPathExists() {
+        assertTrue("Path C:\\Users does not exist", validator.pathExists("C:\\Users\\"));
+    }
+
+    /**
+     * Eleventh test, validate a path that does not exist.
+     */
+    @Test
+    public void testPathExistsDoesNotExist() {
+        final String param = "C:\\Users\\Administrator\\Doc\\";
+        assertFalse("Path C:\\Users\\Administrator\\Doc doesn't exist", validator.pathExists(param));
+    }
+
+    /**
+     * Twelfth test, validate if a path is valid.
+     */
+    @Test
+    public void testIsAValidPath() {
+        final String param = "C:\\Users\\manuelvaldez\\";
+        assertTrue("Path c:\\Users", validator.isAValidPath(param));
+    }
+
+    /**
+     * Thirteenth test, validate if a path is valid.
+     */
+    @Test
+    public void testIsAValidPathInvalidPath() {
+        final String param = "C:\\Users\\manuel*al:dez\\";
+        assertFalse("Path c:\\Users", validator.isAValidPath(param));
     }
 }
