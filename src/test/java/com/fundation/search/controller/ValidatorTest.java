@@ -107,7 +107,7 @@ public class ValidatorTest {
      */
     @Test
     public void testPathExists() {
-        final String param = "src\\test\\java\\com\\fundation\\search\\test-file";
+        final String param = "src\\test\\java\\com\\fundation\\search";
         assertTrue("Path C:\\Users does not exist", validator.pathExists(param));
     }
 
