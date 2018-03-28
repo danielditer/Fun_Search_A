@@ -18,7 +18,8 @@ repositories {
 // In this section you declare the dependencies for your production and test code
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile fileTree(dir: 'lib', include: '*.jar')
+    compile group: 'tablelayout', name: 'TableLayout', version: '20050920'
+    compile group: 'com.miglayout', name: 'miglayout', version: '3.7.4'
 }
 
 // Checkstyle configuration
