@@ -6,13 +6,15 @@
  *
  * Project Search for Prog102.
  */
-package com.fundation.search.controller;
+package com.fundation.search.common;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This class Validator will have methods to validate the criterias used in the program.
+ * So far these are fileName and pathName.
  * @version
  * 25 Mar 2018  * @Juan Manuel
  */
@@ -21,8 +23,10 @@ public class Validator {
     private static final int INDEX_THREE = 3;
 
     static final List<Character> INVALID_CHARACTERS = new ArrayList<>();
+
     /**
-     * static method to fill list.
+     * static method to fill list with characters that are not
+     * allowed when a file or path directory is created in windows.
      */
     static {
         INVALID_CHARACTERS.add('/');
@@ -33,10 +37,11 @@ public class Validator {
         INVALID_CHARACTERS.add('>');
         INVALID_CHARACTERS.add('|');
         INVALID_CHARACTERS.add('"');
+        INVALID_CHARACTERS.add('\\');
     }
 
     /**
-     * method to validate string.
+     * Method to validate file name, it should not contains special characters for windows..
      * @param name file name.
      * @return boolean value is valid.
      */
@@ -51,7 +56,7 @@ public class Validator {
     }
 
     /**
-     * method to validate path exists.
+     * Method to validate path exists.
      * @param path .
      * @return boolean value is valid.
      */
@@ -61,7 +66,7 @@ public class Validator {
     }
 
     /**
-     * method to validate if path is valid.
+     * Method to validate if path is valid, if this is longer than 246, if it exists and if it has a valid name.
      * @param path .
      * @return boolean value is valid.
      */

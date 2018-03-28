@@ -6,7 +6,8 @@
  *
  * Project Search for Prog102.
  */
-package com.fundation.search.controller;
+package com.fundation.search.common;
+
 
 
 import org.junit.Before;
@@ -31,71 +32,72 @@ public class ValidatorTest {
     }
 
     /**
-     * First test.
+     * First test, validate if a name with slash is valid.
      */
     @Test
     public void testIsValidNameSlash() {
-        assertFalse("A name with / is not valid", validator.isAValidName("/"));
+        assertFalse("A name with / is not valid", validator.isAValidName("file/name"));
     }
 
     /**
-     * Second test.
+     * Second test, validate if a name with two points is valid.
      */
     @Test
     public void testIsValidNameTwoPoints() {
-        assertFalse("A name with : is not valid", validator.isAValidName(":"));
+        assertFalse("A name with : is not valid", validator.isAValidName("file:name"));
     }
 
     /**
-     * Third test.
+     * Third test, validate if a name with asterisk is valid.
      */
     @Test
     public void testIsValidNameAsterisk() {
-        assertFalse("A name with * is not valid", validator.isAValidName("*"));
+        assertFalse("A name with * is not valid", validator.isAValidName("file*name"));
     }
 
     /**
-     * Fourth test.
+     * Fourth test, validate if a name with question mark is valid.
      */
     @Test
     public void testIsValidNameQuestionMark() {
-        assertFalse("A name with ? is not valid", validator.isAValidName("?"));
+        assertFalse("A name with ? is not valid", validator.isAValidName("file?name"));
     }
 
     /**
-     * Fifth test.
+     * Fifth test, validate if a name with less than is valid.
      */
     @Test
     public void testIsValidNameLessThan() {
-        assertFalse("A name with < is not valid", validator.isAValidName("<"));
+        assertFalse("A name with < is not valid", validator.isAValidName("file<name"));
     }
 
     /**
-     * Sixth test.
+     * Sixth test, validate if a name with more than is valid.
      */
     @Test
     public void testIsValidNameMoreThan() {
-        assertFalse("A name with > is not valid", validator.isAValidName(">"));
+        assertFalse("A name with > is not valid", validator.isAValidName("file>name"));
     }
 
     /**
-     * Seventh test.
+     * Seventh test, validate if a name with pipe line is valid.
      */
     @Test
     public void testIsValidNamePipe() {
-        assertFalse("A name with | is not valid", validator.isAValidName("|"));
+        assertFalse("A name with | is not valid", validator.isAValidName("file|name"));
     }
 
+
     /**
-     * Eight test.
+     * Eight test, validate if a name with slash is valid.
      */
     @Test
-    public void testIsValidNameWithTwoPoints() {
-        assertFalse("file:name is not valid", validator.isAValidName("file:name"));
+    public void testIsValidNameWithBackSlash() {
+        assertFalse("file\\name is not valid", validator.isAValidName("file\\name"));
     }
 
     /**
-     * Nineth test.
+     * Nineth test, validate if a name with underscore is valid.
      */
     @Test
     public void testIsValidNameValidFileName() {
@@ -103,12 +105,12 @@ public class ValidatorTest {
     }
 
     /**
-     * Tenth test, validate a path that exists.
+     * Tenth test, validate if a path exists.
      */
     @Test
     public void testPathExists() {
         final String param = "src\\test\\java\\com\\fundation\\search";
-        assertTrue("Path C:\\Users does not exist", validator.pathExists(param));
+        assertTrue("Path src\\test\\java\\com\\fundation\\search", validator.pathExists(param));
     }
 
     /**
@@ -125,12 +127,21 @@ public class ValidatorTest {
      */
     @Test
     public void testIsAValidPath() {
-        final String param = "src\\test\\java\\com\\fundation\\s\\test-file";
-        assertTrue("Path src\\test\\java\\com\\fundation\\search\\test-file", validator.isAValidPath(param));
+        final String param = "src\\test\\java\\com\\fundation\\search";
+        assertFalse("Path src\\test\\java\\com\\fundation\\search", validator.isAValidPath(param));
     }
 
     /**
      * Thirteenth test, validate if a path is valid.
+     */
+    @Test
+    public void testIsAValidPathPathIsNotValid() {
+        final String param = "src\\test\\java\\com\\fundation\\s\\test-file";
+        assertFalse("Path src\\test\\java\\com\\fundation\\search\\test-file", validator.isAValidPath(param));
+    }
+
+    /**
+     * Fourteeth test, validate if a path is valid.
      */
     @Test
     public void testIsAValidPathInvalidPath() {
@@ -139,7 +150,7 @@ public class ValidatorTest {
     }
 
     /**
-     * Fourteenth test, validate if a path is valid.
+     * Fifteenth test, validate if a path is valid.
      */
     @Test
     public void testIsAValidPathInvalidDrive() {
@@ -148,7 +159,7 @@ public class ValidatorTest {
     }
 
     /**
-     * Fifteenth test, validate if a path is valid.
+     * Sixteenth test, validate if a path is valid.
      */
     @Test
     public void testIsAValidPathInvalidLength() {
