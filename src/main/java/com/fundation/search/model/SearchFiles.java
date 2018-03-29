@@ -14,10 +14,41 @@ import java.util.List;
  * @version 28 Mar 2018  * @Jimmy Romero
  */
 public class SearchFiles {
-    private static final String TEST_1 = "test4.txt";
+    private SearchCriteria searchCriteria;
+    private List<ResultFile> resultResultFiles;
 
-    private List<FileS> arrayFiles;
-    private List<String> arrayCoincidences;
+    private static final String TEST_1 = "test4.txt";
+    private List<ResultFile> arrayResultFiles;
+    private List<ResultFile> arrayCoincidences;
+
+
+    /**
+     * Method to set searchCriteria attribute.
+     * @param searchCriteria
+     */
+    public void setSearchCriteria(SearchCriteria searchCriteria) {
+        this.searchCriteria = searchCriteria;
+    }
+
+    /**
+     * Method to initialize search.
+     */
+    public void init() {
+        if (searchCriteria.getPath() != null) {
+            resultResultFiles = recoverFiles(searchCriteria.getPath());
+        }
+        if (searchCriteria.getName() != null) {
+            resultResultFiles = searchFile(resultResultFiles);
+        }
+    }
+
+    /**
+     * Method to get resultResultFiles.
+     * @return resultResultFiles
+     */
+    public List<ResultFile> getResultResultFiles() {
+        return this.resultResultFiles;
+    }
 
     /**
      * Method that is going to recover all File objects into an array.
@@ -25,33 +56,33 @@ public class SearchFiles {
      * @param path is given in order to obtain all files of a path.
      * @return the array of Files object.
      */
-    List<FileS> recoverFiles(File path) {
-        arrayFiles = new ArrayList<>();
+    List<ResultFile> recoverFiles(File path) {
+        arrayResultFiles = new ArrayList<>();
         try {
             for (File fileEntry : path.listFiles()) {
                 if (fileEntry.isDirectory()) {
                     recoverFiles(fileEntry);
                 } else {
-                    arrayFiles.add(new FileS(fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden()));
+                    arrayResultFiles.add(new ResultFile(fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden()));
                 }
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        return arrayFiles;
+        return arrayResultFiles;
     }
 
     /**
      * Method that returns an array of visible files of a path.
      *
-     * @param arrayFiles is the array of FileS objects.
+     * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case visible files.
      */
-    List<String> searchAllFiles(List<FileS> arrayFiles) {
+    List<ResultFile> searchAllFiles(List<ResultFile> arrayResultFiles) {
         arrayCoincidences = new ArrayList<>();
-        for (FileS fileEntry : arrayFiles) {
+        for (ResultFile fileEntry : arrayResultFiles) {
             if (!fileEntry.getHidden()) {
-                arrayCoincidences.add(fileEntry.getPath());
+                arrayCoincidences.add(fileEntry);
             }
         }
         return arrayCoincidences;
@@ -61,14 +92,14 @@ public class SearchFiles {
     /**
      * Method that returns an array of coincidences of fileNames of files of a path.
      *
-     * @param arrayFiles is the array of FileS objects.
+     * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case fileName coincidences.
      */
-    List<String> searchFile(List<FileS> arrayFiles) {
+    List<ResultFile> searchFile(List<ResultFile> arrayResultFiles) {
         arrayCoincidences = new ArrayList<>();
-        for (FileS fileEntry : arrayFiles) {
+        for (ResultFile fileEntry : arrayResultFiles) {
             if (fileEntry.getFileName().contains(TEST_1)) {
-                arrayCoincidences.add(fileEntry.getFileName());
+                arrayCoincidences.add(fileEntry);
             }
         }
         return arrayCoincidences;
@@ -77,14 +108,14 @@ public class SearchFiles {
     /**
      * Method that returns an array of hidden coincidences of files of a path.
      *
-     * @param arrayFiles is the array of FileS objects.
+     * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
-    List<String> searchHiddenFiles(List<FileS> arrayFiles) {
+    List<ResultFile> searchHiddenFiles(List<ResultFile> arrayResultFiles) {
         arrayCoincidences = new ArrayList<>();
-        for (FileS fileEntry : arrayFiles) {
+        for (ResultFile fileEntry : arrayResultFiles) {
             if (fileEntry.getHidden()) {
-                arrayCoincidences.add(fileEntry.getFileName());
+                arrayCoincidences.add(fileEntry);
             }
         }
         return arrayCoincidences;

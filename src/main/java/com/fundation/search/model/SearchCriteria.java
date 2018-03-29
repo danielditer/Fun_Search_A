@@ -4,7 +4,9 @@
  * Cochabamba, Bolivia.
  * Project Search for Prog102.
  */
-package com.fundation.search.controller;
+package com.fundation.search.model;
+
+import java.io.File;
 
 /**
  * @version
@@ -12,7 +14,7 @@ package com.fundation.search.controller;
  */
 public class SearchCriteria {
     private String name;
-    private String path;
+    private File path;
 
     /**
      * Setter for name attribute.
@@ -26,7 +28,7 @@ public class SearchCriteria {
      * Setter for path attribute.
      * @param path .
      */
-    public void setPath(String path) {
+    public void setPath(File path) {
         this.path = path;
     }
 
@@ -42,7 +44,7 @@ public class SearchCriteria {
      * Getter for path attribute.
      * @return path.
      */
-    public String getPath() {
+    public File getPath() {
         return this.path;
     }
 }

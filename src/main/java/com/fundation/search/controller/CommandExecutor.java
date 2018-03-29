@@ -6,6 +6,8 @@
  */
 package com.fundation.search.controller;
 
+import com.fundation.search.model.SearchCriteria;
+
 import java.util.StringJoiner;
 
 /**

@@ -35,12 +35,12 @@ public class SearchFilesTest {
     }
 
     /**
-     * Test to compare the array of FileS objects.
+     * Test to compare the array of ResultFile objects.
      */
     @Test
     public void testRecoverResultFilesObject() {
-        List<FileS> expected = new ArrayList<>();
-        expected.add(new FileS("src\\main\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt",
+        List<ResultFile> expected = new ArrayList<>();
+        expected.add(new ResultFile("src\\main\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt",
                 "test1-1.txt", false));
 
         assertEquals(expected.get(0).getPath(), pathFiles.recoverFiles(path).get(0).getPath());
