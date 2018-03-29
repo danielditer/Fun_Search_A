@@ -1,4 +1,3 @@
-
 /**
  * @(#)Controller.java  03/28/18.
  * Copyright (c) 2018 Jala Foundation.
@@ -21,6 +20,10 @@ import java.io.File;
 import java.util.List;
 
 /**
+ * This class is the Controller for MVC pattern,
+ * it will get values from view, then send to model,
+ * get results from model and display in view.
+ * For this release results are not displayed in view, just in console.
  * @version
  * 28 Mar 2018  * @Juan Manuel
  */
@@ -29,16 +32,27 @@ public class SearchController {
     private MainView mainView;
     private SearchCriteria searchCriteria;
 
+    /**
+     * Constructor for controller.
+     * @param searchFile
+     * @param mainView
+     */
     public SearchController(SearchFiles searchFile, MainView mainView) {
         this.searchFile = searchFile;
         this.mainView = mainView;
     }
 
+    /**
+     * Method to initialize all controll methods.
+     */
     public void init() {
         searchCriteria = new SearchCriteria();
         getActionPerformed();
     }
 
+    /**
+     * Method to get values from button search in the View.
+     */
     public void getActionPerformed() {
         PanelNormalSearch p = (PanelNormalSearch) mainView.getPanel();
         p.getButtonSearch().addActionListener(new ActionListener() {
@@ -56,6 +70,12 @@ public class SearchController {
 
     }
 
+    /**
+     * Method to validate each input.
+     * @param path
+     * @param name
+     * @return
+     */
     public boolean areValidParams(String path, String name) {
         Validator validator = new Validator();
         if (!validator.isAValidName(name)) {
@@ -69,6 +89,11 @@ public class SearchController {
         return true;
     }
 
+    /**
+     * Method to set search criteria for Model and start search.
+     * @param path
+     * @param name
+     */
     public void sendSearchCriteriaToModel(String path, String name) {
         File filePath = new File(path);
         searchCriteria.setPath(filePath);
@@ -78,6 +103,9 @@ public class SearchController {
         setResultsToTable();
     }
 
+    /**
+     * Method to get Model results and display them.
+     */
     public void setResultsToTable() {
         List<ResultFile> resultFileList = searchFile.getResultResultFiles();
         System.out.println("File Name\tFile Path\tHidden");
