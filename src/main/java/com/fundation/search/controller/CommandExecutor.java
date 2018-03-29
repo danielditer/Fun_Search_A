@@ -42,7 +42,6 @@ public class CommandExecutor {
                 File path = new File(commandArray[i + 1]);
                 criteria.setPath(path);
                 System.out.println(commandArray[i + 1]);
-
             }
             if (commandArray[i].contains("-h")) { /* Search by files hidden*/
                 resultString.add("get hidden: " + commandArray[i + 1]);
