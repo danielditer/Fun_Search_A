@@ -16,8 +16,6 @@ import java.util.List;
 public class SearchFiles {
     private SearchCriteria searchCriteria;
     private List<ResultFile> resultResultFiles;
-
-    private static final String TEST_1 = "test4.txt";
     private List<ResultFile> arrayResultFiles;
     private List<ResultFile> arrayCoincidences;
 
@@ -98,7 +96,7 @@ public class SearchFiles {
     List<ResultFile> searchFile(List<ResultFile> arrayResultFiles) {
         arrayCoincidences = new ArrayList<>();
         for (ResultFile fileEntry : arrayResultFiles) {
-            if (fileEntry.getFileName().contains(TEST_1)) {
+            if (fileEntry.getFileName().contains(searchCriteria.getName())) {
                 arrayCoincidences.add(fileEntry);
             }
         }
