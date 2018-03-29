@@ -16,8 +16,6 @@ import java.util.List;
 public class SearchFiles {
     private SearchCriteria searchCriteria;
     private List<ResultFile> resultResultFiles;
-
-    private static final String TEST_1 = "test4.txt";
     private List<ResultFile> arrayResultFiles;
     private List<ResultFile> arrayCoincidences;
 
