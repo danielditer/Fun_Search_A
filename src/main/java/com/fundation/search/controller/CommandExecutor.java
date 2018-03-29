@@ -33,7 +33,7 @@ public class CommandExecutor {
                 resultString.add("get name: " + criteria.getName());
             }
             if (commandArray[i].contains("-p")) { /* Search by path*/
-                criteria.setPath(commandArray[i + 1]);
+                //criteria.setPath(commandArray[i + 1]);
                 resultString.add("get path: " + criteria.getPath());
             }
             if (commandArray[i].contains("-h")) { /* Search by files hidden*/
