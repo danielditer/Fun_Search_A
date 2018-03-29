@@ -6,61 +6,39 @@
  */
 package com.fundation.search.controller;
 
+
+import com.fundation.search.model.SearchFiles;
 import org.junit.Before;
 import org.junit.Test;
+
 
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Class that contain test to commandExecutor.
  * @version
  * 28 Mar 2018  * @Maria Canqui
  */
 public class CommandExecutorTest {
     private CommandExecutor comex;
+    private SearchFiles pathFiles;
     /**
      * * initialize CommandExecutor.
      * */
     @Before
     public void initialize() {
         comex = new CommandExecutor();
+        pathFiles = new SearchFiles();
     }
 
     /**
-     * the searchFileCommandName method provide a test for the command -n name.
+     * the searchFileCommandName method provide a test for the command -n name and -p path.
      */
     @Test
     public void searchFileCommandName() {
-        assertEquals("get name: test.txt", comex.exeCmd("java search -n test.txt"));
+        assertEquals("test", comex.exeCmd("java search -n doc -p C:\\Users\\Administrator\\Documents\\Prog102\\Search\\Fun_Search_A"));
     }
-    /**
-     * the searchFileCommandPath method provide a test for the command -p path.
-     */
-    @Test
-    public void searchFileCommandPath() {
-        assertEquals("get path: C:/Users", comex.exeCmd("java search -p C:/Users"));
-    }
-    /**
-     * the searchFileCommandNamePathHidden method provide a test for the command -h hidden.
-     */
-    @Test
-    public void searchFileCommandHidden() {
-         assertEquals("get hidden: true", comex.exeCmd("java search -h true"));
-    }
-    /**
-     * the searchFileCommandNamePathHidden method provide a test for the command -h -n -p.
-     */
-    @Test
-    public void searchFileCommandNamePathHidden() {
-        String command = "java search -h true -p C:/Users -h true";
-        String result = "get hidden: true get path: C:/Users get hidden: true";
-        assertEquals(result, comex.exeCmd(command));
-    }
-    /**
-     * the searchFileDoesNotFound method provide a test for a nonexistent command.
-     */
-    @Test
-    public void searchFileDoesNotFound() {
-        String command = "java search -l true";
-        assertEquals("", comex.exeCmd(command));
-    }
+
+
+
 }
