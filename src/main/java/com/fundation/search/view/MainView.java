@@ -87,6 +87,10 @@ public class MainView extends JFrame {
         pack();
         setLocationRelativeTo(getOwner());
     }
+    
+    public JPanel getPanel() {
+        return panelNormalSearch;
+    }
 
     private JMenuBar menuBar;
     private JMenu menuFile;
