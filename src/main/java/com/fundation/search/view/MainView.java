@@ -1,3 +1,9 @@
+/**
+ * @(#)MainView.java  03/27/18.
+ * Copyright (c) 2018 Jala Foundation.
+ * Cochabamba, Bolivia.
+ * Project Search for Prog102.
+ */
 package com.fundation.search.view;
 
 import java.awt.Container;
@@ -12,7 +18,8 @@ import info.clearthought.layout.TableLayout;
 import net.miginfocom.swing.MigLayout;
 
 /**
- * @author Daniel Caballero
+ * @version
+ * 27 Mar 2018  * @Daniel Caballero.
  */
 public class MainView extends JFrame {
     /**
@@ -40,9 +47,7 @@ public class MainView extends JFrame {
         Container contentPane = getContentPane();
         contentPane.setLayout(new MigLayout(
                 "hidemode 3",
-                // columns
                 "[fill]" + "[fill]",
-                // rows
                 "[]" + "[]" + "[]"));
         //======== menuBar ========
         //======== menuFile ========

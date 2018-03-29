@@ -1,20 +1,29 @@
+/**
+ * @(#)PanelNormalSearch.java 03/27/18.
+ * Copyright (c) 2018 Jala Foundation.
+ * Cochabamba, Bolivia.
+ * Project Search for Prog102.
+ */
 package com.fundation.search.view;
 
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import javax.swing.JCheckBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.border.TitledBorder;
 import java.awt.Dimension;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JCheckBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JScrollPane;
+
 
 /**
- * Panel for tab normal search.
+ * @version
+ * 27 Mar 2018  * @Daniel Caballero.
  */
 public class PanelNormalSearch extends JPanel {
     /**
@@ -50,6 +59,8 @@ public class PanelNormalSearch extends JPanel {
         panelAttributes = new JPanel();
         checkBoxReadOnly = new JCheckBox();
         checkBoxHidden = new JCheckBox();
+        panelButtonSearch = new JPanel();
+        buttonSearch = new JButton();
 
         //======== panelNamePath ========
         setLayout(new TableLayout(new double[][]{
@@ -65,7 +76,8 @@ public class PanelNormalSearch extends JPanel {
         labelName.setText("Name:");
         final Dimension preferredSize = new Dimension(120, 20);
         labelName.setPreferredSize(preferredSize);
-        panelNamePath.add(labelName, new TableLayoutConstraints(0, 0, 0, 0, TableLayoutConstraints.RIGHT,
+        panelNamePath.add(labelName, new TableLayoutConstraints(0, 0, 0, 0,
+                TableLayoutConstraints.RIGHT,
                 TableLayoutConstraints.FULL));
         //---- textFieldName ----
         textFieldName.setPreferredSize(preferredSize);
@@ -73,11 +85,13 @@ public class PanelNormalSearch extends JPanel {
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //---- labelPath ----
         labelPath.setText("Path:");
-        panelNamePath.add(labelPath, new TableLayoutConstraints(0, 1, 0, 1, TableLayoutConstraints.FULL,
+        panelNamePath.add(labelPath, new TableLayoutConstraints(0, 1, 0, 1,
+                TableLayoutConstraints.FULL,
                 TableLayoutConstraints.FULL));
         //---- textFieldPath ----
         textFieldPath.setPreferredSize(preferredSize);
-        panelNamePath.add(textFieldPath, new TableLayoutConstraints(1, 1, 1, 1, TableLayoutConstraints.FULL,
+        panelNamePath.add(textFieldPath, new TableLayoutConstraints(1, 1, 1, 1,
+                TableLayoutConstraints.FULL,
                 TableLayoutConstraints.FULL));
         add(panelNamePath, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
@@ -155,6 +169,23 @@ public class PanelNormalSearch extends JPanel {
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         add(panelAttributes, new TableLayoutConstraints(0, constraints1, 0, constraints1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        //======== panelButtonSearch ========
+
+        panelButtonSearch.setLayout(new TableLayout(new double[][]{
+                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
+                        TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
+                        TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
+                        TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
+                        TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
+                {TableLayout.PREFERRED}}));
+
+        //---- buttonSearch ----
+        buttonSearch.setText("Search");
+        panelButtonSearch.add(buttonSearch, new TableLayoutConstraints(0, 0, 0, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
+        add(panelButtonSearch, new TableLayoutConstraints(1, 2, 1, 2,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
     }
 
     private JPanel panelNamePath;
@@ -178,4 +209,6 @@ public class PanelNormalSearch extends JPanel {
     private JPanel panelAttributes;
     private JCheckBox checkBoxReadOnly;
     private JCheckBox checkBoxHidden;
+    private JButton buttonSearch;
+    private JPanel panelButtonSearch;
 }
