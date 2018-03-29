@@ -22,6 +22,7 @@ public class SearchFiles {
 
     /**
      * Method to set searchCriteria attribute.
+     *
      * @param searchCriteria
      */
     public void setSearchCriteria(SearchCriteria searchCriteria) {
@@ -32,8 +33,9 @@ public class SearchFiles {
      * Method to initialize search.
      */
     public void init() {
+        arrayResultFiles = new ArrayList<>();
         if (searchCriteria.getPath() != null) {
-            resultResultFiles = recoverFiles(searchCriteria.getPath());
+            resultResultFiles = recoverFiles(searchCriteria.getPath(), arrayResultFiles);
         }
         if (searchCriteria.getName() != null) {
             resultResultFiles = searchFile(resultResultFiles);
@@ -42,6 +44,7 @@ public class SearchFiles {
 
     /**
      * Method to get resultResultFiles.
+     *
      * @return resultResultFiles
      */
     public List<ResultFile> getResultResultFiles() {
@@ -54,12 +57,11 @@ public class SearchFiles {
      * @param path is given in order to obtain all files of a path.
      * @return the array of Files object.
      */
-    List<ResultFile> recoverFiles(File path) {
-        arrayResultFiles = new ArrayList<>();
+    List<ResultFile> recoverFiles(File path, List<ResultFile> arrayResultFiles) {
         try {
             for (File fileEntry : path.listFiles()) {
                 if (fileEntry.isDirectory()) {
-                    recoverFiles(fileEntry);
+                    recoverFiles(fileEntry, arrayResultFiles);
                 } else {
                     arrayResultFiles.add(new ResultFile(fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden()));
                 }
