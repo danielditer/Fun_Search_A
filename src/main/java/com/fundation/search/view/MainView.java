@@ -20,6 +20,7 @@ import net.miginfocom.swing.MigLayout;
 /**
  * @version
  * 27 Mar 2018  * @Daniel Caballero.
+ * Class that contains the Main Window of the Search application.
  */
 public class MainView extends JFrame {
     /**

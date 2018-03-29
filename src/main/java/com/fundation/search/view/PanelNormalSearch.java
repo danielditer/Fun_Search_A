@@ -188,6 +188,18 @@ public class PanelNormalSearch extends JPanel {
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
     }
 
+    public JButton getButtonSearch(){
+        return buttonSearch;
+    }
+
+    public String getPath(){
+        return textFieldPath.getText();
+    }
+
+    public String getName(){
+        return textFieldName.getText();
+    }
+
     private JPanel panelNamePath;
     private JLabel labelName;
     private JTextField textFieldName;
