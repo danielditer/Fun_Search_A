@@ -10,13 +10,17 @@ import com.fundation.search.model.SearchCriteria;
 
 import java.util.StringJoiner;
 
-/**
+/** The command Executor class provides methods to execute a kind of Search according a command.
  * @version
  * 27 Mar 2018  * @Maria Canqui
  */
 
 public class CommandExecutor {
     /**
+     * Method exeCmd to call functions by command introduced.
+     * -p to path
+     * -n to name
+     * -h to hidden
      * @param commandString command
      * @return results command execution
      */

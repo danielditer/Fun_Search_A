@@ -12,13 +12,14 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * The class CommandExecutorTest contains test to class Command Executor.
  * @version
  * 28 Mar 2018  * @Maria Canqui
  */
 public class CommandExecutorTest {
     private CommandExecutor comex;
     /**
-     * * initialize CommandExecutor.
+     * * initialize CommandExecutor object.
      * */
     @Before
     public void initialize() {
