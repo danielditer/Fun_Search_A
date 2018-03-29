@@ -43,7 +43,7 @@ public class SearchController {
     }
 
     /**
-     * Method to initialize all controll methods.
+     * Method to initialize all controller methods.
      */
     public void init() {
         searchCriteria = new SearchCriteria();
@@ -54,22 +54,19 @@ public class SearchController {
      * Method to get values from button search in the View.
      */
     public void getActionPerformed() {
-        PanelNormalSearch p = (PanelNormalSearch) mainView.getPanel();
-        p.getButtonSearch().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("name:" + p.getName());
-                System.out.println("path:" + p.getPath());
-                if (areValidParams(p.getPath(), p.getName())) {
-                    System.out.println("name:" + p.getName() + " OK");
-                    System.out.println("path:" + p.getPath() + " OK");
-                    sendSearchCriteriaToModel(p.getPath(), p.getName());
-                }
-            }
-        });
-
+        PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
+        panel.getButtonSearch().addActionListener(e -> lambdaActionListener(panel));
     }
 
+    /**
+     * Method lambda to add action listener to button search.
+     * @param p
+     */
+    public void lambdaActionListener(PanelNormalSearch p) {
+        if (areValidParams(p.getPath(), p.getName())) { ;
+            sendSearchCriteriaToModel(p.getPath(), p.getName());
+        }
+    }
     /**
      * Method to validate each input.
      * @param path
@@ -78,12 +75,12 @@ public class SearchController {
      */
     public boolean areValidParams(String path, String name) {
         Validator validator = new Validator();
-        if (!validator.isAValidName(name)) {
-            JOptionPane.showMessageDialog(null, "Invalid File Name");
-            return false;
-        }
         if (!validator.isAValidPath(path)) {
             JOptionPane.showMessageDialog(null, "Invalid Path Name");
+            return false;
+        }
+        if (!validator.isAValidName(name)) {
+            JOptionPane.showMessageDialog(null, "Invalid File Name");
             return false;
         }
         return true;

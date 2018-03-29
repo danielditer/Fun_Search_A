@@ -169,4 +169,20 @@ public class ValidatorTest {
         final String param3 = "xxx\\test\\java\\com\\funda\\s\\test-file\\xxx\\test\\java\\com\\funda\\s\\test-file\\";
         assertFalse("Path c:\\Users", validator.isAValidPath(param.concat(param1).concat(param2).concat(param3)));
     }
+
+    /**
+     * Seventeenth test.
+     */
+    @Test
+    public void testIsAValidPathNames(){
+        assertTrue("Path", validator.isAValidPathName("folder\\folder1\\aa"));
+    }
+
+    /**
+     * Eighteenth test.
+     */
+    @Test
+    public void testIsAInvalidPathNames(){
+        assertFalse("Path", validator.isAValidPathName("folderr:rrrr\\file\\document\\"));
+    }
 }

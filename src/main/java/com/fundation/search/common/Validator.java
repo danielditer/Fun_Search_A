@@ -56,6 +56,21 @@ public class Validator {
     }
 
     /**
+     * Method to validate each directory of a path.
+     * @param path
+     * @return
+     */
+    public boolean isAValidPathName(String path) {
+        String[] directoryName = path.split("\\\\");
+        for (String value : directoryName) {
+            if (!isAValidName(value)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Method to validate path exists.
      * @param path .
      * @return boolean value is valid.
@@ -71,13 +86,16 @@ public class Validator {
      * @return boolean value is valid.
      */
     public boolean isAValidPath(String path) {
+        if (path.isEmpty()) {
+            return false;
+        }
         if (path.length() > MAX_PATH_VALUE) {
             return false;
         }
         if (!pathExists(path.substring(0, path.indexOf("\\")))) {
             return false;
         }
-        if (!isAValidName(path.substring(INDEX_THREE))) {
+        if (!isAValidPathName(path.substring(INDEX_THREE))) {
             return false;
         }
         return true;
