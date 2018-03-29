@@ -1,6 +1,5 @@
 /**
- * @(#)Validator.java 03/25/18
- *
+ * @(#)SearchFiles.java 03/25/18
  * Copyright (c) 2018 Jala Foundation.
  * Cochabamba, Bolivia.
  * Project Search for Prog102.
@@ -10,46 +9,84 @@ package com.fundation.search.model;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
- * @version 25 Mar 2018  * @Jimmy Romero
+ * @version 28 Mar 2018  * @Jimmy Romero
  */
 public class SearchFiles {
-    private static final String TEST_1 = "test1.txt";
-    private List<String> arrayFiles = new ArrayList<>();
+    private static final String TEST_1 = "test4.txt";
+
+    private List<FileS> arrayFiles;
+    private List<String> arrayCoincidences;
 
     /**
-     * Method to display all files of specific path.
+     * Method that is going to recover all File objects into an array.
      *
-     * @param path is the specific path.
-     * @return all the  files contained in the path.
+     * @param path is given in order to obtain all files of a path.
+     * @return the array of Files object.
      */
-    public List<String> displayAllFiles(File path) {
-        for (File fileEntry : Objects.requireNonNull(path.listFiles()))
-            if (fileEntry.isDirectory()) {
-                displayAllFiles(fileEntry);
-            } else {
-                arrayFiles.add(fileEntry.getName());
+    List<FileS> recoverFiles(File path) {
+        arrayFiles = new ArrayList<>();
+        try {
+            for (File fileEntry : path.listFiles()) {
+                if (fileEntry.isDirectory()) {
+                    recoverFiles(fileEntry);
+                } else {
+                    arrayFiles.add(new FileS(fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden()));
+                }
             }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
         return arrayFiles;
     }
 
     /**
-     * Method to display an specific file of an specific path.
+     * Method that returns an array of visible files of a path.
      *
-     * @param path is the specific path.
-     * @return the specific file.
+     * @param arrayFiles is the array of FileS objects.
+     * @return the array of coincidences, in this case visible files.
      */
-    public List<String> displaySpecificFile(File path) {
-        for (File fileEntry : Objects.requireNonNull(path.listFiles()))
-            if (fileEntry.isDirectory()) {
-                displaySpecificFile(fileEntry);
-            } else {
-                if (fileEntry.getName().contains(TEST_1)) {
-                    arrayFiles.add(fileEntry.getName());
-                }
+    List<String> searchAllFiles(List<FileS> arrayFiles) {
+        arrayCoincidences = new ArrayList<>();
+        for (FileS fileEntry : arrayFiles) {
+            if (!fileEntry.getHidden()) {
+                arrayCoincidences.add(fileEntry.getPath());
             }
-        return arrayFiles;
+        }
+        return arrayCoincidences;
+    }
+
+
+    /**
+     * Method that returns an array of coincidences of fileNames of files of a path.
+     *
+     * @param arrayFiles is the array of FileS objects.
+     * @return the array of coincidences, in this case fileName coincidences.
+     */
+    List<String> searchFile(List<FileS> arrayFiles) {
+        arrayCoincidences = new ArrayList<>();
+        for (FileS fileEntry : arrayFiles) {
+            if (fileEntry.getFileName().contains(TEST_1)) {
+                arrayCoincidences.add(fileEntry.getFileName());
+            }
+        }
+        return arrayCoincidences;
+    }
+
+    /**
+     * Method that returns an array of hidden coincidences of files of a path.
+     *
+     * @param arrayFiles is the array of FileS objects.
+     * @return the array of coincidences, in this case hidden file coincidences.
+     */
+    List<String> searchHiddenFiles(List<FileS> arrayFiles) {
+        arrayCoincidences = new ArrayList<>();
+        for (FileS fileEntry : arrayFiles) {
+            if (fileEntry.getHidden()) {
+                arrayCoincidences.add(fileEntry.getFileName());
+            }
+        }
+        return arrayCoincidences;
     }
 }
