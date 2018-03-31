@@ -60,11 +60,11 @@ public class SearchController {
 
     /**
      * Method lambda to add action listener to button search.
-     * @param p
+     * @param panel
      */
-    public void lambdaActionListener(PanelNormalSearch p) {
-        if (areValidParams(p.getPath(), p.getName())) { ;
-            sendSearchCriteriaToModel(p.getPath(), p.getName());
+    public void lambdaActionListener(PanelNormalSearch panel) {
+        if (areValidParams(panel.getPath(), panel.getName())) { ;
+            sendSearchCriteriaToModel(panel.getPath(), panel.getName());
         }
     }
     /**
