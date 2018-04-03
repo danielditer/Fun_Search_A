@@ -20,9 +20,6 @@ import java.util.StringJoiner;
  */
 
 public class CommandExecutor {
-
-
-
     /**
      * @param commandString command
      * @return results command execution
@@ -36,12 +33,10 @@ public class CommandExecutor {
         for (int i = 0; i < commandArray.length; i++) {
             if (commandArray[i].contains("-n")) { /* Search by name*/
                 criteria.setName(commandArray[i + 1]);
-                System.out.println(commandArray[i + 1]);
             }
             if (commandArray[i].contains("-p")) { /* Search by path*/
                 File path = new File(commandArray[i + 1]);
                 criteria.setPath(path);
-                System.out.println(commandArray[i + 1]);
             }
             if (commandArray[i].contains("-h")) { /* Search by files hidden*/
                 resultString.add("get hidden: " + commandArray[i + 1]);
@@ -57,7 +52,12 @@ public class CommandExecutor {
         return "test";
 
     }
-    public void setResultsToTable( SearchFiles searchFil) {
+
+    /**
+     * Method setResultsToTable to print the files.
+     * @param searchFil list of files
+     */
+    public void setResultsToTable(SearchFiles searchFil) {
 
         List<ResultFile> resultFileList = searchFil.getResultResultFiles();
         System.out.println("File Name\tFile Path\tHidden");
