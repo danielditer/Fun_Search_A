@@ -6,19 +6,24 @@
  */
 package com.fundation.search.model;
 
-import java.io.File;
-
 /**
  * @version
  * 27 Mar 2018  * @Juan Manuel
  */
 public class SearchCriteria {
+    /**
+     * Attribute of file name.
+     */
     private String name;
-    private File path;
+
+    /**
+     * Attribute of file path.
+     */
+    private String path;
 
     /**
      * Setter for name attribute.
-     * @param name .
+     * @param name
      */
     public void setName(String name) {
         this.name = name;
@@ -26,15 +31,15 @@ public class SearchCriteria {
 
     /**
      * Setter for path attribute.
-     * @param path .
+     * @param path
      */
-    public void setPath(File path) {
+    public void setPath(String path) {
         this.path = path;
     }
 
     /**
      * Getter for name attribute.
-     * @return name.
+     * @return name
      */
     public String getName() {
         return this.name;
@@ -42,9 +47,9 @@ public class SearchCriteria {
 
     /**
      * Getter for path attribute.
-     * @return path.
+     * @return path
      */
-    public File getPath() {
+    public String getPath() {
         return this.path;
     }
 }

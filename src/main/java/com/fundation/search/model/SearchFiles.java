@@ -32,8 +32,9 @@ public class SearchFiles {
      * Method to initialize search.
      */
     public void init() {
+        File filePath = new File(searchCriteria.getPath());
         if (searchCriteria.getPath() != null) {
-            resultResultFiles = recoverFiles(searchCriteria.getPath());
+            resultResultFiles = recoverFiles(filePath);
         }
         if (searchCriteria.getName() != null) {
             resultResultFiles = searchFile(resultResultFiles);
