@@ -22,7 +22,7 @@ public class SearchCriteria {
 
     /**
      * Setter for name attribute.
-     * @param name
+     * @param name, is the file name the user is searching.
      */
     public void setName(String name) {
         this.name = name;
@@ -30,7 +30,7 @@ public class SearchCriteria {
 
     /**
      * Setter for path attribute.
-     * @param path
+     * @param path, is the path where the user is searching a file.
      */
     public void setPath(String path) {
         this.path = path;
@@ -38,7 +38,7 @@ public class SearchCriteria {
 
     /**
      * Getter for name attribute.
-     * @return name
+     * @return name, is the file name set in previous method.
      */
     public String getName() {
         return this.name;
@@ -46,7 +46,7 @@ public class SearchCriteria {
 
     /**
      * Getter for path attribute.
-     * @return path
+     * @return path, is the path set in previous method.
      */
     public String getPath() {
         return this.path;
