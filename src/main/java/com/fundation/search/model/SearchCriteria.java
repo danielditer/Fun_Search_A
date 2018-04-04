@@ -7,18 +7,17 @@
 package com.fundation.search.model;
 
 /**
+ * Class to build all the criterias user chose.
  * @version
  * 27 Mar 2018  * @Juan Manuel
  */
 public class SearchCriteria {
     /**
-     * Attribute of file name.
-     */
+     * Attribute of file name*/
     private String name;
 
     /**
-     * Attribute of file path.
-     */
+     * Attribute of path name*/
     private String path;
 
     /**
