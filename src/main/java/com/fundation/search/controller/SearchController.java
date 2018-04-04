@@ -92,8 +92,7 @@ public class SearchController {
      * @param name
      */
     public void sendSearchCriteriaToModel(String path, String name) {
-        File filePath = new File(path);
-        searchCriteria.setPath(filePath);
+        searchCriteria.setPath(path);
         searchCriteria.setName(name);
         searchFile.setSearchCriteria(searchCriteria);
         searchFile.init();
