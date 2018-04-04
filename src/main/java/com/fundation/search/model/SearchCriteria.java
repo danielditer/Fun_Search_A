@@ -6,19 +6,23 @@
  */
 package com.fundation.search.model;
 
-import java.io.File;
-
 /**
+ * Class to build all the criterias user chose.
  * @version
  * 27 Mar 2018  * @Juan Manuel
  */
 public class SearchCriteria {
+    /**
+     * Attribute of file name*/
     private String name;
-    private File path;
+
+    /**
+     * Attribute of path name*/
+    private String path;
 
     /**
      * Setter for name attribute.
-     * @param name .
+     * @param name, is the file name the user is searching.
      */
     public void setName(String name) {
         this.name = name;
@@ -26,15 +30,15 @@ public class SearchCriteria {
 
     /**
      * Setter for path attribute.
-     * @param path .
+     * @param path, is the path where the user is searching a file.
      */
-    public void setPath(File path) {
+    public void setPath(String path) {
         this.path = path;
     }
 
     /**
      * Getter for name attribute.
-     * @return name.
+     * @return name, is the file name set in previous method.
      */
     public String getName() {
         return this.name;
@@ -42,9 +46,9 @@ public class SearchCriteria {
 
     /**
      * Getter for path attribute.
-     * @return path.
+     * @return path, is the path set in previous method.
      */
-    public File getPath() {
+    public String getPath() {
         return this.path;
     }
 }

@@ -34,8 +34,9 @@ public class SearchFiles {
      */
     public void init() {
         arrayResultFiles = new ArrayList<>();
+        File filePath = new File(searchCriteria.getPath());
         if (searchCriteria.getPath() != null) {
-            resultResultFiles = recoverFiles(searchCriteria.getPath(), arrayResultFiles);
+            resultResultFiles = recoverFiles(filePath, arrayResultFiles);
         }
         if (searchCriteria.getName() != null) {
             resultResultFiles = searchFile(resultResultFiles);
