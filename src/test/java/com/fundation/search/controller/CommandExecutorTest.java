@@ -36,7 +36,7 @@ public class CommandExecutorTest {
      */
     @Test
     public void searchFileCommandName() {
-        assertEquals("test", comex.exeCmd("java search -n doc -p C:\\Users\\Administrator\\Documents\\Prog102\\Search\\Fun_Search_A"));
+        assertEquals("test", comex.exeCmd("java search -n test -p C:\\Users"));
     }
 
 
