@@ -9,8 +9,6 @@ package com.fundation.search.controller;
 import com.fundation.search.model.ResultFile;
 import com.fundation.search.model.SearchCriteria;
 import com.fundation.search.model.SearchFiles;
-
-import java.io.File;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -35,7 +33,7 @@ public class CommandExecutor {
                 criteria.setName(commandArray[i + 1]);
             }
             if (commandArray[i].contains("-p")) { /* Search by path*/
-                //criteria.setPath(commandArray[i + 1]);
+                criteria.setPath(commandArray[i + 1]);
             }
             if (commandArray[i].contains("-h")) { /* Search by files hidden*/
                 resultString.add("get hidden: " + commandArray[i + 1]);
