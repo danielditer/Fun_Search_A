@@ -11,19 +11,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @version 28 Mar 2018  * @Jimmy Romero
+ * Class made in order to develop different methods for search files.
+ * Like: search files of a path, search specific files, search hidden files.
+ *
+ * @version April 4th, 2018  * @Jimmy Romero
  */
 public class SearchFiles {
+    /**
+     * searchCriteria is the attribute that is used for setting the criteria of searching.
+     */
     private SearchCriteria searchCriteria;
+    /**
+     * resultResultFiles is the attribute in which we are going to recover files depending the type of searching.
+     */
     private List<ResultFile> resultResultFiles;
+    /**
+     * arrayResultFiles is the array that is used for insert ResultFile objects inside of it.
+     */
     private List<ResultFile> arrayResultFiles;
+    /**
+     * arrayCoincidences is the array in which all the search coincidences depending the method used, are going to be stored.
+     */
     private List<ResultFile> arrayCoincidences;
-
 
     /**
      * Method to set searchCriteria attribute.
      *
-     * @param searchCriteria
+     * @param searchCriteria is the param received in order to set the search criteria.
      */
     public void setSearchCriteria(SearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
@@ -46,7 +60,7 @@ public class SearchFiles {
     /**
      * Method to get resultResultFiles.
      *
-     * @return resultResultFiles
+     * @return resultResultFiles is going to get the result files for the search controller.
      */
     public List<ResultFile> getResultResultFiles() {
         return this.resultResultFiles;
@@ -88,7 +102,6 @@ public class SearchFiles {
         }
         return arrayCoincidences;
     }
-
 
     /**
      * Method that returns an array of coincidences of fileNames of files of a path.
