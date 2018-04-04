@@ -72,7 +72,7 @@ public class SearchFiles {
      * @param path is given in order to obtain all files of a path.
      * @return the array of Files object.
      */
-    List<ResultFile> recoverFiles(File path, List<ResultFile> arrayResultFiles) {
+    private List<ResultFile> recoverFiles(File path, List<ResultFile> arrayResultFiles) {
         try {
             for (File fileEntry : path.listFiles()) {
                 if (fileEntry.isDirectory()) {
@@ -93,7 +93,7 @@ public class SearchFiles {
      * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case visible files.
      */
-    List<ResultFile> searchAllFiles(List<ResultFile> arrayResultFiles) {
+    private List<ResultFile> searchAllFiles(List<ResultFile> arrayResultFiles) {
         arrayCoincidences = new ArrayList<>();
         for (ResultFile fileEntry : arrayResultFiles) {
             if (!fileEntry.getHidden()) {
@@ -109,7 +109,7 @@ public class SearchFiles {
      * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case fileName coincidences.
      */
-    List<ResultFile> searchFile(List<ResultFile> arrayResultFiles) {
+    private List<ResultFile> searchFile(List<ResultFile> arrayResultFiles) {
         arrayCoincidences = new ArrayList<>();
         for (ResultFile fileEntry : arrayResultFiles) {
             if (fileEntry.getFileName().contains(searchCriteria.getName())) {
@@ -125,7 +125,7 @@ public class SearchFiles {
      * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
-    List<ResultFile> searchHiddenFiles(List<ResultFile> arrayResultFiles) {
+    private List<ResultFile> searchHiddenFiles(List<ResultFile> arrayResultFiles) {
         arrayCoincidences = new ArrayList<>();
         for (ResultFile fileEntry : arrayResultFiles) {
             if (fileEntry.getHidden()) {
