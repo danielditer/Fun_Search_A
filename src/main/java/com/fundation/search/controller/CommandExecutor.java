@@ -19,6 +19,17 @@ import java.util.StringJoiner;
  */
 public class CommandExecutor {
     /**
+     * Method setResultsToTable to print the files.
+     * @param searchFil list of files founded
+     */
+    private void setResultsToTable(SearchFiles searchFil) {
+        List<ResultFile> resultFileList = searchFil.getResultResultFiles();
+        System.out.println("File Name\tFile Path\tHidden");
+        for (ResultFile rf : resultFileList) {
+            System.out.println(rf.getFileName() + "\t" + rf.getPath() + "\t" + rf.getHidden());
+        }
+    }
+    /**
      * Method exeCmd receive a command, separe the string by command and set criteria attributes.
      * @param commandString command
      * @return list of files founded
@@ -46,15 +57,4 @@ public class CommandExecutor {
         return "test";
     }
 
-    /**
-     * Method setResultsToTable to print the files.
-     * @param searchFil list of files founded
-     */
-    public void setResultsToTable(SearchFiles searchFil) {
-        List<ResultFile> resultFileList = searchFil.getResultResultFiles();
-        System.out.println("File Name\tFile Path\tHidden");
-        for (ResultFile rf : resultFileList) {
-            System.out.println(rf.getFileName() + "\t" + rf.getPath() + "\t" + rf.getHidden());
-        }
-    }
 }
