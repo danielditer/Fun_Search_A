@@ -92,6 +92,7 @@ public class MainView extends JFrame {
         setVisible(true);
         pack();
         setLocationRelativeTo(getOwner());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     /**
