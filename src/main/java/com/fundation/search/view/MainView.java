@@ -13,7 +13,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-
 import info.clearthought.layout.TableLayout;
 import net.miginfocom.swing.MigLayout;
 
@@ -23,6 +22,16 @@ import net.miginfocom.swing.MigLayout;
  * Class that contains the Main Window of the Search application.
  */
 public class MainView extends JFrame {
+    private JMenuBar menuBar;
+    private JMenu menuFile;
+    private JMenu menuEdit;
+    private JMenu menuView;
+    private JMenu menuHelp;
+    private JTabbedPane tabbedPane;
+    private JPanel panelMultimediaSearch;
+    private JPanel panelTerminalSearch;
+    private JPanel panelTabbedPane;
+    private PanelNormalSearch panelNormalSearch;
     /**
      * MainView constructor.
      */
@@ -65,10 +74,7 @@ public class MainView extends JFrame {
         menuBar.add(menuHelp);
         setJMenuBar(menuBar);
         //======== panelNormalSearch ========
-        // JFormDesigner evaluation mark
-
         tabbedPane.addTab("Normal Search", panelNormalSearch);
-
         //======== panelMultimediaSearch ========
         panelMultimediaSearch.setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED},
@@ -87,19 +93,11 @@ public class MainView extends JFrame {
         pack();
         setLocationRelativeTo(getOwner());
     }
-    
+
+    /**
+     * @return the Panel ´panelNormalSearch´.
+     */
     public JPanel getPanel() {
         return panelNormalSearch;
     }
-
-    private JMenuBar menuBar;
-    private JMenu menuFile;
-    private JMenu menuEdit;
-    private JMenu menuView;
-    private JMenu menuHelp;
-    private JTabbedPane tabbedPane;
-    private JPanel panelMultimediaSearch;
-    private JPanel panelTerminalSearch;
-    private JPanel panelTabbedPane;
-    private PanelNormalSearch panelNormalSearch;
 }
