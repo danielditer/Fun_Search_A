@@ -14,7 +14,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Class that contain test to commandExecutor.
+ * Class that contain test to validate method exeCmd of commandExecutor.
  * @version
  * 28 Mar 2018  * @Maria Canqui
  */
