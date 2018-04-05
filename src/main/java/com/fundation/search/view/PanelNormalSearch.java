@@ -13,19 +13,28 @@ import javax.swing.border.TitledBorder;
 import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.JCheckBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JScrollPane;
 
 
 /**
- * @version
- * 27 Mar 2018  * @Daniel Caballero.
+ * @version 27 Mar 2018  * @Daniel Caballero.
  */
 public class PanelNormalSearch extends JPanel {
+    private PanelNamePath panelNamePath;
+    private JPanel panelCoincidences;
+    private JPanel panelFileContent;
+    private JScrollPane scrollPaneContent;
+    private JTextArea textAreaContent;
+    private JCheckBox checkBoxCaseSensitive;
+    private PanelDate panelDate;
+    private JPanel panelAttributes;
+    private JCheckBox checkBoxReadOnly;
+    private JCheckBox checkBoxHidden;
+    private JButton buttonSearch;
+    private JPanel panelButtonSearch;
+
     /**
      * Class constructor.
      */
@@ -38,61 +47,23 @@ public class PanelNormalSearch extends JPanel {
      * Initializes panel components.
      */
     public void initComponents() {
-        panelNamePath = new JPanel();
-        labelName = new JLabel();
-        textFieldName = new JTextField();
-        labelPath = new JLabel();
-        textFieldPath = new JTextField();
+        panelNamePath = new PanelNamePath();
         panelCoincidences = new JPanel();
         panelFileContent = new JPanel();
         scrollPaneContent = new JScrollPane();
         textAreaContent = new JTextArea();
         checkBoxCaseSensitive = new JCheckBox();
-        panelDate = new JPanel();
-        checkBoxCreated = new JCheckBox();
-        checkBoxModified = new JCheckBox();
-        checkBoxAccessed = new JCheckBox();
-        labelFrom = new JLabel();
-        formattedTextFieldStart = new JFormattedTextField();
-        labelTo = new JLabel();
-        formattedTextFieldEnd = new JFormattedTextField();
+        panelDate = new PanelDate();
         panelAttributes = new JPanel();
         checkBoxReadOnly = new JCheckBox();
         checkBoxHidden = new JCheckBox();
         panelButtonSearch = new JPanel();
         buttonSearch = new JButton();
 
-        //======== panelNamePath ========
         setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED},
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
-        panelNamePath.setBorder(new TitledBorder(null, "Name/Path", TitledBorder.DEFAULT_JUSTIFICATION,
-                TitledBorder.DEFAULT_POSITION));
-        panelNamePath.setOpaque(false);
-        panelNamePath.setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED, TableLayout.PREFERRED},
-                {TableLayout.PREFERRED, TableLayout.PREFERRED}}));
-        //---- labelName ----
-        labelName.setText("Name:");
-        final Dimension preferredSize = new Dimension(120, 20);
-        labelName.setPreferredSize(preferredSize);
-        panelNamePath.add(labelName, new TableLayoutConstraints(0, 0, 0, 0,
-                TableLayoutConstraints.RIGHT,
-                TableLayoutConstraints.FULL));
-        //---- textFieldName ----
-        textFieldName.setPreferredSize(preferredSize);
-        panelNamePath.add(textFieldName, new TableLayoutConstraints(1, 0, 1, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        //---- labelPath ----
-        labelPath.setText("Path:");
-        panelNamePath.add(labelPath, new TableLayoutConstraints(0, 1, 0, 1,
-                TableLayoutConstraints.FULL,
-                TableLayoutConstraints.FULL));
-        //---- textFieldPath ----
-        textFieldPath.setPreferredSize(preferredSize);
-        panelNamePath.add(textFieldPath, new TableLayoutConstraints(1, 1, 1, 1,
-                TableLayoutConstraints.FULL,
-                TableLayoutConstraints.FULL));
+        //======== panelNamePath ========
         add(panelNamePath, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //======== panelCoincidences ========
@@ -106,7 +77,6 @@ public class PanelNormalSearch extends JPanel {
         panelFileContent.setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED},
                 {TableLayout.PREFERRED, TableLayout.PREFERRED}}));
-
         //======== scrollPaneContent ========
         //---- textAreaContent ----
         final Dimension preferredSizeTextArea = new Dimension(240, 20);
@@ -121,37 +91,6 @@ public class PanelNormalSearch extends JPanel {
         add(panelFileContent, new TableLayoutConstraints(0, 1, 0, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //======== panelDate ========
-        panelDate.setBorder(new TitledBorder("Date"));
-        panelDate.setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
-                        TableLayout.PREFERRED},
-                {TableLayout.PREFERRED, TableLayout.PREFERRED}}));
-        //---- checkBoxCreated ----
-        checkBoxCreated.setText("Created");
-        panelDate.add(checkBoxCreated, new TableLayoutConstraints(0, 0, 0, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        //---- checkBoxModified ----
-        checkBoxModified.setText("Modified");
-        panelDate.add(checkBoxModified, new TableLayoutConstraints(2, 0, 2, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        //---- checkBoxAccessed ----
-        checkBoxAccessed.setText("Accesed");
-        final int constraints2 = 4;
-        panelDate.add(checkBoxAccessed, new TableLayoutConstraints(constraints2, 0, constraints2, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        //---- labelFrom ----
-        labelFrom.setText("From:");
-        panelDate.add(labelFrom, new TableLayoutConstraints(0, 1, 0, 1, TableLayoutConstraints.FULL,
-                TableLayoutConstraints.FULL));
-        panelDate.add(formattedTextFieldStart, new TableLayoutConstraints(1, 1, 2, 1,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        //---- labelTo ----
-        labelTo.setText("To:");
-        final int constraints1 = 3;
-        panelDate.add(labelTo, new TableLayoutConstraints(constraints1, 1, constraints1, 1,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        panelDate.add(formattedTextFieldEnd, new TableLayoutConstraints(constraints2, 1, constraints2, 1,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         add(panelDate, new TableLayoutConstraints(0, 2, 0, 2,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //======== panelAttributes ========
@@ -167,10 +106,10 @@ public class PanelNormalSearch extends JPanel {
         checkBoxHidden.setText("Hidden");
         panelAttributes.add(checkBoxHidden, new TableLayoutConstraints(2, 0, 2, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        final int constraints1 = 3;
         add(panelAttributes, new TableLayoutConstraints(0, constraints1, 0, constraints1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //======== panelButtonSearch ========
-
         panelButtonSearch.setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
                         TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
@@ -178,49 +117,39 @@ public class PanelNormalSearch extends JPanel {
                         TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
                         TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
                 {TableLayout.PREFERRED}}));
-
         //---- buttonSearch ----
         buttonSearch.setText("Search");
         panelButtonSearch.add(buttonSearch, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-
         add(panelButtonSearch, new TableLayoutConstraints(1, 2, 1, 2,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
     }
 
-    public JButton getButtonSearch(){
+    /**
+     * Getter for the search button.
+     *
+     * @return ´buttonSearch´ button.
+     */
+    public JButton getButtonSearch() {
         return buttonSearch;
     }
 
-    public String getPath(){
-        return textFieldPath.getText();
+    /**
+     * Getter for the path.
+     *
+     * @return the String of ´textFieldPath´ text field.
+     */
+    public String getPath() {
+        return panelNamePath.getPath();
     }
 
-    public String getName(){
-        return textFieldName.getText();
+    /**
+     * Getter for the file name.
+     *
+     * @return the String of ´textFieldName´ text field.
+     */
+    public String getName() {
+        return panelNamePath.getName();
     }
 
-    private JPanel panelNamePath;
-    private JLabel labelName;
-    private JTextField textFieldName;
-    private JLabel labelPath;
-    private JTextField textFieldPath;
-    private JPanel panelCoincidences;
-    private JPanel panelFileContent;
-    private JScrollPane scrollPaneContent;
-    private JTextArea textAreaContent;
-    private JCheckBox checkBoxCaseSensitive;
-    private JPanel panelDate;
-    private JCheckBox checkBoxCreated;
-    private JCheckBox checkBoxModified;
-    private JCheckBox checkBoxAccessed;
-    private JLabel labelFrom;
-    private JFormattedTextField formattedTextFieldStart;
-    private JLabel labelTo;
-    private JFormattedTextField formattedTextFieldEnd;
-    private JPanel panelAttributes;
-    private JCheckBox checkBoxReadOnly;
-    private JCheckBox checkBoxHidden;
-    private JButton buttonSearch;
-    private JPanel panelButtonSearch;
 }
