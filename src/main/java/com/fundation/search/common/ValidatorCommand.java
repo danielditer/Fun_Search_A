@@ -54,10 +54,7 @@ public class ValidatorCommand {
             if (command.contains(singleCommand) && command.length() == SIZE_COMMAND) {
                 return false;
             }
-
         }
         return true;
     }
-
-
 }

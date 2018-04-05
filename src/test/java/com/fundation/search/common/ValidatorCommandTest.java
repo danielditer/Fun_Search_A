@@ -22,7 +22,7 @@ public class ValidatorCommandTest {
     }
 
     /**
-     * the searchFileCommandName method provide a test for the first and second word.
+     * the searchFileCommandName method provide a positive test for the first and second word.
      */
     @Test
     public void searchFileCommandValid() {
@@ -30,21 +30,21 @@ public class ValidatorCommandTest {
     }
 
     /**
-     * the searchFileCommandName method provide a test for the first word.
+     * the searchFileCommandName method provide a negative test for the first word.
      */
     @Test
     public void searchFileCommandFirstWord() {
         assertFalse( valcom.isAValidFirstSecondWord("javac search -n test -p C:\\Users"));
     }
     /**
-     * the searchFileCommandName method provide a test for the second word.
+     * the searchFileCommandName method provide a negative test for the second word.
      */
     @Test
     public void searchFileCommandSecondWord() {
         assertFalse( valcom.isAValidFirstSecondWord("java searchh -n test -p C:\\Users"));
     }
     /**
-     * the searchFileCommandName method provide a test for the second word.
+     * the searchFileCommandName method provide a negative test for the second and first word.
      */
     @Test
     public void searchFileCommandFirsrSecondWord() {
@@ -52,7 +52,7 @@ public class ValidatorCommandTest {
     }
 
     /**
-     * the searchFileCommandName method provide a test for the second word.
+     * the searchFileCommandName method provide a positive and negative test for the word after the command.
      */
     @Test
     public void searchFileCommandArgumentAfterWord() {
@@ -61,7 +61,7 @@ public class ValidatorCommandTest {
     }
 
     /**
-     * the searchFileCommandName method provide a test for the second word.
+     * the searchFileCommandName method provide a negative test for the word after command.
      */
     @Test
     public void searchFileCommandNotArgumentAfterWord() {
