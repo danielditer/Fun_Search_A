@@ -20,7 +20,7 @@ import java.util.StringJoiner;
 public class CommandExecutor {
     /**
      * Method setResultsToTable to print the files.
-     * @param searchFil list of files founded
+     * @param searchFil list of files found
      */
     private void setResultsToTable(SearchFiles searchFil) {
         List<ResultFile> resultFileList = searchFil.getResultResultFiles();
@@ -32,7 +32,7 @@ public class CommandExecutor {
     /**
      * Method exeCmd receive a command, separe the string by command and set criteria attributes.
      * @param commandString command
-     * @return list of files founded
+     * @return list of files found
      */
     public String exeCmd(String commandString) {
         StringJoiner resultString = new StringJoiner(" ");
