@@ -14,6 +14,7 @@ import com.fundation.search.view.MainView;
 import com.fundation.search.view.PanelNormalSearch;
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -31,6 +32,7 @@ public class SearchController {
     private SearchFiles searchFile;
     private MainView mainView;
     private SearchCriteria searchCriteria;
+    private static final int START_COLUMN = 0;
 
     /**
      * Constructor for controller.
@@ -104,9 +106,17 @@ public class SearchController {
      */
     public void setResultsToTable() {
         List<ResultFile> resultFileList = searchFile.getResultResultFiles();
+        PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
+        TableModel tableModel = panel.getTableModel();
         System.out.println("File Name\tFile Path\tHidden");
-        for (ResultFile rf : resultFileList) {
-            System.out.println(rf.getFileName() + "\t" + rf.getPath() + "\t" + rf.getHidden());
+        for (int i = 0; i < resultFileList.size(); i++ )
+        {
+            tableModel.setValueAt(resultFileList.get(i).getFileName(), i, START_COLUMN);
+            tableModel.setValueAt(resultFileList.get(i).getPath(), i, START_COLUMN + 1);
+            tableModel.setValueAt(resultFileList.get(i).getHidden(), i, START_COLUMN + 2);
+            System.out.println(resultFileList.get(i).getFileName() + "\t" + resultFileList.get(i).getPath() + "\t" + resultFileList.get(i).getHidden());
         }
+        panel.setTableModel(tableModel);
+        panel.setTableResultModel();
     }
 }
