@@ -17,11 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import java.awt.Dimension;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
-
 
 /**
  * Class to initialize panel for normal search tab.
@@ -42,7 +38,7 @@ public class PanelNormalSearch extends JPanel {
     private JButton buttonSearch;
     private JPanel panelButtonSearch;
     private JTable tableResult;
-    private TableModel tableModel;
+    private DefaultTableModel tableModel;
 
 
     /**
@@ -72,10 +68,10 @@ public class PanelNormalSearch extends JPanel {
         buttonSearch = new JButton();
         tableResult = new JTable ();
 
-        String columnNames[] = {"File Name", "File Path", "Hidden"};
-        String rowData[][] = { {},
-                {}, {} };
-        tableModel = new DefaultTableModel(rowData, columnNames);
+        String columnNames[] = new String[]{"File Name", "File Path", "Hidden"};
+
+        tableModel = new DefaultTableModel(0, 0);
+        tableModel.setColumnIdentifiers(columnNames);
 
         setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED},
@@ -188,7 +184,7 @@ public class PanelNormalSearch extends JPanel {
      * Getter for the controller to get model for the result table.
      * @return tableModel, which is the model for the table.
      */
-    public TableModel getTableModel() {
+    public DefaultTableModel getTableModel() {
         return this.tableModel;
     }
 
@@ -196,7 +192,7 @@ public class PanelNormalSearch extends JPanel {
      * Setter for the controller to set model filled with results.
      * @param model, the TableModel filled with results.
      */
-    public void setTableModel(TableModel model) {
+    public void setTableModel(DefaultTableModel model) {
         this.tableModel = model;
     }
 
