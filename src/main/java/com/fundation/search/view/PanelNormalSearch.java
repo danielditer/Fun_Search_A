@@ -9,10 +9,17 @@ package com.fundation.search.view;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.*;
+import javax.swing.JScrollPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JCheckBox;
+import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import java.awt.Dimension;
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 
@@ -36,12 +43,14 @@ public class PanelNormalSearch extends JPanel {
     private JTable tableResult;
     private TableModel tableModel;
 
+
     /**
      * Class constructor.
      */
     public PanelNormalSearch() {
         initComponents();
         setVisible(true);
+
     }
 
     /**
@@ -63,9 +72,9 @@ public class PanelNormalSearch extends JPanel {
         buttonSearch = new JButton();
         tableResult = new JTable ();
 
-        String columnNames[] = {"A", "B", "C"};
+        String columnNames[] = {"File Name", "File Path", "Hidden"};
         String rowData[][] = { {},
-                {} };
+                {}, {} };
         tableModel = new DefaultTableModel(rowData, columnNames);
 
         setLayout(new TableLayout(new double[][]{
@@ -123,14 +132,16 @@ public class PanelNormalSearch extends JPanel {
          */
         panelResultTable.setBorder(new TitledBorder("Results"));
         panelResultTable.setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED},
-                {TableLayout.PREFERRED}}));
+                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
+                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
 
         tableResult.setModel(tableModel);
-
-        panelResultTable.add(tableResult, new TableLayoutConstraints(0, 0, 0, 0,
+        tableResult.setPreferredScrollableViewportSize(new Dimension(500, 70));
+        tableResult.setFillsViewportHeight(true);
+        JScrollPane scrollPane = new JScrollPane(tableResult);
+        panelResultTable.add(scrollPane, new TableLayoutConstraints(1, 0, 1, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        add(panelResultTable, new TableLayoutConstraints(0, constraints1, 0, constraints1,
+        add(panelResultTable, new TableLayoutConstraints(0, 3, 0, 3,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //======== panelButtonSearch ========
