@@ -1,5 +1,5 @@
 /**
- * @(#)Controller.java  03/28/18.
+ * @(#)Controller.java 03/28/18.
  * Copyright (c) 2018 Jala Foundation.
  * Cochabamba, Bolivia.
  * Project Search for Prog102.
@@ -13,10 +13,8 @@ import com.fundation.search.model.SearchFiles;
 import com.fundation.search.view.MainView;
 import com.fundation.search.view.PanelNormalSearch;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
 /**
@@ -24,16 +22,18 @@ import java.util.List;
  * it will get values from view, then send to model,
  * get results from model and display in view.
  * For this release results are not displayed in view, just in console.
- * @version
- * 28 Mar 2018  * @Juan Manuel
+ *
+ * @version 28 Mar 2018  * @Juan Manuel
  */
 public class SearchController {
     private SearchFiles searchFile;
     private MainView mainView;
     private SearchCriteria searchCriteria;
+    private static final int START_COLUMN = 0;
 
     /**
      * Constructor for controller.
+     *
      * @param searchFile
      * @param mainView
      */
@@ -60,15 +60,19 @@ public class SearchController {
 
     /**
      * Method lambda to add action listener to button search.
+     *
      * @param panel
      */
     public void lambdaActionListener(PanelNormalSearch panel) {
-        if (areValidParams(panel.getPath(), panel.getName())) { ;
+        if (areValidParams(panel.getPath(), panel.getName())) {
+            ;
             sendSearchCriteriaToModel(panel.getPath(), panel.getName());
         }
     }
+
     /**
      * Method to validate each input.
+     *
      * @param path
      * @param name
      * @return
@@ -88,12 +92,12 @@ public class SearchController {
 
     /**
      * Method to set search criteria for Model and start search.
+     *
      * @param path
      * @param name
      */
     public void sendSearchCriteriaToModel(String path, String name) {
-        File filePath = new File(path);
-        searchCriteria.setPath(filePath);
+        searchCriteria.setPath(path);
         searchCriteria.setName(name);
         searchFile.setSearchCriteria(searchCriteria);
         searchFile.init();
@@ -105,9 +109,15 @@ public class SearchController {
      */
     public void setResultsToTable() {
         List<ResultFile> resultFileList = searchFile.getResultResultFiles();
+        PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
+        DefaultTableModel tableModel = panel.getTableModel();
         System.out.println("File Name\tFile Path\tHidden");
-        for (ResultFile rf : resultFileList) {
-            System.out.println(rf.getFileName() + "\t" + rf.getPath() + "\t" + rf.getHidden());
+
+        for (int i = 0; i < resultFileList.size(); i++) {
+            tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden()});
+            System.out.println(resultFileList.get(i).getFileName() + "\t" + resultFileList.get(i).getPath() + "\t" + resultFileList.get(i).getHidden());
         }
+        panel.setTableModel(tableModel);
+        panel.setTableResultModel();
     }
 }
