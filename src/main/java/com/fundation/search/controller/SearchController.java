@@ -13,11 +13,8 @@ import com.fundation.search.model.SearchFiles;
 import com.fundation.search.view.MainView;
 import com.fundation.search.view.PanelNormalSearch;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.List;
 
 /**
