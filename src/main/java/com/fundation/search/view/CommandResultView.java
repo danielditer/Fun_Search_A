@@ -1,20 +1,33 @@
+/**
+ * @(#)Controller.java  4/06/18.
+ * Copyright (c) 2018 Jala Foundation.
+ * Cochabamba, Bolivia.
+ * Project Search for Prog102.
+ */
 package com.fundation.search.view;
 
 import com.fundation.search.model.ResultFile;
-import com.fundation.search.model.SearchCriteria;
-import com.fundation.search.model.SearchFiles;
-
 import java.util.List;
 
+/**
+ * This class will display the search results, it is applied for command inputs.
+ * @version
+ * April, 6th 2018  * @Juan Manuel
+ */
 public class CommandResultView {
     private List<ResultFile> resultFileList;
 
-    public CommandResultView() {
-    }
-
+    /**
+     * Method to set resultFileList attribute.
+     * @param resultFileList this list contains the search results.
+     */
     public void setResultFileList(List<ResultFile> resultFileList) {
         this.resultFileList = resultFileList;
     }
+
+    /**
+     * Method to display search resultd in command line (cmd).
+     */
     public void printResults() {
         System.out.println("Search Results:");
         if (!resultFileList.isEmpty()) {
