@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  * Class to initialize panel for normal search tab.
+ *
  * @version 27 Mar 2018  * @Daniel Caballero.
  */
 public class PanelNormalSearch extends JPanel {
@@ -31,12 +32,9 @@ public class PanelNormalSearch extends JPanel {
     private JTextArea textAreaContent;
     private JCheckBox checkBoxCaseSensitive;
     private PanelDate panelDate;
-    private JPanel panelAttributes;
-    private JCheckBox checkBoxReadOnly;
-    private JCheckBox checkBoxHidden;
+    private PanelAttributes panelAttributes;
     private JPanel panelResultTable;
-    private JButton buttonSearch;
-    private JPanel panelButtonSearch;
+    private PanelButtonSearch panelButtonSearch;
     private JTable tableResult;
     private DefaultTableModel tableModel;
 
@@ -60,13 +58,10 @@ public class PanelNormalSearch extends JPanel {
         textAreaContent = new JTextArea();
         checkBoxCaseSensitive = new JCheckBox();
         panelDate = new PanelDate();
-        panelAttributes = new JPanel();
-        checkBoxReadOnly = new JCheckBox();
-        checkBoxHidden = new JCheckBox();
+        panelAttributes = new PanelAttributes();
         panelResultTable = new JPanel();
-        panelButtonSearch = new JPanel();
-        buttonSearch = new JButton();
-        tableResult = new JTable ();
+        panelButtonSearch = new PanelButtonSearch();
+        tableResult = new JTable();
 
         String columnNames[] = new String[]{"File Name", "File Path", "Hidden"};
 
@@ -75,7 +70,8 @@ public class PanelNormalSearch extends JPanel {
 
         setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED},
-                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
+                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
+                        TableLayout.PREFERRED}}));
         //======== panelNamePath ========
         add(panelNamePath, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
@@ -107,21 +103,9 @@ public class PanelNormalSearch extends JPanel {
         add(panelDate, new TableLayoutConstraints(0, 2, 0, 2,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //======== panelAttributes ========
-        panelAttributes.setBorder(new TitledBorder("Attributes"));
-        panelAttributes.setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
-                {TableLayout.PREFERRED}}));
-        //---- checkBoxReadOnly ----
-        checkBoxReadOnly.setText("Read-only");
-        panelAttributes.add(checkBoxReadOnly, new TableLayoutConstraints(0, 0, 0, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        //---- checkBoxHidden ----
-        checkBoxHidden.setText("Hidden");
-        panelAttributes.add(checkBoxHidden, new TableLayoutConstraints(2, 0, 2, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         final int constraints1 = 3;
-        //add(panelAttributes, new TableLayoutConstraints(0, constraints1, 0, constraints1,
-        //        TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        add(panelAttributes, new TableLayoutConstraints(0, constraints1, 0, constraints1,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         /**
          * Panel for results table
@@ -137,35 +121,26 @@ public class PanelNormalSearch extends JPanel {
         JScrollPane scrollPane = new JScrollPane(tableResult);
         panelResultTable.add(scrollPane, new TableLayoutConstraints(1, 0, 1, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        add(panelResultTable, new TableLayoutConstraints(0, 3, 0, 3,
+        add(panelResultTable, new TableLayoutConstraints(0, 4, 0, 4,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //======== panelButtonSearch ========
-        panelButtonSearch.setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
-                        TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
-                        TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
-                        TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
-                        TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
-                {TableLayout.PREFERRED}}));
-        //---- buttonSearch ----
-        buttonSearch.setText("Search");
-        panelButtonSearch.add(buttonSearch, new TableLayoutConstraints(0, 0, 0, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        add(panelButtonSearch, new TableLayoutConstraints(1, 2, 1, 2,
+        add(panelButtonSearch, new TableLayoutConstraints(1, 4, 1, 4,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
     }
 
     /**
      * Getter for the search button.
+     *
      * @return ´buttonSearch´ button.
      */
     public JButton getButtonSearch() {
-        return buttonSearch;
+        return panelButtonSearch.getButtonSearch();
     }
 
     /**
      * Getter for the path.
+     *
      * @return the String of ´textFieldPath´ text field.
      */
     public String getPath() {
@@ -174,6 +149,7 @@ public class PanelNormalSearch extends JPanel {
 
     /**
      * Getter for the file name.
+     *
      * @return the String of ´textFieldName´ text field.
      */
     public String getName() {
@@ -182,6 +158,7 @@ public class PanelNormalSearch extends JPanel {
 
     /**
      * Getter for the controller to get model for the result table.
+     *
      * @return tableModel, which is the model for the table.
      */
     public DefaultTableModel getTableModel() {
@@ -190,6 +167,7 @@ public class PanelNormalSearch extends JPanel {
 
     /**
      * Setter for the controller to set model filled with results.
+     *
      * @param model, the TableModel filled with results.
      */
     public void setTableModel(DefaultTableModel model) {
