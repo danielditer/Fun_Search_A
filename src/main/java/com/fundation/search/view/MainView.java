@@ -30,7 +30,7 @@ public class MainView extends JFrame {
     private JTabbedPane tabbedPane;
     private JPanel panelMultimediaSearch;
     private JPanel panelTerminalSearch;
-    private JPanel panelTabbedPane;
+    //private JPanel panelTabbedPane;
     private PanelNormalSearch panelNormalSearch;
     /**
      * MainView constructor.
@@ -52,13 +52,15 @@ public class MainView extends JFrame {
         panelNormalSearch = new PanelNormalSearch();
         panelMultimediaSearch = new JPanel();
         panelTerminalSearch = new JPanel();
-        panelTabbedPane = new JPanel();
+        //panelTabbedPane = new JPanel();
         //======== this ========
         Container contentPane = getContentPane();
-        contentPane.setLayout(new MigLayout(
+        contentPane.setLayout(new BorderLayout());
+        /*contentPane.setLayout(new MigLayout(
                 "hidemode 3",
                 "[fill]" + "[fill]",
-                "[]" + "[]" + "[]"));
+                "[]" + "[]" + "[]"));*/
+        contentPane.setSize(500, 500);
         //======== menuBar ========
         //======== menuFile ========
         menuFile.setText("File");
@@ -87,11 +89,14 @@ public class MainView extends JFrame {
         tabbedPane.addTab("Terminal Search", panelTerminalSearch);
         contentPane.add(tabbedPane, BorderLayout.CENTER);
         //======== panelTabbedPane ========
-        panelTabbedPane.setLayout(new BorderLayout());
-        contentPane.add(panelTabbedPane, BorderLayout.CENTER);
+        //panelTabbedPane.setLayout(new BorderLayout());
+        //contentPane.add(panelTabbedPane, BorderLayout.CENTER);
         setVisible(true);
         pack();
         setLocationRelativeTo(getOwner());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(650,500);
+        setResizable(false);
     }
 
     /**
