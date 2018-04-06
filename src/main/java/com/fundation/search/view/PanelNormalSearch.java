@@ -24,6 +24,7 @@ import javax.swing.table.TableModel;
 
 
 /**
+ * Class to initialize panel for normal search tab.
  * @version 27 Mar 2018  * @Daniel Caballero.
  */
 public class PanelNormalSearch extends JPanel {
@@ -45,12 +46,11 @@ public class PanelNormalSearch extends JPanel {
 
 
     /**
-     * Class constructor.
+     * Class constructor to initialize components and set visible this panel.
      */
     public PanelNormalSearch() {
         initComponents();
         setVisible(true);
-
     }
 
     /**
