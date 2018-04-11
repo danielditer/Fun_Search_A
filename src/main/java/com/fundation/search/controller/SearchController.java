@@ -56,7 +56,7 @@ public class SearchController implements Controller {
      */
     public void getActionPerformed() {
         PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
-        panel.getButtonSearch().addActionListener(e -> lambdaActionListener(panel));
+        panel.getButtonSearch().addActionListener(e -> searchButtonActionListener(panel));
     }
 
     /**
@@ -64,9 +64,8 @@ public class SearchController implements Controller {
      *
      * @param panel
      */
-    public void lambdaActionListener(PanelNormalSearch panel) {
+    public void searchButtonActionListener(PanelNormalSearch panel) {
         if (areValidParams(panel.getPath(), panel.getName())) {
-            ;
             sendSearchCriteriaToModel(panel.getPath(), panel.getName());
         }
     }
