@@ -6,8 +6,11 @@
  */
 package com.fundation.search;
 
+import com.fundation.search.controller.CommandController;
+import com.fundation.search.controller.Controller;
 import com.fundation.search.controller.SearchController;
 import com.fundation.search.model.SearchFiles;
+import com.fundation.search.view.CommandResultView;
 import com.fundation.search.view.MainView;
 
 /**
@@ -18,12 +21,18 @@ import com.fundation.search.view.MainView;
 public class Main {
     /**
      * Method main to run project.
-     * @param args
+     * @param args, commands as an input to search files
      */
     public static void main (String[] args) {
+        Controller controller;
         SearchFiles searchFile = new SearchFiles();
-        MainView mainView = new MainView();
-        SearchController searchController = new SearchController(searchFile, mainView);
-        searchController.init();
+        if (args.length > 0) {
+            CommandResultView commandResultView = new CommandResultView();
+            controller = new CommandController(searchFile, commandResultView, args);
+        } else {
+            MainView mainView = new MainView();
+            controller = new SearchController(searchFile, mainView);
+        }
+        controller.init();
     }
 }
