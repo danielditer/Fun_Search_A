@@ -6,7 +6,6 @@
  */
 package com.fundation.search.controller;
 
-import com.fundation.search.model.SearchFiles;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,14 +17,14 @@ import static org.junit.Assert.assertEquals;
  * @version
  * 28 Mar 2018  * @Maria Canqui
  */
-public class CommandExecutorTest {
-    private CommandExecutor comex;
+public class CommandControllerTest {
+    private CommandController comex;
     /**
-     * * initialize CommandExecutor.
+     * * initialize CommandController.
      * */
     @Before
     public void initialize() {
-        comex = new CommandExecutor();
+        comex = new CommandController();
     }
     /**
      * the searchFileCommandName method provide a test for the command -n name and -p path.

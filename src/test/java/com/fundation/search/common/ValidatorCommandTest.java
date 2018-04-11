@@ -14,7 +14,7 @@ import static org.junit.Assert.assertFalse;
 public class ValidatorCommandTest {
     private ValidatorCommand valcom;
     /**
-     * * initialize CommandExecutor.
+     * * initialize CommandController.
      * */
     @Before
     public void initialize() {
