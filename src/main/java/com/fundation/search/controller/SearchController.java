@@ -25,7 +25,7 @@ import java.util.List;
  *
  * @version 28 Mar 2018  * @Juan Manuel
  */
-public class SearchController {
+public class SearchController implements Controller {
     private SearchFiles searchFile;
     private MainView mainView;
     private SearchCriteria searchCriteria;
@@ -45,6 +45,7 @@ public class SearchController {
     /**
      * Method to initialize all controller methods.
      */
+    @Override
     public void init() {
         searchCriteria = new SearchCriteria();
         getActionPerformed();
@@ -121,3 +122,4 @@ public class SearchController {
         panel.setTableResultModel();
     }
 }
+
