@@ -32,10 +32,9 @@ public class SearchController implements Controller {
     private static final int START_COLUMN = 0;
 
     /**
-     * Constructor for controller.
-     *
-     * @param searchFile
-     * @param mainView
+     * Constructor for controller
+     * @param searchFile is the model instance.
+     * @param mainView is the view UI instance.
      */
     public SearchController(SearchFiles searchFile, MainView mainView) {
         this.searchFile = searchFile;
@@ -61,8 +60,7 @@ public class SearchController implements Controller {
 
     /**
      * Method lambda to add action listener to button search.
-     *
-     * @param panel
+     * @param panel the panel(JPanel) where the button is placed.
      */
     public void searchButtonActionListener(PanelNormalSearch panel) {
         if (areValidParams(panel.getPath(), panel.getName())) {
@@ -72,10 +70,9 @@ public class SearchController implements Controller {
 
     /**
      * Method to validate each input.
-     *
-     * @param path
-     * @param name
-     * @return
+     * @param path is the file path the user fills in.
+     * @param name is the file name the user fills in.
+     * @return if both values are valid.
      */
     public boolean areValidParams(String path, String name) {
         Validator validator = new Validator();
@@ -92,9 +89,8 @@ public class SearchController implements Controller {
 
     /**
      * Method to set search criteria for Model and start search.
-     *
-     * @param path
-     * @param name
+     * @param path that will be added to search criteria object.
+     * @param name that will be added to search criteria object.
      */
     public void sendSearchCriteriaToModel(String path, String name) {
         searchCriteria.setPath(path);
