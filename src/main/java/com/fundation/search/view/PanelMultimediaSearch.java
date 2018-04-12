@@ -71,33 +71,11 @@ public class PanelMultimediaSearch extends JPanel{
         //======== this ========
         setLayout(new TableLayout(new double[][] {
                 {TableLayout.PREFERRED, TableLayout.PREFERRED},
-                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
+                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
 
         //======== panelNamePath ========
         add(panelNamePath, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-
-        //======== scrollPane1 ========
-        {
-
-            //======== panelResults ========
-            {
-                panelResults.setBorder(new TitledBorder("Results"));
-                panelResults.setLayout(new TableLayout(new double[][] {
-                        {TableLayout.PREFERRED},
-                        {TableLayout.PREFERRED}}));
-                ((TableLayout) panelResults.getLayout()).setHGap(5);
-                ((TableLayout) panelResults.getLayout()).setVGap(5);
-
-                //======== scrollPane2 ========
-                {
-                    scrollPane2.setViewportView(table1);
-                }
-                panelResults.add(scrollPane2, new TableLayoutConstraints(0, 0, 0, 0, TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-            }
-            scrollPane1.setViewportView(panelResults);
-        }
-        add(scrollPane1, new TableLayoutConstraints(1, 0, 1, 5, TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //======== panelDuration ========
         {
@@ -196,6 +174,6 @@ public class PanelMultimediaSearch extends JPanel{
 
         //======== panelButtonSearch ========
 
-        add(panelButtonSearch, new TableLayoutConstraints(1, 6, 1, 6, TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        add(panelButtonSearch, new TableLayoutConstraints(0, 7, 0, 7, TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
     }
 }

@@ -3,11 +3,14 @@ package com.fundation.search.view;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JButton;
 
 public class PanelButtonSearch extends JPanel {
 
     JButton buttonSearch = new JButton();
+    JButton buttonClear = new JButton();
+
 
     public PanelButtonSearch() {
         initComponents();
@@ -15,6 +18,9 @@ public class PanelButtonSearch extends JPanel {
 
     public void initComponents() {
         buttonSearch = new JButton();
+        buttonClear = new JButton();
+
+
         setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
                         TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
@@ -24,7 +30,12 @@ public class PanelButtonSearch extends JPanel {
                 {TableLayout.PREFERRED}}));
         //---- buttonSearch ----
         buttonSearch.setText("Search");
-        add(buttonSearch, new TableLayoutConstraints(0, 0, 0, 0,
+        buttonClear.setText("Clear");
+
+        add(buttonSearch, new TableLayoutConstraints(4, 0, 4, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
+        add(buttonClear, new TableLayoutConstraints(5, 0, 5, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
     }
 
