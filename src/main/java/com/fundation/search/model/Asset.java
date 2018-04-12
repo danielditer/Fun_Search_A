@@ -7,7 +7,7 @@
 package com.fundation.search.model;
 
 /**
- * Class to determine generic values and
+ * Class to determine generic objects.
  * @version April, 11th 2018  * @Manuel Valdez
  */
 public class Asset {
