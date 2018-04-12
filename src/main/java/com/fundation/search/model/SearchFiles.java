@@ -24,15 +24,17 @@ public class SearchFiles {
     /**
      * resultResultFiles is the attribute in which we are going to recover files depending the type of searching.
      */
-    private List<ResultFile> resultResultFiles;
+    private List<Asset> resultResultFiles;
     /**
      * arrayResultFiles is the array that is used for insert ResultFile objects inside of it.
      */
-    private List<ResultFile> arrayResultFiles;
+    private List<Asset> arrayResultFiles;
     /**
      * arrayCoincidences is the array in which all the search coincidences depending the method used, are going to be stored.
      */
-    private List<ResultFile> arrayCoincidences;
+    private List<Asset> arrayCoincidences;
+
+    private AssetFactory assetFactory;
 
     /**
      * Method to set searchCriteria attribute.
@@ -49,6 +51,7 @@ public class SearchFiles {
     public void init() {
         arrayResultFiles = new ArrayList<>();
         File filePath = new File(searchCriteria.getPath());
+        assetFactory = new AssetFactory();
         if (searchCriteria.getPath() != null) {
             resultResultFiles = recoverFiles(filePath, arrayResultFiles);
         }
@@ -62,7 +65,7 @@ public class SearchFiles {
      *
      * @return resultResultFiles is going to get the result files for the search controller.
      */
-    public List<ResultFile> getResultResultFiles() {
+    public List<Asset> getResultResultFiles() {
         return this.resultResultFiles;
     }
 
@@ -72,13 +75,13 @@ public class SearchFiles {
      * @param path is given in order to obtain all files of a path.
      * @return the array of Files object.
      */
-    private List<ResultFile> recoverFiles(File path, List<ResultFile> arrayResultFiles) {
+    private List<Asset> recoverFiles(File path, List<Asset> arrayResultFiles) {
         try {
             for (File fileEntry : path.listFiles()) {
                 if (fileEntry.isDirectory()) {
                     recoverFiles(fileEntry, arrayResultFiles);
                 } else {
-                    arrayResultFiles.add(new ResultFile(fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden()));
+                    arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0));
                 }
             }
         } catch (NullPointerException e) {
@@ -93,9 +96,9 @@ public class SearchFiles {
      * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case visible files.
      */
-    private List<ResultFile> searchAllFiles(List<ResultFile> arrayResultFiles) {
+    private List<Asset> searchAllFiles(List<Asset> arrayResultFiles) {
         arrayCoincidences = new ArrayList<>();
-        for (ResultFile fileEntry : arrayResultFiles) {
+        for (Asset fileEntry : arrayResultFiles) {
             if (!fileEntry.getHidden()) {
                 arrayCoincidences.add(fileEntry);
             }
@@ -109,9 +112,9 @@ public class SearchFiles {
      * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case fileName coincidences.
      */
-    private List<ResultFile> searchFile(List<ResultFile> arrayResultFiles) {
+    private List<Asset> searchFile(List<Asset> arrayResultFiles) {
         arrayCoincidences = new ArrayList<>();
-        for (ResultFile fileEntry : arrayResultFiles) {
+        for (Asset fileEntry : arrayResultFiles) {
             if (fileEntry.getFileName().contains(searchCriteria.getName())) {
                 arrayCoincidences.add(fileEntry);
             }
@@ -125,9 +128,9 @@ public class SearchFiles {
      * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
-    private List<ResultFile> searchHiddenFiles(List<ResultFile> arrayResultFiles) {
+    private List<Asset> searchHiddenFiles(List<Asset> arrayResultFiles) {
         arrayCoincidences = new ArrayList<>();
-        for (ResultFile fileEntry : arrayResultFiles) {
+        for (Asset fileEntry : arrayResultFiles) {
             if (fileEntry.getHidden()) {
                 arrayCoincidences.add(fileEntry);
             }
