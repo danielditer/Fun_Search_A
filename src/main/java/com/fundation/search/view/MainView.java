@@ -6,7 +6,9 @@
  */
 package com.fundation.search.view;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Container;
+import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.JMenu;
@@ -62,10 +64,7 @@ public class MainView extends JFrame {
         //======== this ========
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
-        /*contentPane.setLayout(new MigLayout(
-                "hidemode 3",
-                "[fill]" + "[fill]",
-                "[]" + "[]" + "[]"));*/
+
         contentPane.setSize(50, 600);
         //======== menuBar ========
         //======== menuFile ========
@@ -87,11 +86,7 @@ public class MainView extends JFrame {
         tabbedPane.addTab("Normal Search", panelNormalSearch);
         //======== panelMultimediaSearch ========
         tabbedPane.addTab("Multimedia Search", panelMultimediaSearch);
-        //======== panelTerminalSearch ========
-       /* panelTerminalSearch.setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED, TableLayout.PREFERRED},
-                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));*/
-        //tabbedPane.addTab("Terminal Search", panelTerminalSearch);
+
         contentPane.add(tabbedPane, BorderLayout.CENTER);
         //======== panelTabbedPane ========
         //panelTabbedPane.setLayout(new BorderLayout());
