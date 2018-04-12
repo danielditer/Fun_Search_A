@@ -79,4 +79,39 @@ public class PanelDate extends JPanel {
         add(formattedTextFieldEnd, new TableLayoutConstraints(constraints2, 1, constraints2, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
     }
+    /**
+     * Getter for the created date checkbox.
+     * @return the boolean of ´checkBoxCreated´ checkbox.
+     */
+    public boolean getCheckBoxCreated() {
+        return checkBoxCreated.isSelected();
+    }
+    /**
+     * Getter for the las modified checkbox.
+     * @return the boolean of ´checkBoxModified´ checkbox.
+     */
+    public boolean getCheckBoxModified() {
+        return checkBoxModified.isSelected();
+    }
+    /**
+     * Getter for the last accessed checkbox.
+     * @return the boolean of ´checkBoxAccessed´ checkbox.
+     */
+    public boolean getCheckBoxAccessed() {
+        return checkBoxAccessed.isSelected();
+    }
+    /**
+     * Getter for the start date.
+     * @return the boolean of ´formattedTextFieldStart´ checkbox.
+     */
+    public String getFormattedTextFieldStart() {
+        return formattedTextFieldStart.getText();
+    }
+    /**
+     * Getter for the en date.
+     * @return the boolean of ´formattedTextFieldEnd´ checkbox.
+     */
+    public String getFormattedTextFieldEnd() {
+        return formattedTextFieldEnd.getText();
+    }
 }

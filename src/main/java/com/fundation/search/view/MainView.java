@@ -6,6 +6,7 @@
  */
 package com.fundation.search.view;
 
+import java.awt.Dimension;
 import java.awt.Container;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
@@ -13,6 +14,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
 import info.clearthought.layout.TableLayout;
 import net.miginfocom.swing.MigLayout;
 
@@ -30,8 +33,10 @@ public class MainView extends JFrame {
     private JTabbedPane tabbedPane;
     private JPanel panelMultimediaSearch;
     private JPanel panelTerminalSearch;
+    private JPanel panelResults;
     //private JPanel panelTabbedPane;
     private PanelNormalSearch panelNormalSearch;
+    private PanelSearchResults panelSearchResult;
     /**
      * MainView constructor.
      */
@@ -50,17 +55,17 @@ public class MainView extends JFrame {
         menuHelp = new JMenu();
         tabbedPane = new JTabbedPane();
         panelNormalSearch = new PanelNormalSearch();
+        panelSearchResult = new PanelSearchResults();
         panelMultimediaSearch = new PanelMultimediaSearch();
-        panelTerminalSearch = new JPanel();
+        //panelTerminalSearch = new JPanel();
+
+        panelResults = new JPanel();
         //panelTabbedPane = new JPanel();
         //======== this ========
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
-        /*contentPane.setLayout(new MigLayout(
-                "hidemode 3",
-                "[fill]" + "[fill]",
-                "[]" + "[]" + "[]"));*/
-        contentPane.setSize(600, 600);
+
+        contentPane.setSize(50, 600);
         //======== menuBar ========
         //======== menuFile ========
         menuFile.setText("File");
@@ -75,15 +80,13 @@ public class MainView extends JFrame {
         menuHelp.setText("Help");
         menuBar.add(menuHelp);
         setJMenuBar(menuBar);
+
+        tabbedPane.setPreferredSize(new Dimension(280, 460));
         //======== panelNormalSearch ========
         tabbedPane.addTab("Normal Search", panelNormalSearch);
         //======== panelMultimediaSearch ========
         tabbedPane.addTab("Multimedia Search", panelMultimediaSearch);
-        //======== panelTerminalSearch ========
-        panelTerminalSearch.setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED, TableLayout.PREFERRED},
-                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
-        tabbedPane.addTab("Terminal Search", panelTerminalSearch);
+
         contentPane.add(tabbedPane, BorderLayout.CENTER);
         //======== panelTabbedPane ========
         //panelTabbedPane.setLayout(new BorderLayout());
@@ -92,14 +95,26 @@ public class MainView extends JFrame {
         pack();
         setLocationRelativeTo(getOwner());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(780,560);
+        setSize(725,470);
         setResizable(false);
+
+        panelResults.add(panelSearchResult);
+        panelResults.setBorder(new EmptyBorder(10,390,10,100));
+        contentPane.add(panelResults, BorderLayout.CENTER);
+
     }
 
     /**
-     * @return the Panel ´panelNormalSearch´.
+     * @return the Panel ´panelNormalSerch´.
      */
     public JPanel getPanel() {
         return panelNormalSearch;
+    }
+
+    /**
+     * @return the Panel ´panelNormalSerch´.
+     */
+    public JPanel getPanelResultList() {
+        return panelSearchResult;
     }
 }
