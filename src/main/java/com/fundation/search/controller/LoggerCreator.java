@@ -1,71 +1,66 @@
+/**
+ * @(#)LoggerCreator.java 04/13/18.
+ * Copyright (c) 2018 Jala Foundation.
+ * Cochabamba, Bolivia.
+ * Project Search for Prog102.
+ */
 package com.fundation.search.controller;
 
-import java.io.IOException;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Handler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
- * Class LoggerCreator to register events of the programm.
+ * Class LoggerCreator to register events of the program.
+ * @version
+ * April 13 2018  * @Daniel Caballero
  */
 public class LoggerCreator {
-
-    private static final Logger LOGGER = Logger.getLogger(LoggerCreator.class.getName());
-    private String action;
+    public static final int DEBUG = 1;
+    public static final int INFO = 2;
+    public static final int WARN = 3;
+    public static final int ERROR = 4;
     private static LoggerCreator logInstance;
+    private static final Logger LOGGER = Logger.getLogger(LoggerCreator.class.getName());
 
     /**
-     * Constructor LoggerCreator.
-     *
-     * @param action the action executed.
+     * Class constructor.
      */
-    private LoggerCreator(String action) {
-        this.action = action;
+    public LoggerCreator() {
+        BasicConfigurator.configure();
     }
 
     /**
-     * Method getInstance to determina if exists an instance.
-     *
-     * @param action the action executed.
+     * @return the instance of Logger.
      */
-    public static LoggerCreator getInstance(String action) {
+    public static LoggerCreator getInstance() {
         if (logInstance == null) {
-            logInstance = new LoggerCreator(action);
+            logInstance = new LoggerCreator();
         }
         return logInstance;
     }
 
     /**
-     * Method setLog to insert information in searchFiles log.
+     * @param logLevel
+     * @param logContent
      */
-    public void setLog() {
-        Handler consoleHandler = null;
-        Handler fileHandler = null;
-        SimpleFormatter formatter = new SimpleFormatter();
-        try {
-            consoleHandler = new ConsoleHandler();
-            fileHandler = new FileHandler("./searchFiles.log");
-            LOGGER.addHandler(consoleHandler);
-            LOGGER.addHandler(fileHandler);
-            fileHandler.setFormatter(formatter);
-            consoleHandler.setLevel(Level.ALL);
-            fileHandler.setLevel(Level.ALL);
-            LOGGER.setLevel(Level.ALL);
-            LOGGER.info(getAction());
-        } catch (IOException exception) {
-            LOGGER.log(Level.SEVERE, "Error ", exception);
+    public void writeLog(int logLevel, String logContent) {
+        switch (logLevel) {
+            case DEBUG:
+                LOGGER.debug(logContent);
+                break;
+            case INFO:
+                LOGGER.info(logContent);
+                break;
+            case WARN:
+                LOGGER.warn(logContent);
+                break;
+            case ERROR:
+                LOGGER.error(logContent);
+                break;
+            default:
+                System.out.println("error log level for WriteLog error");
+                break;
         }
     }
-
-    /**
-     * Method getAction to get the action of the constructor.
-     *
-     * @return a string with the action description.
-     */
-    public String getAction() {
-        return action;
-    }
 }
+
