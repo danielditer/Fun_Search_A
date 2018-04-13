@@ -2,17 +2,19 @@ package com.fundation.search.common;
 
 /**
  * Class ValidatorCommand to validate commands introduced by the user.
- * @version
- * 29 Mar 2018  * @Maria Canqui
+ *
+ * @version 29 Mar 2018  * @Maria Canqui
  */
 public class ValidatorCommand {
     private static final String FIRST_WORD = "java";
     private static final String SECOND_WORD = "search";
     private static final String INI_COMMAND = "-";
     private static final int SIZE_COMMAND = 2;
-    private static final String[] COMMANDS = {"-p", "-n"};
+    private static final String[] COMMANDS = {"-p", "-n", "-h"};
+
     /**
      * Method to validate the two first words of the command.
+     *
      * @param command file name.
      * @return boolean value is valid.
      */
@@ -29,6 +31,7 @@ public class ValidatorCommand {
 
     /**
      * Method to validate if the command is followed by an argument.
+     *
      * @param command file name.
      * @return boolean value is valid.
      */
@@ -46,11 +49,12 @@ public class ValidatorCommand {
 
     /**
      * Method to validate if the command is followed by an argument.
+     *
      * @param command file name.
      * @return boolean value is valid.
      */
     public boolean containAValidCommand(String command) {
-        for (String singleCommand: COMMANDS) {
+        for (String singleCommand : COMMANDS) {
             if (command.contains(singleCommand) && command.length() == SIZE_COMMAND) {
                 return false;
             }
