@@ -34,6 +34,9 @@ public class SearchFiles {
      */
     private List<Asset> arrayCoincidences;
 
+    /**
+     * Object to create asset objects (files, multimedia, directory).
+     */
     private AssetFactory assetFactory;
 
     /**
@@ -55,9 +58,12 @@ public class SearchFiles {
         if (searchCriteria.getPath() != null) {
             resultResultFiles = recoverFiles(filePath, arrayResultFiles);
         }
-        if (searchCriteria.getName() != null) {
-            resultResultFiles = searchFile(resultResultFiles);
+        if (!searchCriteria.getName().isEmpty()) {
+            resultResultFiles = searchFile(resultResultFiles, searchCriteria.getNameFileCaseSensitive());
         }
+        resultResultFiles = searchHiddenFiles(resultResultFiles, searchCriteria.getHidden());
+        resultResultFiles = searchReadOnlyFiles(resultResultFiles, searchCriteria.getReadOnly());
+        resultResultFiles = searchFilesOrDirectoriesOnly(resultResultFiles, searchCriteria.getTypeFile());
     }
 
     /**
@@ -75,13 +81,14 @@ public class SearchFiles {
      * @param path is given in order to obtain all files of a path.
      * @return the array of Files object.
      */
-    private List<Asset> recoverFiles(File path, List<Asset> arrayResultFiles) {
+    public List<Asset> recoverFiles(File path, List<Asset> arrayResultFiles) {
         try {
             for (File fileEntry : path.listFiles()) {
                 if (fileEntry.isDirectory()) {
                     recoverFiles(fileEntry, arrayResultFiles);
+                    arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3));
                 } else {
-                    arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0));
+                    arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1));
                 }
             }
         } catch (NullPointerException e) {
@@ -112,11 +119,20 @@ public class SearchFiles {
      * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case fileName coincidences.
      */
-    private List<Asset> searchFile(List<Asset> arrayResultFiles) {
+    private List<Asset> searchFile(List<Asset> arrayResultFiles, boolean nameFileCaseSensitive) {
         arrayCoincidences = new ArrayList<>();
         for (Asset fileEntry : arrayResultFiles) {
-            if (fileEntry.getFileName().contains(searchCriteria.getName())) {
+            /*if (fileEntry.getFileName().contains(searchCriteria.getName())) {
                 arrayCoincidences.add(fileEntry);
+            }*/
+            if (nameFileCaseSensitive) {
+                if (fileEntry.getFileName().equals(searchCriteria.getName())) {
+                    arrayCoincidences.add(fileEntry);
+                }
+            } else {
+                if (fileEntry.getFileName().equalsIgnoreCase(searchCriteria.getName())) {
+                    arrayCoincidences.add(fileEntry);
+                }
             }
         }
         return arrayCoincidences;
@@ -128,10 +144,69 @@ public class SearchFiles {
      * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
-    private List<Asset> searchHiddenFiles(List<Asset> arrayResultFiles) {
+    public List<Asset> searchHiddenFiles(List<Asset> arrayResultFiles, boolean searchHidden) {
         arrayCoincidences = new ArrayList<>();
         for (Asset fileEntry : arrayResultFiles) {
-            if (fileEntry.getHidden()) {
+            if (searchHidden) {
+                if (fileEntry.getHidden()) {
+                    arrayCoincidences.add(fileEntry);
+                }
+            } else {
+                if (!fileEntry.getHidden()) {
+                    arrayCoincidences.add(fileEntry);
+                }
+            }
+        }
+        return arrayCoincidences;
+    }
+
+    /**
+     * Method to search only files read only or not.
+     * @param arrayResultFiles array of Assets.
+     * @param readOnly search criteria value.
+     * @return the array of coincidences, in this case hidden file coincidences.
+     */
+    public List<Asset> searchReadOnlyFiles(List<Asset> arrayResultFiles, boolean readOnly) {
+        arrayCoincidences = new ArrayList<>();
+        for (Asset fileEntry : arrayResultFiles) {
+            if (readOnly) {
+                if (fileEntry.getReadOnly()) {
+                    arrayCoincidences.add(fileEntry);
+                }
+            } else {
+                if (!fileEntry.getReadOnly()) {
+                    arrayCoincidences.add(fileEntry);
+                }
+            }
+        }
+        return arrayCoincidences;
+    }
+
+    /**
+     * Method to search only files or directories or all of them.
+     * @param arrayResultFiles array of Assets.
+     * @param typeFile search criteria value.
+     * @return the array of coincidences, in this case hidden file coincidences.
+     */
+    public List<Asset> searchFilesOrDirectoriesOnly(List<Asset> arrayResultFiles, int typeFile) {
+        arrayCoincidences = new ArrayList<>();
+        for (Asset fileEntry : arrayResultFiles) {
+            if (typeFile == 1) { /**when typeFile is 1 we want to look only for files (.txt, .docx, .exe, etc)*/
+                if (fileEntry instanceof ResultFile) {
+                    arrayCoincidences.add(fileEntry);
+                }
+            }
+            if (typeFile == 2) { /**when typeFile is 2 we want to look only for multimedia files (.mp3, .mp4, etc)*/
+                if (fileEntry instanceof ResultMultimediaFile) {
+                    arrayCoincidences.add(fileEntry);
+                }
+            }
+            if (typeFile == 3) { /**when typeFile is 3 we want to look only for directories*/
+                if (fileEntry instanceof ResultDirectory) {
+                    arrayCoincidences.add(fileEntry);
+                }
+            }
+            if (typeFile == 0) { /**when typeFile is 0 we look for all type of files*/
                 arrayCoincidences.add(fileEntry);
             }
         }

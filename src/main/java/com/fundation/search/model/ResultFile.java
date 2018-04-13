@@ -18,7 +18,7 @@ public class ResultFile extends Asset {
      * @param fileName is the file name of files.
      * @param hidden   is the hidden state of files.
      */
-    public ResultFile(String path, String fileName, boolean hidden) {
-        super(path, fileName, hidden);
+    public ResultFile(String path, String fileName, boolean hidden, boolean readOnly, int typeFile) {
+        super(path, fileName, hidden, readOnly, typeFile);
     }
 }
