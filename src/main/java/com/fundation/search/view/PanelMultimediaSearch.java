@@ -15,7 +15,7 @@ import javax.swing.border.TitledBorder;
 /**
  * Class that creates a panel in Multimedia Search tab.
  *
- * @version 27 Mar 2018  * @Daniel Caballero.
+ * @version Apr 13 2018  * @Daniel Caballero.
  */
 public class PanelMultimediaSearch extends JPanel {
     private JPanel panelNamePath;
@@ -40,10 +40,16 @@ public class PanelMultimediaSearch extends JPanel {
     private PanelButtonSearch panelButtonSearch;
     private PanelAttributes panelAttributes;
 
+    /**
+     * Class constructor.
+     */
     public PanelMultimediaSearch() {
         initComponents();
     }
 
+    /**
+     * Initializes the components.
+     */
     private void initComponents() {
         panelNamePath = new PanelNamePath();
         panelDuration = new JPanel();
