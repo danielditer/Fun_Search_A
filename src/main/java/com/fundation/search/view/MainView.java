@@ -34,9 +34,13 @@ public class MainView extends JFrame {
     private JPanel panelMultimediaSearch;
     private JPanel panelTerminalSearch;
     private JPanel panelResults;
+    private JPanel panelSearchCrit;
+    private JPanel panelSaveCrit;
     //private JPanel panelTabbedPane;
     private PanelNormalSearch panelNormalSearch;
     private PanelSearchResults panelSearchResult;
+    private PanelSearchCriterial panelSearchCriterial;
+    private PanelSaveCriterial panelSaveCriterial;
     /**
      * MainView constructor.
      */
@@ -57,9 +61,13 @@ public class MainView extends JFrame {
         panelNormalSearch = new PanelNormalSearch();
         panelSearchResult = new PanelSearchResults();
         panelMultimediaSearch = new PanelMultimediaSearch();
+        panelSearchCriterial = new PanelSearchCriterial();
+        panelSaveCriterial = new PanelSaveCriterial();
         //panelTerminalSearch = new JPanel();
 
         panelResults = new JPanel();
+        panelSearchCrit = new JPanel();
+        panelSaveCrit = new JPanel();
         //panelTabbedPane = new JPanel();
         //======== this ========
         Container contentPane = getContentPane();
@@ -89,18 +97,26 @@ public class MainView extends JFrame {
 
         contentPane.add(tabbedPane, BorderLayout.CENTER);
         //======== panelTabbedPane ========
-        //panelTabbedPane.setLayout(new BorderLayout());
-        //contentPane.add(panelTabbedPane, BorderLayout.CENTER);
         setVisible(true);
         pack();
         setLocationRelativeTo(getOwner());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(725,470);
+        setSize(725,520);
         setResizable(false);
 
+        //======== panel Search Criterial ========
+        panelSearchCrit.add(panelSearchCriterial);
+        panelSearchCrit.setBorder(new EmptyBorder(10,390,10,100));
+        contentPane.add(panelSearchCrit, BorderLayout.NORTH);
+
+        //======== panel Search Results ========
         panelResults.add(panelSearchResult);
-        panelResults.setBorder(new EmptyBorder(10,390,10,100));
+        panelResults.setBorder(new EmptyBorder(5,390,10,100));
         contentPane.add(panelResults, BorderLayout.CENTER);
+        //======== panel Search Results ========
+        panelSaveCrit.add(panelSaveCriterial);
+        panelSaveCrit.setBorder(new EmptyBorder(5,390,10,100));
+        contentPane.add(panelSaveCrit, BorderLayout.SOUTH);
 
     }
 
@@ -116,5 +132,22 @@ public class MainView extends JFrame {
      */
     public JPanel getPanelResultList() {
         return panelSearchResult;
+    }
+
+    /**
+     * Getter for the search criterial panel.
+     *
+     * @return ta boolean of ´panelSearchCriterial´ panel.
+     */
+    public JPanel getPanelSearchCriterial() {
+        return panelSearchCriterial;
+    }
+    /**
+     * Getter for the save criterial panel.
+     *
+     * @return ta boolean of ´panelSaveCriterial´ panel.
+     */
+    public JPanel getPanelSaveCriterial() {
+        return panelSaveCriterial;
     }
 }
