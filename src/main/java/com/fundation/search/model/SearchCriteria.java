@@ -32,6 +32,8 @@ public class SearchCriteria {
      * Attribute which type of file (file -> 1, directory -> 2, multimedia -> 3)*/
     private int typeFile;
 
+    /**
+     * Attribute to know if name is case sensitive or not*/
     private boolean nameFileCaseSensitive;
 
     /**
@@ -113,10 +115,18 @@ public class SearchCriteria {
         return this.readOnly;
     }
 
+    /**
+     * Getter for type file attribute.
+     * @return type file attribute.
+     */
     public int getTypeFile() {
         return this.typeFile;
     }
 
+    /**
+     * Getter for name file case sensitive.
+     * @return name file case sensitive.
+     */
     public boolean getNameFileCaseSensitive() {
         return this.nameFileCaseSensitive;
     }

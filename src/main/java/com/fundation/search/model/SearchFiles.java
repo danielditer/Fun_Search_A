@@ -160,6 +160,12 @@ public class SearchFiles {
         return arrayCoincidences;
     }
 
+    /**
+     * Method to search only files read only or not.
+     * @param arrayResultFiles array of Assets.
+     * @param readOnly search criteria value.
+     * @return the array of coincidences, in this case hidden file coincidences.
+     */
     public List<Asset> searchReadOnlyFiles(List<Asset> arrayResultFiles, boolean readOnly) {
         arrayCoincidences = new ArrayList<>();
         for (Asset fileEntry : arrayResultFiles) {
@@ -176,6 +182,12 @@ public class SearchFiles {
         return arrayCoincidences;
     }
 
+    /**
+     * Method to search only files or directories or all of them.
+     * @param arrayResultFiles array of Assets.
+     * @param typeFile search criteria value.
+     * @return the array of coincidences, in this case hidden file coincidences.
+     */
     public List<Asset> searchFilesOrDirectoriesOnly(List<Asset> arrayResultFiles, int typeFile) {
         arrayCoincidences = new ArrayList<>();
         for (Asset fileEntry : arrayResultFiles) {
