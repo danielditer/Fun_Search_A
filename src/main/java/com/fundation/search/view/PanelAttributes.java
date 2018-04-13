@@ -17,7 +17,11 @@ import javax.swing.JTextField;
 
 import javax.swing.border.TitledBorder;
 import java.awt.Dimension;
-
+/**
+ * Class PanelAttributes that contains elements of the attributes panel for the normal search files.
+ *
+ * @version 27 Mar 2018  * @Daniel Caballero.
+ */
 public class PanelAttributes extends JPanel{
     private JCheckBox checkBoxReadOnly;
     private JCheckBox checkBoxReadOnlyNo;
