@@ -6,7 +6,10 @@
  */
 package com.fundation.search.view;
 
-import com.fundation.search.model.ResultFile;
+import com.fundation.search.model.Asset;
+import dnl.utils.text.table.TextTable;
+import javafx.scene.control.cell.TextFieldTableCell;
+
 import java.util.List;
 
 /**
@@ -15,13 +18,13 @@ import java.util.List;
  * April, 6th 2018  * @Juan Manuel
  */
 public class CommandResultView {
-    private List<ResultFile> resultFileList;
+    private List<Asset> resultFileList;
 
     /**
      * Method to set resultFileList attribute.
      * @param resultFileList this list contains the search results.
      */
-    public void setResultFileList(List<ResultFile> resultFileList) {
+    public void setResultFileList(List<Asset> resultFileList) {
         this.resultFileList = resultFileList;
     }
 
@@ -32,15 +35,24 @@ public class CommandResultView {
         System.out.println("Search Results:");
         if (!resultFileList.isEmpty()) {
             String[] tableTitles = {"File Name", "File Path", "Hidden"};
-            for (String titles : tableTitles) {
-                System.out.print(String.format("%s%s", titles, "\t"));
-            }
+//            for (String titles : tableTitles) {
+//                System.out.print(String.format("%s%s", titles, "\t"));
+//            }
 
-            for (ResultFile results : resultFileList) {
-                System.out.print(String.format("%s%s%s", "\n", results.getFileName(), "\t"));
-                System.out.print(String.format("%s%s", results.getFileName(), "\t"));
-                System.out.print(results.getFileName());
+//            for (Asset results : resultFileList) {
+//                System.out.print(String.format("%s%s%s", "\n", results.getFileName(), "\t"));
+//                System.out.print(String.format("%s%s", results.getPath(), "\t"));
+//                System.out.print(results.getHidden());
+//            }
+            Object[][] values = new Object[10][];
+
+            for (int i = 0; i < resultFileList.size(); i++) {
+
+                    values = new Object[][] {resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden()};
+
             }
+            TextTable tt = new TextTable(tableTitles, values);
+            tt.printTable();
         }
     }
 

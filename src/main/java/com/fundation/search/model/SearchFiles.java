@@ -58,6 +58,9 @@ public class SearchFiles {
         if (searchCriteria.getName() != null) {
             resultResultFiles = searchFile(resultResultFiles);
         }
+        if (searchCriteria.getHidden()) {
+            resultResultFiles = searchHiddenFiles(resultResultFiles);
+        }
     }
 
     /**
