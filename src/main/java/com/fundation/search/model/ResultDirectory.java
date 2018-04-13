@@ -18,7 +18,7 @@ public class ResultDirectory extends Asset {
      * @param fileName
      * @param hidden
      */
-    public ResultDirectory(String path, String fileName, boolean hidden) {
-        super(path, fileName, hidden);
+    public ResultDirectory(String path, String fileName, boolean hidden, boolean readOnly, int typeFile) {
+        super(path, fileName, hidden, readOnly, typeFile);
     }
 }
