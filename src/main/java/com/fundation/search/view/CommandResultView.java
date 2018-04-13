@@ -6,6 +6,7 @@
  */
 package com.fundation.search.view;
 
+import com.fundation.search.model.Asset;
 import com.fundation.search.model.ResultFile;
 import java.util.List;
 
@@ -15,13 +16,13 @@ import java.util.List;
  * April, 6th 2018  * @Juan Manuel
  */
 public class CommandResultView {
-    private List<ResultFile> resultFileList;
+    private List<Asset> resultFileList;
 
     /**
      * Method to set resultFileList attribute.
      * @param resultFileList this list contains the search results.
      */
-    public void setResultFileList(List<ResultFile> resultFileList) {
+    public void setResultFileList(List<Asset> resultFileList) {
         this.resultFileList = resultFileList;
     }
 
@@ -36,7 +37,7 @@ public class CommandResultView {
                 System.out.print(String.format("%s%s", titles, "\t"));
             }
 
-            for (ResultFile results : resultFileList) {
+            for (Asset results : resultFileList) {
                 System.out.print(String.format("%s%s%s", "\n", results.getFileName(), "\t"));
                 System.out.print(String.format("%s%s", results.getFileName(), "\t"));
                 System.out.print(results.getFileName());

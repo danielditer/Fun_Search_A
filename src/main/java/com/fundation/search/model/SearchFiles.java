@@ -7,6 +7,8 @@
 package com.fundation.search.model;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +60,7 @@ public class SearchFiles {
         if (searchCriteria.getPath() != null) {
             resultResultFiles = recoverFiles(filePath, arrayResultFiles);
         }
-        if (!searchCriteria.getName().isEmpty()) {
+        if (searchCriteria.getName() != null) {
             resultResultFiles = searchFile(resultResultFiles, searchCriteria.getNameFileCaseSensitive());
         }
         resultResultFiles = searchHiddenFiles(resultResultFiles, searchCriteria.getHidden());
@@ -86,12 +88,16 @@ public class SearchFiles {
             for (File fileEntry : path.listFiles()) {
                 if (fileEntry.isDirectory()) {
                     recoverFiles(fileEntry, arrayResultFiles);
+                    System.out.println("ownerDir: " + Files.getOwner(fileEntry.toPath()));
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3));
                 } else {
+                    System.out.println("ownerFile: " + Files.getOwner(fileEntry.toPath()));
                     arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1));
                 }
             }
         } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return arrayResultFiles;
