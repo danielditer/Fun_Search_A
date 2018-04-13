@@ -20,7 +20,9 @@ import java.awt.Dimension;
 
 public class PanelAttributes extends JPanel{
     private JCheckBox checkBoxReadOnly;
+    private JCheckBox checkBoxReadOnlyNo;
     private JCheckBox checkBoxHidden;
+    private JCheckBox checkBoxHiddenNo;
     private JLabel labelExt;
     private JTextField textFieldExt;
     private JLabel labelSize;
@@ -43,6 +45,8 @@ public class PanelAttributes extends JPanel{
     public void initComponents(){
         checkBoxReadOnly = new JCheckBox();
         checkBoxHidden = new JCheckBox();
+        checkBoxHiddenNo = new JCheckBox();
+        checkBoxReadOnlyNo = new JCheckBox();
         labelExt = new JLabel();
         textFieldExt = new JTextField();
         labelSize = new JLabel();
@@ -60,9 +64,17 @@ public class PanelAttributes extends JPanel{
         checkBoxReadOnly.setText("Read-only");
         add(checkBoxReadOnly, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        //---- checkBoxReadOnly ----
+        checkBoxReadOnlyNo.setText("No RO.");
+        add(checkBoxReadOnlyNo, new TableLayoutConstraints(1, 0, 1, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //---- checkBoxHidden ----
         checkBoxHidden.setText("Hidden");
-        add(checkBoxHidden, new TableLayoutConstraints(1, 0, 1, 0,
+        add(checkBoxHidden, new TableLayoutConstraints(2, 0, 2, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        //---- checkBoxHiddenNo ----
+        checkBoxHiddenNo.setText("No h.");
+        add(checkBoxHiddenNo, new TableLayoutConstraints(3, 0, 3, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- labelExtension ----
@@ -130,6 +142,22 @@ public class PanelAttributes extends JPanel{
      */
     public boolean getCheckBoxHidden() {
         return checkBoxHidden.isSelected();
+    }
+    /**
+     * Getter for the no hidden checkbox.
+     *
+     * @return ta boolean of ´checkBoxHiddenNo´ text field.
+     */
+    public boolean getCheckBoxNoHidden() {
+        return checkBoxHiddenNo.isSelected();
+    }
+    /**
+     * Getter for the no readonly checkbox.
+     *
+     * @return ta boolean of ´checkBoxReadOnlyNo´ text field.
+     */
+    public boolean checkBoxReadOnlyNo() {
+        return checkBoxReadOnlyNo.isSelected();
     }
     /**
      * Getter for the extension type.

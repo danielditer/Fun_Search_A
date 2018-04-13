@@ -59,4 +59,10 @@ public class PanelButtonSearch extends JPanel {
     public JButton getButtonSearch(){
         return buttonSearch;
     }
+    /**
+     * @return getButtonClear.
+     */
+    public JButton getButtonClear(){
+        return buttonClear;
+    }
 }

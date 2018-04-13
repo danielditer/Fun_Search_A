@@ -159,8 +159,6 @@ public class PanelNormalSearch extends JPanel {
     public String getFormattedTextFieldEnd() {
         return panelDate.getFormattedTextFieldEnd();
     }
-
-
     /**
      * Getter for the read only checkbox.
      *
@@ -176,6 +174,22 @@ public class PanelNormalSearch extends JPanel {
      */
     public boolean getCheckBoxHidden() {
         return panelAttributes.getCheckBoxHidden();
+    }
+    /**
+     * Getter for the read only checkbox.
+     *
+     * @return ta boolean of ´getCheckBoxReadOnly´ text field.
+     */
+    public boolean getCheckBoxReadOnlyNo() {
+        return panelAttributes.checkBoxReadOnlyNo();
+    }
+    /**
+     * Getter for the hidden checkbox.
+     *
+     * @return ta boolean of ´checkBoxHidden´ text field.
+     */
+    public boolean getCheckBoxHiddenNo() {
+        return panelAttributes.getCheckBoxNoHidden();
     }
     /**
      * Getter for the extension type.
@@ -218,5 +232,6 @@ public class PanelNormalSearch extends JPanel {
     public String getTextFieldOwner() {
         return panelAttributes.getTextFieldOwner();
     }
+
 
 }
