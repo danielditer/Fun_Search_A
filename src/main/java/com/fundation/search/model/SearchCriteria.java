@@ -21,6 +21,20 @@ public class SearchCriteria {
     private String path;
 
     /**
+     * Attribute of hidden or not file*/
+    private boolean hidden;
+
+    /**
+     * Attribute of read only*/
+    private boolean readOnly;
+
+    /**
+     * Attribute which type of file (file -> 1, directory -> 2, multimedia -> 3)*/
+    private int typeFile;
+
+    private boolean nameFileCaseSensitive;
+
+    /**
      * Setter for name attribute.
      * @param name, is the file name the user is searching.
      */
@@ -37,6 +51,38 @@ public class SearchCriteria {
     }
 
     /**
+     * Setter for hidden attribute
+     * @param hidden
+     */
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
+    /**
+     * Setter for readonly attribute.
+     * @param readOnly boolean attribute;
+     */
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
+    /**
+     * Setter for typeFile.
+     * @param setTypeFile 1, 2, 3, 0 to know if search is file, multimedia, directory or all of them.
+     */
+    public void setTypeFile(int setTypeFile) {
+        this.typeFile = setTypeFile;
+    }
+
+    /**
+     * Setter for nameFileCaseSensitive.
+     * @param nameFileCaseSensitive true for case sensitive search.
+     */
+    public void setNameFileCaseSensitive(boolean nameFileCaseSensitive) {
+        this.nameFileCaseSensitive = nameFileCaseSensitive;
+    }
+
+    /**
      * Getter for name attribute.
      * @return name, is the file name set in previous method.
      */
@@ -50,5 +96,28 @@ public class SearchCriteria {
      */
     public String getPath() {
         return this.path;
+    }
+
+    /**
+     * Getter for hidden attribute.
+     * @return hidden attribute.
+     */
+    public boolean getHidden() {
+        return this.hidden;
+    }
+
+    /**
+     * Getter for readonly attribute
+     */
+    public boolean getReadOnly() {
+        return this.readOnly;
+    }
+
+    public int getTypeFile() {
+        return this.typeFile;
+    }
+
+    public boolean getNameFileCaseSensitive() {
+        return this.nameFileCaseSensitive;
     }
 }

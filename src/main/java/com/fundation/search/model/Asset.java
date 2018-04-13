@@ -14,11 +14,15 @@ public class Asset {
     private String path;
     private String fileName;
     private boolean hidden;
+    private boolean readOnly;
+    private int typeFile;
 
-    public Asset(String path, String fileName, boolean hidden) {
+    public Asset(String path, String fileName, boolean hidden, boolean readOnly, int typeFile) {
         this.path = path;
         this.fileName = fileName;
         this.hidden = hidden;
+        this.readOnly = readOnly;
+        this.typeFile = typeFile;
     }
 
     /**
@@ -46,5 +50,13 @@ public class Asset {
      */
     public boolean getHidden() {
         return hidden;
+    }
+
+    public boolean getReadOnly() {
+        return readOnly;
+    }
+
+    public int getTypeFile() {
+        return typeFile;
     }
 }
