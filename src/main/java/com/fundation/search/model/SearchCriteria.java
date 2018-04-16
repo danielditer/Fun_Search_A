@@ -24,6 +24,8 @@ public class SearchCriteria {
      * Attribute of hidden or not file*/
     private boolean hidden;
 
+    private boolean noHidden;
+
     /**
      * Attribute of read only*/
     private boolean readOnly;
@@ -35,6 +37,8 @@ public class SearchCriteria {
     /**
      * Attribute to know if name is case sensitive or not*/
     private boolean nameFileCaseSensitive;
+
+    private String owner;
 
     /**
      * Setter for name attribute.
@@ -85,6 +89,16 @@ public class SearchCriteria {
     }
 
     /**
+     * Setter for owner attribute.
+     * @param owner input from UI.
+     */
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+
+
+    /**
      * Getter for name attribute.
      * @return name, is the file name set in previous method.
      */
@@ -129,5 +143,13 @@ public class SearchCriteria {
      */
     public boolean getNameFileCaseSensitive() {
         return this.nameFileCaseSensitive;
+    }
+
+    /**
+     * Getter for owner attribute.
+     * @return owner attribute.
+     */
+    public String getOwner() {
+        return this.owner;
     }
 }

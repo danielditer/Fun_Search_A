@@ -39,7 +39,7 @@ public class PanelSearchResults extends JPanel {
     public void initComponents() {
         tableResult = new JTable();
 
-        String columnNames[] = new String[]{"File Name", "File Path", "Hidden"};
+        String columnNames[] = new String[]{"File Name", "File Path", "Hidden", "Read Only"};
 
         tableModel = new DefaultTableModel(0, 0);
         tableModel.setColumnIdentifiers(columnNames);

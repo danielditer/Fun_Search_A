@@ -55,6 +55,20 @@ public class CommandController implements Controller {
             if (inputCommands[i].contains("-h")) { /* Search by files hidden*/
                 resultString.add("get hidden: " + inputCommands[i + 1]);
             }
+            if (inputCommands[i].contains("-h")) { /* Search by hidden*/
+                boolean value = false;
+                if ((inputCommands[i + 1]).equals("true")) {
+                    value = true;
+                }
+                searchCriteria.setHidden(value);
+            }
+            if (inputCommands[i].contains("-s")) { /* Search by hidden*/
+                boolean value = false;
+                if ((inputCommands[i + 1]).equals("true")) {
+                    value = true;
+                }
+                searchCriteria.setNameFileCaseSensitive(value);
+            }
         }
         searchFiles.setSearchCriteria(searchCriteria);
         searchFiles.init();

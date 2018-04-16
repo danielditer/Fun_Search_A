@@ -16,6 +16,7 @@ public class Asset {
     private boolean hidden;
     private boolean readOnly;
     private int typeFile;
+    private boolean noHidden;
 
 
     /**

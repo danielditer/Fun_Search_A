@@ -108,7 +108,9 @@ public class SearchController implements Controller {
      */
     public void sendSearchCriteriaToModel(String path, String name, boolean hidden, boolean readOnly, int typeFile, boolean nameFileCaseSensitive) {
         searchCriteria.setPath(path);
-        searchCriteria.setName(name);
+        if (!name.isEmpty()) {
+            searchCriteria.setName(name);
+        }
         searchCriteria.setHidden(hidden);
         searchCriteria.setReadOnly(readOnly);
         searchCriteria.setTypeFile(typeFile);
@@ -129,7 +131,7 @@ public class SearchController implements Controller {
         tableModel.setRowCount(0);
 
         for (int i = 0; i < resultFileList.size(); i++) {
-            tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden()});
+            tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly()});
             System.out.println(resultFileList.get(i).getFileName() + "\t" + resultFileList.get(i).getPath() + "\t" + resultFileList.get(i).getHidden());
         }
         panel.setTableModel(tableModel);
