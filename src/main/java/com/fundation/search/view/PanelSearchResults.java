@@ -39,7 +39,7 @@ public class PanelSearchResults extends JPanel {
     public void initComponents() {
         tableResult = new JTable();
 
-        String columnNames[] = new String[]{"File Name", "File Path", "Hidden"};
+        String columnNames[] = new String[]{"File Name", "File Path", "Hidden", "Read Only"};
 
         tableModel = new DefaultTableModel(0, 0);
         tableModel.setColumnIdentifiers(columnNames);
@@ -50,7 +50,7 @@ public class PanelSearchResults extends JPanel {
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
 
         tableResult.setModel(tableModel);
-        tableResult.setPreferredScrollableViewportSize(new Dimension(400, 200));
+        tableResult.setPreferredScrollableViewportSize(new Dimension(400, 150));
         tableResult.setFillsViewportHeight(true);
         JScrollPane scrollPane = new JScrollPane(tableResult);
         add(scrollPane, new TableLayoutConstraints(1, 0, 1, 0,
@@ -77,6 +77,15 @@ public class PanelSearchResults extends JPanel {
      */
     public void setTableModel(DefaultTableModel model) {
         this.tableModel = model;
+    }
+
+    /**
+     * Setter for the controller to set model filled with results.
+     *
+     * @param model, the TableModel filled with results.
+     */
+    public void clearTableModel(DefaultTableModel model) {
+        model.setRowCount(0);
     }
 
 }

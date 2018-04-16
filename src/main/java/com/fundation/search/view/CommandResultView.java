@@ -7,9 +7,7 @@
 package com.fundation.search.view;
 
 import com.fundation.search.model.Asset;
-import dnl.utils.text.table.TextTable;
-import javafx.scene.control.cell.TextFieldTableCell;
-
+import com.fundation.search.model.ResultFile;
 import java.util.List;
 
 /**
@@ -35,24 +33,15 @@ public class CommandResultView {
         System.out.println("Search Results:");
         if (!resultFileList.isEmpty()) {
             String[] tableTitles = {"File Name", "File Path", "Hidden"};
-//            for (String titles : tableTitles) {
-//                System.out.print(String.format("%s%s", titles, "\t"));
-//            }
-
-//            for (Asset results : resultFileList) {
-//                System.out.print(String.format("%s%s%s", "\n", results.getFileName(), "\t"));
-//                System.out.print(String.format("%s%s", results.getPath(), "\t"));
-//                System.out.print(results.getHidden());
-//            }
-            Object[][] values = new Object[10][];
-
-            for (int i = 0; i < resultFileList.size(); i++) {
-
-                    values = new Object[][] {resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden()};
-
+            for (String titles : tableTitles) {
+                System.out.print(String.format("%s%s", titles, "\t"));
             }
-            TextTable tt = new TextTable(tableTitles, values);
-            tt.printTable();
+
+            for (Asset results : resultFileList) {
+                System.out.print(String.format("%s%s%s", "\n", results.getFileName(), "\t"));
+                System.out.print(String.format("%s%s", results.getFileName(), "\t"));
+                System.out.print(results.getFileName());
+            }
         }
     }
 
