@@ -73,6 +73,7 @@ public class PanelNamePath extends JPanel {
                 TableLayoutConstraints.FULL));
         //---- textFieldName ----
         textFieldName.setPreferredSize(preferredSize);
+
         textFieldName.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -80,8 +81,6 @@ public class PanelNamePath extends JPanel {
                 if(inputText.length() > 0) {
                     checkBoxCaseSensitiveName.setEnabled(true);
                 }
-
-
             }
 
             @Override
@@ -94,7 +93,7 @@ public class PanelNamePath extends JPanel {
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                System.out.println("changedUpdate");
+
             }
         });
         add(textFieldName, new TableLayoutConstraints(1, 0, 1, 0,
