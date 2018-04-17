@@ -164,7 +164,7 @@ public class PanelNormalSearch extends JPanel {
      *
      * @return ta boolean of ´getCheckBoxReadOnly´ text field.
      */
-    public boolean getCheckBoxReadOnly() {
+    public String getCheckBoxReadOnly() {
         return panelAttributes.getCheckBoxReadOnly();
     }
     /**
@@ -172,25 +172,10 @@ public class PanelNormalSearch extends JPanel {
      *
      * @return ta boolean of ´checkBoxHidden´ text field.
      */
-    public boolean getCheckBoxHidden() {
+    public String getCheckBoxHidden() {
         return panelAttributes.getCheckBoxHidden();
     }
-    /**
-     * Getter for the read only checkbox.
-     *
-     * @return ta boolean of ´getCheckBoxReadOnly´ text field.
-     */
-    public boolean getCheckBoxReadOnlyNo() {
-        return panelAttributes.checkBoxReadOnlyNo();
-    }
-    /**
-     * Getter for the hidden checkbox.
-     *
-     * @return ta boolean of ´checkBoxHidden´ text field.
-     */
-    public boolean getCheckBoxHiddenNo() {
-        return panelAttributes.getCheckBoxNoHidden();
-    }
+
     /**
      * Getter for the extension type.
      *
