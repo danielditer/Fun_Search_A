@@ -6,27 +6,26 @@
  */
 package com.fundation.search.controller;
 
+import com.fundation.search.Main;
+import com.fundation.search.common.Constants;
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 /**
  * Class LoggerCreator to register events of the program.
- * @version
- * April 13 2018  * @Daniel Caballero
+ *
+ * @version April 13 2018  * @Daniel Caballero
  */
 public class LoggerCreator {
-    public static final int DEBUG = 1;
-    public static final int INFO = 2;
-    public static final int WARN = 3;
-    public static final int ERROR = 4;
     private static LoggerCreator logInstance;
-    private static final Logger LOGGER = Logger.getLogger(LoggerCreator.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(LoggerCreator.class.getName());
 
     /**
      * Class constructor.
      */
     public LoggerCreator() {
-        BasicConfigurator.configure();
+
     }
 
     /**
@@ -35,6 +34,8 @@ public class LoggerCreator {
     public static LoggerCreator getInstance() {
         if (logInstance == null) {
             logInstance = new LoggerCreator();
+            BasicConfigurator.configure();
+            LOGGER.setLevel(Level.ALL);
         }
         return logInstance;
     }
@@ -43,24 +44,37 @@ public class LoggerCreator {
      * @param logLevel
      * @param logContent
      */
-    public void writeLog(int logLevel, String logContent) {
+    public void writeLog(int logLevel, String myClass, String logContent) {
         switch (logLevel) {
-            case DEBUG:
-                LOGGER.debug(logContent);
+            case Constants.DEBUG:
+                LOGGER.debug(myClass + logContent);
                 break;
-            case INFO:
-                LOGGER.info(logContent);
+            case Constants.INFO:
+                LOGGER.info(myClass + logContent);
                 break;
-            case WARN:
-                LOGGER.warn(logContent);
+            case Constants.WARN:
+                LOGGER.warn(myClass + logContent);
                 break;
-            case ERROR:
-                LOGGER.error(logContent);
+            case Constants.ERROR:
+                LOGGER.error(myClass + logContent);
                 break;
             default:
-                System.out.println("error log level for WriteLog error");
+                System.out.println("error log level for writeLog error");
                 break;
         }
+    }
+
+    public void info(String myClass, String message) {
+        LOGGER.info("[" + myClass + "] " + message);
+
+    }
+
+    public void error(String myClass, String message, Exception ce) {
+        LOGGER.error("[" + myClass + "] " + message, ce);
+    }
+
+    public void warning(String myClass, String message) {
+        LOGGER.warn("[" + myClass + "] " + message);
     }
 }
 
