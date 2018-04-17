@@ -9,12 +9,13 @@ package com.fundation.search.controller;
 import com.fundation.search.model.SearchCriteria;
 import com.fundation.search.model.SearchFiles;
 import com.fundation.search.view.CommandResultView;
+
 import java.util.StringJoiner;
 
 /**
  * Class CommandController execute command introduced by the user.
- * @version
- * 27 Mar 2018  * @Maria Canqui
+ *
+ * @version 27 Mar 2018  * @Maria Canqui
  */
 public class CommandController implements Controller {
     private String[] inputCommands;
@@ -40,6 +41,7 @@ public class CommandController implements Controller {
 
     /**
      * Method exeCmd receive a command, separe the string by command and set criteria attributes.
+     *
      * @return list of files found
      */
     private void exeCmd() {
@@ -52,22 +54,33 @@ public class CommandController implements Controller {
             if (inputCommands[i].contains("-p")) { /* Search by path*/
                 searchCriteria.setPath(inputCommands[i + 1]);
             }
-            if (inputCommands[i].contains("-h")) { /* Search by files hidden*/
-                resultString.add("get hidden: " + inputCommands[i + 1]);
-            }
-            if (inputCommands[i].contains("-h")) { /* Search by hidden*/
+            if (inputCommands[i].equals("-h")) { /* Search by hidden*/
                 boolean value = false;
                 if ((inputCommands[i + 1]).equals("true")) {
                     value = true;
                 }
                 searchCriteria.setHidden(value);
             }
-            if (inputCommands[i].contains("-s")) { /* Search by hidden*/
+            if (inputCommands[i].contains("-r")) { /* Search by read-only*/
                 boolean value = false;
                 if ((inputCommands[i + 1]).equals("true")) {
                     value = true;
                 }
+                searchCriteria.setReadOnly(value);
+            }
+            if (inputCommands[i].contains("-s")) { /* Search by sensitive case*/
+                boolean value = false;
+                if ((inputCommands[i + 1]).equals("true")) {
+                    value = true;
+                } else {
+                    System.out.println("Enter a value in the following format: -h true / -h false");
+                }
                 searchCriteria.setNameFileCaseSensitive(value);
+            }
+            if (inputCommands[i].equals("-help")) { /*Helper*/
+                if ((inputCommands[i + 1]).equals("true")) {
+                    System.out.println("this is a help test");
+                }
             }
         }
         searchFiles.setSearchCriteria(searchCriteria);

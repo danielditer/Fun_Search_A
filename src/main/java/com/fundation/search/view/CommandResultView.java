@@ -8,6 +8,9 @@ package com.fundation.search.view;
 
 import com.fundation.search.model.Asset;
 import com.fundation.search.model.ResultFile;
+import dnl.utils.text.table.TextTable;
+import dnl.utils.text.table.TextTreeTable;
+
 import java.util.List;
 
 /**
@@ -37,11 +40,26 @@ public class CommandResultView {
                 System.out.print(String.format("%s%s", titles, "\t"));
             }
 
-            for (Asset results : resultFileList) {
-                System.out.print(String.format("%s%s%s", "\n", results.getFileName(), "\t"));
-                System.out.print(String.format("%s%s", results.getFileName(), "\t"));
-                System.out.print(results.getFileName());
-            }
+//            for (Asset results : resultFileList) {
+//                System.out.print(String.format("%s%s%s", "\n", results.getFileName(), "\t"));
+//                System.out.print(String.format("%s%s", results.getPath(), "\t"));
+//                System.out.print(results.getHidden());
+//            }
+
+//            for (int i = 0; i < resultFileList.size(); i++) {
+//
+//                values = new Object[][] {resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden()};
+//
+//            }
+            Object[][] data = {
+                    {"Kathy", "Smith",
+                            "Snowboarding", new Integer(5), new Boolean(false)},
+                    {"John", "Doe",
+                            "Rowing", new Integer(3), new Boolean(true)}};
+
+
+            TextTable tt = new TextTable(tableTitles, data);
+            tt.printTable();
         }
     }
 
