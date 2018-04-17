@@ -38,6 +38,8 @@ public class SearchCriteria {
      * Attribute to know if name is case sensitive or not*/
     private boolean nameFileCaseSensitive;
 
+    /**
+     * Attribute to know a file's or directory's ownes*/
     private String owner;
 
     /**

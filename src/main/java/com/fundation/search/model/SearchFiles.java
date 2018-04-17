@@ -9,8 +9,14 @@ package com.fundation.search.model;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.FileOwnerAttributeView;
+import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.nio.file.Files.getFileAttributeView;
 
 /**
  * Class made in order to develop different methods for search files.
@@ -34,7 +40,7 @@ public class SearchFiles {
     /**
      * arrayCoincidences is the array in which all the search coincidences depending the method used, are going to be stored.
      */
-    private List<Asset> arrayCoincidences;
+    private List<Asset> arrayFinalResult;
 
     /**
      * Object to create asset objects (files, multimedia, directory).
@@ -55,17 +61,36 @@ public class SearchFiles {
      */
     public void init() {
         arrayResultFiles = new ArrayList<>();
+        arrayFinalResult  = new ArrayList<>();
         File filePath = new File(searchCriteria.getPath());
         assetFactory = new AssetFactory();
         if (searchCriteria.getPath() != null) {
             resultResultFiles = recoverFiles(filePath, arrayResultFiles);
         }
-        if (searchCriteria.getName() != null) {
-            resultResultFiles = searchFile(resultResultFiles, searchCriteria.getNameFileCaseSensitive());
+        for (Asset results : resultResultFiles) {
+            boolean matchesCriteria = true;
+            if (searchCriteria.getName() != null) {
+                if (!searchFile(results, searchCriteria.getNameFileCaseSensitive())) {
+                    matchesCriteria = false;
+                }
+            }
+            if (matchesCriteria && !searchHiddenFiles(results, searchCriteria.getHidden())) {
+                matchesCriteria = false;
+            }
+            if (matchesCriteria && !searchReadOnlyFiles(results, searchCriteria.getReadOnly())) {
+                matchesCriteria = false;
+            }
+            if (matchesCriteria && !searchFilesOrDirectoriesOnly(results, searchCriteria.getTypeFile())) {
+                matchesCriteria = false;
+            }
+            if (matchesCriteria && !searchOwner(results, searchCriteria.getOwner())) {
+                matchesCriteria = false;
+            }
+            if (matchesCriteria) {
+                arrayFinalResult.add(results);
+            }
         }
-        resultResultFiles = searchHiddenFiles(resultResultFiles, searchCriteria.getHidden());
-        resultResultFiles = searchReadOnlyFiles(resultResultFiles, searchCriteria.getReadOnly());
-        resultResultFiles = searchFilesOrDirectoriesOnly(resultResultFiles, searchCriteria.getTypeFile());
+
     }
 
     /**
@@ -74,7 +99,7 @@ public class SearchFiles {
      * @return resultResultFiles is going to get the result files for the search controller.
      */
     public List<Asset> getResultResultFiles() {
-        return this.resultResultFiles;
+        return this.arrayFinalResult;
     }
 
     /**
@@ -86,13 +111,14 @@ public class SearchFiles {
     public List<Asset> recoverFiles(File path, List<Asset> arrayResultFiles) {
         try {
             for (File fileEntry : path.listFiles()) {
+                Path path2 = Paths.get(fileEntry.getPath());
+                FileOwnerAttributeView foav = Files.getFileAttributeView(path2, FileOwnerAttributeView.class);
+                UserPrincipal owner = foav.getOwner();
                 if (fileEntry.isDirectory()) {
                     recoverFiles(fileEntry, arrayResultFiles);
-                    System.out.println("ownerDir: " + Files.getOwner(fileEntry.toPath()));
-                    arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3));
+                    arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3, owner.getName().substring(owner.getName().indexOf("\\") + 1)));
                 } else {
-                    System.out.println("ownerFile: " + Files.getOwner(fileEntry.toPath()));
-                    arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1));
+                    arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1, owner.getName().substring(owner.getName().indexOf("\\") + 1)));
                 }
             }
         } catch (NullPointerException e) {
@@ -104,44 +130,22 @@ public class SearchFiles {
     }
 
     /**
-     * Method that returns an array of visible files of a path.
-     *
-     * @param arrayResultFiles is the array of ResultFile objects.
-     * @return the array of coincidences, in this case visible files.
-     */
-    private List<Asset> searchAllFiles(List<Asset> arrayResultFiles) {
-        arrayCoincidences = new ArrayList<>();
-        for (Asset fileEntry : arrayResultFiles) {
-            if (!fileEntry.getHidden()) {
-                arrayCoincidences.add(fileEntry);
-            }
-        }
-        return arrayCoincidences;
-    }
-
-    /**
      * Method that returns an array of coincidences of fileNames of files of a path.
      *
      * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case fileName coincidences.
      */
-    private List<Asset> searchFile(List<Asset> arrayResultFiles, boolean nameFileCaseSensitive) {
-        arrayCoincidences = new ArrayList<>();
-        for (Asset fileEntry : arrayResultFiles) {
-            /*if (fileEntry.getFileName().contains(searchCriteria.getName())) {
-                arrayCoincidences.add(fileEntry);
-            }*/
-            if (nameFileCaseSensitive) {
-                if (fileEntry.getFileName().equals(searchCriteria.getName())) {
-                    arrayCoincidences.add(fileEntry);
-                }
-            } else {
-                if (fileEntry.getFileName().equalsIgnoreCase(searchCriteria.getName())) {
-                    arrayCoincidences.add(fileEntry);
-                }
+    private boolean searchFile(Asset arrayResultFiles, boolean nameFileCaseSensitive) {
+        if (nameFileCaseSensitive) {
+            if (arrayResultFiles.getFileName().equals(searchCriteria.getName())) {
+                return true;
+            }
+        } else {
+            if (arrayResultFiles.getFileName().equalsIgnoreCase(searchCriteria.getName())) {
+                return true;
             }
         }
-        return arrayCoincidences;
+        return false;
     }
 
     /**
@@ -150,20 +154,17 @@ public class SearchFiles {
      * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
-    public List<Asset> searchHiddenFiles(List<Asset> arrayResultFiles, boolean searchHidden) {
-        arrayCoincidences = new ArrayList<>();
-        for (Asset fileEntry : arrayResultFiles) {
-            if (searchHidden) {
-                if (fileEntry.getHidden()) {
-                    arrayCoincidences.add(fileEntry);
-                }
-            } else {
-                if (!fileEntry.getHidden()) {
-                    arrayCoincidences.add(fileEntry);
-                }
+    public boolean searchHiddenFiles(Asset arrayResultFiles, boolean searchHidden) {
+        if (searchHidden) {
+            if (arrayResultFiles.getHidden()) {
+                return true;
+            }
+        } else {
+            if (!arrayResultFiles.getHidden()) {
+                return true;
             }
         }
-        return arrayCoincidences;
+        return false;
     }
 
     /**
@@ -172,20 +173,17 @@ public class SearchFiles {
      * @param readOnly search criteria value.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
-    public List<Asset> searchReadOnlyFiles(List<Asset> arrayResultFiles, boolean readOnly) {
-        arrayCoincidences = new ArrayList<>();
-        for (Asset fileEntry : arrayResultFiles) {
-            if (readOnly) {
-                if (fileEntry.getReadOnly()) {
-                    arrayCoincidences.add(fileEntry);
-                }
-            } else {
-                if (!fileEntry.getReadOnly()) {
-                    arrayCoincidences.add(fileEntry);
-                }
+    public boolean searchReadOnlyFiles(Asset arrayResultFiles, boolean readOnly) {
+        if (readOnly) {
+            if (arrayResultFiles.getReadOnly()) {
+                return true;
+            }
+        } else {
+            if (!arrayResultFiles.getReadOnly()) {
+                return true;
             }
         }
-        return arrayCoincidences;
+        return false;
     }
 
     /**
@@ -194,28 +192,44 @@ public class SearchFiles {
      * @param typeFile search criteria value.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
-    public List<Asset> searchFilesOrDirectoriesOnly(List<Asset> arrayResultFiles, int typeFile) {
-        arrayCoincidences = new ArrayList<>();
-        for (Asset fileEntry : arrayResultFiles) {
-            if (typeFile == 1) { /**when typeFile is 1 we want to look only for files (.txt, .docx, .exe, etc)*/
-                if (fileEntry instanceof ResultFile) {
-                    arrayCoincidences.add(fileEntry);
-                }
-            }
-            if (typeFile == 2) { /**when typeFile is 2 we want to look only for multimedia files (.mp3, .mp4, etc)*/
-                if (fileEntry instanceof ResultMultimediaFile) {
-                    arrayCoincidences.add(fileEntry);
-                }
-            }
-            if (typeFile == 3) { /**when typeFile is 3 we want to look only for directories*/
-                if (fileEntry instanceof ResultDirectory) {
-                    arrayCoincidences.add(fileEntry);
-                }
-            }
-            if (typeFile == 0) { /**when typeFile is 0 we look for all type of files*/
-                arrayCoincidences.add(fileEntry);
+    public boolean searchFilesOrDirectoriesOnly(Asset arrayResultFiles, int typeFile) {
+        if (typeFile == 1) { /**when typeFile is 1 we want to look only for files (.txt, .docx, .exe, etc)*/
+            if (arrayResultFiles instanceof ResultFile) {
+                return true;
             }
         }
-        return arrayCoincidences;
+        if (typeFile == 2) { /**when typeFile is 2 we want to look only for multimedia files (.mp3, .mp4, etc)*/
+            if (arrayResultFiles instanceof ResultMultimediaFile) {
+                return true;
+            }
+        }
+        if (typeFile == 3) { /**when typeFile is 3 we want to look only for directories*/
+            if (arrayResultFiles instanceof ResultDirectory) {
+                return true;
+            }
+        }
+        if (typeFile == 0) { /**when typeFile is 0 we look for all type of files*/
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     *
+     * @param arrayResultFiles
+     * @param owner
+     * @return
+     */
+    public boolean searchOwner(Asset arrayResultFiles, String owner) {
+        System.out.println("owner search: " + owner);
+        System.out.println("file owner: " + arrayResultFiles.getOwner());
+        if (owner != null) {
+            if (arrayResultFiles.getOwner().equalsIgnoreCase(owner)) {
+                return true;
+            }
+            return false;
+        }
+        return true;
     }
 }
