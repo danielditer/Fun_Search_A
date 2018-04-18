@@ -66,7 +66,7 @@ public class SearchController implements Controller {
      * @param panel
      */
     public void searchButtonActionListener(PanelNormalSearch panel) {
-        System.out.println("hidden:" + panel.getCheckBoxHidden());
+        
         int typeFile = 0;
         if (panel.getCheckBoxOnlyFiles() && panel.getCheckBoxOnlyDirectory()) {
             typeFile = 0;
