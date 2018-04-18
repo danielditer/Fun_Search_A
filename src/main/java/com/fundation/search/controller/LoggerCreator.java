@@ -7,27 +7,17 @@
 package com.fundation.search.controller;
 
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 /**
  * Class LoggerCreator to register events of the program.
- * @version
- * April 13 2018  * @Daniel Caballero
+ *
+ * @version April 13 2018  * @Daniel Caballero
  */
 public class LoggerCreator {
-    public static final int DEBUG = 1;
-    public static final int INFO = 2;
-    public static final int WARN = 3;
-    public static final int ERROR = 4;
     private static LoggerCreator logInstance;
-    private static final Logger LOGGER = Logger.getLogger(LoggerCreator.class.getName());
-
-    /**
-     * Class constructor.
-     */
-    public LoggerCreator() {
-        BasicConfigurator.configure();
-    }
+    private final static Logger LOGGER = Logger.getLogger(LoggerCreator.class.getName());
 
     /**
      * @return the instance of Logger.
@@ -35,32 +25,48 @@ public class LoggerCreator {
     public static LoggerCreator getInstance() {
         if (logInstance == null) {
             logInstance = new LoggerCreator();
+            BasicConfigurator.configure();
+            LOGGER.setLevel(Level.ALL);
         }
         return logInstance;
     }
 
     /**
-     * @param logLevel
-     * @param logContent
+     * Method for write a log with INFO level.
+     * @param myClass
+     * @param message
      */
-    public void writeLog(int logLevel, String logContent) {
-        switch (logLevel) {
-            case DEBUG:
-                LOGGER.debug(logContent);
-                break;
-            case INFO:
-                LOGGER.info(logContent);
-                break;
-            case WARN:
-                LOGGER.warn(logContent);
-                break;
-            case ERROR:
-                LOGGER.error(logContent);
-                break;
-            default:
-                System.out.println("error log level for WriteLog error");
-                break;
-        }
+    public void info(String myClass, String message) {
+        LOGGER.info("[" + myClass + "] " + message);
+
+    }
+
+    /**
+     * Method for write a log with ERROR level.
+     * @param myClass
+     * @param message
+     * @param ce
+     */
+    public void error(String myClass, String message, Exception ce) {
+        LOGGER.error("[" + myClass + "] " + message, ce);
+    }
+
+    /**
+     * Method for write a log with WARNING level.
+     * @param myClass
+     * @param message
+     */
+    public void warning(String myClass, String message) {
+        LOGGER.warn("[" + myClass + "] " + message);
+    }
+
+    /**
+     * Method for write a log with DEBUG level.
+     * @param myClass
+     * @param message
+     */
+    public void debug(String myClass, String message) {
+        LOGGER.debug("[" + myClass + "] " + message);
     }
 }
 

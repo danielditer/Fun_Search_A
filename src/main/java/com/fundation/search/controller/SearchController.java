@@ -76,7 +76,6 @@ public class SearchController implements Controller {
         }
         if (areValidParams(panel.getPath(), panel.getName())) {
             sendSearchCriteriaToModel(panel.getPath(), panel.getName(), panel.getCheckBoxHidden(), panel.getCheckBoxReadOnly(), typeFile, panel.getCaseSensitiveName(), panel.getTextFieldOwner(), panel.getTextFieldExt());
-
         }
     }
 

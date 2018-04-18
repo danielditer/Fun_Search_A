@@ -85,9 +85,12 @@ public class SearchFiles {
             if (matchesCriteria && !searchOwner(results, searchCriteria.getOwner())) {
                 matchesCriteria = false;
             }
-            if (matchesCriteria && !searchExtension(results, searchCriteria.getExtension())) {
-                matchesCriteria = false;
+            if (results instanceof ResultFile) {
+                if (matchesCriteria && !searchExtension(results, searchCriteria.getExtension())) {
+                    matchesCriteria = false;
+                }
             }
+
             if (matchesCriteria) {
                 arrayFinalResult.add(results);
             }

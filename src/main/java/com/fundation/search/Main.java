@@ -25,17 +25,19 @@ public class Main {
      * @param args, commands as an input to search files
      */
     public static void main (String[] args) {
-        //LoggerCreator.getInstance().writeLog(1, "Main.class - Controller Interface instance");
         Controller controller;
-        //LoggerCreator.getInstance().writeLog(1, "Main.class - SearchFiles model instance");
         SearchFiles searchFile = new SearchFiles();
+        LoggerCreator.getInstance().info(searchFile.getClass().getName(), "Started Searchfiles");
         if (args.length > 0) {
             CommandResultView commandResultView = new CommandResultView();
+            LoggerCreator.getInstance().info(commandResultView.getClass().getName(), "Started CommandResultView");
             controller = new CommandController(searchFile, commandResultView, args);
         } else {
             MainView mainView = new MainView();
+            LoggerCreator.getInstance().info(mainView.getClass().getName(), "Started MainView");
             controller = new SearchController(searchFile, mainView);
         }
         controller.init();
+        LoggerCreator.getInstance().info(controller.getClass().getName(), "Initialized Controller");
     }
 }
