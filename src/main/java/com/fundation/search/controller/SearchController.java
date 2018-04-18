@@ -66,7 +66,6 @@ public class SearchController implements Controller {
      * @param panel
      */
     public void searchButtonActionListener(PanelNormalSearch panel) {
-        
         int typeFile = 0;
         if (panel.getCheckBoxOnlyFiles() && panel.getCheckBoxOnlyDirectory()) {
             typeFile = 0;
@@ -118,9 +117,13 @@ public class SearchController implements Controller {
         searchCriteria.setNameFileCaseSensitive(nameFileCaseSensitive);
         if (!owner.isEmpty()) {
             searchCriteria.setOwner(owner);
+        } else {
+            searchCriteria.setOwner(null);
         }
         if (!extension.isEmpty()) {
             searchCriteria.setExtension(extension);
+        } else {
+            searchCriteria.setExtension(null);
         }
         searchFile.setSearchCriteria(searchCriteria);
         searchFile.init();

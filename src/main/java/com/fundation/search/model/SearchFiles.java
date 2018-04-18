@@ -256,6 +256,7 @@ public static void main(String[] args) throws ParseException {
      * @return
      */
     public boolean searchOwner(Asset arrayResultFiles, String owner) {
+        System.out.println("Owner: " + arrayResultFiles.getOwner());
         if (owner != null) {
             if (arrayResultFiles.getOwner().equalsIgnoreCase(owner)) {
                 return true;
