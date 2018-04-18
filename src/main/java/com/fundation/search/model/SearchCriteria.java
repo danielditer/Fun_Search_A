@@ -22,13 +22,11 @@ public class SearchCriteria {
 
     /**
      * Attribute of hidden or not file*/
-    private boolean hidden;
-
-    private boolean noHidden;
+    private String hidden;
 
     /**
      * Attribute of read only*/
-    private boolean readOnly;
+    private String readOnly;
 
     /**
      * Attribute which type of file (file -> 1, directory -> 2, multimedia -> 3)*/
@@ -68,7 +66,7 @@ public class SearchCriteria {
      * Setter for hidden attribute
      * @param hidden
      */
-    public void setHidden(boolean hidden) {
+    public void setHidden(String hidden) {
         this.hidden = hidden;
     }
 
@@ -76,7 +74,7 @@ public class SearchCriteria {
      * Setter for readonly attribute.
      * @param readOnly boolean attribute;
      */
-    public void setReadOnly(boolean readOnly) {
+    public void setReadOnly(String readOnly) {
         this.readOnly = readOnly;
     }
 
@@ -134,14 +132,14 @@ public class SearchCriteria {
      * Getter for hidden attribute.
      * @return hidden attribute.
      */
-    public boolean getHidden() {
+    public String getHidden() {
         return this.hidden;
     }
 
     /**
      * Getter for readonly attribute
      */
-    public boolean getReadOnly() {
+    public String getReadOnly() {
         return this.readOnly;
     }
 

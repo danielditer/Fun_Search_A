@@ -60,7 +60,7 @@ public class CommandController implements Controller {
                 if ((inputCommands[i + 1]).equals("true")) {
                     value = true;
                 }
-                searchCriteria.setHidden(value);
+                //searchCriteria.setHidden(value);
             }
             if (inputCommands[i].contains("-s")) { /* Search by hidden*/
                 boolean value = false;

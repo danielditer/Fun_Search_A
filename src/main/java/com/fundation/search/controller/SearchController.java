@@ -66,6 +66,7 @@ public class SearchController implements Controller {
      * @param panel
      */
     public void searchButtonActionListener(PanelNormalSearch panel) {
+        System.out.println("hidden:" + panel.getCheckBoxHidden());
         int typeFile = 0;
         if (panel.getCheckBoxOnlyFiles() && panel.getCheckBoxOnlyDirectory()) {
             typeFile = 0;
@@ -76,6 +77,7 @@ public class SearchController implements Controller {
         }
         if (areValidParams(panel.getPath(), panel.getName())) {
             sendSearchCriteriaToModel(panel.getPath(), panel.getName(), panel.getCheckBoxHidden(), panel.getCheckBoxReadOnly(), typeFile, panel.getCaseSensitiveName(), panel.getTextFieldOwner(), panel.getTextFieldExt());
+
         }
     }
 
@@ -105,7 +107,7 @@ public class SearchController implements Controller {
      * @param path
      * @param name
      */
-    public void sendSearchCriteriaToModel(String path, String name, boolean hidden, boolean readOnly, int typeFile, boolean nameFileCaseSensitive, String owner, String extension) {
+    public void sendSearchCriteriaToModel(String path, String name, String hidden, String readOnly, int typeFile, boolean nameFileCaseSensitive, String owner, String extension) {
         searchCriteria.setPath(path);
         if (!name.isEmpty()) {
             searchCriteria.setName(name);

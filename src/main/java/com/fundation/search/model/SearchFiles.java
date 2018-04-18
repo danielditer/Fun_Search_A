@@ -123,8 +123,7 @@ public class SearchFiles {
                  * Section to know last modified date of a file.*/
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String lastModified = dateFormat.format(fileEntry.lastModified());
-                System.out.println("file name: " + fileEntry.getName() + "**last modified:" + fileEntry.lastModified() + "**formated:" + lastModified);
-
+                //System.out.println("file name: " + fileEntry.getName() + "**last modified:" + fileEntry.lastModified() + "**formated:" + lastModified);
                 /*
 public static void main(String[] args) throws ParseException {
     String dateString1 = "05-12-2012";
@@ -181,15 +180,19 @@ public static void main(String[] args) throws ParseException {
      * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
-    public boolean searchHiddenFiles(Asset arrayResultFiles, boolean searchHidden) {
-        if (searchHidden) {
+    public boolean searchHiddenFiles(Asset arrayResultFiles, String searchHidden) {
+        if (searchHidden.equals("1")) { /**Hidden*/
             if (arrayResultFiles.getHidden()) {
                 return true;
             }
-        } else {
+        }
+        if (searchHidden.equals("2")) { /**No hidden*/
             if (!arrayResultFiles.getHidden()) {
                 return true;
             }
+        }
+        if (searchHidden.equals("3")) { /**All*/
+            return true;
         }
         return false;
     }
@@ -200,15 +203,19 @@ public static void main(String[] args) throws ParseException {
      * @param readOnly search criteria value.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
-    public boolean searchReadOnlyFiles(Asset arrayResultFiles, boolean readOnly) {
-        if (readOnly) {
+    public boolean searchReadOnlyFiles(Asset arrayResultFiles, String readOnly) {
+        if (readOnly.equals("1")) {
             if (arrayResultFiles.getReadOnly()) {
                 return true;
             }
-        } else {
+        }
+        if (readOnly.equals("2")) {
             if (!arrayResultFiles.getReadOnly()) {
                 return true;
             }
+        }
+        if (readOnly.equals("3")) { /**All*/
+            return true;
         }
         return false;
     }
