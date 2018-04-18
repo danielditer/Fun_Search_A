@@ -83,6 +83,9 @@ public class CommandController implements Controller {
         searchFiles.init();
     }
 
+    /**
+     * Method for displaying the help message for the command line.
+     */
     public void helpMessage() {
         System.out.println("Usage: java [-options] [args...]");
         System.out.println("To perform a search");

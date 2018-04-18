@@ -28,7 +28,7 @@ public class CommandResultView {
     }
 
     /**
-     * Method to display search resultd in command line (cmd).
+     * Method to display search result in command line (cmd).
      */
     public void printResults() {
         System.out.println("Search Results:");
