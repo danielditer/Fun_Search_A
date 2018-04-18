@@ -43,6 +43,12 @@ public class SearchCriteria {
     private String owner;
 
     /**
+     * Attribute to search's extension*/
+    private String extension;
+
+
+
+    /**
      * Setter for name attribute.
      * @param name, is the file name the user is searching.
      */
@@ -96,6 +102,14 @@ public class SearchCriteria {
      */
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    /**
+     * Setter for extension attribute.
+     * @param extension input from UI.
+     */
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
 
 
@@ -153,5 +167,13 @@ public class SearchCriteria {
      */
     public String getOwner() {
         return this.owner;
+    }
+
+    /**
+     * Getter for extension attribute.
+     * @return extesntion attribute.
+     */
+    public String getExtension() {
+        return this.extension;
     }
 }

@@ -85,4 +85,8 @@ public class Asset {
     public String getOwner() {
         return this.owner;
     }
+
+    public String getExtension() {
+        return getExtension();
+    }
 }

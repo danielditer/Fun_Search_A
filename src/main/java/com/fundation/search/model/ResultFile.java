@@ -10,6 +10,9 @@ package com.fundation.search.model;
  * @version 28 Mar 2018  * @Jimmy Romero
  */
 public class ResultFile extends Asset {
+    /**
+     * Extension attribute for files and multimedia files only.*/
+    private String extension;
 
     /**
      * ResultFile object.
@@ -18,7 +21,16 @@ public class ResultFile extends Asset {
      * @param fileName is the file name of files.
      * @param hidden   is the hidden state of files.
      */
-    public ResultFile(String path, String fileName, boolean hidden, boolean readOnly, int typeFile, String owner) {
+    public ResultFile(String path, String fileName, boolean hidden, boolean readOnly, int typeFile, String owner, String extension) {
         super(path, fileName, hidden, readOnly, typeFile, owner);
+        this.extension = extension;
+    }
+
+    /**
+     * Getter for extension attribute.
+     * @return extension attribute.
+     */
+    public String getExtension() {
+        return this.extension;
     }
 }

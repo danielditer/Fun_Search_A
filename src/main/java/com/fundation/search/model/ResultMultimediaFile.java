@@ -13,9 +13,12 @@ package com.fundation.search.model;
 public class ResultMultimediaFile extends Asset {
 
     /**
-     * duration attribute to know its duration (hour minute second)
-     */
+     * duration attribute to know its duration (hour minute second)*/
     private double duration;
+
+    /**
+     * Extension attribute for files and multimedia files only.*/
+    private String extension;
 
     /**
      * Constructor for this class, recieves the same as the father class,
@@ -25,9 +28,10 @@ public class ResultMultimediaFile extends Asset {
      * @param hidden if the file is hidden or not.
      * @param duration hour minute second of file.
      */
-    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner) {
+    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension) {
         super(path, fileName, hidden, true, typeFile, owner);
         this.duration = duration;
+        this.extension = extension;
     }
 
     /**
@@ -36,5 +40,13 @@ public class ResultMultimediaFile extends Asset {
      */
     public double getDuration() {
         return this.duration;
+    }
+
+    /**
+     * Getter for extension attribute.
+     * @return extension attribute.
+     */
+    public String getExtension() {
+        return this.extension;
     }
 }

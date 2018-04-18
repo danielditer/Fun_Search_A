@@ -16,8 +16,6 @@ import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.nio.file.Files.getFileAttributeView;
-
 /**
  * Class made in order to develop different methods for search files.
  * Like: search files of a path, search specific files, search hidden files.
@@ -86,6 +84,9 @@ public class SearchFiles {
             if (matchesCriteria && !searchOwner(results, searchCriteria.getOwner())) {
                 matchesCriteria = false;
             }
+            if (matchesCriteria && !searchExtension(results, searchCriteria.getExtension())) {
+                matchesCriteria = false;
+            }
             if (matchesCriteria) {
                 arrayFinalResult.add(results);
             }
@@ -116,9 +117,11 @@ public class SearchFiles {
                 UserPrincipal owner = foav.getOwner();
                 if (fileEntry.isDirectory()) {
                     recoverFiles(fileEntry, arrayResultFiles);
-                    arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3, owner.getName().substring(owner.getName().indexOf("\\") + 1)));
+                    arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3, owner.getName().substring(owner.getName().indexOf("\\") + 1), null));
                 } else {
-                    arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1, owner.getName().substring(owner.getName().indexOf("\\") + 1)));
+                    String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
+                    System.out.println("extension:" + extension);
+                    arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1, owner.getName().substring(owner.getName().indexOf("\\") + 1), extension));
                 }
             }
         } catch (NullPointerException e) {
@@ -216,16 +219,30 @@ public class SearchFiles {
     }
 
     /**
-     *
+     * Method to filter a file for its owner.
      * @param arrayResultFiles
      * @param owner
      * @return
      */
     public boolean searchOwner(Asset arrayResultFiles, String owner) {
-        System.out.println("owner search: " + owner);
-        System.out.println("file owner: " + arrayResultFiles.getOwner());
         if (owner != null) {
             if (arrayResultFiles.getOwner().equalsIgnoreCase(owner)) {
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Method to filter a files for its extension.
+     * @param arrayResultFiles
+     * @param extension
+     * @return
+     */
+    public boolean searchExtension(Asset arrayResultFiles, String extension) {
+        if (extension != null) {
+            if (arrayResultFiles.getExtension().equalsIgnoreCase(extension)) {
                 return true;
             }
             return false;
