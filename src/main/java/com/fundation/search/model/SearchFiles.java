@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.FileOwnerAttributeView;
 import java.nio.file.attribute.UserPrincipal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,15 +113,38 @@ public class SearchFiles {
     public List<Asset> recoverFiles(File path, List<Asset> arrayResultFiles) {
         try {
             for (File fileEntry : path.listFiles()) {
+                /**
+                 * Section to know a files owner.*/
                 Path path2 = Paths.get(fileEntry.getPath());
                 FileOwnerAttributeView foav = Files.getFileAttributeView(path2, FileOwnerAttributeView.class);
                 UserPrincipal owner = foav.getOwner();
+
+                /**
+                 * Section to know last modified date of a file.*/
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String lastModified = dateFormat.format(fileEntry.lastModified());
+                System.out.println("file name: " + fileEntry.getName() + "**last modified:" + fileEntry.lastModified() + "**formated:" + lastModified);
+
+                /*
+public static void main(String[] args) throws ParseException {
+    String dateString1 = "05-12-2012";
+    String dateString2 = "05-13-2012";
+
+    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+
+    Date date1 = format.parse(dateString1);
+    Date date2 = format.parse(dateString2);
+
+    if (date1.compareTo(date2) <= 0) {
+        System.out.println("dateString1 is an earlier date than dateString2");
+    }
+}
+                 */
                 if (fileEntry.isDirectory()) {
                     recoverFiles(fileEntry, arrayResultFiles);
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3, owner.getName().substring(owner.getName().indexOf("\\") + 1), null));
                 } else {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
-                    System.out.println("extension:" + extension);
                     arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1, owner.getName().substring(owner.getName().indexOf("\\") + 1), extension));
                 }
             }
