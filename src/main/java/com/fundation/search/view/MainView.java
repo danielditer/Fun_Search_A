@@ -6,6 +6,7 @@
  */
 package com.fundation.search.view;
 
+import java.awt.Dimension;
 import java.awt.Container;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
@@ -13,6 +14,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
 import info.clearthought.layout.TableLayout;
 import net.miginfocom.swing.MigLayout;
 
@@ -30,8 +33,14 @@ public class MainView extends JFrame {
     private JTabbedPane tabbedPane;
     private JPanel panelMultimediaSearch;
     private JPanel panelTerminalSearch;
+    private JPanel panelResults;
+    private JPanel panelSearchCrit;
+    private JPanel panelSaveCrit;
     //private JPanel panelTabbedPane;
     private PanelNormalSearch panelNormalSearch;
+    private PanelSearchResults panelSearchResult;
+    private PanelSearchCriterial panelSearchCriterial;
+    private PanelSaveCriterial panelSaveCriterial;
     /**
      * MainView constructor.
      */
@@ -50,17 +59,21 @@ public class MainView extends JFrame {
         menuHelp = new JMenu();
         tabbedPane = new JTabbedPane();
         panelNormalSearch = new PanelNormalSearch();
+        panelSearchResult = new PanelSearchResults();
         panelMultimediaSearch = new PanelMultimediaSearch();
-        panelTerminalSearch = new JPanel();
+        panelSearchCriterial = new PanelSearchCriterial();
+        panelSaveCriterial = new PanelSaveCriterial();
+        //panelTerminalSearch = new JPanel();
+
+        panelResults = new JPanel();
+        panelSearchCrit = new JPanel();
+        panelSaveCrit = new JPanel();
         //panelTabbedPane = new JPanel();
         //======== this ========
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
-        /*contentPane.setLayout(new MigLayout(
-                "hidemode 3",
-                "[fill]" + "[fill]",
-                "[]" + "[]" + "[]"));*/
-        contentPane.setSize(600, 600);
+
+        contentPane.setSize(50, 600);
         //======== menuBar ========
         //======== menuFile ========
         menuFile.setText("File");
@@ -75,31 +88,66 @@ public class MainView extends JFrame {
         menuHelp.setText("Help");
         menuBar.add(menuHelp);
         setJMenuBar(menuBar);
+
+        tabbedPane.setPreferredSize(new Dimension(310, 460));
         //======== panelNormalSearch ========
         tabbedPane.addTab("Normal Search", panelNormalSearch);
         //======== panelMultimediaSearch ========
         tabbedPane.addTab("Multimedia Search", panelMultimediaSearch);
-        //======== panelTerminalSearch ========
-        panelTerminalSearch.setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED, TableLayout.PREFERRED},
-                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
-        tabbedPane.addTab("Terminal Search", panelTerminalSearch);
+
         contentPane.add(tabbedPane, BorderLayout.CENTER);
         //======== panelTabbedPane ========
-        //panelTabbedPane.setLayout(new BorderLayout());
-        //contentPane.add(panelTabbedPane, BorderLayout.CENTER);
         setVisible(true);
         pack();
         setLocationRelativeTo(getOwner());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(780,560);
+        setSize(745,520);
         setResizable(false);
+
+        //======== panel Search Criterial ========
+        panelSearchCrit.add(panelSearchCriterial);
+        panelSearchCrit.setBorder(new EmptyBorder(10,420,10,100));
+        contentPane.add(panelSearchCrit, BorderLayout.CENTER);
+
+        //======== panel Search Results ========
+        panelResults.add(panelSearchResult);
+        panelResults.setBorder(new EmptyBorder(5,420,10,100));
+        contentPane.add(panelResults, BorderLayout.SOUTH);
+        //======== panel Search Results ========
+        panelSaveCrit.add(panelSaveCriterial);
+        panelSaveCrit.setBorder(new EmptyBorder(5,420,10,100));
+        contentPane.add(panelSaveCrit, BorderLayout.NORTH);
+
     }
 
     /**
-     * @return the Panel ´panelNormalSearch´.
+     * @return the Panel ´panelNormalSerch´.
      */
     public JPanel getPanel() {
         return panelNormalSearch;
+    }
+
+    /**
+     * @return the Panel ´panelNormalSerch´.
+     */
+    public JPanel getPanelResultList() {
+        return panelSearchResult;
+    }
+
+    /**
+     * Getter for the search criterial panel.
+     *
+     * @return ta boolean of ´panelSearchCriterial´ panel.
+     */
+    public JPanel getPanelSearchCriterial() {
+        return panelSearchCriterial;
+    }
+    /**
+     * Getter for the save criterial panel.
+     *
+     * @return ta boolean of ´panelSaveCriterial´ panel.
+     */
+    public JPanel getPanelSaveCriterial() {
+        return panelSaveCriterial;
     }
 }

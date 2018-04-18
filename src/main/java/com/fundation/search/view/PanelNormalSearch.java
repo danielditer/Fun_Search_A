@@ -8,16 +8,8 @@ package com.fundation.search.view;
 
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
-
-import javax.swing.JScrollPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JCheckBox;
 import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.border.TitledBorder;
-import java.awt.Dimension;
-import javax.swing.table.DefaultTableModel;
 
 /**
  * Class to initialize panel for normal search tab.
@@ -26,19 +18,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PanelNormalSearch extends JPanel {
     private PanelNamePath panelNamePath;
-    private JPanel panelCoincidences;
-    private JPanel panelFileContent;
-    private JScrollPane scrollPaneContent;
-    private JTextArea textAreaContent;
-    private JCheckBox checkBoxCaseSensitive;
+
     private PanelDate panelDate;
     private PanelAttributes panelAttributes;
-    private JPanel panelResultTable;
     private PanelButtonSearch panelButtonSearch;
-    private JTable tableResult;
-    private DefaultTableModel tableModel;
-
-
+    private PanelFileContent panelFileContents;
     /**
      * Class constructor to initialize components and set visible this panel.
      */
@@ -46,27 +30,15 @@ public class PanelNormalSearch extends JPanel {
         initComponents();
         setVisible(true);
     }
-
     /**
      * Initializes panel components.
      */
     public void initComponents() {
         panelNamePath = new PanelNamePath();
-        panelCoincidences = new JPanel();
-        panelFileContent = new JPanel();
-        scrollPaneContent = new JScrollPane();
-        textAreaContent = new JTextArea();
-        checkBoxCaseSensitive = new JCheckBox();
+        panelFileContents = new PanelFileContent();
         panelDate = new PanelDate();
         panelAttributes = new PanelAttributes();
-        panelResultTable = new JPanel();
         panelButtonSearch = new PanelButtonSearch();
-        tableResult = new JTable();
-
-        String columnNames[] = new String[]{"File Name", "File Path", "Hidden"};
-
-        tableModel = new DefaultTableModel(0, 0);
-        tableModel.setColumnIdentifiers(columnNames);
 
         setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED},
@@ -75,29 +47,8 @@ public class PanelNormalSearch extends JPanel {
         //======== panelNamePath ========
         add(panelNamePath, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        //======== panelCoincidences ========
-        panelCoincidences.setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED, TableLayout.PREFERRED},
-                {TableLayout.PREFERRED, TableLayout.PREFERRED}}));
-        add(panelCoincidences, new TableLayoutConstraints(1, 0, 1, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //======== panelFileContent ========
-        panelFileContent.setBorder(new TitledBorder("File content"));
-        panelFileContent.setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED},
-                {TableLayout.PREFERRED, TableLayout.PREFERRED}}));
-        //======== scrollPaneContent ========
-        //---- textAreaContent ----
-        final Dimension preferredSizeTextArea = new Dimension(240, 20);
-        textAreaContent.setPreferredSize(preferredSizeTextArea);
-        scrollPaneContent.setViewportView(textAreaContent);
-        panelFileContent.add(scrollPaneContent, new TableLayoutConstraints(0, 0, 0, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        //---- checkBoxCaseSensitive ----
-        checkBoxCaseSensitive.setText("Case sensitive");
-        panelFileContent.add(checkBoxCaseSensitive, new TableLayoutConstraints(0, 1, 0, 1,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        add(panelFileContent, new TableLayoutConstraints(0, 1, 0, 1,
+        add(panelFileContents, new TableLayoutConstraints(0, 1, 0, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //======== panelDate ========
         add(panelDate, new TableLayoutConstraints(0, 2, 0, 2,
@@ -106,29 +57,10 @@ public class PanelNormalSearch extends JPanel {
         final int constraints1 = 3;
         add(panelAttributes, new TableLayoutConstraints(0, constraints1, 0, constraints1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-
-        /**
-         * Panel for results table
-         */
-        panelResultTable.setBorder(new TitledBorder("Results"));
-        panelResultTable.setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
-                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
-
-        tableResult.setModel(tableModel);
-        tableResult.setPreferredScrollableViewportSize(new Dimension(500, 70));
-        tableResult.setFillsViewportHeight(true);
-        JScrollPane scrollPane = new JScrollPane(tableResult);
-        panelResultTable.add(scrollPane, new TableLayoutConstraints(1, 0, 1, 1,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        add(panelResultTable, new TableLayoutConstraints(0, 4, 0, 4,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-
         //======== panelButtonSearch ========
-        add(panelButtonSearch, new TableLayoutConstraints(1, 4, 1, 4,
+        add(panelButtonSearch, new TableLayoutConstraints(0, 4, 0, 4,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
     }
-
     /**
      * Getter for the search button.
      *
@@ -137,7 +69,6 @@ public class PanelNormalSearch extends JPanel {
     public JButton getButtonSearch() {
         return panelButtonSearch.getButtonSearch();
     }
-
     /**
      * Getter for the path.
      *
@@ -146,7 +77,6 @@ public class PanelNormalSearch extends JPanel {
     public String getPath() {
         return panelNamePath.getPath();
     }
-
     /**
      * Getter for the file name.
      *
@@ -155,29 +85,137 @@ public class PanelNormalSearch extends JPanel {
     public String getName() {
         return panelNamePath.getName();
     }
-
     /**
-     * Getter for the controller to get model for the result table.
+     * Getter for the case sensitive name.
      *
-     * @return tableModel, which is the model for the table.
+     * @return ta boolean of ´checkBoxCaseSensitiveName´ text field.
      */
-    public DefaultTableModel getTableModel() {
-        return this.tableModel;
+    public boolean getCaseSensitiveName() {
+        return panelNamePath.getCaseSensitive();
     }
-
     /**
-     * Setter for the controller to set model filled with results.
+     * Getter for the case sensitive name.
      *
-     * @param model, the TableModel filled with results.
+     * @return ta boolean of ´checkBoxCaseSensitiveName´ text field.
      */
-    public void setTableModel(DefaultTableModel model) {
-        this.tableModel = model;
+    public boolean getCheckBoxOnlyFiles() {
+        return panelNamePath.getCheckBoxOnlyFiles();
+    }
+    /**
+     * Getter for the case sensitive name.
+     *
+     * @return ta boolean of ´checkBoxCaseSensitiveName´ text field.
+     */
+    public boolean getCheckBoxOnlyDirectory() {
+        return panelNamePath.getCheckBoxOnlyDirectory();
+    }
+    /**
+     * Getter for the Case sensitive input content.
+     * @return the boolean of ´getContent´ method.
+     */
+    public String getContent() {
+        return panelFileContents.getContent();
+    }
+    /**
+     * Getter for the Case sensitive file content.
+     * @return the boolean of ´getCaseSensitiveContent´ method.
+     */
+    public Boolean getCaseSensitiveContent() {
+        return panelFileContents.getCaseSensitiveContent();
+    }
+    /**
+     * Getter for the creation date checkbox.
+     * @return the boolean of ´getCheckBoxCreated´ method.
+     */
+    public Boolean getCheckBoxCreated() {
+        return panelDate.getCheckBoxCreated();
+    }
+    /**
+     * Getter for the modified date checkbox.
+     * @return the boolean of ´getCheckBoxModified´ method.
+     */
+    public Boolean getCheckBoxModified() {
+        return panelDate.getCheckBoxModified();
+    }
+    /**
+     * Getter for the las acceced date checkbox.
+     * @return the boolean of ´getCheckBoxAccessed´ method.
+     */
+    public Boolean getCheckBoxAccessed() {
+        return panelDate.getCheckBoxAccessed();
+    }
+    /**
+     * Getter for the date start.
+     * @return the boolean of ´getFormattedTextFieldStart´ method.
+     */
+    public String getFormattedTextFieldStart() {
+        return panelDate.getFormattedTextFieldStart();
+    }
+    /**
+     * Getter for the date end.
+     * @return the boolean of ´getFormattedTextFieldEnd´ method.
+     */
+    public String getFormattedTextFieldEnd() {
+        return panelDate.getFormattedTextFieldEnd();
+    }
+    /**
+     * Getter for the read only checkbox.
+     *
+     * @return ta boolean of ´getCheckBoxReadOnly´ text field.
+     */
+    public String getCheckBoxReadOnly() {
+        return panelAttributes.getCheckBoxReadOnly();
+    }
+    /**
+     * Getter for the hidden checkbox.
+     *
+     * @return ta boolean of ´checkBoxHidden´ text field.
+     */
+    public String getCheckBoxHidden() {
+        return panelAttributes.getCheckBoxHidden();
     }
 
     /**
-     * Method to set model in table.
+     * Getter for the extension type.
+     *
+     * @return ta boolean of ´textFieldExt´ text field.
      */
-    public void setTableResultModel() {
-        this.tableResult.setModel(this.tableModel);
+    public String getTextFieldExt() {
+        return panelAttributes.getTextFieldExt();
     }
+    /**
+     * Getter for the size file.
+     *
+     * @return ta boolean of ´textFieldSize´ text field.
+     */
+    public String getTextFieldSize() {
+        return panelAttributes.getTextFieldSize();
+    }
+    /**
+     * Getter for the combobox size.
+     *
+     * @return ta boolean of ´comboBoxSize´ text field.
+     */
+    public String getComboBoxSize() {
+        return panelAttributes.getComboBoxSize();
+    }
+    /**
+     * Getter for the combobox type size.
+     *
+     * @return ta boolean of ´comboBoxType´ text field.
+     */
+
+    public String getComboBoxType() {
+        return panelAttributes.getComboBoxType();
+    }
+    /**
+     * Getter for the owner input.
+     *
+     * @return ta boolean of ´textFieldOwner´ text field.
+     */
+    public String getTextFieldOwner() {
+        return panelAttributes.getTextFieldOwner();
+    }
+
+
 }

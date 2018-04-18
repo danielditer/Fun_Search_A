@@ -7,11 +7,12 @@
 package com.fundation.search.controller;
 
 import com.fundation.search.common.Validator;
-import com.fundation.search.model.ResultFile;
+import com.fundation.search.model.Asset;
 import com.fundation.search.model.SearchCriteria;
 import com.fundation.search.model.SearchFiles;
 import com.fundation.search.view.MainView;
 import com.fundation.search.view.PanelNormalSearch;
+import com.fundation.search.view.PanelSearchResults;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -25,7 +26,7 @@ import java.util.List;
  *
  * @version 28 Mar 2018  * @Juan Manuel
  */
-public class SearchController {
+public class SearchController implements Controller {
     private SearchFiles searchFile;
     private MainView mainView;
     private SearchCriteria searchCriteria;
@@ -45,6 +46,7 @@ public class SearchController {
     /**
      * Method to initialize all controller methods.
      */
+    @Override
     public void init() {
         searchCriteria = new SearchCriteria();
         getActionPerformed();
@@ -55,18 +57,26 @@ public class SearchController {
      */
     public void getActionPerformed() {
         PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
-        panel.getButtonSearch().addActionListener(e -> lambdaActionListener(panel));
+        panel.getButtonSearch().addActionListener(e -> searchButtonActionListener(panel));
     }
 
     /**
-     * Method lambda to add action listener to button search.
+     * Method lambda to add action listener for button search.
      *
      * @param panel
      */
-    public void lambdaActionListener(PanelNormalSearch panel) {
+    public void searchButtonActionListener(PanelNormalSearch panel) {
+        int typeFile = 0;
+        if (panel.getCheckBoxOnlyFiles() && panel.getCheckBoxOnlyDirectory()) {
+            typeFile = 0;
+        } else if (panel.getCheckBoxOnlyFiles()) {
+            typeFile = 1;
+        } else if (panel.getCheckBoxOnlyDirectory()) {
+            typeFile = 3;
+        }
+
         if (areValidParams(panel.getPath(), panel.getName())) {
-            ;
-            sendSearchCriteriaToModel(panel.getPath(), panel.getName());
+            sendSearchCriteriaToModel(panel.getPath(), panel.getName(), panel.getCheckBoxHidden(), panel.getCheckBoxReadOnly(), typeFile, panel.getCaseSensitiveName());
         }
     }
 
@@ -96,9 +106,15 @@ public class SearchController {
      * @param path
      * @param name
      */
-    public void sendSearchCriteriaToModel(String path, String name) {
+    public void sendSearchCriteriaToModel(String path, String name, boolean hidden, boolean readOnly, int typeFile, boolean nameFileCaseSensitive) {
         searchCriteria.setPath(path);
-        searchCriteria.setName(name);
+        if (!name.isEmpty()) {
+            searchCriteria.setName(name);
+        }
+        searchCriteria.setHidden(hidden);
+        searchCriteria.setReadOnly(readOnly);
+        searchCriteria.setTypeFile(typeFile);
+        searchCriteria.setNameFileCaseSensitive(nameFileCaseSensitive);
         searchFile.setSearchCriteria(searchCriteria);
         searchFile.init();
         setResultsToTable();
@@ -108,16 +124,18 @@ public class SearchController {
      * Method to get Model results and display them.
      */
     public void setResultsToTable() {
-        List<ResultFile> resultFileList = searchFile.getResultResultFiles();
-        PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
+        List<Asset> resultFileList = searchFile.getResultResultFiles();
+        PanelSearchResults panel = (PanelSearchResults) mainView.getPanelResultList();
         DefaultTableModel tableModel = panel.getTableModel();
         System.out.println("File Name\tFile Path\tHidden");
+        tableModel.setRowCount(0);
 
         for (int i = 0; i < resultFileList.size(); i++) {
-            tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden()});
+            tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly()});
             System.out.println(resultFileList.get(i).getFileName() + "\t" + resultFileList.get(i).getPath() + "\t" + resultFileList.get(i).getHidden());
         }
         panel.setTableModel(tableModel);
         panel.setTableResultModel();
     }
 }
+

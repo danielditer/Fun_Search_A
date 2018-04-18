@@ -6,9 +6,12 @@
  */
 package com.fundation.search;
 
+import com.fundation.search.controller.CommandController;
+import com.fundation.search.controller.Controller;
 import com.fundation.search.controller.LoggerCreator;
 import com.fundation.search.controller.SearchController;
 import com.fundation.search.model.SearchFiles;
+import com.fundation.search.view.CommandResultView;
 import com.fundation.search.view.MainView;
 
 /**
@@ -19,15 +22,22 @@ import com.fundation.search.view.MainView;
 public class Main {
     /**
      * Method main to run project.
-     * @param args
+     * @param args, commands as an input to search files
      */
     public static void main (String[] args) {
+        Controller controller;
         SearchFiles searchFile = new SearchFiles();
-        LoggerCreator.getInstance().info(searchFile.getClass().getName(), "Started Searchfiles");
-        MainView mainView = new MainView();
-        LoggerCreator.getInstance().info(mainView.getClass().getName(), "Started MainView");
-        SearchController searchController = new SearchController(searchFile, mainView);
-        searchController.init();
-        LoggerCreator.getInstance().info(searchController.getClass().getName(), "Initialized SearchController");
+        LoggerCreator.getInstance().info(searchFile.getClass().getName(), "Started Searchfiles");  
+        if (args.length > 0) {
+            CommandResultView commandResultView = new CommandResultView();
+            LoggerCreator.getInstance().info(commandResultView.getName(), "Started CommandResultView");
+            controller = new CommandController(searchFile, commandResultView, args);
+        } else {
+            MainView mainView = new MainView();
+            LoggerCreator.getInstance().info(mainView.getClass().getName(), "Started MainView");
+            controller = new SearchController(searchFile, mainView);
+        }
+        controller.init();
+        LoggerCreator.getInstance().info(searchController.getClass().getName(), "Initialized Controller");
     }
 }
