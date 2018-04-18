@@ -32,6 +32,7 @@ public class PanelSearchCriterial extends JPanel {
     private JTable tableResult;
     JButton buttonSelect;
     JButton buttonSearch;
+    JButton buttonLoad;
     /**
      * Class constructor.
      */
@@ -45,6 +46,7 @@ public class PanelSearchCriterial extends JPanel {
         labelName = new JLabel();
         textFieldName = new JTextField();
         buttonSelect = new JButton();
+        buttonLoad = new JButton();
         buttonSearch = new JButton();
         tableResult = new JTable();
         String columnNames[] = new String[]{"Name"};
@@ -87,6 +89,11 @@ public class PanelSearchCriterial extends JPanel {
         add(buttonSelect, new TableLayoutConstraints(2, 2, 2, 2,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
+        //---- Button select criterial ----
+        buttonLoad.setText("Load");
+        add(buttonLoad, new TableLayoutConstraints(1, 2, 1, 2,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
 
     }
 
@@ -110,6 +117,12 @@ public class PanelSearchCriterial extends JPanel {
      */
     public JButton getButtonSearch(){
         return buttonSearch;
+    }
+    /**
+     * @return buttonLoad return all criteria in the database.
+     */
+    public JButton getButtonLoad(){
+        return buttonLoad;
     }
 
 
