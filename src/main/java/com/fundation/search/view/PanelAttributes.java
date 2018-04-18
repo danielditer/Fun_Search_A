@@ -9,13 +9,16 @@ package com.fundation.search.view;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JButton;
 
 import javax.swing.border.TitledBorder;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import javax.swing.JRadioButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.ButtonGroup;
 /**
  * Class PanelAttributes that contains elements of the attributes panel for the normal search files.
  *
@@ -141,8 +144,10 @@ public class PanelAttributes extends JPanel{
 
         //---- comboBoxSize ----
         comboBoxType.setPreferredSize(new Dimension(50, 20));
-        comboBoxType.addItem("Gb");
+        comboBoxType.addItem("bytes");
         comboBoxType.addItem("Mb");
+        comboBoxType.addItem("Gb");
+
         add(comboBoxType, new TableLayoutConstraints(3, 3, 3, 3,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 

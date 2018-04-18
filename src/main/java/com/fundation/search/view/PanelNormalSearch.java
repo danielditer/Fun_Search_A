@@ -18,7 +18,7 @@ import javax.swing.JButton;
  */
 public class PanelNormalSearch extends JPanel {
     private PanelNamePath panelNamePath;
-    private JPanel panelFileContent;
+
     private PanelDate panelDate;
     private PanelAttributes panelAttributes;
     private PanelButtonSearch panelButtonSearch;
@@ -35,7 +35,6 @@ public class PanelNormalSearch extends JPanel {
      */
     public void initComponents() {
         panelNamePath = new PanelNamePath();
-        panelFileContent = new JPanel();
         panelFileContents = new PanelFileContent();
         panelDate = new PanelDate();
         panelAttributes = new PanelAttributes();

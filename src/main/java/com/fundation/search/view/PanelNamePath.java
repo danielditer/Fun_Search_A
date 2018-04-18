@@ -9,7 +9,12 @@ package com.fundation.search.view;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JPanel;
+import javax.swing.JFileChooser;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
