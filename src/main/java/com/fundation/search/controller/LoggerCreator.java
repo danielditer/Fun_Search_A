@@ -32,6 +32,7 @@ public class LoggerCreator {
     }
 
     /**
+     * Method for write a log with INFO level.
      * @param myClass
      * @param message
      */
@@ -41,6 +42,7 @@ public class LoggerCreator {
     }
 
     /**
+     * Method for write a log with ERROR level.
      * @param myClass
      * @param message
      * @param ce
@@ -50,6 +52,7 @@ public class LoggerCreator {
     }
 
     /**
+     * Method for write a log with WARNING level.
      * @param myClass
      * @param message
      */
@@ -58,6 +61,7 @@ public class LoggerCreator {
     }
 
     /**
+     * Method for write a log with DEBUG level.
      * @param myClass
      * @param message
      */
