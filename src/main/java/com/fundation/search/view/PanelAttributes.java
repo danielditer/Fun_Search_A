@@ -77,8 +77,14 @@ public class PanelAttributes extends JPanel{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
         //---- checkBoxReadOnly ----
         radioBoxReadOnly.setText("Read-only");
+        radioBoxReadOnly.setActionCommand("1");
+
         radioBoxReadOnlyNo.setText("No Read-only");
+        radioBoxReadOnlyNo.setActionCommand("2");
+
         radioBoxReadOnlyAll.setText("All");
+        radioBoxReadOnlyAll.setActionCommand("3");
+
         radioBoxReadOnlyAll.setSelected(true);
 
         btnGroupRead.add(radioBoxReadOnly);
@@ -94,8 +100,14 @@ public class PanelAttributes extends JPanel{
 
         //---- checkBoxHidden ----
         radioBoxHidden.setText("Hidden");
+        radioBoxHidden.setActionCommand("1");
+
         radioBoxHiddenNo.setText("No Hidden");
+        radioBoxHiddenNo.setActionCommand("2");
+
         radioBoxHiddenAll.setText("All");
+        radioBoxHiddenAll.setActionCommand("3");
+
         radioBoxHiddenAll.setSelected(true);
 
         btnGroupHidden.add(radioBoxHidden);
