@@ -16,8 +16,7 @@ public class Asset {
     private boolean hidden;
     private boolean readOnly;
     private int typeFile;
-    private boolean noHidden;
-
+    private String owner;
 
     /**
      * Constructor.
@@ -27,12 +26,13 @@ public class Asset {
      * @param readOnly if file is readonly or not.
      * @param typeFile type of file.
      */
-    public Asset(String path, String fileName, boolean hidden, boolean readOnly, int typeFile) {
+    public Asset(String path, String fileName, boolean hidden, boolean readOnly, int typeFile, String owner) {
         this.path = path;
         this.fileName = fileName;
         this.hidden = hidden;
         this.readOnly = readOnly;
         this.typeFile = typeFile;
+        this.owner = owner;
     }
 
     /**
@@ -76,5 +76,17 @@ public class Asset {
      */
     public int getTypeFile() {
         return typeFile;
+    }
+
+    /**
+     * Methot to get owner attribute
+     * @return owner attribute.
+     */
+    public String getOwner() {
+        return this.owner;
+    }
+
+    public String getExtension() {
+        return getExtension();
     }
 }

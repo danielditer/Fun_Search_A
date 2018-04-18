@@ -28,6 +28,7 @@ public class Main {
         Controller controller;
         SearchFiles searchFile = new SearchFiles();
         LoggerCreator.getInstance().info(searchFile.getClass().getName(), "Started Searchfiles");  
+
         if (args.length > 0) {
             CommandResultView commandResultView = new CommandResultView();
             LoggerCreator.getInstance().info(commandResultView.getClass().getName(), "Started CommandResultView");

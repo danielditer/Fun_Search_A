@@ -3,15 +3,7 @@ package com.fundation.search.view;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.JScrollPane;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JTable;
-import javax.swing.JSpinner;
-import javax.swing.JPanel;
-import javax.swing.JCheckBox;
-
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 public class PanelMultimediaSearch extends JPanel{

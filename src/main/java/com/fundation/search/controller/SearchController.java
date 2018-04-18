@@ -74,9 +74,8 @@ public class SearchController implements Controller {
         } else if (panel.getCheckBoxOnlyDirectory()) {
             typeFile = 3;
         }
-
         if (areValidParams(panel.getPath(), panel.getName())) {
-            sendSearchCriteriaToModel(panel.getPath(), panel.getName(), panel.getCheckBoxHidden(), panel.getCheckBoxReadOnly(), typeFile, panel.getCaseSensitiveName());
+            sendSearchCriteriaToModel(panel.getPath(), panel.getName(), panel.getCheckBoxHidden(), panel.getCheckBoxReadOnly(), typeFile, panel.getCaseSensitiveName(), panel.getTextFieldOwner(), panel.getTextFieldExt());
         }
     }
 
@@ -106,7 +105,7 @@ public class SearchController implements Controller {
      * @param path
      * @param name
      */
-    public void sendSearchCriteriaToModel(String path, String name, boolean hidden, boolean readOnly, int typeFile, boolean nameFileCaseSensitive) {
+    public void sendSearchCriteriaToModel(String path, String name, String hidden, String readOnly, int typeFile, boolean nameFileCaseSensitive, String owner, String extension) {
         searchCriteria.setPath(path);
         if (!name.isEmpty()) {
             searchCriteria.setName(name);
@@ -115,6 +114,16 @@ public class SearchController implements Controller {
         searchCriteria.setReadOnly(readOnly);
         searchCriteria.setTypeFile(typeFile);
         searchCriteria.setNameFileCaseSensitive(nameFileCaseSensitive);
+        if (!owner.isEmpty()) {
+            searchCriteria.setOwner(owner);
+        } else {
+            searchCriteria.setOwner(null);
+        }
+        if (!extension.isEmpty()) {
+            searchCriteria.setExtension(extension);
+        } else {
+            searchCriteria.setExtension(null);
+        }
         searchFile.setSearchCriteria(searchCriteria);
         searchFile.init();
         setResultsToTable();
