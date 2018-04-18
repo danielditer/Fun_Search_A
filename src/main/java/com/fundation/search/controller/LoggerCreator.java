@@ -6,8 +6,6 @@
  */
 package com.fundation.search.controller;
 
-import com.fundation.search.Main;
-import com.fundation.search.common.Constants;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -22,13 +20,6 @@ public class LoggerCreator {
     private final static Logger LOGGER = Logger.getLogger(LoggerCreator.class.getName());
 
     /**
-     * Class constructor.
-     */
-    public LoggerCreator() {
-
-    }
-
-    /**
      * @return the instance of Logger.
      */
     public static LoggerCreator getInstance() {
@@ -41,40 +32,37 @@ public class LoggerCreator {
     }
 
     /**
-     * @param logLevel
-     * @param logContent
+     * @param myClass
+     * @param message
      */
-    public void writeLog(int logLevel, String myClass, String logContent) {
-        switch (logLevel) {
-            case Constants.DEBUG:
-                LOGGER.debug(myClass + logContent);
-                break;
-            case Constants.INFO:
-                LOGGER.info(myClass + logContent);
-                break;
-            case Constants.WARN:
-                LOGGER.warn(myClass + logContent);
-                break;
-            case Constants.ERROR:
-                LOGGER.error(myClass + logContent);
-                break;
-            default:
-                System.out.println("error log level for writeLog error");
-                break;
-        }
-    }
-
     public void info(String myClass, String message) {
         LOGGER.info("[" + myClass + "] " + message);
 
     }
 
+    /**
+     * @param myClass
+     * @param message
+     * @param ce
+     */
     public void error(String myClass, String message, Exception ce) {
         LOGGER.error("[" + myClass + "] " + message, ce);
     }
 
+    /**
+     * @param myClass
+     * @param message
+     */
     public void warning(String myClass, String message) {
         LOGGER.warn("[" + myClass + "] " + message);
+    }
+
+    /**
+     * @param myClass
+     * @param message
+     */
+    public void debug(String myClass, String message) {
+        LOGGER.debug("[" + myClass + "] " + message);
     }
 }
 
