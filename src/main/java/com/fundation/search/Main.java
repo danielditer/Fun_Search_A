@@ -30,7 +30,7 @@ public class Main {
         LoggerCreator.getInstance().info(searchFile.getClass().getName(), "Started Searchfiles");  
         if (args.length > 0) {
             CommandResultView commandResultView = new CommandResultView();
-            LoggerCreator.getInstance().info(commandResultView.getName(), "Started CommandResultView");
+            LoggerCreator.getInstance().info(commandResultView.getClass().getName(), "Started CommandResultView");
             controller = new CommandController(searchFile, commandResultView, args);
         } else {
             MainView mainView = new MainView();
@@ -38,6 +38,6 @@ public class Main {
             controller = new SearchController(searchFile, mainView);
         }
         controller.init();
-        LoggerCreator.getInstance().info(searchController.getClass().getName(), "Initialized Controller");
+        LoggerCreator.getInstance().info(controller.getClass().getName(), "Initialized Controller");
     }
 }
