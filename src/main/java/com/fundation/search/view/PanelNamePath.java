@@ -87,7 +87,6 @@ public class PanelNamePath extends JPanel {
                     checkBoxCaseSensitiveName.setEnabled(true);
                 }
             }
-
             @Override
             public void removeUpdate(DocumentEvent e) {
                 String inputText = textFieldName.getText();
@@ -95,10 +94,8 @@ public class PanelNamePath extends JPanel {
                     checkBoxCaseSensitiveName.setEnabled(false);
                 }
             }
-
             @Override
             public void changedUpdate(DocumentEvent e) {
-
             }
         });
         add(textFieldName, new TableLayoutConstraints(1, 0, 1, 0,
@@ -115,6 +112,7 @@ public class PanelNamePath extends JPanel {
                 TableLayoutConstraints.FULL));
         //---- File chooser ----
         buttonFileChooser.setText("...");
+        buttonFileChooser.setPreferredSize(new Dimension(20, 20));
         buttonFileChooser.addActionListener(e -> folderChooser(e));
         add(buttonFileChooser, new TableLayoutConstraints(2, 1, 2, 1,
                 TableLayoutConstraints.FULL,
