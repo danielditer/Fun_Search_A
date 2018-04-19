@@ -17,6 +17,7 @@ public class Asset {
     private boolean readOnly;
     private int typeFile;
     private String owner;
+    private long size;
 
     /**
      * Constructor.
@@ -26,13 +27,14 @@ public class Asset {
      * @param readOnly if file is readonly or not.
      * @param typeFile type of file.
      */
-    public Asset(String path, String fileName, boolean hidden, boolean readOnly, int typeFile, String owner) {
+    public Asset(String path, String fileName, boolean hidden, boolean readOnly, int typeFile, String owner, long size) {
         this.path = path;
         this.fileName = fileName;
         this.hidden = hidden;
         this.readOnly = readOnly;
         this.typeFile = typeFile;
         this.owner = owner;
+        this.size = size;
     }
 
     /**
@@ -79,14 +81,22 @@ public class Asset {
     }
 
     /**
-     * Methot to get owner attribute
+     * Method to get owner attribute
      * @return owner attribute.
      */
     public String getOwner() {
         return this.owner;
     }
 
+    /**
+     * Method to get extension attribute.
+     * @return extension attribute.
+     */
     public String getExtension() {
         return getExtension();
+    }
+
+    public long getSize() {
+        return this.size;
     }
 }

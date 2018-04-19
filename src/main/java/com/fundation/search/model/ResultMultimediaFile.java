@@ -28,8 +28,8 @@ public class ResultMultimediaFile extends Asset {
      * @param hidden if the file is hidden or not.
      * @param duration hour minute second of file.
      */
-    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension) {
-        super(path, fileName, hidden, true, typeFile, owner);
+    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension, long size) {
+        super(path, fileName, hidden, true, typeFile, owner, size);
         this.duration = duration;
         this.extension = extension;
     }
