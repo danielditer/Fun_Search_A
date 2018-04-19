@@ -9,10 +9,15 @@ package com.fundation.search.view;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JCheckBox;
 
 import javax.swing.border.TitledBorder;
-import java.awt.*;
+import java.awt.Dimension;
 
 /**
  * @version 12 Apr 2018  * @Maria Canqui.
