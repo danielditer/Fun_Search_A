@@ -125,7 +125,9 @@ public class SearchController implements Controller {
             searchCriteria.setExtension(null);
         }
         searchCriteria.setSizeSign(sizeSign);
-        searchCriteria.setSizeRequired(sizeRequired);
+        if (!sizeRequired.isEmpty()) {
+            searchCriteria.setSizeRequired(sizeRequired);
+        }
         searchCriteria.setSizeMeasure(sizeMeasure);
 
         searchFile.setSearchCriteria(searchCriteria);

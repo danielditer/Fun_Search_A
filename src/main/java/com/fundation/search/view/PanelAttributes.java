@@ -157,6 +157,7 @@ public class PanelAttributes extends JPanel{
         //---- comboBoxSize ----
         comboBoxType.setPreferredSize(new Dimension(50, 20));
         comboBoxType.addItem("bytes");
+        comboBoxType.addItem("Kb");
         comboBoxType.addItem("Mb");
         comboBoxType.addItem("Gb");
 

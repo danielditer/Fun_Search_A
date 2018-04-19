@@ -111,5 +111,6 @@ public class SearchFilesTest {
                 , "test5.docx", true));
         assertTrue( pathFiles.searchHiddenFiles(pathFiles.recoverFiles(path, arrayResultFiles)).get(0).getHidden());
         assertTrue( pathFiles.searchHiddenFiles(pathFiles.recoverFiles(path, arrayResultFiles)).get(1).getHidden());
+        assertEquals();
     }
 }

@@ -320,7 +320,7 @@ public static void main(String[] args) throws ParseException {
             return false;
         }
         if (sizeSign.equalsIgnoreCase("equals")) {
-            if (arrayResultFiles.getSize() == size) {
+            if (Math.abs(arrayResultFiles.getSize() - size) <= 100.0) {
                 return true;
             }
             return false;
