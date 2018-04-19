@@ -9,12 +9,15 @@ package com.fundation.search.view;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.JTextArea;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JCheckBox;
 
 import javax.swing.border.TitledBorder;
+import java.awt.Dimension;
 
 /**
  * @version 12 Apr 2018  * @Maria Canqui.
@@ -24,6 +27,8 @@ public class PanelFileContent extends JPanel {
     private JTextArea textAreaContent;
     private JScrollPane scrollPaneContent;
     private JCheckBox checkBoxCaseSensitive;
+    private JComboBox comboTypeFile;
+    private JLabel labelComboTypeFile;
     /**
      * Class constructor.
      */
@@ -37,19 +42,35 @@ public class PanelFileContent extends JPanel {
         textAreaContent = new JTextArea(2, 23);
         scrollPaneContent = new JScrollPane();
         checkBoxCaseSensitive = new JCheckBox();
+        comboTypeFile = new JComboBox();
+        labelComboTypeFile = new JLabel();
 
+
+        //---- File content ----
         setBorder(new TitledBorder("File content"));
         setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED},
-                {TableLayout.PREFERRED, TableLayout.PREFERRED}}));
+                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
+                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
+
+        //---- textFieldExtension ----
+        labelComboTypeFile.setText("Type");
+        add(labelComboTypeFile, new TableLayoutConstraints(0, 0, 0, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
+        //---- comboBoxSize ----
+        comboTypeFile.addItem("txt");
+        comboTypeFile.setPreferredSize(new Dimension(20, 20));
+        add(comboTypeFile, new TableLayoutConstraints(1, 0, 1, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
         //======== scrollPaneContent ========
         //---- textAreaContent ----
         scrollPaneContent.setViewportView(textAreaContent);
-        add(scrollPaneContent, new TableLayoutConstraints(0, 0, 0, 0,
+        add(scrollPaneContent, new TableLayoutConstraints(0, 1, 2, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //---- checkBoxCaseSensitive ----
         checkBoxCaseSensitive.setText("Case sensitive");
-        add(checkBoxCaseSensitive, new TableLayoutConstraints(0, 1, 0, 1,
+        add(checkBoxCaseSensitive, new TableLayoutConstraints(0, 2, 0, 2,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
     }
     /**
