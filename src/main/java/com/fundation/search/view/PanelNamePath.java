@@ -36,7 +36,6 @@ public class PanelNamePath extends JPanel {
     private JCheckBox checkBoxCaseSensitiveName;
     private JCheckBox checkBoxOnlyFiles;
     private JCheckBox checkBoxOnlyDirectory;
-    private JTextField pathTextField;
 
     /**
      * Class constructor.
@@ -190,5 +189,37 @@ public class PanelNamePath extends JPanel {
      */
     public boolean getCheckBoxOnlyDirectory() {
         return checkBoxOnlyDirectory.isSelected();
+    }
+
+    //setters
+    /**
+     * Setter for the name text field file.
+     */
+    public void setTextFieldName(String textFieldName) {
+        this.textFieldName.setText(textFieldName);
+    }
+    /**
+     * Setter for the path text field file.
+     */
+    public void setTextFieldPath(String textFieldPath) {
+        this.textFieldPath.setText(textFieldPath);
+    }
+    /**
+     * Setter for the case sensitive checkbox.
+     */
+    public void setCheckBoxCaseSensitiveName(boolean checkBoxCaseSensitiveName) {
+        this.checkBoxCaseSensitiveName.setSelected(checkBoxCaseSensitiveName);
+    }
+    /**
+     * Setter for the case only files checkbox.
+     */
+    public void setCheckBoxOnlyFiles(boolean checkBoxOnlyFiles) {
+        this.checkBoxOnlyFiles.setSelected(checkBoxOnlyFiles);
+    }
+    /**
+     * Setter for the only directory checkbox.
+     */
+    public void setCheckBoxOnlyDirectory(boolean checkBoxOnlyDirectory) {
+        this.checkBoxOnlyDirectory.setSelected(checkBoxOnlyDirectory);
     }
 }
