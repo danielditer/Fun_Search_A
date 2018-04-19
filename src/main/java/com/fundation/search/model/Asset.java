@@ -11,12 +11,25 @@ package com.fundation.search.model;
  * @version April, 11th 2018  * @Manuel Valdez
  */
 public class Asset {
+    /**Path of file*/
     private String path;
+
+    /**Name of file*/
     private String fileName;
+
+    /**Hidden property of file*/
     private boolean hidden;
+
+    /**Readonly property of file*/
     private boolean readOnly;
+
+    /**Type of file*/
     private int typeFile;
+
+    /**Owner of file*/
     private String owner;
+
+    /**Size of file*/
     private long size;
 
     /**
@@ -26,7 +39,10 @@ public class Asset {
      * @param hidden if file is hidden or not.
      * @param readOnly if file is readonly or not.
      * @param typeFile type of file.
+     * @param owner file owner.
+     * @param size file size.
      */
+
     public Asset(String path, String fileName, boolean hidden, boolean readOnly, int typeFile, String owner, long size) {
         this.path = path;
         this.fileName = fileName;
@@ -39,7 +55,6 @@ public class Asset {
 
     /**
      * Method that gets the path of ResultFile object.
-     *
      * @return the path of ResultFile object.
      */
     public String getPath() {
@@ -48,7 +63,6 @@ public class Asset {
 
     /**
      * Method that gets the file name of ResultFile object.
-     *
      * @return the file name of ResultFile object.
      */
     public String getFileName() {
@@ -57,7 +71,6 @@ public class Asset {
 
     /**
      * Method that gets the hidden state of ResultFile object.
-     *
      * @return the hidden state of ResultFile object.
      */
     public boolean getHidden() {
@@ -96,6 +109,10 @@ public class Asset {
         return getExtension();
     }
 
+    /**
+     * Method to get size attribute.
+     * @return size attribute.
+     */
     public long getSize() {
         return this.size;
     }
