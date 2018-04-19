@@ -57,7 +57,7 @@ public class CommandController implements Controller {
                 if ((inputCommands[i + 1]).equals("true")) {
                     value = true;
                 }
-                searchCriteria.setHidden(value);
+                //searchCriteria.setHidden(value);
             }
             if (inputCommands[i].equals("-r")) { /* Search by read-only*/
                 boolean value = false;

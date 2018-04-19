@@ -24,13 +24,11 @@ public class SearchCriteria {
 
     /**
      * Attribute of hidden or not file*/
-    private boolean hidden;
-
-    private boolean noHidden;
+    private String hidden;
 
     /**
      * Attribute of read only*/
-    private boolean readOnly;
+    private String readOnly;
 
     /**
      * Attribute which type of file (file -> 1, directory -> 2, multimedia -> 3)*/
@@ -40,7 +38,15 @@ public class SearchCriteria {
      * Attribute to know if name is case sensitive or not*/
     private boolean nameFileCaseSensitive;
 
+    /**
+     * Attribute to know a file's or directory's ownes*/
     private String owner;
+
+    /**
+     * Attribute to search's extension*/
+    private String extension;
+
+
 
     /**
      * Setter for name attribute.
@@ -65,7 +71,7 @@ public class SearchCriteria {
 
      * @param hidden
      */
-    public void setHidden(boolean hidden) {
+    public void setHidden(String hidden) {
         this.hidden = hidden;
     }
 
@@ -73,7 +79,7 @@ public class SearchCriteria {
      * Setter for readonly attribute.
      * @param readOnly boolean attribute;
      */
-    public void setReadOnly(boolean readOnly) {
+    public void setReadOnly(String readOnly) {
         this.readOnly = readOnly;
     }
 
@@ -101,6 +107,14 @@ public class SearchCriteria {
         this.owner = owner;
     }
 
+    /**
+     * Setter for extension attribute.
+     * @param extension input from UI.
+     */
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
+
 
 
     /**
@@ -125,14 +139,14 @@ public class SearchCriteria {
      * Getter for hidden attribute.
      * @return hidden attribute.
      */
-    public boolean getHidden() {
+    public String getHidden() {
         return this.hidden;
     }
 
     /**
      * Getter for readonly attribute
      */
-    public boolean getReadOnly() {
+    public String getReadOnly() {
         return this.readOnly;
     }
 
@@ -158,5 +172,13 @@ public class SearchCriteria {
      */
     public String getOwner() {
         return this.owner;
+    }
+
+    /**
+     * Getter for extension attribute.
+     * @return extesntion attribute.
+     */
+    public String getExtension() {
+        return this.extension;
     }
 }

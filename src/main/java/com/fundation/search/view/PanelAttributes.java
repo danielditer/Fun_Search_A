@@ -10,23 +10,27 @@ import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
 import javax.swing.JPanel;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
+import javax.swing.JButton;
 
 import javax.swing.border.TitledBorder;
 import java.awt.Dimension;
+import javax.swing.JRadioButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.ButtonGroup;
 /**
  * Class PanelAttributes that contains elements of the attributes panel for the normal search files.
  *
  * @version 27 Mar 2018  * @Daniel Caballero.
  */
 public class PanelAttributes extends JPanel{
-    private JCheckBox checkBoxReadOnly;
-    private JCheckBox checkBoxReadOnlyNo;
-    private JCheckBox checkBoxHidden;
-    private JCheckBox checkBoxHiddenNo;
+    private JRadioButton radioBoxReadOnly;
+    private JRadioButton radioBoxReadOnlyNo;
+    private JRadioButton radioBoxReadOnlyAll;
+    private JRadioButton radioBoxHidden;
+    private JRadioButton radioBoxHiddenNo;
+    private JRadioButton radioBoxHiddenAll;
     private JLabel labelExt;
     private JTextField textFieldExt;
     private JLabel labelSize;
@@ -35,6 +39,8 @@ public class PanelAttributes extends JPanel{
     private JComboBox comboBoxType;
     private JLabel labelOwner;
     private JTextField textFieldOwner;
+    ButtonGroup btnGroupHidden;
+    ButtonGroup btnGroupRead;
 
     /**
      * Class constructor.
@@ -47,10 +53,14 @@ public class PanelAttributes extends JPanel{
      * Initializes panel components.
      */
     public void initComponents(){
-        checkBoxReadOnly = new JCheckBox();
-        checkBoxHidden = new JCheckBox();
-        checkBoxHiddenNo = new JCheckBox();
-        checkBoxReadOnlyNo = new JCheckBox();
+        radioBoxReadOnly = new JRadioButton();
+        radioBoxHidden = new JRadioButton();
+        radioBoxHiddenNo = new JRadioButton();
+        radioBoxHiddenAll = new JRadioButton();
+        radioBoxReadOnlyNo = new JRadioButton();
+        radioBoxReadOnlyAll = new JRadioButton();
+        btnGroupHidden = new ButtonGroup();
+        btnGroupRead = new ButtonGroup();
         labelExt = new JLabel();
         textFieldExt = new JTextField();
         labelSize = new JLabel();
@@ -60,48 +70,80 @@ public class PanelAttributes extends JPanel{
         labelOwner = new JLabel();
         textFieldOwner = new JTextField();
 
+
         setBorder(new TitledBorder("Attributes"));
         setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
-                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
+                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
         //---- checkBoxReadOnly ----
-        checkBoxReadOnly.setText("Read-only");
-        add(checkBoxReadOnly, new TableLayoutConstraints(0, 0, 0, 0,
+        radioBoxReadOnly.setText("Read-only");
+        radioBoxReadOnly.setActionCommand("1");
+
+        radioBoxReadOnlyNo.setText("No Read-only");
+        radioBoxReadOnlyNo.setActionCommand("2");
+
+        radioBoxReadOnlyAll.setText("All");
+        radioBoxReadOnlyAll.setActionCommand("3");
+
+        radioBoxReadOnlyAll.setSelected(true);
+
+        btnGroupRead.add(radioBoxReadOnly);
+        btnGroupRead.add(radioBoxReadOnlyNo);
+        btnGroupRead.add(radioBoxReadOnlyAll);
+
+        add(radioBoxReadOnly, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        //---- checkBoxReadOnly ----
-        checkBoxReadOnlyNo.setText("No RO.");
-        add(checkBoxReadOnlyNo, new TableLayoutConstraints(1, 0, 1, 0,
+        add(radioBoxReadOnlyNo, new TableLayoutConstraints(1, 0, 1, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        add(radioBoxReadOnlyAll, new TableLayoutConstraints(2, 0, 2, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
         //---- checkBoxHidden ----
-        checkBoxHidden.setText("Hidden");
-        add(checkBoxHidden, new TableLayoutConstraints(2, 0, 2, 0,
+        radioBoxHidden.setText("Hidden");
+        radioBoxHidden.setActionCommand("1");
+
+        radioBoxHiddenNo.setText("No Hidden");
+        radioBoxHiddenNo.setActionCommand("2");
+
+        radioBoxHiddenAll.setText("All");
+        radioBoxHiddenAll.setActionCommand("3");
+
+        radioBoxHiddenAll.setSelected(true);
+
+        btnGroupHidden.add(radioBoxHidden);
+        btnGroupHidden.add(radioBoxHiddenNo);
+        btnGroupHidden.add(radioBoxHiddenAll);
+
+
+        add(radioBoxHidden, new TableLayoutConstraints(0, 1, 0, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        //---- checkBoxHiddenNo ----
-        checkBoxHiddenNo.setText("No h.");
-        add(checkBoxHiddenNo, new TableLayoutConstraints(3, 0, 3, 0,
+        add(radioBoxHiddenNo, new TableLayoutConstraints(1, 1, 1, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        add(radioBoxHiddenAll, new TableLayoutConstraints(2, 1, 2, 1,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
 
         //---- labelExtension ----
         labelExt.setText("Extension:");
         final Dimension preferredSize = new Dimension(65, 20);
         labelExt.setPreferredSize(preferredSize);
-        add(labelExt, new TableLayoutConstraints(0, 1, 0, 1,
+        add(labelExt, new TableLayoutConstraints(0, 2, 0, 2,
                 TableLayoutConstraints.RIGHT,
                 TableLayoutConstraints.FULL));
         //---- textFieldExtension ----
         textFieldExt.setPreferredSize(preferredSize);
-        add(textFieldExt, new TableLayoutConstraints(1, 1, 3, 1,
+        add(textFieldExt, new TableLayoutConstraints(1, 2, 3, 2,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- labelSize ----
         labelSize.setText("Size:");
         labelSize.setPreferredSize(preferredSize);
-        add(labelSize, new TableLayoutConstraints(0, 2, 0, 2,
+        add(labelSize, new TableLayoutConstraints(0, 3, 0, 3,
                 TableLayoutConstraints.RIGHT,
                 TableLayoutConstraints.FULL));
         //---- textFieldExtension ----
         textFieldSize.setPreferredSize(preferredSize);
-        add(textFieldSize, new TableLayoutConstraints(2, 2, 2, 2,
+        add(textFieldSize, new TableLayoutConstraints(2, 3, 2, 3,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- comboBoxSize ----
@@ -109,60 +151,49 @@ public class PanelAttributes extends JPanel{
         comboBoxSize.addItem("Minor");
         comboBoxSize.addItem("Equals");
         comboBoxSize.addItem("Mayor");
-        add(comboBoxSize, new TableLayoutConstraints(1, 2, 1, 2,
+        add(comboBoxSize, new TableLayoutConstraints(1, 3, 1, 3,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- comboBoxSize ----
         comboBoxType.setPreferredSize(new Dimension(50, 20));
-        comboBoxType.addItem("Gb");
+        comboBoxType.addItem("bytes");
         comboBoxType.addItem("Mb");
-        add(comboBoxType, new TableLayoutConstraints(3, 2, 3, 2,
+        comboBoxType.addItem("Gb");
+
+        add(comboBoxType, new TableLayoutConstraints(3, 3, 3, 3,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- labelOwner ----
         labelOwner.setText("Owner:");
         labelOwner.setPreferredSize(preferredSize);
-        add(labelOwner, new TableLayoutConstraints(0, 3, 0, 3,
+        add(labelOwner, new TableLayoutConstraints(0, 4, 0, 4,
                 TableLayoutConstraints.RIGHT,
                 TableLayoutConstraints.FULL));
         //---- textFieldOwner ----
         textFieldOwner.setPreferredSize(preferredSize);
-        add(textFieldOwner, new TableLayoutConstraints(1, 3, 3, 3,
+        add(textFieldOwner, new TableLayoutConstraints(1, 4, 3, 4,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
     }
+
     /**
      * Getter for the read only checkbox.
      *
-     * @return ta boolean of ´checkBoxReadOnly´ text field.
+     * @return a String of ´checkBoxReadOnly´ text field.
      */
-    public boolean getCheckBoxReadOnly() {
-        return checkBoxReadOnly.isSelected();
+    public String getCheckBoxReadOnly() {
+        return btnGroupRead.getSelection().getActionCommand();
     }
     /**
      * Getter for the hidden checkbox.
      *
-     * @return ta boolean of ´checkBoxHidden´ text field.
+     * @returnta String of ´checkBoxHidden´ text field.
      */
-    public boolean getCheckBoxHidden() {
-        return checkBoxHidden.isSelected();
+    public String getCheckBoxHidden() {
+        return btnGroupHidden.getSelection().getActionCommand();
     }
-    /**
-     * Getter for the no hidden checkbox.
-     *
-     * @return ta boolean of ´checkBoxHiddenNo´ text field.
-     */
-    public boolean getCheckBoxNoHidden() {
-        return checkBoxHiddenNo.isSelected();
-    }
-    /**
-     * Getter for the no readonly checkbox.
-     *
-     * @return ta boolean of ´checkBoxReadOnlyNo´ text field.
-     */
-    public boolean checkBoxReadOnlyNo() {
-        return checkBoxReadOnlyNo.isSelected();
-    }
+
+
     /**
      * Getter for the extension type.
      *
