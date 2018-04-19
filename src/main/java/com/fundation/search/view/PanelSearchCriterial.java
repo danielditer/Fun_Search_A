@@ -118,6 +118,12 @@ public class PanelSearchCriterial extends JPanel {
     public JButton getButtonSearch(){
         return buttonSearch;
     }
+    /**
+     * @return buttonLoad.
+     */
+    public JButton getButtonLoad(){
+        return buttonLoad;
+    }
 
 
 }
