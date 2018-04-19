@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JFormattedTextField;
 import javax.swing.border.TitledBorder;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /* @version
@@ -124,5 +125,37 @@ public class PanelDate extends JPanel {
     public String getFormattedTextFieldEnd() {
         SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
         return formatDate.format(dateChooserTo.getDate());
+    }
+
+    //setters////
+    /**
+     * Setter for the created date checkbox.
+     */
+    public void setCheckBoxCreated(boolean checkBoxCreated) {
+        this.checkBoxCreated.setSelected(checkBoxCreated);
+    }
+    /**
+     * Setter for the modified date checkbox.
+     */
+    public void setCheckBoxModified(boolean checkBoxModified) {
+        this.checkBoxModified.setSelected(checkBoxModified);
+    }
+    /**
+     * Setter for the Accessed date checkbox.
+     */
+    public void setCheckBoxAccessed(boolean checkBoxAccessed) {
+        this.checkBoxAccessed.setSelected(checkBoxAccessed);
+    }
+    /**
+     * Setter for the date chooser from.
+     */
+    public void setDateChooserFrom(Date dateChooserFrom) {
+        this.dateChooserFrom.setDate(dateChooserFrom);
+    }
+    /**
+     * Setter for the date chooser to.
+     */
+    public void setDateChooserTo(Date dateChooserTo) {
+        this.dateChooserTo.setDate(dateChooserTo);
     }
 }

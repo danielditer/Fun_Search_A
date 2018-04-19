@@ -8,8 +8,9 @@ package com.fundation.search.view;
 
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
-import javax.swing.JPanel;
-import javax.swing.JButton;
+
+import javax.swing.*;
+import java.util.Date;
 
 /**
  * Class to initialize panel for normal search tab.
@@ -216,6 +217,140 @@ public class PanelNormalSearch extends JPanel {
     public String getTextFieldOwner() {
         return panelAttributes.getTextFieldOwner();
     }
+
+
+    //setters
+
+    /**
+     * Setter for the name text field file.
+     */
+    public void setTextFieldName(String value) {
+        panelNamePath.setTextFieldName(value);
+    }
+    /**
+     * Setter for the path text field file.
+     */
+    public void setTextFieldPath(String textFieldPath) {
+        panelNamePath.setTextFieldPath(textFieldPath);
+    }
+    /**
+     * Setter for the case sensitive checkbox.
+     */
+    public void setCheckBoxCaseSensitiveName(boolean checkBoxCaseSensitiveName) {
+        panelNamePath.setCheckBoxCaseSensitiveName(checkBoxCaseSensitiveName);
+    }
+    /**
+     * Setter for the case only files checkbox.
+     */
+    public void setCheckBoxOnlyFiles(boolean checkBoxOnlyFiles) {
+        panelNamePath.setCheckBoxOnlyFiles(checkBoxOnlyFiles);
+    }
+    /**
+     * Setter for the only directory checkbox.
+     */
+    public void setCheckBoxOnlyDirectory(boolean checkBoxOnlyDirectory) {
+        panelNamePath.setCheckBoxOnlyDirectory(checkBoxOnlyDirectory);
+    }
+
+    /**
+     * Setter for the only content textarea - panelFileContents.
+     */
+    public void setTextAreaContent(String textAreaContent) {
+        panelFileContents.setTextAreaContent(textAreaContent);
+    }
+    /**
+     * Setter for the case sensitive checkbox - panelFileContents.
+     */
+    public void setCheckBoxCaseSensitiveContent(boolean checkBoxCaseSensitive) {
+        panelFileContents.setCheckBoxCaseSensitive(checkBoxCaseSensitive);
+    }
+    /**
+     * Setter for the file type combobox - panelFileContents.
+     */
+    public void setComboTypeFileContent(String comboTypeFile) {
+        panelFileContents.setComboTypeFile(comboTypeFile);
+    }
+
+    //----------panel attributes
+
+    /**
+     * Setter for the extension text field.
+     */
+    public void setTextFieldExtAttributes(String textFieldExt) {
+        panelAttributes.setTextFieldExt(textFieldExt);
+    }
+    /**
+     * Setter for the size text field.
+     */
+    public void setTextFieldSizeAttributes(String textFieldSize) {
+        panelAttributes.setTextFieldSize(textFieldSize);
+    }
+    /**
+     * Setter for the combo box size ><=.
+     */
+    public void setComboBoxSizeAttributes(String comboBoxSize) {
+        panelAttributes.setComboBoxSize(comboBoxSize);
+    }
+    /**
+     * Setter for the combo box type size.
+     */
+    public void setComboBoxTypeAttributes(boolean comboBoxType) {
+        panelAttributes.setComboBoxType(comboBoxType);
+    }
+    /**
+     * Setter for the owner text field.
+     */
+    public void setTextFieldOwnerAttributes(String textFieldOwner) {
+        panelAttributes.setTextFieldOwner(textFieldOwner);
+    }
+    /**
+     * Setter for the hidden checkbox.
+     */
+    public void setBtnGroupHiddenAttributes(String btnGroupHidden) {
+        panelAttributes.setBtnGroupHidden(btnGroupHidden);
+    }
+    /**
+     * Setter for the readoly checkbox.
+     */
+    public void setBtnGroupReadOnlyAttributes(String btnGroupReadonly) {
+        panelAttributes.setBtnGroupReadOnly(btnGroupReadonly);
+    }
+
+    //--panel date
+
+    /**
+     * Setter for the created date checkbox - paneldate.
+     */
+    public void setCheckBoxCreatedPanel(boolean checkBoxCreated) {
+        panelDate.setCheckBoxCreated(checkBoxCreated);
+    }
+    /**
+     * Setter for the modified date checkbox - paneldate.
+     */
+    public void setCheckBoxModifiedPanel(boolean checkBoxModified) {
+        panelDate.setCheckBoxCreated(checkBoxModified);
+    }
+    /**
+     * Setter for the Accessed date checkbox - paneldate.
+     */
+    public void setCheckBoxAccessedPanel(boolean checkBoxAccessed) {
+        panelDate.setCheckBoxAccessed(checkBoxAccessed);
+    }
+    /**
+     * Setter for the date chooser from - paneldate.
+     */
+    public void setDateChooserFromPanel(Date dateChooserFrom) {
+        panelDate.setDateChooserFrom(dateChooserFrom);
+    }
+    /**
+     * Setter for the date chooser to - paneldate.
+     */
+    public void setDateChooserToPanel(Date dateChooserTo) {
+        panelDate.setDateChooserTo(dateChooserTo);
+    }
+
+
+
 
 
 }
