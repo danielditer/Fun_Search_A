@@ -7,6 +7,8 @@
 package com.fundation.search.model;
 
 import com.fundation.search.common.Converter;
+import com.fundation.search.common.SearchQuery;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
@@ -132,21 +134,7 @@ public class SearchFiles {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String lastModified = dateFormat.format(fileEntry.lastModified());
                 //System.out.println("file name: " + fileEntry.getName() + "**last modified:" + fileEntry.lastModified() + "**formated:" + lastModified);
-                /*
-public static void main(String[] args) throws ParseException {
-    String dateString1 = "05-12-2012";
-    String dateString2 = "05-13-2012";
 
-    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-
-    Date date1 = format.parse(dateString1);
-    Date date2 = format.parse(dateString2);
-
-    if (date1.compareTo(date2) <= 0) {
-        System.out.println("dateString1 is an earlier date than dateString2");
-    }
-}
-                 */
 
                 /**
                  * Section to know a files' size*/
@@ -300,6 +288,14 @@ public static void main(String[] args) throws ParseException {
         return true;
     }
 
+    /**
+     * Method to filter a files for its size.
+     * @param arrayResultFiles
+     * @param sizeSign
+     * @param sizeRequired
+     * @param sizeMeasure
+     * @return
+     */
     public boolean searchSize(Asset arrayResultFiles, String sizeSign, String sizeRequired, String sizeMeasure) {
         if (sizeRequired == null) {
             return true;
@@ -327,4 +323,18 @@ public static void main(String[] args) throws ParseException {
         }
         return true;
     }
+
+    /**
+     * method saveSearchCriteria
+     * @return a string with the json search criterial
+     */
+    public String saveSearchCriteria() {
+        Gson gson = new Gson();
+        String json = gson.toJson(searchCriteria);
+        System.out.println("JSON:" + json);
+        SearchQuery searchQuery = new SearchQuery();
+
+        return searchQuery.addCriteria(json);
+    }
+
 }
