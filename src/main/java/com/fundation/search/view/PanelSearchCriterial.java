@@ -124,6 +124,4 @@ public class PanelSearchCriterial extends JPanel {
     public JButton getButtonLoad(){
         return buttonLoad;
     }
-
-
 }
