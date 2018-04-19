@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.Dimension;
 
 
@@ -105,6 +106,12 @@ public class PanelSearchCriterial extends JPanel {
     public void setTableModel(DefaultTableModel model) {
         this.tableModel = model;
     }
+    public DefaultTableModel getTableModel() {
+        return this.tableModel;
+    }
+    public void setTableResultModel() {
+        this.tableResult.setModel(this.tableModel);
+    }
     /**
      * Getter for the file name.
      * @return the String of ´textFieldName´ text field.
@@ -117,6 +124,12 @@ public class PanelSearchCriterial extends JPanel {
      */
     public JButton getButtonSearch(){
         return buttonSearch;
+    }
+    /**
+     * @return buttonLoad.
+     */
+    public JButton getButtonLoad(){
+        return buttonLoad;
     }
 
 
