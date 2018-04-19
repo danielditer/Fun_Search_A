@@ -1,5 +1,5 @@
 /**
- * @(#)Controller.java  4/06/18.
+ * @(#)Controller.java 4/06/18.
  * Copyright (c) 2018 Jala Foundation.
  * Cochabamba, Bolivia.
  * Project Search for Prog102.
@@ -7,19 +7,20 @@
 package com.fundation.search.view;
 
 import com.fundation.search.model.Asset;
-import com.fundation.search.model.ResultFile;
+
 import java.util.List;
 
 /**
  * This class will display the search results, it is applied for command inputs.
- * @version
- * April, 6th 2018  * @Juan Manuel
+ *
+ * @version April, 6th 2018  * @Juan Manuel
  */
 public class CommandResultView {
     private List<Asset> resultFileList;
 
     /**
      * Method to set resultFileList attribute.
+     *
      * @param resultFileList this list contains the search results.
      */
     public void setResultFileList(List<Asset> resultFileList) {
@@ -27,22 +28,23 @@ public class CommandResultView {
     }
 
     /**
-     * Method to display search resultd in command line (cmd).
+     * Method to display search result in command line (cmd).
      */
     public void printResults() {
         System.out.println("Search Results:");
         if (!resultFileList.isEmpty()) {
-            String[] tableTitles = {"File Name", "File Path", "Hidden"};
-            for (String titles : tableTitles) {
-                System.out.print(String.format("%s%s", titles, "\t"));
-            }
-
+            String heading1 = "FilePath";
+            String heading2 = "FileName";
+            String heading3 = "Hidden";
+            System.out.printf("%-15s %50s %30s %n", heading1, heading2, heading3);
+            String divider = "---------------------------------------------------------------------------------------------------";
+            System.out.println(divider);
             for (Asset results : resultFileList) {
-                System.out.print(String.format("%s%s%s", "\n", results.getFileName(), "\t"));
-                System.out.print(String.format("%s%s", results.getFileName(), "\t"));
-                System.out.print(results.getFileName());
+                System.out.println("");
+                System.out.printf("%-15s %30s %30s %n", results.getPath(), results.getFileName(), results.getHidden());
+
             }
+            System.out.println(divider);
         }
     }
-
 }
