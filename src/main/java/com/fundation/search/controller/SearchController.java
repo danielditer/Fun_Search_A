@@ -75,7 +75,7 @@ public class SearchController implements Controller {
             typeFile = 3;
         }
         if (areValidParams(panel.getPath(), panel.getName())) {
-            sendSearchCriteriaToModel(panel.getPath(), panel.getName(), panel.getCheckBoxHidden(), panel.getCheckBoxReadOnly(), typeFile, panel.getCaseSensitiveName(), panel.getTextFieldOwner(), panel.getTextFieldExt());
+            sendSearchCriteriaToModel(panel.getPath(), panel.getName(), panel.getCheckBoxHidden(), panel.getCheckBoxReadOnly(), typeFile, panel.getCaseSensitiveName(), panel.getTextFieldOwner(), panel.getTextFieldExt(), panel.getComboBoxSize(), panel.getTextFieldSize(), panel.getComboBoxType());
         }
     }
 
@@ -101,11 +101,19 @@ public class SearchController implements Controller {
 
     /**
      * Method to set search criteria for Model and start search.
-     *
-     * @param path
-     * @param name
+     * @param path the path from UI.
+     * @param name the name from UI.
+     * @param hidden value from UI.
+     * @param readOnly value from UI.
+     * @param typeFile value from UI.
+     * @param nameFileCaseSensitive value from UI.
+     * @param owner value from UI.
+     * @param extension value from UI.
+     * @param sizeSign value from UI.
+     * @param sizeRequired value from UI.
+     * @param sizeMeasure value from UI.
      */
-    public void sendSearchCriteriaToModel(String path, String name, String hidden, String readOnly, int typeFile, boolean nameFileCaseSensitive, String owner, String extension) {
+    public void sendSearchCriteriaToModel(String path, String name, String hidden, String readOnly, int typeFile, boolean nameFileCaseSensitive, String owner, String extension, String sizeSign, String sizeRequired, String sizeMeasure) {
         searchCriteria.setPath(path);
         if (!name.isEmpty()) {
             searchCriteria.setName(name);
@@ -124,6 +132,12 @@ public class SearchController implements Controller {
         } else {
             searchCriteria.setExtension(null);
         }
+        searchCriteria.setSizeSign(sizeSign);
+        if (!sizeRequired.isEmpty()) {
+            searchCriteria.setSizeRequired(sizeRequired);
+        }
+        searchCriteria.setSizeMeasure(sizeMeasure);
+
         searchFile.setSearchCriteria(searchCriteria);
         searchFile.init();
         setResultsToTable();
