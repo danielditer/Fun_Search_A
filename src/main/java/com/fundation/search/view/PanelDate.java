@@ -11,7 +11,9 @@ import com.toedter.calendar.JDateChooser;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 import java.text.SimpleDateFormat;
 import java.util.Date;

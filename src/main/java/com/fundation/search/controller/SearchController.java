@@ -11,10 +11,15 @@ import com.fundation.search.common.Validator;
 import com.fundation.search.model.Asset;
 import com.fundation.search.model.SearchCriteria;
 import com.fundation.search.model.SearchFiles;
-import com.fundation.search.view.*;
+import com.fundation.search.view.PanelNormalSearch;
+import com.fundation.search.view.PanelSaveCriterial;
+import com.fundation.search.view.PanelSearchResults;
+import com.fundation.search.view.PanelSearchCriterial;
+import com.fundation.search.view.MainView;
 import com.google.gson.Gson;
 
-import javax.swing.*;
+import javax.swing.JTable;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;

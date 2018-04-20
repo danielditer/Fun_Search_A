@@ -328,7 +328,7 @@ public class SearchFiles {
             return true;
         }
         double size = Double.parseDouble(sizeRequired);
-        System.out.println("sizeSign:" + sizeSign + ",sizeRequired:" + size + ",sizeMeasure:" + sizeMeasure);
+        //System.out.println("sizeSign:" + sizeSign + ",sizeRequired:" + size + ",sizeMeasure:" + sizeMeasure);
         size = Converter.convertToBytes(size, sizeMeasure);
         if (sizeSign.equalsIgnoreCase("minor")) {
             if (arrayResultFiles.getSize() < size) {
@@ -428,9 +428,6 @@ public class SearchFiles {
 
         }
         return null;
-        /*if (extension.equalsIgnoreCase("txt") && fileEntry.length() > 0L) {
-
-        }*/
     }
 
     public boolean searchContent(Asset arrayResultFiles, String content) {

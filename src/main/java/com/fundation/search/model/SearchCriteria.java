@@ -162,15 +162,30 @@ public class SearchCriteria {
         this.sizeMeasure = sizeMeasure;
     }
 
+    /**
+     * Setter for create date.
+     * @param createDate
+     */
     public void setCreateDate(boolean createDate) {
         this.createDate = createDate;
     }
+
+    /**
+     * Setter for modified date.
+     * @param modifiedDate
+     */
     public void setModifiedDate(boolean modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
+
+    /**
+     * Setter for accessed date.
+     * @param accessedDate
+     */
     public void setAccessedDate(boolean accessedDate) {
         this.accessedDate = accessedDate;
     }
+
     /**
      * Setter for from date.
      * @param fromDate
@@ -187,6 +202,10 @@ public class SearchCriteria {
         this.toDate = toDate;
     }
 
+    /**
+     * Setter for content.
+     * @param content
+     */
     public void setContent(String content) {
         this.content = content;
     }
@@ -287,12 +306,26 @@ public class SearchCriteria {
         return this.sizeMeasure;
     }
 
+    /**
+     * Getter for create date.
+     * @return
+     */
     public boolean getCreatedDate() {
         return this.createDate;
     }
+
+    /**
+     * Getter for modified date.
+     * @return
+     */
     public boolean getModifiedDate() {
         return this.modifiedDate;
     }
+
+    /**
+     * Getter for accessed date.
+     * @return
+     */
     public boolean getAccessedDate() {
         return this.accessedDate;
     }
@@ -311,6 +344,11 @@ public class SearchCriteria {
     public String getToDate() {
         return this.toDate;
     }
+
+    /**
+     * Getter for content.
+     * @return
+     */
     public String getContent() {
         return this.content;
     }

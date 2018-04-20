@@ -117,16 +117,34 @@ public class Asset {
         return this.size;
     }
 
+    /**
+     * Method to get creation time.
+     * @return creationTime.
+     */
     public String getCreationTime() {
         return getCreationTime();
     }
+
+    /**
+     * Method to get last modified time.
+     * @return lastModifiedTime.
+     */
     public String getLastModifiedTime() {
         return getLastModifiedTime();
     }
+
+    /**
+     * Method to get last accessed time.
+     * @return lastAccessedTime.
+     */
     public String getLastAccessTime() {
         return getLastAccessTime();
     }
 
+    /**
+     * Method to get file content.
+     * @return content.
+     */
     public String getContent() {
         return getContent();
     }
