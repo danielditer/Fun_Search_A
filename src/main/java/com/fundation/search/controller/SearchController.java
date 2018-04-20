@@ -145,6 +145,7 @@ public class SearchController implements Controller {
         searchCriteriaForDB.setFromDate(panelMain.getFormattedTextFieldStart());
         searchCriteriaForDB.setToDate(panelMain.getFormattedTextFieldEnd());
         searchCriteriaForDB.setContent(panelMain.getContent());
+        searchCriteriaForDB.setContentCaseSensitive(panelMain.getCaseSensitiveContent());
 
         searchFile.setSearchCriteria(searchCriteriaForDB);
         System.out.println("DB:" + searchFile.saveSearchCriteria());
@@ -383,7 +384,7 @@ public class SearchController implements Controller {
             panel.setDateChooserToPanel(null);
         }
         panel.setTextAreaContent(searchCriteriaDB.get(key).getContent());
-
+        panel.setCheckBoxCaseSensitiveContent(searchCriteriaDB.get(key).getContentCaseSensitive());
     }
 }
 
