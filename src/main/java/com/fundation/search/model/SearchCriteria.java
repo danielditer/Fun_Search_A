@@ -17,48 +17,58 @@ public class SearchCriteria {
     /**
      * Attribute of file name*/
     private String name;
-
     /**
      * Attribute of path name*/
     private String path;
-
     /**
      * Attribute of hidden or not file*/
     private String hidden;
-
     /**
      * Attribute of read only*/
     private String readOnly;
-
     /**
      * Attribute which type of file (file -> 1, directory -> 2, multimedia -> 3)*/
     private int typeFile;
-
     /**
      * Attribute to know if name is case sensitive or not*/
     private boolean nameFileCaseSensitive;
-
     /**
      * Attribute to know a file's or directory's ownes*/
     private String owner;
-
     /**
      * Attribute to search's extension*/
     private String extension;
-
     /**
      * Attribute for size sign (less, more or equals)*/
     private String sizeSign;
-
     /**
      * Attribute for size required*/
     private String sizeRequired;
+    /**
+     * Attribute for size measure (Mb, Gb, Bytes)*/
+    private String sizeMeasure;
+    /**
+     * Attribute for created date*/
+    private boolean createDate;
+    /**
+     * Attribute for modified date*/
+    private boolean modifiedDate;
+    /**
+     * Attribute for accessed date*/
+    private boolean accessedDate;
+    /**
+     * Attribute for from date*/
+    private String fromDate;
+    /**
+     * Attribute for to date*/
+    private String toDate;
+
+
 
     /**
-     * Attribute fro size measure (Mb, Gb, Bytes)*/
-    private String sizeMeasure;
-
-    /**Setter for search criteria name to save in DB*/
+     * Setter for search criteria name to save in DB.
+     * @param searchCriteriaName
+     */
     public void setSearchCriteriaName(String searchCriteriaName) {
         this.searchCriteriaName = searchCriteriaName;
     }
@@ -151,8 +161,37 @@ public class SearchCriteria {
         this.sizeMeasure = sizeMeasure;
     }
 
+    public void setCreateDate(boolean createDate) {
+        this.createDate = createDate;
+    }
+    public void setModifiedDate(boolean modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+    public void setAccessedDate(boolean accessedDate) {
+        this.accessedDate = accessedDate;
+    }
+    /**
+     * Setter for from date.
+     * @param fromDate
+     */
+    public void setFromDate(String fromDate) {
+        this.fromDate = fromDate;
+    }
 
-    /**Getter for search criteria name saved in DB*/
+    /**
+     * Setter for to date.
+     * @param toDate
+     */
+    public void setToDate(String toDate) {
+        this.toDate = toDate;
+    }
+
+
+
+    /**
+     * Getter for search criteria name saved in DB
+     * @return
+     */
     public String getSearchCriteriaName() {
         return this.searchCriteriaName;
     }
@@ -243,4 +282,30 @@ public class SearchCriteria {
     public String getSizeMeasure() {
         return this.sizeMeasure;
     }
+
+    public boolean getCreatedDate() {
+        return this.createDate;
+    }
+    public boolean getModifiedDate() {
+        return this.modifiedDate;
+    }
+    public boolean getAccessedDate() {
+        return this.accessedDate;
+    }
+    /**
+     * Getter of from date.
+     * @return creationTime
+     */
+    public String getFromDate() {
+        return this.fromDate;
+    }
+
+    /**
+     * Getter of to date.
+     * @return lastModifiedTime.
+     */
+    public String getToDate() {
+        return this.toDate;
+    }
+
 }

@@ -116,4 +116,14 @@ public class Asset {
     public long getSize() {
         return this.size;
     }
+
+    public String getCreationTime() {
+        return getCreationTime();
+    }
+    public String getLastModifiedTime() {
+        return getLastModifiedTime();
+    }
+    public String getLastAccessTime() {
+        return getLastAccessTime();
+    }
 }

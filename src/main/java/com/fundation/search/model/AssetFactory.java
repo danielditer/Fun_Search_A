@@ -21,15 +21,15 @@ public class AssetFactory {
      * @param duration if the file is multimedia the program searches for its duration.
      * @return the method return the object instanced.
      */
-    public Asset getAsset(String assetType, String path, String fileName, boolean hidden, double duration, boolean readOnly, int typeFile, String owner, String extension, long size) {
+    public Asset getAsset(String assetType, String path, String fileName, boolean hidden, double duration, boolean readOnly, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime) {
         if (assetType == null) {
             return null;
         }
         if (assetType.equalsIgnoreCase("file")) {
-            return new ResultFile(path, fileName, hidden, readOnly, typeFile, owner, extension, size);
+            return new ResultFile(path, fileName, hidden, readOnly, typeFile, owner, extension, size, creationTime, lastModifiedTime, lastAccessTime);
         }
         if (assetType.equalsIgnoreCase("multimedia")) {
-            return new ResultMultimediaFile(path, fileName, hidden, duration, typeFile, owner, extension, size);
+            return new ResultMultimediaFile(path, fileName, hidden, duration, typeFile, owner, extension, size, creationTime, lastModifiedTime, lastAccessTime);
         }
         if (assetType.equalsIgnoreCase("directory")) {
             return new ResultDirectory(path, fileName, hidden, readOnly, typeFile, owner, size);
