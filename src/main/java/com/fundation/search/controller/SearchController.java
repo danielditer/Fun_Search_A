@@ -6,17 +6,26 @@
  */
 package com.fundation.search.controller;
 
+import com.fundation.search.common.SearchQuery;
 import com.fundation.search.common.Validator;
 import com.fundation.search.model.Asset;
 import com.fundation.search.model.SearchCriteria;
 import com.fundation.search.model.SearchFiles;
 import com.fundation.search.view.MainView;
+import com.fundation.search.view.PanelSaveCriterial;
+import com.fundation.search.view.PanelSearchCriterial;
 import com.fundation.search.view.PanelNormalSearch;
 import com.fundation.search.view.PanelSearchResults;
+import com.google.gson.Gson;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class is the Controller for MVC pattern,
@@ -31,6 +40,7 @@ public class SearchController implements Controller {
     private MainView mainView;
     private SearchCriteria searchCriteria;
     private static final int START_COLUMN = 0;
+    private Map<Integer, SearchCriteria> searchCriteriaDB;
 
     /**
      * Constructor for controller.
@@ -50,6 +60,8 @@ public class SearchController implements Controller {
     public void init() {
         searchCriteria = new SearchCriteria();
         getActionPerformed();
+        saveActionPerformed();
+        loadActionPerformed();
     }
 
     /**
@@ -75,8 +87,69 @@ public class SearchController implements Controller {
             typeFile = 3;
         }
         if (areValidParams(panel.getPath(), panel.getName())) {
-            sendSearchCriteriaToModel(panel.getPath(), panel.getName(), panel.getCheckBoxHidden(), panel.getCheckBoxReadOnly(), typeFile, panel.getCaseSensitiveName(), panel.getTextFieldOwner(), panel.getTextFieldExt());
+            sendSearchCriteriaToModel(panel.getPath(), panel.getName(), panel.getCheckBoxHidden(), panel.getCheckBoxReadOnly(), typeFile, panel.getCaseSensitiveName(), panel.getTextFieldOwner(), panel.getTextFieldExt(), panel.getComboBoxSize(), panel.getTextFieldSize(), panel.getComboBoxType());
         }
+    }
+
+    /**
+     * Method to save a criteria in the database using save button on the View.
+     */
+    public void saveActionPerformed() {
+        PanelSaveCriterial panel = (PanelSaveCriterial) mainView.getPanelSaveCriterial();
+        PanelNormalSearch panelMain = (PanelNormalSearch) mainView.getPanel();
+        panel.getButtonSave().addActionListener(e -> saveButtonActionListener(panel, panelMain));
+    }
+
+    /**
+     * Method to add Action Listener for button save.
+     *
+     * @param panel
+     * @param panelMain
+     */
+    public void saveButtonActionListener(PanelSaveCriterial panel, PanelNormalSearch panelMain) {
+        String nameSearchCriteria = panel.getName();
+        int typeFile = 0;
+        if (panelMain.getCheckBoxOnlyFiles() && panelMain.getCheckBoxOnlyDirectory()) {
+            typeFile = 0;
+        } else if (panelMain.getCheckBoxOnlyFiles()) {
+            typeFile = 1;
+        } else if (panelMain.getCheckBoxOnlyDirectory()) {
+            typeFile = 3;
+        }
+
+        searchCriteria.setSearchCriteriaName(nameSearchCriteria);
+        searchCriteria.setPath(panelMain.getPath());
+        searchCriteria.setName(panelMain.getName());
+        searchCriteria.setHidden(panelMain.getCheckBoxHidden());
+        searchCriteria.setReadOnly(panelMain.getCheckBoxReadOnly());
+        searchCriteria.setTypeFile(typeFile);
+        searchCriteria.setNameFileCaseSensitive(panelMain.getCaseSensitiveName());
+        searchCriteria.setOwner(panelMain.getTextFieldOwner());
+        searchCriteria.setExtension(panelMain.getTextFieldExt());
+        searchCriteria.setSizeSign(panelMain.getComboBoxSize());
+        searchCriteria.setSizeRequired(panelMain.getTextFieldSize());
+        searchCriteria.setSizeMeasure(panelMain.getComboBoxType());
+
+        searchFile.setSearchCriteria(searchCriteria);
+        System.out.println("DB:" + searchFile.saveSearchCriteria());
+    }
+
+    /**
+     * Method to load a criteria from the database by using button ´Load´ in the View.
+     */
+    public void loadActionPerformed() {
+        PanelSearchCriterial panel = (PanelSearchCriterial) mainView.getPanelSearchCriterial();
+        panel.getButtonLoad().addActionListener(e -> loadButtonActionListener(panel));
+    }
+
+    /**
+     * Method to add Action Listener for button ´Load´.
+     *
+     * @param panel
+     */
+    public void loadButtonActionListener(PanelSearchCriterial panel) {
+        getSearchCriterias();
+        setSearchCriteriaTable();
     }
 
     /**
@@ -102,10 +175,19 @@ public class SearchController implements Controller {
     /**
      * Method to set search criteria for Model and start search.
      *
-     * @param path
-     * @param name
+     * @param path                  the path from UI.
+     * @param name                  the name from UI.
+     * @param hidden                value from UI.
+     * @param readOnly              value from UI.
+     * @param typeFile              value from UI.
+     * @param nameFileCaseSensitive value from UI.
+     * @param owner                 value from UI.
+     * @param extension             value from UI.
+     * @param sizeSign              value from UI.
+     * @param sizeRequired          value from UI.
+     * @param sizeMeasure           value from UI.
      */
-    public void sendSearchCriteriaToModel(String path, String name, String hidden, String readOnly, int typeFile, boolean nameFileCaseSensitive, String owner, String extension) {
+    public void sendSearchCriteriaToModel(String path, String name, String hidden, String readOnly, int typeFile, boolean nameFileCaseSensitive, String owner, String extension, String sizeSign, String sizeRequired, String sizeMeasure) {
         searchCriteria.setPath(path);
         if (!name.isEmpty()) {
             searchCriteria.setName(name);
@@ -124,6 +206,12 @@ public class SearchController implements Controller {
         } else {
             searchCriteria.setExtension(null);
         }
+        searchCriteria.setSizeSign(sizeSign);
+        if (!sizeRequired.isEmpty()) {
+            searchCriteria.setSizeRequired(sizeRequired);
+        }
+        searchCriteria.setSizeMeasure(sizeMeasure);
+
         searchFile.setSearchCriteria(searchCriteria);
         searchFile.init();
         setResultsToTable();
@@ -143,6 +231,53 @@ public class SearchController implements Controller {
             tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly()});
             System.out.println(resultFileList.get(i).getFileName() + "\t" + resultFileList.get(i).getPath() + "\t" + resultFileList.get(i).getHidden());
         }
+        panel.setTableModel(tableModel);
+        panel.setTableResultModel();
+    }
+
+
+    /**
+     * Method for obtain the search criterias saved in the database.
+     */
+    public void getSearchCriterias() {
+        searchCriteriaDB = new HashMap<>();
+        SearchQuery searchQuery = new SearchQuery();
+        try {
+            ResultSet resultSet = searchQuery.getAllCriteria();
+            while (resultSet.next()) {
+                searchCriteriaDB.put(Integer.parseInt(resultSet.getString("ID")), jsonToSearchCriteria(resultSet.getString("CRITERIAJSON")));
+            }
+        } catch (SQLException e) {
+            System.out.println("Controller SQL:" + e.getMessage());
+        }
+    }
+
+    /**
+     * This method converts a String to a SearchCriteria object.
+     * @param json a String representation of a Json file.
+     * @return the search criteria converted.
+     */
+    private SearchCriteria jsonToSearchCriteria(String json) {
+        Gson gson = new Gson();
+        SearchCriteria criteria = gson.fromJson(json, SearchCriteria.class);
+        return criteria;
+    }
+
+    /**
+     * This method puts the search criteria loaded from the Database in a table on the View.
+     */
+    private void setSearchCriteriaTable() {
+        PanelSearchCriterial panel = (PanelSearchCriterial) mainView.getPanelSearchCriterial();
+        DefaultTableModel tableModel = panel.getTableModel();
+        tableModel.setRowCount(0);
+
+        Iterator<Integer> itr = searchCriteriaDB.keySet().iterator();
+        while (itr.hasNext()) {
+            Integer k = itr.next();
+            tableModel.addRow(new Object[]{searchCriteriaDB.get(k).getSearchCriteriaName()});
+
+        }
+
         panel.setTableModel(tableModel);
         panel.setTableResultModel();
     }

@@ -6,6 +6,10 @@
  */
 package com.fundation.search.model;
 
+import com.fundation.search.common.Converter;
+import com.fundation.search.common.SearchQuery;
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -90,6 +94,9 @@ public class SearchFiles {
                     matchesCriteria = false;
                 }
             }
+            if (matchesCriteria && !searchSize(results, searchCriteria.getSizeSign(), searchCriteria.getSizeRequired(), searchCriteria.getSizeMeasure())) {
+                matchesCriteria = false;
+            }
 
             if (matchesCriteria) {
                 arrayFinalResult.add(results);
@@ -127,27 +134,18 @@ public class SearchFiles {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String lastModified = dateFormat.format(fileEntry.lastModified());
                 //System.out.println("file name: " + fileEntry.getName() + "**last modified:" + fileEntry.lastModified() + "**formated:" + lastModified);
-                /*
-public static void main(String[] args) throws ParseException {
-    String dateString1 = "05-12-2012";
-    String dateString2 = "05-13-2012";
 
-    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
-    Date date1 = format.parse(dateString1);
-    Date date2 = format.parse(dateString2);
+                /**
+                 * Section to know a files' size*/
+                System.out.println("name:" + fileEntry.getName() + ", **Size:" + fileEntry.length());
 
-    if (date1.compareTo(date2) <= 0) {
-        System.out.println("dateString1 is an earlier date than dateString2");
-    }
-}
-                 */
                 if (fileEntry.isDirectory()) {
                     recoverFiles(fileEntry, arrayResultFiles);
-                    arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3, owner.getName().substring(owner.getName().indexOf("\\") + 1), null));
+                    arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3, owner.getName().substring(owner.getName().indexOf("\\") + 1), null, 0L));
                 } else {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
-                    arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1, owner.getName().substring(owner.getName().indexOf("\\") + 1), extension));
+                    arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(), fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1, owner.getName().substring(owner.getName().indexOf("\\") + 1), extension, fileEntry.length()));
                 }
             }
         } catch (NullPointerException e) {
@@ -184,6 +182,9 @@ public static void main(String[] args) throws ParseException {
      * @return the array of coincidences, in this case hidden file coincidences.
      */
     public boolean searchHiddenFiles(Asset arrayResultFiles, String searchHidden) {
+        if (searchHidden == null) {
+            return true;
+        }
         if (searchHidden.equals("1")) { /**Hidden*/
             if (arrayResultFiles.getHidden()) {
                 return true;
@@ -207,6 +208,9 @@ public static void main(String[] args) throws ParseException {
      * @return the array of coincidences, in this case hidden file coincidences.
      */
     public boolean searchReadOnlyFiles(Asset arrayResultFiles, String readOnly) {
+        if (readOnly == null) {
+            return true;
+        }
         if (readOnly.equals("1")) {
             if (arrayResultFiles.getReadOnly()) {
                 return true;
@@ -259,7 +263,6 @@ public static void main(String[] args) throws ParseException {
      * @return
      */
     public boolean searchOwner(Asset arrayResultFiles, String owner) {
-        System.out.println("Owner: " + arrayResultFiles.getOwner());
         if (owner != null) {
             if (arrayResultFiles.getOwner().equalsIgnoreCase(owner)) {
                 return true;
@@ -284,4 +287,54 @@ public static void main(String[] args) throws ParseException {
         }
         return true;
     }
+
+    /**
+     * Method to filter a files for its size.
+     * @param arrayResultFiles
+     * @param sizeSign
+     * @param sizeRequired
+     * @param sizeMeasure
+     * @return
+     */
+    public boolean searchSize(Asset arrayResultFiles, String sizeSign, String sizeRequired, String sizeMeasure) {
+        if (sizeRequired == null) {
+            return true;
+        }
+        double size = Double.parseDouble(sizeRequired);
+        System.out.println("sizeSign:" + sizeSign + ",sizeRequired:" + size + ",sizeMeasure:" + sizeMeasure);
+        size = Converter.convertToBytes(size, sizeMeasure);
+        if (sizeSign.equalsIgnoreCase("minor")) {
+            if (arrayResultFiles.getSize() < size) {
+                return true;
+            }
+            return false;
+        }
+        if (sizeSign.equalsIgnoreCase("mayor")) {
+            if (arrayResultFiles.getSize() > size) {
+                return true;
+            }
+            return false;
+        }
+        if (sizeSign.equalsIgnoreCase("equals")) {
+            if (Math.abs(arrayResultFiles.getSize() - size) <= 100.0) {
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * method saveSearchCriteria
+     * @return a string with the json search criterial
+     */
+    public String saveSearchCriteria() {
+        Gson gson = new Gson();
+        String json = gson.toJson(searchCriteria);
+        System.out.println("JSON:" + json);
+        SearchQuery searchQuery = new SearchQuery();
+
+        return searchQuery.addCriteria(json);
+    }
+
 }

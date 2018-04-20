@@ -157,6 +157,7 @@ public class PanelAttributes extends JPanel{
         //---- comboBoxSize ----
         comboBoxType.setPreferredSize(new Dimension(50, 20));
         comboBoxType.addItem("bytes");
+        comboBoxType.addItem("Kb");
         comboBoxType.addItem("Mb");
         comboBoxType.addItem("Gb");
 
@@ -235,4 +236,51 @@ public class PanelAttributes extends JPanel{
     public String getTextFieldOwner() {
         return textFieldOwner.getText();
     }
+
+    //setters
+
+    /**
+     * Setter for the extension text field.
+     */
+    public void setTextFieldExt(String textFieldExt) {
+        this.textFieldExt.setText(textFieldExt);
+    }
+    /**
+     * Setter for the size text field.
+     */
+    public void setTextFieldSize(String textFieldSize) {
+        this.textFieldSize.setText(textFieldSize);
+    }
+    /**
+     * Setter for the combo box size ><=.
+     */
+    public void setComboBoxSize(String comboBoxSize) {
+        this.comboBoxSize.setSelectedItem(comboBoxSize);
+    }
+    /**
+     * Setter for the combo box type size.
+     */
+    public void setComboBoxType(boolean comboBoxType) {
+        this.comboBoxType.setSelectedItem(comboBoxType);
+    }
+    /**
+     * Setter for the owner text field.
+     */
+    public void setTextFieldOwner(String textFieldOwner) {
+        this.textFieldOwner.setText(textFieldOwner);
+    }
+    /**
+     * Setter for the hidden checkbox.
+     */
+    public void setBtnGroupHidden(String btnGroupHidden) {
+        this.btnGroupHidden.getSelection().setActionCommand(btnGroupHidden);
+    }
+    /**
+     * Setter for the readoly checkbox.
+     */
+    public void setBtnGroupReadOnly(String btnGroupReadonly) {
+        this.btnGroupRead.getSelection().setActionCommand(btnGroupReadonly);
+    }
+
+
 }

@@ -12,14 +12,14 @@ package com.fundation.search.model;
  * @version 27 Mar 2018  * @Juan Manuel
  */
 public class SearchCriteria {
+    private String searchCriteriaName;
+
     /**
-     * Attribute of file name
-     */
+     * Attribute of file name*/
     private String name;
 
     /**
-     * Attribute of path name
-     */
+     * Attribute of path name*/
     private String path;
 
     /**
@@ -46,11 +46,25 @@ public class SearchCriteria {
      * Attribute to search's extension*/
     private String extension;
 
+    /**
+     * Attribute for size sign (less, more or equals)*/
+    private String sizeSign;
 
+    /**
+     * Attribute for size required*/
+    private String sizeRequired;
+
+    /**
+     * Attribute fro size measure (Mb, Gb, Bytes)*/
+    private String sizeMeasure;
+
+    /**Setter for search criteria name to save in DB*/
+    public void setSearchCriteriaName(String searchCriteriaName) {
+        this.searchCriteriaName = searchCriteriaName;
+    }
 
     /**
      * Setter for name attribute.
-     *
      * @param name, is the file name the user is searching.
      */
     public void setName(String name) {
@@ -59,7 +73,6 @@ public class SearchCriteria {
 
     /**
      * Setter for path attribute.
-     *
      * @param path, is the path where the user is searching a file.
      */
     public void setPath(String path) {
@@ -68,7 +81,6 @@ public class SearchCriteria {
 
     /**
      * Setter for hidden attribute
-
      * @param hidden
      */
     public void setHidden(String hidden) {
@@ -115,11 +127,38 @@ public class SearchCriteria {
         this.extension = extension;
     }
 
+    /**
+     * Setter for size sign.
+     * @param sizeSign input from UI.
+     */
+    public void setSizeSign(String sizeSign) {
+        this.sizeSign = sizeSign;
+    }
 
+    /**
+     * Setter for size required.
+     * @param sizeRequired
+     */
+    public void setSizeRequired(String sizeRequired) {
+        this.sizeRequired = sizeRequired;
+    }
+
+    /**
+     * Setter for size measure.
+     * @param sizeMeasure
+     */
+    public void setSizeMeasure(String sizeMeasure) {
+        this.sizeMeasure = sizeMeasure;
+    }
+
+
+    /**Getter for search criteria name saved in DB*/
+    public String getSearchCriteriaName() {
+        return this.searchCriteriaName;
+    }
 
     /**
      * Getter for name attribute.
-     *
      * @return name, is the file name set in previous method.
      */
     public String getName() {
@@ -128,7 +167,6 @@ public class SearchCriteria {
 
     /**
      * Getter for path attribute.
-     *
      * @return path, is the path set in previous method.
      */
     public String getPath() {
@@ -180,5 +218,29 @@ public class SearchCriteria {
      */
     public String getExtension() {
         return this.extension;
+    }
+
+    /**
+     * Getter for size sign.
+     * @return size sign.
+     */
+    public String getSizeSign() {
+        return this.sizeSign;
+    }
+
+    /**
+     * Getter for size required.
+     * @return
+     */
+    public String getSizeRequired() {
+        return this.sizeRequired;
+    }
+
+    /**
+     * Getter for size measure.
+     * @return
+     */
+    public String getSizeMeasure() {
+        return this.sizeMeasure;
     }
 }

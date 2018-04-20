@@ -7,6 +7,7 @@
 
 package com.fundation.search.view;
 
+import com.toedter.calendar.JDateChooser;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 import javax.swing.JCheckBox;
@@ -14,6 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JFormattedTextField;
 import javax.swing.border.TitledBorder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 /* @version
  * 27 Mar 2018  * @Daniel Caballero.
@@ -24,9 +28,10 @@ public class PanelDate extends JPanel {
     private JCheckBox checkBoxModified;
     private JCheckBox checkBoxAccessed;
     private JLabel labelFrom;
-    private JFormattedTextField formattedTextFieldStart;
     private JLabel labelTo;
-    private JFormattedTextField formattedTextFieldEnd;
+    private JDateChooser dateChooserFrom;
+    private JDateChooser dateChooserTo;
+
 
     /**
      * Class constructor.
@@ -43,41 +48,46 @@ public class PanelDate extends JPanel {
         checkBoxModified = new JCheckBox();
         checkBoxAccessed = new JCheckBox();
         labelFrom = new JLabel();
-        formattedTextFieldStart = new JFormattedTextField();
         labelTo = new JLabel();
-        formattedTextFieldEnd = new JFormattedTextField();
+        dateChooserFrom = new JDateChooser();
+        dateChooserTo = new JDateChooser();
+
 
         setBorder(new TitledBorder("Date"));
         setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
+                        TableLayout.PREFERRED,
                         TableLayout.PREFERRED},
                 {TableLayout.PREFERRED, TableLayout.PREFERRED}}));
         //---- checkBoxCreated ----
         checkBoxCreated.setText("Created");
-        add(checkBoxCreated, new TableLayoutConstraints(0, 0, 0, 0,
+        add(checkBoxCreated, new TableLayoutConstraints(1, 0, 1, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //---- checkBoxModified ----
         checkBoxModified.setText("Modified");
-        add(checkBoxModified, new TableLayoutConstraints(2, 0, 2, 0,
+        add(checkBoxModified, new TableLayoutConstraints(3, 0, 3, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //---- checkBoxAccessed ----
         checkBoxAccessed.setText("Accesed");
-        final int constraints2 = 4;
-        add(checkBoxAccessed, new TableLayoutConstraints(constraints2, 0, constraints2, 0,
+
+        add(checkBoxAccessed, new TableLayoutConstraints(4, 0, 4, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //---- labelFrom ----
         labelFrom.setText("From:");
         add(labelFrom, new TableLayoutConstraints(0, 1, 0, 1, TableLayoutConstraints.FULL,
                 TableLayoutConstraints.FULL));
-        add(formattedTextFieldStart, new TableLayoutConstraints(1, 1, 2, 1,
+
+        add(dateChooserFrom, new TableLayoutConstraints(1, 1, 1, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
         //---- labelTo ----
         labelTo.setText("To:");
-        final int constraints1 = 3;
-        add(labelTo, new TableLayoutConstraints(constraints1, 1, constraints1, 1,
+
+        add(labelTo, new TableLayoutConstraints(3, 1,3 , 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        add(formattedTextFieldEnd, new TableLayoutConstraints(constraints2, 1, constraints2, 1,
+        add(dateChooserTo, new TableLayoutConstraints(4, 1, 4, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
     }
     /**
      * Getter for the created date checkbox.
@@ -105,13 +115,47 @@ public class PanelDate extends JPanel {
      * @return the boolean of ´formattedTextFieldStart´ checkbox.
      */
     public String getFormattedTextFieldStart() {
-        return formattedTextFieldStart.getText();
+        SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
+        return formatDate.format(dateChooserFrom.getDate());
     }
     /**
      * Getter for the en date.
      * @return the boolean of ´formattedTextFieldEnd´ checkbox.
      */
     public String getFormattedTextFieldEnd() {
-        return formattedTextFieldEnd.getText();
+        SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
+        return formatDate.format(dateChooserTo.getDate());
+    }
+
+    //setters////
+    /**
+     * Setter for the created date checkbox.
+     */
+    public void setCheckBoxCreated(boolean checkBoxCreated) {
+        this.checkBoxCreated.setSelected(checkBoxCreated);
+    }
+    /**
+     * Setter for the modified date checkbox.
+     */
+    public void setCheckBoxModified(boolean checkBoxModified) {
+        this.checkBoxModified.setSelected(checkBoxModified);
+    }
+    /**
+     * Setter for the Accessed date checkbox.
+     */
+    public void setCheckBoxAccessed(boolean checkBoxAccessed) {
+        this.checkBoxAccessed.setSelected(checkBoxAccessed);
+    }
+    /**
+     * Setter for the date chooser from.
+     */
+    public void setDateChooserFrom(Date dateChooserFrom) {
+        this.dateChooserFrom.setDate(dateChooserFrom);
+    }
+    /**
+     * Setter for the date chooser to.
+     */
+    public void setDateChooserTo(Date dateChooserTo) {
+        this.dateChooserTo.setDate(dateChooserTo);
     }
 }
