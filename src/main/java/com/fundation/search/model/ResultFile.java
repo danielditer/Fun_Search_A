@@ -23,6 +23,9 @@ public class ResultFile extends Asset {
     /**File last modified time*/
     private String lastModifiedTime;
 
+    /**File content*/
+    private String content;
+
     /**
      * ResultFile object.
      *
@@ -30,12 +33,13 @@ public class ResultFile extends Asset {
      * @param fileName is the file name of files.
      * @param hidden   is the hidden state of files.
      */
-    public ResultFile(String path, String fileName, boolean hidden, boolean readOnly, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime) {
+    public ResultFile(String path, String fileName, boolean hidden, boolean readOnly, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime, String content) {
         super(path, fileName, hidden, readOnly, typeFile, owner, size);
         this.extension = extension;
         this.creationTime = creationTime;
         this.lastModifiedTime = lastModifiedTime;
         this.lastAccessTime = lastAccessTime;
+        this.content = content;
     }
 
     /**
@@ -68,5 +72,13 @@ public class ResultFile extends Asset {
      */
     public String getLastAccessTime() {
         return this.lastAccessTime;
+    }
+
+    /**
+     * Method to get file's content.
+     * @return file content.
+     */
+    public String getContent() {
+        return this.content;
     }
 }

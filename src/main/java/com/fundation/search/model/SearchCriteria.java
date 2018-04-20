@@ -62,8 +62,9 @@ public class SearchCriteria {
     /**
      * Attribute for to date*/
     private String toDate;
-
-
+    /**
+     * Attribute for file content*/
+    private String content;
 
     /**
      * Setter for search criteria name to save in DB.
@@ -186,6 +187,9 @@ public class SearchCriteria {
         this.toDate = toDate;
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
 
 
     /**
@@ -307,5 +311,7 @@ public class SearchCriteria {
     public String getToDate() {
         return this.toDate;
     }
-
+    public String getContent() {
+        return this.content;
+    }
 }

@@ -126,4 +126,8 @@ public class Asset {
     public String getLastAccessTime() {
         return getLastAccessTime();
     }
+
+    public String getContent() {
+        return getContent();
+    }
 }

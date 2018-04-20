@@ -9,8 +9,16 @@ package com.fundation.search.model;
 import com.fundation.search.common.Converter;
 import com.fundation.search.common.SearchQuery;
 import com.google.gson.Gson;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.PDFTextStripperByArea;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Class made in order to develop different methods for search files.
@@ -106,7 +115,11 @@ public class SearchFiles {
                     matchesCriteria = false;
                 }
             }
-
+            if (results instanceof ResultFile) {
+                if (matchesCriteria && !searchContent(results, searchCriteria.getContent())) {
+                    matchesCriteria = false;
+                }
+            }
             if (matchesCriteria) {
                 arrayFinalResult.add(results);
             }
@@ -145,22 +158,21 @@ public class SearchFiles {
                 String creationTime = dateFormat.format(fileAttributes.creationTime().toMillis());
                 String lastAccessTime = dateFormat.format(fileAttributes.lastAccessTime().toMillis());
                 String lastModifiedTime = dateFormat.format(fileAttributes.lastModifiedTime().toMillis());
-                //System.out.println("file name:" + fileEntry.getName() + ",**creationTime: " + dateFormat.format(fileAttributes.creationTime().toMillis()));
-                //System.out.println("file name:" + fileEntry.getName() + ",**lastAccessTime: " + dateFormat.format(fileAttributes.lastAccessTime().toMillis()));
-                //System.out.println("file name:" + fileEntry.getName() + ",**lastModifiedTime: " + dateFormat.format(fileAttributes.lastModifiedTime().toMillis()));
 
                 if (fileEntry.isDirectory()) {
                     recoverFiles(fileEntry, arrayResultFiles);
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(),
                         fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3,
                         owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                        null, 0L, null, null, null));
+                        null, 0L, null, null, null, null));
                 } else {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
+                    String content = getFileContent(fileEntry, extension);
+
                     arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(),
                         fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1,
                         owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                        extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime));
+                        extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, content));
                 }
             }
         } catch (NullPointerException e) {
@@ -374,6 +386,63 @@ public class SearchFiles {
         return dateInRange;
     }
 
+    public String getFileContent(File fileEntry, String extension) {
+        if (extension.equalsIgnoreCase("docx") && fileEntry.length() > 0L) {
+            try {
+                FileInputStream fis = new FileInputStream(fileEntry.getPath());
+                XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(fis));
+                XWPFWordExtractor extractor = new XWPFWordExtractor(xdoc);
+                return extractor.getText();
+            } catch(Exception ex) {
+                return null;
+            }
+        }
+        if (extension.equalsIgnoreCase("txt") && fileEntry.length() > 0L) {
+            Scanner in = null;
+            String content = null;
+            try {
+                in = new Scanner(new FileReader(fileEntry));
+                while(in.hasNextLine()) {
+                    content = in.nextLine();
+                }
+            }
+            catch(IOException e) {
+                e.printStackTrace();
+            }
+            return content;
+        }
+        if (extension.equalsIgnoreCase("pdf") && fileEntry.length() > 0L) {
+            try {
+                PDDocument document = PDDocument.load(fileEntry);
+                document.getClass();
+                if (!document.isEncrypted()) {
+                    PDFTextStripperByArea stripper = new PDFTextStripperByArea();
+                    stripper.setSortByPosition(true);
+                    PDFTextStripper tStripper = new PDFTextStripper();
+                    String pdfFileInText = tStripper.getText(document);
+                    return pdfFileInText.toString();
+                }
+            } catch (Exception e) {
+                e.getMessage();
+            }
+
+        }
+        return null;
+        /*if (extension.equalsIgnoreCase("txt") && fileEntry.length() > 0L) {
+
+        }*/
+    }
+
+    public boolean searchContent(Asset arrayResultFiles, String content) {
+        if (content == null) {
+            return true;
+        }
+        //System.out.println("filename:" + arrayResultFiles.getFileName()  + "**filecontnet:" + arrayResultFiles.getContent() + "****content:" + content);
+        if (arrayResultFiles.getContent() != null && arrayResultFiles.getContent().contains(content)) {
+            return true;
+        }
+        return false;
+    }
     /**
      * method saveSearchCriteria
      * @return a string with the json search criterial
