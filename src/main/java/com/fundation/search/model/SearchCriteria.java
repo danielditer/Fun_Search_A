@@ -12,6 +12,8 @@ package com.fundation.search.model;
  * @version 27 Mar 2018  * @Juan Manuel
  */
 public class SearchCriteria {
+    private String searchCriteriaName;
+
     /**
      * Attribute of file name*/
     private String name;
@@ -56,6 +58,10 @@ public class SearchCriteria {
      * Attribute fro size measure (Mb, Gb, Bytes)*/
     private String sizeMeasure;
 
+    /**Setter for search criteria name to save in DB*/
+    public void setSearchCriteriaName(String searchCriteriaName) {
+        this.searchCriteriaName = searchCriteriaName;
+    }
 
     /**
      * Setter for name attribute.
@@ -145,6 +151,11 @@ public class SearchCriteria {
         this.sizeMeasure = sizeMeasure;
     }
 
+
+    /**Getter for search criteria name saved in DB*/
+    public String getSearchCriteriaName() {
+        return this.searchCriteriaName;
+    }
 
     /**
      * Getter for name attribute.
