@@ -9,6 +9,7 @@ package com.fundation.search.controller;
 import com.fundation.search.common.SearchQuery;
 import com.fundation.search.common.Validator;
 import com.fundation.search.model.Asset;
+import com.fundation.search.model.ResultFile;
 import com.fundation.search.model.SearchCriteria;
 import com.fundation.search.model.SearchFiles;
 import com.fundation.search.view.PanelNormalSearch;
@@ -284,7 +285,12 @@ public class SearchController implements Controller {
         tableModel.setRowCount(0);
 
         for (int i = 0; i < resultFileList.size(); i++) {
-            tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly()});
+            if (resultFileList.get(i) instanceof ResultFile) {
+                tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly(), resultFileList.get(i).getOwner(), resultFileList.get(i).getSize()});
+            } else {
+                tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly(), resultFileList.get(i).getOwner(), 0L});
+            }
+
             System.out.println(resultFileList.get(i).getFileName() + "\t" + resultFileList.get(i).getPath() + "\t" + resultFileList.get(i).getHidden());
         }
         panel.setTableModel(tableModel);

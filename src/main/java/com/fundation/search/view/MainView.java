@@ -101,7 +101,7 @@ public class MainView extends JFrame {
         pack();
         setLocationRelativeTo(getOwner());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(745,520);
+        setSize(800,520);
         setResizable(false);
 
         //======== panel Search Criterial ========
