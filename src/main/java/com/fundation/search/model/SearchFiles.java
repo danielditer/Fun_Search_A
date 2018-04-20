@@ -101,6 +101,11 @@ public class SearchFiles {
             if (matchesCriteria && !searchSize(results, searchCriteria.getSizeSign(), searchCriteria.getSizeRequired(), searchCriteria.getSizeMeasure())) {
                 matchesCriteria = false;
             }
+            if (results instanceof ResultFile) {
+                if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
+                    matchesCriteria = false;
+                }
+            }
 
             if (matchesCriteria) {
                 arrayFinalResult.add(results);
@@ -136,7 +141,7 @@ public class SearchFiles {
                 /**
                  * Section to know a files dates*/
                 BasicFileAttributes fileAttributes = Files.readAttributes(fileEntry.toPath(), BasicFileAttributes.class);
-                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
                 String creationTime = dateFormat.format(fileAttributes.creationTime().toMillis());
                 String lastAccessTime = dateFormat.format(fileAttributes.lastAccessTime().toMillis());
                 String lastModifiedTime = dateFormat.format(fileAttributes.lastModifiedTime().toMillis());
@@ -336,21 +341,37 @@ public class SearchFiles {
 
     public boolean searchDate(Asset arrayResultFiles, boolean createDate, boolean modifiedDate, boolean accessedDate, String fromDate, String toDate) {
         SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
-        try {
-            Date dateFromDate = formatDate.parse(fromDate);
-            Date dateToDate = formatDate.parse(toDate);
-            Date dateCreation = formatDate.parse(arrayResultFiles.getCreationTime());
-            Date dateModification = formatDate.parse(arrayResultFiles.getLastModifiedTime());
-            Date dateAccessed = formatDate.parse(arrayResultFiles.getLastAccessTime());
-            if (createDate) {
-                if (dateFromDate.compareTo(dateCreation) < 0) {
-                    System.out.println("date from:" + dateFromDate + " is lower than:" + dateCreation);
+        boolean dateInRange = true;
+        if (createDate || modifiedDate ||accessedDate) {
+            try {
+                Date dateFromDate = formatDate.parse(fromDate);
+                Date dateToDate = formatDate.parse(toDate);
+                Date dateCreation = formatDate.parse(arrayResultFiles.getCreationTime());
+                Date dateModification = formatDate.parse(arrayResultFiles.getLastModifiedTime());
+                Date dateAccessed = formatDate.parse(arrayResultFiles.getLastAccessTime());
+                if (createDate) {
+                    dateInRange = false;
+                    if (dateFromDate.compareTo(dateCreation) <= 0 && dateToDate.compareTo(dateCreation) >= 0) {
+                        dateInRange = true;
+                    }
                 }
+                if (dateInRange && modifiedDate) {
+                    dateInRange = false;
+                    if (dateFromDate.compareTo(dateModification) <= 0 && dateToDate.compareTo(dateModification) >= 0) {
+                        dateInRange = true;
+                    }
+                }
+                if (dateInRange && accessedDate) {
+                    dateInRange = false;
+                    if (dateFromDate.compareTo(dateAccessed) <= 0 && dateToDate.compareTo(dateAccessed) >= 0) {
+                        dateInRange = true;
+                    }
+                }
+            } catch (ParseException e) {
+                System.out.println("Exception:" + e.getMessage());
             }
-        } catch (ParseException e) {
-            e.getMessage();
         }
-        return true;
+        return dateInRange;
     }
 
     /**

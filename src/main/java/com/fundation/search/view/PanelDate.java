@@ -10,10 +10,8 @@ package com.fundation.search.view;
 import com.toedter.calendar.JDateChooser;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JFormattedTextField;
+
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -116,7 +114,7 @@ public class PanelDate extends JPanel {
      */
     public String getFormattedTextFieldStart() {
         SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
-        return formatDate.format(dateChooserFrom.getDate());
+        return dateChooserFrom.getDate() == null ? null : formatDate.format(dateChooserFrom.getDate());
     }
     /**
      * Getter for the en date.
@@ -124,7 +122,7 @@ public class PanelDate extends JPanel {
      */
     public String getFormattedTextFieldEnd() {
         SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
-        return formatDate.format(dateChooserTo.getDate());
+        return dateChooserTo.getDate() == null ? null : formatDate.format(dateChooserTo.getDate());
     }
 
     //setters////
