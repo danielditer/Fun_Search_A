@@ -116,7 +116,7 @@ public class SearchFiles {
                 }
             }
             if (results instanceof ResultFile) {
-                if (matchesCriteria && !searchContent(results, searchCriteria.getContent())) {
+                if (matchesCriteria && !searchContent(results, searchCriteria.getContent(), searchCriteria.getContentCaseSensitive())) {
                     matchesCriteria = false;
                 }
             }
@@ -430,14 +430,20 @@ public class SearchFiles {
         return null;
     }
 
-    public boolean searchContent(Asset arrayResultFiles, String content) {
+    public boolean searchContent(Asset arrayResultFiles, String content, boolean contentCaseSensitive) {
         if (content == null) {
             return true;
         }
-        //System.out.println("filename:" + arrayResultFiles.getFileName()  + "**filecontnet:" + arrayResultFiles.getContent() + "****content:" + content);
-        if (arrayResultFiles.getContent() != null && arrayResultFiles.getContent().contains(content)) {
-            return true;
+        if (contentCaseSensitive) {
+            if (arrayResultFiles.getContent() != null && arrayResultFiles.getContent().toUpperCase().contains(content.toUpperCase())) {
+                return true;
+            }
+        } else {
+            if (arrayResultFiles.getContent() != null && arrayResultFiles.getContent().contains(content)) {
+                return true;
+            }
         }
+
         return false;
     }
     /**

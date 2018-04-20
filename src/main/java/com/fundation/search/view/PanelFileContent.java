@@ -53,15 +53,15 @@ public class PanelFileContent extends JPanel {
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
 
         //---- textFieldExtension ----
-        labelComboTypeFile.setText("Type");
+        labelComboTypeFile.setText("Type: txt - docx - pdf");
         add(labelComboTypeFile, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- comboBoxSize ----
-        comboTypeFile.addItem("txt");
+        /*comboTypeFile.addItem("txt");
         comboTypeFile.setPreferredSize(new Dimension(20, 20));
         add(comboTypeFile, new TableLayoutConstraints(1, 0, 1, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));*/
 
         //======== scrollPaneContent ========
         //---- textAreaContent ----
@@ -69,7 +69,7 @@ public class PanelFileContent extends JPanel {
         add(scrollPaneContent, new TableLayoutConstraints(0, 1, 2, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //---- checkBoxCaseSensitive ----
-        checkBoxCaseSensitive.setText("Case sensitive");
+        checkBoxCaseSensitive.setText("No Case sensitive");
         add(checkBoxCaseSensitive, new TableLayoutConstraints(0, 2, 0, 2,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
     }
