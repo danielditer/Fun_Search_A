@@ -294,7 +294,7 @@ public class PanelNormalSearch extends JPanel {
     /**
      * Setter for the combo box type size.
      */
-    public void setComboBoxTypeAttributes(boolean comboBoxType) {
+    public void setComboBoxTypeAttributes(String comboBoxType) {
         panelAttributes.setComboBoxType(comboBoxType);
     }
     /**
@@ -328,7 +328,7 @@ public class PanelNormalSearch extends JPanel {
      * Setter for the modified date checkbox - paneldate.
      */
     public void setCheckBoxModifiedPanel(boolean checkBoxModified) {
-        panelDate.setCheckBoxCreated(checkBoxModified);
+        panelDate.setCheckBoxModified(checkBoxModified);
     }
     /**
      * Setter for the Accessed date checkbox - paneldate.
