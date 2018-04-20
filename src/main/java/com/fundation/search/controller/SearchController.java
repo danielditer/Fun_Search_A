@@ -143,6 +143,7 @@ public class SearchController implements Controller {
         searchCriteriaForDB.setAccessedDate(panelMain.getCheckBoxAccessed());
         searchCriteriaForDB.setFromDate(panelMain.getFormattedTextFieldStart());
         searchCriteriaForDB.setToDate(panelMain.getFormattedTextFieldEnd());
+        searchCriteriaForDB.setContent(panelMain.getContent());
 
         searchFile.setSearchCriteria(searchCriteriaForDB);
         System.out.println("DB:" + searchFile.saveSearchCriteria());
@@ -323,13 +324,6 @@ public class SearchController implements Controller {
         DefaultTableModel tableModel = panel.getTableModel();
         tableModel.setRowCount(0);
 
-        /*Iterator<Integer> itr = searchCriteriaDB.keySet().iterator();
-        while (itr.hasNext()) {
-            Integer k = itr.next();
-            tableModel.addRow(new Object[]{searchCriteriaDB., searchCriteriaDB.get(k).getSearchCriteriaName()});
-
-        }*/
-
         for (Integer i : searchCriteriaDB.keySet()) {
             tableModel.addRow(new Object[]{i, searchCriteriaDB.get(i).getSearchCriteriaName()});
         }
@@ -386,6 +380,7 @@ public class SearchController implements Controller {
             panel.setDateChooserFromPanel(null);
             panel.setDateChooserToPanel(null);
         }
+        panel.setTextAreaContent(searchCriteriaDB.get(key).getContent());
 
     }
 }
