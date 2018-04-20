@@ -20,6 +20,15 @@ public class ResultMultimediaFile extends Asset {
      * Extension attribute for files and multimedia files only.*/
     private String extension;
 
+    /**File creation time*/
+    private String creationTime;
+
+    /**File last access time*/
+    private String lastAccessTime;
+
+    /**File last modified time*/
+    private String lastModifiedTime;
+
     /**
      * Constructor for this class, recieves the same as the father class,
      * it sends them with super and sets its own attribute duration
@@ -28,10 +37,13 @@ public class ResultMultimediaFile extends Asset {
      * @param hidden if the file is hidden or not.
      * @param duration hour minute second of file.
      */
-    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension, long size) {
+    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime) {
         super(path, fileName, hidden, true, typeFile, owner, size);
         this.duration = duration;
         this.extension = extension;
+        this.creationTime = creationTime;
+        this.lastModifiedTime = lastModifiedTime;
+        this.lastAccessTime = lastAccessTime;
     }
 
     /**
@@ -48,5 +60,29 @@ public class ResultMultimediaFile extends Asset {
      */
     public String getExtension() {
         return this.extension;
+    }
+
+    /**
+     * Method to get creation time.
+     * @return creationTime attribute.
+     */
+    public String getCreationTime() {
+        return this.creationTime;
+    }
+
+    /**
+     * Method to get last modified time.
+     * @return lastModifiedTime attribute.
+     */
+    public String getLastModifiedTime() {
+        return this.lastModifiedTime;
+    }
+
+    /**
+     * Method to get last accessed time.
+     * @return lastAccessedTime attribute.
+     */
+    public String getLastAccessTime() {
+        return this.lastAccessTime;
     }
 }
