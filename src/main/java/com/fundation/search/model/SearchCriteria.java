@@ -65,6 +65,11 @@ public class SearchCriteria {
     /**
      * Attribute for file content*/
     private String content;
+    /**
+     * Attribute for content case sensitive check*/
+    private boolean contentCaseSensitive;
+
+
 
     /**
      * Setter for search criteria name to save in DB.
@@ -210,6 +215,16 @@ public class SearchCriteria {
         this.content = content;
     }
 
+    /**
+     * Setter for content case sensitive.
+     * @param contentCaseSensitive
+     */
+    public void setContentCaseSensitive(boolean contentCaseSensitive) {
+        this.contentCaseSensitive = contentCaseSensitive;
+    }
+
+
+
 
     /**
      * Getter for search criteria name saved in DB
@@ -351,5 +366,13 @@ public class SearchCriteria {
      */
     public String getContent() {
         return this.content;
+    }
+
+    /**
+     * Getter for content case sensitive.
+     * @return
+     */
+    public boolean getContentCaseSensitive() {
+        return this.contentCaseSensitive;
     }
 }
