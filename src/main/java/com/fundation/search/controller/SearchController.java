@@ -95,7 +95,8 @@ public class SearchController implements Controller {
                 typeFile, panel.getCaseSensitiveName(), panel.getTextFieldOwner(), panel.getTextFieldExt(),
                 panel.getComboBoxSize(), panel.getTextFieldSize(), panel.getComboBoxType(),
                 panel.getCheckBoxCreated(), panel.getCheckBoxModified(), panel.getCheckBoxAccessed(),
-                panel.getFormattedTextFieldStart(), panel.getFormattedTextFieldEnd(), panel.getContent());
+                panel.getFormattedTextFieldStart(), panel.getFormattedTextFieldEnd(), panel.getContent(),
+                panel.getCaseSensitiveContent());
         }
     }
 
@@ -143,6 +144,7 @@ public class SearchController implements Controller {
         searchCriteriaForDB.setAccessedDate(panelMain.getCheckBoxAccessed());
         searchCriteriaForDB.setFromDate(panelMain.getFormattedTextFieldStart());
         searchCriteriaForDB.setToDate(panelMain.getFormattedTextFieldEnd());
+        searchCriteriaForDB.setContent(panelMain.getContent());
 
         searchFile.setSearchCriteria(searchCriteriaForDB);
         System.out.println("DB:" + searchFile.saveSearchCriteria());
@@ -221,7 +223,7 @@ public class SearchController implements Controller {
      * @param sizeRequired          value from UI.
      * @param sizeMeasure           value from UI.
      */
-    public void sendSearchCriteriaToModel(String path, String name, String hidden, String readOnly, int typeFile, boolean nameFileCaseSensitive, String owner, String extension, String sizeSign, String sizeRequired, String sizeMeasure, boolean create, boolean modified, boolean accessed, String fromDate, String toDate, String content) {
+    public void sendSearchCriteriaToModel(String path, String name, String hidden, String readOnly, int typeFile, boolean nameFileCaseSensitive, String owner, String extension, String sizeSign, String sizeRequired, String sizeMeasure, boolean create, boolean modified, boolean accessed, String fromDate, String toDate, String content, boolean contentCaseSensitive) {
         searchCriteria.setPath(path);
         if (!name.isEmpty()) {
             searchCriteria.setName(name);
@@ -263,6 +265,7 @@ public class SearchController implements Controller {
         } else {
             searchCriteria.setContent(null);
         }
+        searchCriteria.setContentCaseSensitive(contentCaseSensitive);
 
         searchFile.setSearchCriteria(searchCriteria);
         searchFile.init();
@@ -323,13 +326,6 @@ public class SearchController implements Controller {
         DefaultTableModel tableModel = panel.getTableModel();
         tableModel.setRowCount(0);
 
-        /*Iterator<Integer> itr = searchCriteriaDB.keySet().iterator();
-        while (itr.hasNext()) {
-            Integer k = itr.next();
-            tableModel.addRow(new Object[]{searchCriteriaDB., searchCriteriaDB.get(k).getSearchCriteriaName()});
-
-        }*/
-
         for (Integer i : searchCriteriaDB.keySet()) {
             tableModel.addRow(new Object[]{i, searchCriteriaDB.get(i).getSearchCriteriaName()});
         }
@@ -386,6 +382,7 @@ public class SearchController implements Controller {
             panel.setDateChooserFromPanel(null);
             panel.setDateChooserToPanel(null);
         }
+        panel.setTextAreaContent(searchCriteriaDB.get(key).getContent());
 
     }
 }
