@@ -10,6 +10,8 @@ import com.fundation.search.model.Asset;
 
 import java.util.List;
 
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+
 /**
  * This class will display the search results, it is applied for command inputs.
  *
@@ -31,7 +33,8 @@ public class CommandResultView {
      * Method to display search result in command line (cmd).
      */
     public void printResults() {
-        System.out.println("Search Results:");
+//        System.out.println("Search Results:");
+        LOGGER.info("Search Results: ");
         if (!resultFileList.isEmpty()) {
             String heading1 = "FilePath";
             String heading2 = "FileName";
@@ -41,10 +44,9 @@ public class CommandResultView {
             System.out.println(divider);
             for (Asset results : resultFileList) {
                 System.out.println("");
-                System.out.printf("%-15s %30s %30s %n", results.getPath(), results.getFileName(), results.getHidden());
+                System.out.printf("%-15s %30s %30s ", results.getPath(), results.getFileName(), results.getHidden());
 
             }
-            System.out.println(divider);
         }
     }
 }
