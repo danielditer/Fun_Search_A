@@ -114,7 +114,6 @@ public class PanelAttributes extends JPanel{
         btnGroupHidden.add(radioBoxHiddenNo);
         btnGroupHidden.add(radioBoxHiddenAll);
 
-
         add(radioBoxHidden, new TableLayoutConstraints(0, 1, 0, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         add(radioBoxHiddenNo, new TableLayoutConstraints(1, 1, 1, 1,
@@ -260,7 +259,7 @@ public class PanelAttributes extends JPanel{
     /**
      * Setter for the combo box type size.
      */
-    public void setComboBoxType(boolean comboBoxType) {
+    public void setComboBoxType(String comboBoxType) {
         this.comboBoxType.setSelectedItem(comboBoxType);
     }
     /**
@@ -273,13 +272,31 @@ public class PanelAttributes extends JPanel{
      * Setter for the hidden checkbox.
      */
     public void setBtnGroupHidden(String btnGroupHidden) {
-        this.btnGroupHidden.getSelection().setActionCommand(btnGroupHidden);
+        if (btnGroupHidden.equals("1")) {
+            radioBoxHidden.setSelected(true);
+        }
+        if (btnGroupHidden.equals("2")) {
+            radioBoxHiddenNo.setSelected(true);
+        }
+        if (btnGroupHidden.equals("3")) {
+            radioBoxHiddenAll.setSelected(true);
+        }
+        //this.btnGroupHidden.getSelection().setActionCommand(btnGroupHidden);
     }
     /**
      * Setter for the readoly checkbox.
      */
     public void setBtnGroupReadOnly(String btnGroupReadonly) {
-        this.btnGroupRead.getSelection().setActionCommand(btnGroupReadonly);
+        if (btnGroupReadonly.equals("1")) {
+            radioBoxReadOnly.setSelected(true);
+        }
+        if (btnGroupReadonly.equals("2")) {
+            radioBoxReadOnlyNo.setSelected(true);
+        }
+        if (btnGroupReadonly.equals("3")) {
+            radioBoxReadOnlyAll.setSelected(true);
+        }
+        //this.btnGroupRead.getSelection().setActionCommand(btnGroupReadonly);
     }
 
 

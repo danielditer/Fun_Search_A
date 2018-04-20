@@ -50,7 +50,7 @@ public class PanelSearchCriterial extends JPanel {
         buttonSearch = new JButton();
         buttonLoad = new JButton();
         tableResult = new JTable();
-        String columnNames[] = new String[]{"Name"};
+        String columnNames[] = new String[]{"Id", "Name"};
 
         tableModel = new DefaultTableModel(0, 0);
         tableModel.setColumnIdentifiers(columnNames);
@@ -131,6 +131,15 @@ public class PanelSearchCriterial extends JPanel {
     public JButton getButtonLoad(){
         return buttonLoad;
     }
+    /**
+     * @return buttonSelect.
+     */
+    public JButton getButtonSelect(){
+        return buttonSelect;
+    }
 
+    public JTable getTableResult() {
+        return tableResult;
+    }
 
 }

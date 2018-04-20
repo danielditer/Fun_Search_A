@@ -294,7 +294,7 @@ public class PanelNormalSearch extends JPanel {
     /**
      * Setter for the combo box type size.
      */
-    public void setComboBoxTypeAttributes(boolean comboBoxType) {
+    public void setComboBoxTypeAttributes(String comboBoxType) {
         panelAttributes.setComboBoxType(comboBoxType);
     }
     /**
