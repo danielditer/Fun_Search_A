@@ -18,6 +18,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,6 +133,11 @@ public class SearchController implements Controller {
         searchCriteriaForDB.setSizeSign(panelMain.getComboBoxSize());
         searchCriteriaForDB.setSizeRequired(panelMain.getTextFieldSize());
         searchCriteriaForDB.setSizeMeasure(panelMain.getComboBoxType());
+        searchCriteriaForDB.setCreateDate(panelMain.getCheckBoxCreated());
+        searchCriteriaForDB.setModifiedDate(panelMain.getCheckBoxModified());
+        searchCriteriaForDB.setAccessedDate(panelMain.getCheckBoxAccessed());
+        searchCriteriaForDB.setFromDate(panelMain.getFormattedTextFieldStart());
+        searchCriteriaForDB.setToDate(panelMain.getFormattedTextFieldEnd());
 
         searchFile.setSearchCriteria(searchCriteriaForDB);
         System.out.println("DB:" + searchFile.saveSearchCriteria());
@@ -352,6 +359,24 @@ public class SearchController implements Controller {
         panel.setComboBoxTypeAttributes(searchCriteriaDB.get(key).getSizeMeasure());
 
         panel.setTextFieldOwnerAttributes(searchCriteriaDB.get(key).getOwner());
+
+        panel.setCheckBoxCreatedPanel(searchCriteriaDB.get(key).getCreatedDate());
+        panel.setCheckBoxModifiedPanel(searchCriteriaDB.get(key).getModifiedDate());
+        panel.setCheckBoxAccessedPanel(searchCriteriaDB.get(key).getAccessedDate());
+
+        SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
+        try {
+            panel.setDateChooserFromPanel(formatDate.parse(searchCriteriaDB.get(key).getFromDate()));
+            panel.setDateChooserToPanel(formatDate.parse(searchCriteriaDB.get(key).getToDate()));
+        } catch (ParseException e) {
+            panel.setDateChooserFromPanel(null);
+            panel.setDateChooserToPanel(null);
+            System.out.println(e.getMessage());
+        } catch (NullPointerException e) {
+            panel.setDateChooserFromPanel(null);
+            panel.setDateChooserToPanel(null);
+        }
+
     }
 }
 

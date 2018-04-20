@@ -328,7 +328,7 @@ public class PanelNormalSearch extends JPanel {
      * Setter for the modified date checkbox - paneldate.
      */
     public void setCheckBoxModifiedPanel(boolean checkBoxModified) {
-        panelDate.setCheckBoxCreated(checkBoxModified);
+        panelDate.setCheckBoxModified(checkBoxModified);
     }
     /**
      * Setter for the Accessed date checkbox - paneldate.
