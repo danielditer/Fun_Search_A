@@ -43,57 +43,48 @@ public class CommandController implements Controller {
      * @return list of files found
      */
     private void exeCmd() {
-        for (int i = 0; i < inputCommands.length - 1; i++) {
-            System.out.println("x:" + inputCommands[i + 1]);
-            if (inputCommands[i].equals("-n")) { /* Search by name*/
-//                if(inputCommands[i+1].isEmpty()){
-//                    System.out.println("Bad entry");
-//                }
-                searchCriteria.setName(inputCommands[i + 1]);
-            }
-            if (inputCommands[i].equals("-p")) { /* Search by path*/
-                searchCriteria.setPath(inputCommands[i + 1]);
-            }
-            if (inputCommands[i].equals("-h")) { /* Search by hidden*/
-                searchCriteria.setHidden(inputCommands[i + 1]);
-            }
-            if (inputCommands[i].equals("-r")) { /* Search by read-only*/
-                searchCriteria.setReadOnly(inputCommands[i + 1]);
-            }
-            if (inputCommands[i].equals("-s")) { /* Search by sensitive case*/
-                boolean value = false;
-                if ((inputCommands[i + 1]).equals("true")) {
-                    value = true;
+        if (inputCommands[0].equals("-help")) { /*Helper*/
+            helpMessage();
+
+        } else {
+            for (int i = 0; i < inputCommands.length - 1; i++) {
+
+
+                System.out.println("x:" + inputCommands[i + 1]);
+                if (inputCommands[i].equals("-n")) { /* Search by name*/
+                    searchCriteria.setName(inputCommands[i + 1]);
                 }
-                searchCriteria.setNameFileCaseSensitive(value);
-            }
-            if (inputCommands[i].equals("-ext")) { /* Search by hidden*/
-                searchCriteria.setExtension(inputCommands[i + 1]);
-            }
-            if (inputCommands[i].equals("-ow")) { /* Search by owner*/
-                searchCriteria.setOwner(inputCommands[i + 1]);
-            }
-            if (inputCommands[i].equals("-type")) { /* Search by owner*/
-                searchCriteria.setTypeFile(Integer.parseInt(inputCommands[i + 1]));
-            }
-            if (inputCommands[i].equals("-help")) { /*Helper*/
-                if ((inputCommands[i + 1]).equals("true")) {
-                    helpMessage();
+                if (inputCommands[i].equals("-p")) { /* Search by path*/
+                    searchCriteria.setPath(inputCommands[i + 1]);
                 }
+                if (inputCommands[i].equals("-h")) { /* Search by hidden*/
+                    searchCriteria.setHidden(inputCommands[i + 1]);
+                }
+                if (inputCommands[i].equals("-r")) { /* Search by read-only*/
+                    searchCriteria.setReadOnly(inputCommands[i + 1]);
+                }
+                if (inputCommands[i].equals("-s")) { /* Search by sensitive case*/
+                    boolean value = false;
+                    if ((inputCommands[i + 1]).equals("true")) {
+                        value = true;
+                    }
+                    searchCriteria.setNameFileCaseSensitive(value);
+                }
+                if (inputCommands[i].equals("-ext")) { /* Search by hidden*/
+                    searchCriteria.setExtension(inputCommands[i + 1]);
+                }
+                if (inputCommands[i].equals("-ow")) { /* Search by owner*/
+                    searchCriteria.setOwner(inputCommands[i + 1]);
+                }
+                if (inputCommands[i].equals("-type")) { /* Search by owner*/
+                    searchCriteria.setTypeFile(Integer.parseInt(inputCommands[i + 1]));
+                }
+
+
             }
+            searchFiles.setSearchCriteria(searchCriteria);
+            searchFiles.init();
         }
-        searchFiles.setSearchCriteria(searchCriteria);
-        searchFiles.init();
-    }
-
-    public void validateEntries(){
-
-//        for (String value: inputCommands) {
-//            if(value.contains()){
-//                System.out.println("bad 1");
-//            }
-//        }
-
     }
 
 

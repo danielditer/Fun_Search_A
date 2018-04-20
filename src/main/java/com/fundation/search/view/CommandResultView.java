@@ -35,7 +35,7 @@ public class CommandResultView {
     public void printResults() {
 //        System.out.println("Search Results:");
         LOGGER.info("Search Results: ");
-        if (!resultFileList.isEmpty()) {
+        if (resultFileList!= null) {
             String heading1 = "FilePath";
             String heading2 = "FileName";
             String heading3 = "Hidden";
