@@ -44,7 +44,7 @@ public class SearchController implements Controller {
     private SearchCriteria searchCriteria;
     private SearchCriteria searchCriteriaForDB;
     private static final int START_COLUMN = 0;
-    private Map<Integer, SearchCriteria> searchCriteriaDB;
+    private Map<Integer, SearchCriteria> mapSearchCriteriasResults;
 
     /**
      * Constructor for controller.
@@ -62,7 +62,6 @@ public class SearchController implements Controller {
      */
     @Override
     public void init() {
-        searchCriteria = new SearchCriteria();
         getActionPerformed();
         saveActionPerformed();
         loadActionPerformed();
@@ -226,6 +225,7 @@ public class SearchController implements Controller {
      * @param sizeMeasure           value from UI.
      */
     public void sendSearchCriteriaToModel(String path, String name, String hidden, String readOnly, int typeFile, boolean nameFileCaseSensitive, String owner, String extension, String sizeSign, String sizeRequired, String sizeMeasure, boolean create, boolean modified, boolean accessed, String fromDate, String toDate, String content, boolean contentCaseSensitive) {
+        searchCriteria = new SearchCriteria();
         searchCriteria.setPath(path);
         if (!name.isEmpty()) {
             searchCriteria.setName(name);
@@ -302,12 +302,12 @@ public class SearchController implements Controller {
      * Method for obtain the search criterias saved in the database.
      */
     public void getSearchCriterias() {
-        searchCriteriaDB = new HashMap<>();
+        mapSearchCriteriasResults = new HashMap<>();
         SearchQuery searchQuery = new SearchQuery();
         try {
             ResultSet resultSet = searchQuery.getAllCriteria();
             while (resultSet.next()) {
-                searchCriteriaDB.put(Integer.parseInt(resultSet.getString("ID")), jsonToSearchCriteria(resultSet.getString("CRITERIAJSON")));
+                mapSearchCriteriasResults.put(Integer.parseInt(resultSet.getString("ID")), jsonToSearchCriteria(resultSet.getString("CRITERIAJSON")));
             }
         } catch (SQLException e) {
             System.out.println("Controller SQL:" + e.getMessage());
@@ -333,8 +333,8 @@ public class SearchController implements Controller {
         DefaultTableModel tableModel = panel.getTableModel();
         tableModel.setRowCount(0);
 
-        for (Integer i : searchCriteriaDB.keySet()) {
-            tableModel.addRow(new Object[]{i, searchCriteriaDB.get(i).getSearchCriteriaName()});
+        for (Integer i : mapSearchCriteriasResults.keySet()) {
+            tableModel.addRow(new Object[]{i, mapSearchCriteriasResults.get(i).getSearchCriteriaName()});
         }
 
         panel.setTableModel(tableModel);
@@ -350,37 +350,38 @@ public class SearchController implements Controller {
     private void fillFields(Object criteriaSelected) {
         int key = (Integer) criteriaSelected;
         PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
-        panel.setTextFieldName(searchCriteriaDB.get(key).getName());
-        panel.setTextFieldPath(searchCriteriaDB.get(key).getPath());
-        panel.setCheckBoxCaseSensitiveName(searchCriteriaDB.get(key).getNameFileCaseSensitive());
-        if (searchCriteriaDB.get(key).getTypeFile() == 1) {
+
+        panel.setTextFieldName(mapSearchCriteriasResults.get(key).getName());
+        panel.setTextFieldPath(mapSearchCriteriasResults.get(key).getPath());
+        panel.setCheckBoxCaseSensitiveName(mapSearchCriteriasResults.get(key).getNameFileCaseSensitive());
+        if (mapSearchCriteriasResults.get(key).getTypeFile() == 1) {
             panel.setCheckBoxOnlyFiles(true);
         }
-        if (searchCriteriaDB.get(key).getTypeFile() == 3) {
+        if (mapSearchCriteriasResults.get(key).getTypeFile() == 3) {
             panel.setCheckBoxOnlyDirectory(true);
         }
-        if (searchCriteriaDB.get(key).getTypeFile() == 0) {
+        if (mapSearchCriteriasResults.get(key).getTypeFile() == 0) {
             panel.setCheckBoxOnlyFiles(true);
             panel.setCheckBoxOnlyDirectory(true);
         }
-        panel.setBtnGroupHiddenAttributes(searchCriteriaDB.get(key).getHidden());
-        panel.setBtnGroupReadOnlyAttributes(searchCriteriaDB.get(key).getReadOnly());
-        panel.setTextFieldExtAttributes(searchCriteriaDB.get(key).getExtension());
+        panel.setBtnGroupHiddenAttributes(mapSearchCriteriasResults.get(key).getHidden());
+        panel.setBtnGroupReadOnlyAttributes(mapSearchCriteriasResults.get(key).getReadOnly());
+        panel.setTextFieldExtAttributes(mapSearchCriteriasResults.get(key).getExtension());
 
-        panel.setComboBoxSizeAttributes(searchCriteriaDB.get(key).getSizeSign());
-        panel.setTextFieldSizeAttributes(searchCriteriaDB.get(key).getSizeRequired());
-        panel.setComboBoxTypeAttributes(searchCriteriaDB.get(key).getSizeMeasure());
+        panel.setComboBoxSizeAttributes(mapSearchCriteriasResults.get(key).getSizeSign());
+        panel.setTextFieldSizeAttributes(mapSearchCriteriasResults.get(key).getSizeRequired());
+        panel.setComboBoxTypeAttributes(mapSearchCriteriasResults.get(key).getSizeMeasure());
 
-        panel.setTextFieldOwnerAttributes(searchCriteriaDB.get(key).getOwner());
+        panel.setTextFieldOwnerAttributes(mapSearchCriteriasResults.get(key).getOwner());
 
-        panel.setCheckBoxCreatedPanel(searchCriteriaDB.get(key).getCreatedDate());
-        panel.setCheckBoxModifiedPanel(searchCriteriaDB.get(key).getModifiedDate());
-        panel.setCheckBoxAccessedPanel(searchCriteriaDB.get(key).getAccessedDate());
+        panel.setCheckBoxCreatedPanel(mapSearchCriteriasResults.get(key).getCreatedDate());
+        panel.setCheckBoxModifiedPanel(mapSearchCriteriasResults.get(key).getModifiedDate());
+        panel.setCheckBoxAccessedPanel(mapSearchCriteriasResults.get(key).getAccessedDate());
 
         SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
         try {
-            panel.setDateChooserFromPanel(formatDate.parse(searchCriteriaDB.get(key).getFromDate()));
-            panel.setDateChooserToPanel(formatDate.parse(searchCriteriaDB.get(key).getToDate()));
+            panel.setDateChooserFromPanel(formatDate.parse(mapSearchCriteriasResults.get(key).getFromDate()));
+            panel.setDateChooserToPanel(formatDate.parse(mapSearchCriteriasResults.get(key).getToDate()));
         } catch (ParseException e) {
             panel.setDateChooserFromPanel(null);
             panel.setDateChooserToPanel(null);
@@ -389,8 +390,8 @@ public class SearchController implements Controller {
             panel.setDateChooserFromPanel(null);
             panel.setDateChooserToPanel(null);
         }
-        panel.setTextAreaContent(searchCriteriaDB.get(key).getContent());
-        panel.setCheckBoxCaseSensitiveContent(searchCriteriaDB.get(key).getContentCaseSensitive());
+        panel.setTextAreaContent(mapSearchCriteriasResults.get(key).getContent());
+        panel.setCheckBoxCaseSensitiveContent(mapSearchCriteriasResults.get(key).getContentCaseSensitive());
     }
 }
 
