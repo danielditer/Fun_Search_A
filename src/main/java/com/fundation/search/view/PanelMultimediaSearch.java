@@ -6,7 +6,7 @@ import info.clearthought.layout.TableLayoutConstraints;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-public class PanelMultimediaSearch extends JPanel{
+public class PanelMultimediaSearch extends JPanel {
     private JPanel panelNamePath;
     private JPanel panelDuration;
     private JLabel labelMoreThan;
@@ -15,17 +15,14 @@ public class PanelMultimediaSearch extends JPanel{
     private JSpinner spinner2;
     private JPanel panelFrameRate;
     private JComboBox comboBoxFrameRate;
-    private JLabel label5;
-    private JSpinner spinner3;
     private JLabel labelFps;
-    private JSpinner spinner4;
     private JPanel panelCodec;
-    private JLabel label7;
-    private JTextField textField3;
-    private JLabel label8;
-    private JTextField textField4;
-    private JPanel panel5;
-    private JComboBox comboBox1;
+    private JLabel labelVideoCodec;
+    private JLabel labelAudioCodec;
+    private JPanel panelResolution;
+    private JComboBox comboBoxResolution;
+    private JComboBox comboBoxVideoCodec;
+    private JComboBox comboBoxAudioCodec;
     private PanelDate panelDate;
     private JPanel panel8;
     private JCheckBox checkBox5;
@@ -44,17 +41,14 @@ public class PanelMultimediaSearch extends JPanel{
         labelLessThan = new JLabel();
         spinner2 = new JSpinner();
         panelFrameRate = new JPanel();
-        label5 = new JLabel();
-        spinner3 = new JSpinner();
         labelFps = new JLabel();
-        spinner4 = new JSpinner();
         panelCodec = new JPanel();
-        label7 = new JLabel();
-        textField3 = new JTextField();
-        label8 = new JLabel();
-        textField4 = new JTextField();
-        panel5 = new JPanel();
-        comboBox1 = new JComboBox();
+        labelVideoCodec = new JLabel();
+        labelAudioCodec = new JLabel();
+        panelResolution = new JPanel();
+        comboBoxResolution = new JComboBox();
+        comboBoxVideoCodec = new JComboBox();
+        comboBoxAudioCodec = new JComboBox();
         panelDate = new PanelDate();
         panel8 = new JPanel();
         checkBox5 = new JCheckBox();
@@ -63,7 +57,7 @@ public class PanelMultimediaSearch extends JPanel{
         panelButtonSearch = new PanelButtonSearch();
 
         //======== this ========
-        setLayout(new TableLayout(new double[][] {
+        setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED},
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
                         TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
@@ -73,93 +67,133 @@ public class PanelMultimediaSearch extends JPanel{
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //======== panelDuration ========
-        {
-            panelDuration.setBorder(new TitledBorder("Duration"));
-            panelDuration.setLayout(new TableLayout(new double[][] {
-                    {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
-                    {TableLayout.PREFERRED}}));
 
-            //---- labelMoreThan ----
-            labelMoreThan.setText("More than");
-            panelDuration.add(labelMoreThan, new TableLayoutConstraints(0, 0, 0, 0,
-                    TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-            panelDuration.add(spinner1, new TableLayoutConstraints(1, 0, 1, 0,
-                    TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        panelDuration.setBorder(new TitledBorder("Duration"));
+        panelDuration.setLayout(new TableLayout(new double[][]{
+                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
+                {TableLayout.PREFERRED}}));
 
-            //---- labelLessThan ----
-            labelLessThan.setText("Less than");
-            panelDuration.add(labelLessThan, new TableLayoutConstraints(2, 0, 2, 0,
-                    TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-            panelDuration.add(spinner2, new TableLayoutConstraints(3, 0, 3, 0,
-                    TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        }
+        //---- labelMoreThan ----
+        labelMoreThan.setText("More than");
+        panelDuration.add(labelMoreThan, new TableLayoutConstraints(0, 0, 0, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        panelDuration.add(spinner1, new TableLayoutConstraints(1, 0, 1, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
+        //---- labelLessThan ----
+        labelLessThan.setText("Less than");
+        panelDuration.add(labelLessThan, new TableLayoutConstraints(2, 0, 2, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        panelDuration.add(spinner2, new TableLayoutConstraints(3, 0, 3, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
         add(panelDuration, new TableLayoutConstraints(0, 1, 0, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //======== panelFrameRate ========
-        {
-            panelFrameRate.setBorder(new TitledBorder("Frame rate"));
-            panelFrameRate.setLayout(new TableLayout(new double[][] {
-                    {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
-                    {TableLayout.PREFERRED}}));
-            ((TableLayout) panelFrameRate.getLayout()).setHGap(5);
-            ((TableLayout) panelFrameRate.getLayout()).setVGap(5);
 
-            //---- labelFps ----
-            comboBoxFrameRate.addItem("All");
-            comboBoxFrameRate.addItem("23.97");
-            comboBoxFrameRate.addItem("25");
-            comboBoxFrameRate.addItem("29.97");
-            comboBoxFrameRate.addItem("30");
-            comboBoxFrameRate.addItem("60");
-            labelFps.setText("fps");
-            panelFrameRate.add(comboBoxFrameRate, new TableLayoutConstraints(1, 0, 1, 0,
-                    TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-            panelFrameRate.add(labelFps, new TableLayoutConstraints(2, 0, 2, 0,
-                    TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        }
+        panelFrameRate.setBorder(new TitledBorder("Frame rate"));
+        panelFrameRate.setLayout(new TableLayout(new double[][]{
+                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
+                {TableLayout.PREFERRED}}));
+        ((TableLayout) panelFrameRate.getLayout()).setHGap(5);
+        ((TableLayout) panelFrameRate.getLayout()).setVGap(5);
+
+        //---- labelFps ----
+        comboBoxFrameRate.addItem("All");
+        comboBoxFrameRate.addItem("23.97");
+        comboBoxFrameRate.addItem("25");
+        comboBoxFrameRate.addItem("29.97");
+        comboBoxFrameRate.addItem("30");
+        comboBoxFrameRate.addItem("60");
+        labelFps.setText("fps");
+        panelFrameRate.add(comboBoxFrameRate, new TableLayoutConstraints(1, 0, 1, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        panelFrameRate.add(labelFps, new TableLayoutConstraints(2, 0, 2, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
         add(panelFrameRate, new TableLayoutConstraints(0, 2, 0, 2,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //======== panelCodec ========
-        {
-            panelCodec.setBorder(new TitledBorder("Codec"));
-            panelCodec.setLayout(new TableLayout(new double[][] {
-                    {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
-                            TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
-                    {TableLayout.PREFERRED, TableLayout.PREFERRED}}));
-            ((TableLayout) panelCodec.getLayout()).setHGap(5);
-            ((TableLayout) panelCodec.getLayout()).setVGap(5);
 
-            //---- label7 ----
-            label7.setText("Video codec");
-            panelCodec.add(label7, new TableLayoutConstraints(0, 0, 0, 0,
-                    TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-            panelCodec.add(textField3, new TableLayoutConstraints(1, 0, 3, 0,
-                    TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        panelCodec.setBorder(new TitledBorder("Codec"));
+        panelCodec.setLayout(new TableLayout(new double[][]{
+                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
+                        TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
+                {TableLayout.PREFERRED, TableLayout.PREFERRED}}));
+        ((TableLayout) panelCodec.getLayout()).setHGap(5);
+        ((TableLayout) panelCodec.getLayout()).setVGap(5);
 
-            //---- label8 ----
-            label8.setText("Audio codec");
-            panelCodec.add(label8, new TableLayoutConstraints(4, 0, 4, 0,
-                    TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-            panelCodec.add(textField4, new TableLayoutConstraints(5, 0, 7, 0,
-                    TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        }
+        //---- labelVideoCodec ----
+        labelVideoCodec.setText("Video codec");
+        comboBoxVideoCodec.addItem("All");
+        comboBoxVideoCodec.addItem("MPEG-4 Video(*.mp4)");
+        comboBoxVideoCodec.addItem("H.264 Video(*.mp4)");
+        comboBoxVideoCodec.addItem("H.265 Video(*.mp4)");
+        comboBoxVideoCodec.addItem("Flash Video(*.flv)");
+        comboBoxVideoCodec.addItem("WebM Video Format(*.webm)");
+        comboBoxVideoCodec.addItem("MPEG-1 Video(*.mpg)");
+        comboBoxVideoCodec.addItem("MPEG-2 Video(*.mpg)");
+        comboBoxVideoCodec.addItem("MOV - QuickTime(*.mov)");
+        comboBoxVideoCodec.addItem("Windows Media Video(*.wmv)");
+        panelCodec.add(labelVideoCodec, new TableLayoutConstraints(0, 0, 0, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        panelCodec.add(comboBoxVideoCodec, new TableLayoutConstraints(1, 0, 3, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
+        //---- labelAudioCodec ----
+        labelAudioCodec.setText("Audio codec");
+        comboBoxAudioCodec.addItem("All");
+        comboBoxAudioCodec.addItem("MP3 - MPEG Layer-3 Audio(*.mp3)");
+        comboBoxAudioCodec.addItem("WAV - Waveform Audio(*.wav)");
+        comboBoxAudioCodec.addItem("M4A - MPEG-4 Audio(*.m4a)");
+        comboBoxAudioCodec.addItem("AAC - Advanced Audio Coding(*.aac)");
+        comboBoxAudioCodec.addItem("OGG - Ogg Vorbis Audio(*.ogg)");
+        comboBoxAudioCodec.addItem("AC3 - Dolby Digital AC-3(*.ac3)");
+        comboBoxAudioCodec.addItem("WMA - Windows Media Audio(*.wma)");
+        comboBoxAudioCodec.addItem("FLAC - Free Lossless Audio Codec(*.flac)");
+        comboBoxAudioCodec.addItem("AIFF - Audio Interchange File Format(*.aiff)");
+        panelCodec.add(labelAudioCodec, new TableLayoutConstraints(4, 0, 4, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        panelCodec.add(comboBoxAudioCodec, new TableLayoutConstraints(5, 0, 7, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
         add(panelCodec, new TableLayoutConstraints(0, 3, 0, 3, TableLayoutConstraints.FULL,
                 TableLayoutConstraints.FULL));
 
-        //======== panel5 ========
-        {
-            panel5.setBorder(new TitledBorder("Resolution"));
-            panel5.setLayout(new TableLayout(new double[][] {
-                    {TableLayout.PREFERRED},
-                    {TableLayout.PREFERRED}}));
-            ((TableLayout)panel5.getLayout()).setHGap(5);
-            ((TableLayout)panel5.getLayout()).setVGap(5);
-            panel5.add(comboBox1, new TableLayoutConstraints(0, 0, 0, 0,
-                    TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        }
-        add(panel5, new TableLayoutConstraints(0, 4, 0, 4,
+        //======== panelResolution ========
+        panelResolution.setBorder(new TitledBorder("Resolution"));
+        panelResolution.setLayout(new TableLayout(new double[][]{
+                {TableLayout.PREFERRED},
+                {TableLayout.PREFERRED}}));
+        ((TableLayout) panelResolution.getLayout()).setHGap(5);
+        ((TableLayout) panelResolution.getLayout()).setVGap(5);
+        comboBoxResolution.addItem("All");
+        comboBoxResolution.addItem("All(4:3)");
+        comboBoxResolution.addItem("All(16:9)");
+        comboBoxResolution.addItem("120x90(4:3)");
+        comboBoxResolution.addItem("320x240(4:3)");
+        comboBoxResolution.addItem("352x240(4:3)");
+        comboBoxResolution.addItem("352x288(4:3)");
+        comboBoxResolution.addItem("480x480(4:3)");
+        comboBoxResolution.addItem("480x480(16:9)");
+        comboBoxResolution.addItem("480x576(4:3)");
+        comboBoxResolution.addItem("480x576(16:9)");
+        comboBoxResolution.addItem("640x480(4:3)");
+        comboBoxResolution.addItem("640x480(16:9)");
+        comboBoxResolution.addItem("720x480(4:3)");
+        comboBoxResolution.addItem("720x480(16:9)");
+        comboBoxResolution.addItem("720x576(4:3)");
+        comboBoxResolution.addItem("720x576(16:9)");
+        comboBoxResolution.addItem("1280x720(16:9)");
+        comboBoxResolution.addItem("1366x768(16:9)");
+        comboBoxResolution.addItem("1920x1080(16:9)");
+        comboBoxResolution.addItem("3840x2160(16:9)");
+        panelResolution.add(comboBoxResolution, new TableLayoutConstraints(0, 0, 0, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
+        add(panelResolution, new TableLayoutConstraints(0, 4, 0, 4,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //======== panelDate ========
@@ -167,24 +201,24 @@ public class PanelMultimediaSearch extends JPanel{
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //======== panel8 ========
-        {
-            panel8.setBorder(new TitledBorder("text"));
-            panel8.setLayout(new TableLayout(new double[][] {
-                    {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
-                    {TableLayout.PREFERRED}}));
-            ((TableLayout)panel8.getLayout()).setHGap(5);
-            ((TableLayout)panel8.getLayout()).setVGap(5);
 
-            //---- checkBox5 ----
-            checkBox5.setText("Read-only");
-            panel8.add(checkBox5, new TableLayoutConstraints(0, 0, 0, 0,
-                    TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        panel8.setBorder(new TitledBorder("text"));
+        panel8.setLayout(new TableLayout(new double[][]{
+                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
+                {TableLayout.PREFERRED}}));
+        ((TableLayout) panel8.getLayout()).setHGap(5);
+        ((TableLayout) panel8.getLayout()).setVGap(5);
 
-            //---- checkBox6 ----
-            checkBox6.setText("Hidden");
-            panel8.add(checkBox6, new TableLayoutConstraints(2, 0, 2, 0,
-                    TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        }
+        //---- checkBox5 ----
+        checkBox5.setText("Read-only");
+        panel8.add(checkBox5, new TableLayoutConstraints(0, 0, 0, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
+        //---- checkBox6 ----
+        checkBox6.setText("Hidden");
+        panel8.add(checkBox6, new TableLayoutConstraints(2, 0, 2, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
         add(panel8, new TableLayoutConstraints(0, 6, 0, 6,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 

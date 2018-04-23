@@ -89,7 +89,7 @@ public class MainView extends JFrame {
         menuBar.add(menuHelp);
         setJMenuBar(menuBar);
 
-        tabbedPane.setPreferredSize(new Dimension(310, 460));
+        tabbedPane.setPreferredSize(new Dimension(620, 460));
         //======== panelNormalSearch ========
         tabbedPane.addTab("Normal Search", panelNormalSearch);
         //======== panelMultimediaSearch ========
@@ -101,21 +101,21 @@ public class MainView extends JFrame {
         pack();
         setLocationRelativeTo(getOwner());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(745,520);
+        setSize(1045,520);
         setResizable(false);
 
         //======== panel Search Criterial ========
         panelSearchCrit.add(panelSearchCriterial);
-        panelSearchCrit.setBorder(new EmptyBorder(10,420,10,100));
+        panelSearchCrit.setBorder(new EmptyBorder(10,720,10,100));
         contentPane.add(panelSearchCrit, BorderLayout.CENTER);
 
         //======== panel Search Results ========
         panelResults.add(panelSearchResult);
-        panelResults.setBorder(new EmptyBorder(5,420,10,100));
+        panelResults.setBorder(new EmptyBorder(5,720,10,100));
         contentPane.add(panelResults, BorderLayout.SOUTH);
         //======== panel Search Results ========
         panelSaveCrit.add(panelSaveCriterial);
-        panelSaveCrit.setBorder(new EmptyBorder(5,420,10,100));
+        panelSaveCrit.setBorder(new EmptyBorder(5,720,10,100));
         contentPane.add(panelSaveCrit, BorderLayout.NORTH);
 
     }
