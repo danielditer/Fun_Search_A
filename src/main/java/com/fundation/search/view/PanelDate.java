@@ -11,9 +11,7 @@ import com.toedter.calendar.JDateChooser;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.JPanel;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -61,14 +59,17 @@ public class PanelDate extends JPanel {
                 {TableLayout.PREFERRED, TableLayout.PREFERRED}}));
         //---- checkBoxCreated ----
         checkBoxCreated.setText("Created");
+        checkBoxCreated.addActionListener(e->enableDateChooser());
         add(checkBoxCreated, new TableLayoutConstraints(1, 0, 1, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //---- checkBoxModified ----
         checkBoxModified.setText("Modified");
+        checkBoxModified.addActionListener(e->enableDateChooser());
         add(checkBoxModified, new TableLayoutConstraints(3, 0, 3, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //---- checkBoxAccessed ----
         checkBoxAccessed.setText("Accesed");
+        checkBoxAccessed.addActionListener(e->enableDateChooser());
 
         add(checkBoxAccessed, new TableLayoutConstraints(4, 0, 4, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
@@ -76,13 +77,13 @@ public class PanelDate extends JPanel {
         labelFrom.setText("From:");
         add(labelFrom, new TableLayoutConstraints(0, 1, 0, 1, TableLayoutConstraints.FULL,
                 TableLayoutConstraints.FULL));
-
+        dateChooserFrom.setEnabled(false);
         add(dateChooserFrom, new TableLayoutConstraints(1, 1, 1, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- labelTo ----
         labelTo.setText("To:");
-
+        dateChooserTo.setEnabled(false);
         add(labelTo, new TableLayoutConstraints(3, 1,3 , 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         add(dateChooserTo, new TableLayoutConstraints(4, 1, 4, 1,
@@ -157,5 +158,18 @@ public class PanelDate extends JPanel {
      */
     public void setDateChooserTo(Date dateChooserTo) {
         this.dateChooserTo.setDate(dateChooserTo);
+    }
+
+    public void enableDateChooser(){
+        boolean status = false;
+        if (getCheckBoxCreated() || getCheckBoxModified() || getCheckBoxAccessed()) {
+            status = true;
+        }
+        else {
+            ((JTextField)this.dateChooserTo.getDateEditor().getUiComponent()).setText("");
+            ((JTextField)this.dateChooserFrom.getDateEditor().getUiComponent()).setText("");
+        }
+        this.dateChooserTo.setEnabled(status);
+        this.dateChooserFrom.setEnabled(status);
     }
 }

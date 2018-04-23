@@ -61,6 +61,8 @@ public class PanelNormalSearch extends JPanel {
         //======== panelButtonSearch ========
         add(panelButtonSearch, new TableLayoutConstraints(0, 4, 0, 4,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
+       
     }
     /**
      * Getter for the search button.
@@ -69,6 +71,14 @@ public class PanelNormalSearch extends JPanel {
      */
     public JButton getButtonSearch() {
         return panelButtonSearch.getButtonSearch();
+    }
+    /**
+     * Getter for the clear button.
+     *
+     * @return ´buttonClear´ button.
+     */
+    public JButton getButtonClear() {
+        return panelButtonSearch.getButtonClear();
     }
     /**
      * Getter for the path.
@@ -349,8 +359,6 @@ public class PanelNormalSearch extends JPanel {
         panelDate.setDateChooserTo(dateChooserTo);
     }
 
-
-
-
-
 }
+
+

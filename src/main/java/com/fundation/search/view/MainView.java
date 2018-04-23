@@ -16,9 +16,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import info.clearthought.layout.TableLayout;
-import net.miginfocom.swing.MigLayout;
-
 /**
  * @version
  * 27 Mar 2018  * @Daniel Caballero.
@@ -74,6 +71,7 @@ public class MainView extends JFrame {
         contentPane.setLayout(new BorderLayout());
 
         contentPane.setSize(50, 600);
+
         //======== menuBar ========
         //======== menuFile ========
         menuFile.setText("File");
@@ -89,7 +87,10 @@ public class MainView extends JFrame {
         menuBar.add(menuHelp);
         setJMenuBar(menuBar);
 
-        tabbedPane.setPreferredSize(new Dimension(310, 460));
+        //EmptyBorder bordertab = new EmptyBorder(5,20,5,120);
+       // tabbedPane.setBorder(bordertab);
+
+        tabbedPane.setPreferredSize(new Dimension(340, 460));
         //======== panelNormalSearch ========
         tabbedPane.addTab("Normal Search", panelNormalSearch);
         //======== panelMultimediaSearch ========
@@ -99,23 +100,25 @@ public class MainView extends JFrame {
         //======== panelTabbedPane ========
         setVisible(true);
         pack();
-        setLocationRelativeTo(getOwner());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(745,520);
+        setSize(900,550);
+        setLocationRelativeTo(null);
+        //setLocationRelativeTo(getOwner());
         setResizable(false);
 
+        EmptyBorder borderRes = new EmptyBorder(5,420,10,100);
         //======== panel Search Criterial ========
         panelSearchCrit.add(panelSearchCriterial);
-        panelSearchCrit.setBorder(new EmptyBorder(10,420,10,100));
+        panelSearchCrit.setBorder(borderRes);
         contentPane.add(panelSearchCrit, BorderLayout.CENTER);
 
         //======== panel Search Results ========
         panelResults.add(panelSearchResult);
-        panelResults.setBorder(new EmptyBorder(5,420,10,100));
+        panelResults.setBorder(borderRes);
         contentPane.add(panelResults, BorderLayout.SOUTH);
         //======== panel Search Results ========
         panelSaveCrit.add(panelSaveCriterial);
-        panelSaveCrit.setBorder(new EmptyBorder(5,420,10,100));
+        panelSaveCrit.setBorder(borderRes);
         contentPane.add(panelSaveCrit, BorderLayout.NORTH);
 
     }

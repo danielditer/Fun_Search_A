@@ -100,4 +100,16 @@ public class Validator {
         }
         return true;
     }
+
+    /**
+     * Method to validate if a string is a number.
+     * @param size .
+     * @return boolean value is valid.
+     */
+    public boolean isANumber(String size) {
+        if (!size.matches("[0-9]+")) {
+            return false;
+        }
+        return true;
+    }
 }

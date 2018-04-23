@@ -185,4 +185,26 @@ public class ValidatorTest {
     public void testIsAInvalidPathNames(){
         assertFalse("Path", validator.isAValidPathName("folderr:rrrr\\file\\document\\"));
     }
+
+    /**
+     * method testIsANumberString validate is a string contain only numbers
+     */
+    @Test
+    public void testIsANumberString() {
+        assertFalse(validator.isANumber("test"));
+    }
+    /**
+     * method testIsANumberString validate is a string contain only numbers
+     */
+    @Test
+    public void testIsANumberWithString() {
+        assertFalse(validator.isANumber("123213test"));
+    }
+    /**
+     * method testIsANumberString validate is a string contain only numbers
+     */
+    @Test
+    public void testIsANumber() {
+        assertTrue(validator.isANumber("123213"));
+    }
 }

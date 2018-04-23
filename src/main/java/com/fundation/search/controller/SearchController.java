@@ -66,6 +66,7 @@ public class SearchController implements Controller {
         saveActionPerformed();
         loadActionPerformed();
         selectActionPerformed();
+        clearActionPerformed();
     }
 
     /**
@@ -74,6 +75,13 @@ public class SearchController implements Controller {
     public void getActionPerformed() {
         PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
         panel.getButtonSearch().addActionListener(e -> searchButtonActionListener(panel));
+    }
+    /**
+     * Method to clear values the View.
+     */
+    public void clearActionPerformed() {
+        PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
+        panel.getButtonClear().addActionListener(e -> clearButtonActionListener(panel));
     }
 
     /**
@@ -385,6 +393,39 @@ public class SearchController implements Controller {
         }
         panel.setTextAreaContent(searchCriteriaDB.get(key).getContent());
         panel.setCheckBoxCaseSensitiveContent(searchCriteriaDB.get(key).getContentCaseSensitive());
+    }
+    /**
+     * This method clear the fields with the information retrieved of a search criteria selected.
+     *
+     * @param panelMain is the panel that contain all the elements for the normal search
+     */
+
+    public void clearButtonActionListener(PanelNormalSearch panelMain) {
+        panelMain.setTextFieldName(null);
+        panelMain.setTextFieldPath(null);
+        panelMain.setCheckBoxCaseSensitiveName(false);
+        panelMain.setCheckBoxOnlyFiles(false);
+        panelMain.setCheckBoxOnlyDirectory(false);
+
+        panelMain.setBtnGroupHiddenAttributes("3");
+        panelMain.setBtnGroupReadOnlyAttributes("3");
+        panelMain.setTextFieldExtAttributes(null);
+
+        panelMain.setComboBoxSizeAttributes("Minor");
+        panelMain.setTextFieldSizeAttributes(null);
+        panelMain.setComboBoxTypeAttributes("bytes");
+
+        panelMain.setTextFieldOwnerAttributes(null);
+
+        panelMain.setCheckBoxCreatedPanel(false);
+        panelMain.setCheckBoxModifiedPanel(false);
+        panelMain.setCheckBoxAccessedPanel(false);
+
+        panelMain.setDateChooserFromPanel(null);
+        panelMain.setDateChooserToPanel(null);
+
+        panelMain.setTextAreaContent(null);
+        panelMain.setCheckBoxCaseSensitiveContent(false);
     }
 }
 

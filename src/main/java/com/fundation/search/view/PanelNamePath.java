@@ -91,6 +91,7 @@ public class PanelNamePath extends JPanel {
                 String inputText = textFieldName.getText();
                 if(inputText.length() == 0) {
                     checkBoxCaseSensitiveName.setEnabled(false);
+                    checkBoxCaseSensitiveName.setSelected(false);
                 }
             }
             @Override
