@@ -189,7 +189,7 @@ public class SearchFiles {
      * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case fileName coincidences.
      */
-    private boolean searchFile(Asset arrayResultFiles, boolean nameFileCaseSensitive) {
+    public boolean searchFile(Asset arrayResultFiles, boolean nameFileCaseSensitive) {
         if (nameFileCaseSensitive) {
             if (arrayResultFiles.getFileName().equals(searchCriteria.getName())) {
                 return true;
@@ -386,6 +386,12 @@ public class SearchFiles {
         return dateInRange;
     }
 
+    /**
+     * Method to get file's content.
+     * @param fileEntry
+     * @param extension
+     * @return
+     */
     public String getFileContent(File fileEntry, String extension) {
         if (extension.equalsIgnoreCase("docx") && fileEntry.length() > 0L) {
             try {
@@ -430,6 +436,13 @@ public class SearchFiles {
         return null;
     }
 
+    /**
+     * Method to search file's content.
+     * @param arrayResultFiles
+     * @param content
+     * @param contentCaseSensitive
+     * @return
+     */
     public boolean searchContent(Asset arrayResultFiles, String content, boolean contentCaseSensitive) {
         if (content == null) {
             return true;
