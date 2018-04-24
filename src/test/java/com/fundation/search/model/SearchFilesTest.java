@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 /**
  * JUnit class developed in order to test all different methods for searching files.
@@ -32,6 +34,7 @@ public class SearchFilesTest {
      * path is the parameter sent to the methods.
      */
     private File path;
+    private SearchCriteria searchCriteria;
 
     /**
      * Initializes SearchFiles class.
@@ -41,20 +44,21 @@ public class SearchFilesTest {
         final String filePath = "src/test/java/com/fundation/search/pathTest";
         path = new File(filePath);
         searchFiles = new SearchFiles();
+        searchCriteria = new SearchCriteria();
     }
 
     /**
      * Test to compare the array of ResultFile objects.
      */
     @Test
-    public void testRecoverResultFilesObject() throws Exception {
+    public void testModelRecoverFiles() throws Exception {
         List<Asset> arrayResultFiles = new ArrayList<>();
         List<Asset> expectedResultFiles = new ArrayList<>();
         AssetFactory assetFactory = new AssetFactory();
         expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1-1.txt", false, 0.0, true, 1, "Administrators", "txt", 0L, "04-10-2018", "04-10-2018", "04-10-2018"));
         expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test2-1.docx", "test2-1.docx", false, 0.0, false, 1, "Administrators", "docx", 0L, "04-10-2018", "04-10-2018", "04-10-2018"));
         expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test3-1.xlsx", "test3-1.xlsx", false, 0.0, false, 1, "Administrators", "xlsx", 0L, "04-10-2018", "04-10-2018", "04-10-2018"));
-        expectedResultFiles.add(assetFactory.getAsset("directory", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder", "New folder", false, 0.0, false, 3, "Administrators", "d", 0L, "", "", ""));
+        expectedResultFiles.add(assetFactory.getAsset("directory", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder", "New folder", false, 0.0, false, 3, "Administrators", null, 0L, "", "", ""));
         expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", false, 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018"));
         expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test2.docx", "test2.docx", false, 0.0, false, 1, "Administrator", "docx", 11564L, "04-10-2018", "04-20-2018", "04-24-2018"));
         expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test3.xlsx", "test3.xlsx", false, 0.0, false, 1, "Administrators", "xlsx", 0L, "04-10-2018", "04-10-2018", "04-10-2018"));
@@ -79,60 +83,41 @@ public class SearchFilesTest {
         }
     }
 
-    /**
-     * Test in order to show all files of a path.
-     */
-    /*@Test
-    public void testDisplayFilesOfAPath() {
-        List<Asset> expected = new ArrayList<>();
-        List<Asset> arrayResultFiles = new ArrayList<>();
+    @Test
+    public void testModelSearchFile() throws Exception{
+        searchCriteria.setName("test1.txt");
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        Asset expected = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", false, 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchFile", expected, searchCriteria.getNameFileCaseSensitive()));
+    }
+    @Test
+    public void testModelSearchFileNoCaseSensitive() throws Exception{
+        searchCriteria.setName("TEST1.txt");
+        searchCriteria.setNameFileCaseSensitive(false);
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        Asset expected = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", false, 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchFile", expected, searchCriteria.getNameFileCaseSensitive()));
+    }
 
-        expected.add(new ResultFile("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt"
-                , "test1-1.txt", false, false, 1, "", "txt", 0L, "MM-dd-yyyy", "MM-dd-yyyy", "MM-dd-yyyy", ""));
-        expected.add(new ResultFile("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test2-1.docx"
-                , "test2-1.docx", false,  false, 1, "", "txt", 0L, "MM-dd-yyyy", "MM-dd-yyyy", "MM-dd-yyyy", ""));
-        expected.add(new ResultFile("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test3-1.xlsx"
-                , "test3-1.xlsx", false,  false, 1, "", "txt", 0L, "MM-dd-yyyy", "MM-dd-yyyy", "MM-dd-yyyy", ""));
-        expected.add(new ResultFile("src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt"
-                , "test1.txt", false,  false, 1, "", "txt", 0L, "MM-dd-yyyy", "MM-dd-yyyy", "MM-dd-yyyy", ""));
-        expected.add(new ResultFile("src\\test\\java\\com\\fundation\\search\\pathTest\\test2.docx"
-                , "test2.docx", false,  false, 1, "", "txt", 0L, "MM-dd-yyyy", "MM-dd-yyyy", "MM-dd-yyyy", ""));
-        expected.add(new ResultFile("src\\test\\java\\com\\fundation\\search\\pathTest\\test3.xlsx"
-                , "test3.xlsx", false,  false, 1, "", "txt", 0L, "MM-dd-yyyy", "MM-dd-yyyy", "MM-dd-yyyy", ""));
+    @Test
+    public void testModelSearchFileCaseSensitiveNotMatches() throws Exception{
+        searchCriteria.setName("TEST1.txt");
+        searchCriteria.setNameFileCaseSensitive(true);
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        Asset expected = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", false, 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertFalse(Whitebox.invokeMethod(searchFiles, "searchFile", expected, searchCriteria.getNameFileCaseSensitive()));
+    }
 
-        assertEquals(expected.get(0).getPath(), pathFiles.recoverFiles(path, arrayResultFiles).get(0).getPath());
-        assertEquals(expected.get(0).getFileName(), pathFiles.recoverFiles(path, arrayResultFiles).get(0).getFileName());
-        assertEquals(expected.get(0).getHidden(), pathFiles.recoverFiles(path, arrayResultFiles).get(0).getHidden());
-        assertEquals(expected.get(1).getPath(), pathFiles.recoverFiles(path, arrayResultFiles).get(1).getPath());
-        assertEquals(expected.get(1).getFileName(), pathFiles.recoverFiles(path, arrayResultFiles).get(1).getFileName());
-        assertEquals(expected.get(1).getHidden(), pathFiles.recoverFiles(path, arrayResultFiles).get(1).getHidden());
-        assertEquals(expected.get(2).getPath(), pathFiles.recoverFiles(path, arrayResultFiles).get(2).getPath());
-        assertEquals(expected.get(2).getFileName(), pathFiles.recoverFiles(path, arrayResultFiles).get(2).getFileName());
-        assertEquals(expected.get(2).getHidden(), pathFiles.recoverFiles(path, arrayResultFiles).get(2).getHidden());
-        assertEquals(expected.get(3).getPath(), pathFiles.recoverFiles(path, arrayResultFiles).get(3).getPath());
-        assertEquals(expected.get(3).getFileName(), pathFiles.recoverFiles(path, arrayResultFiles).get(3).getFileName());
-        assertEquals(expected.get(3).getHidden(), pathFiles.recoverFiles(path, arrayResultFiles).get(3).getHidden());
-        assertEquals(expected.get(4).getPath(), pathFiles.recoverFiles(path, arrayResultFiles).get(4).getPath());
-        assertEquals(expected.get(4).getFileName(), pathFiles.recoverFiles(path, arrayResultFiles).get(4).getFileName());
-        assertEquals(expected.get(4).getHidden(), pathFiles.recoverFiles(path, arrayResultFiles).get(4).getHidden());
-        assertEquals(expected.get(5).getPath(), pathFiles.recoverFiles(path, arrayResultFiles).get(5).getPath());
-        assertEquals(expected.get(5).getFileName(), pathFiles.recoverFiles(path, arrayResultFiles).get(5).getFileName());
-        assertEquals(expected.get(5).getHidden(), pathFiles.recoverFiles(path, arrayResultFiles).get(5).getHidden());
-    }*/
-
-    /**
-     * Test in order to show all hidden files of a path.
-     */
-    /*@Test
-    public void testSearchHiddenFiles() {
-        List<ResultFile> expected = new ArrayList<>();
-        List<ResultFile> arrayResultFiles = new ArrayList<>();
-        expected.add(new ResultFile("src\\test\\java\\com\\fundation\\search\\pathTest\\test4.txt",
-                "test4.txt", true));
-        expected.add(new ResultFile("src\\test\\java\\com\\fundation\\search\\pathTest\\test5.docx"
-                , "test5.docx", true));
-        assertTrue( pathFiles.searchHiddenFiles(pathFiles.recoverFiles(path, arrayResultFiles)).get(0).getHidden());
-        assertTrue( pathFiles.searchHiddenFiles(pathFiles.recoverFiles(path, arrayResultFiles)).get(1).getHidden());
-        assertEquals();
-    }*/
+    @Test
+    public void testModelSearchFileCaseSensitiveMatches() throws Exception{
+        searchCriteria.setName("test1.txt");
+        searchCriteria.setNameFileCaseSensitive(true);
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        Asset expected = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", false, 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchFile", expected, searchCriteria.getNameFileCaseSensitive()));
+    }
 }
