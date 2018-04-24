@@ -9,16 +9,8 @@ package com.fundation.search.model;
 import com.fundation.search.common.Converter;
 import com.fundation.search.common.SearchQuery;
 import com.google.gson.Gson;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
-import org.apache.pdfbox.text.PDFTextStripperByArea;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -90,16 +82,16 @@ public class SearchFiles {
                     matchesCriteria = false;
                 }
             }
-            if (!searchCriteria.getHidden().equals("3")) {
+//            if (!searchCriteria.getHidden().equals("3")) {
                 if (matchesCriteria && !searchHiddenFiles(results, searchCriteria.getHidden())) {
                     matchesCriteria = false;
                 }
-            }
-            if (!searchCriteria.getReadOnly().equals("3")) {
+//            }
+//            if (!searchCriteria.getReadOnly().equals("3")) {
                 if (matchesCriteria && !searchReadOnlyFiles(results, searchCriteria.getReadOnly())) {
                     matchesCriteria = false;
                 }
-            }
+//            }
             if (searchCriteria.getTypeFile() != 0) {
                 if (matchesCriteria && !searchFilesOrDirectoriesOnly(results, searchCriteria.getTypeFile())) {
                     matchesCriteria = false;
@@ -404,43 +396,43 @@ public class SearchFiles {
      */
     private String getFileContent(Asset fileEntry, String extension) {
         if (extension.equalsIgnoreCase("docx") && fileEntry.getSize() > 0L) {
-            try {
-                FileInputStream fis = new FileInputStream(fileEntry.getPath());
-                XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(fis));
-                XWPFWordExtractor extractor = new XWPFWordExtractor(xdoc);
-                return extractor.getText();
-            } catch(Exception ex) {
-                return null;
-            }
+//            try {
+//                FileInputStream fis = new FileInputStream(fileEntry.getPath());
+//                XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(fis));
+//                XWPFWordExtractor extractor = new XWPFWordExtractor(xdoc);
+//                return extractor.getText();
+//            } catch(Exception ex) {
+//                return null;
+//            }
         }
         if (extension.equalsIgnoreCase("txt") && fileEntry.getSize() > 0L) {
             Scanner in = null;
             String content = null;
-            try {
-                in = new Scanner(new FileReader(fileEntry.getPath()));
-                while(in.hasNextLine()) {
-                    content = in.nextLine();
-                }
-            }
-            catch(IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                in = new Scanner(new FileReader(fileEntry.getPath()));
+//                while(in.hasNextLine()) {
+//                    content = in.nextLine();
+//                }
+//            }
+//            catch(IOException e) {
+//                e.printStackTrace();
+//            }
             return content;
         }
         if (extension.equalsIgnoreCase("pdf") && fileEntry.getSize() > 0L) {
-            try {
-                PDDocument document = PDDocument.load(new File(fileEntry.getPath()));
-                document.getClass();
-                if (!document.isEncrypted()) {
-                    PDFTextStripperByArea stripper = new PDFTextStripperByArea();
-                    stripper.setSortByPosition(true);
-                    PDFTextStripper tStripper = new PDFTextStripper();
-                    String pdfFileInText = tStripper.getText(document);
-                    return pdfFileInText.toString();
-                }
-            } catch (Exception e) {
-                e.getMessage();
-            }
+//            try {
+//                PDDocument document = PDDocument.load(new File(fileEntry.getPath()));
+//                document.getClass();
+//                if (!document.isEncrypted()) {
+//                    PDFTextStripperByArea stripper = new PDFTextStripperByArea();
+//                    stripper.setSortByPosition(true);
+//                    PDFTextStripper tStripper = new PDFTextStripper();
+//                    String pdfFileInText = tStripper.getText(document);
+//                    return pdfFileInText.toString();
+//                }
+//            } catch (Exception e) {
+//                e.getMessage();
+//            }
 
         }
         return null;

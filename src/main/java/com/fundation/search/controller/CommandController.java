@@ -10,6 +10,9 @@ import com.fundation.search.model.SearchCriteria;
 import com.fundation.search.model.SearchFiles;
 import com.fundation.search.view.CommandResultView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Class CommandController execute command introduced by the user.
@@ -43,17 +46,37 @@ public class CommandController implements Controller {
      * @return list of files found
      */
     private void exeCmd() {
+        Map<String, StrategyCommand> commandMap = new HashMap<>();
+        commandMap.put("-p", new CommandSearchPath());
+        commandMap.put("-n", new CommandSearchName());
+//        commandMap.put("-h", "");
+//        commandMap.put("-r", "");
+//        commandMap.put("-s", "");
+//        commandMap.put("-ext", "");
+//        commandMap.put("-ow", "");
+//        commandMap.put("-type", "");
+//        commandMap.put("-cd", "");
+//        commandMap.put("-md", "");
+//        commandMap.put("-ad", "");
+//        commandMap.put("-size", "");
+
         if (inputCommands[0].equals("-help")) { /*Helper*/
             helpMessage();
 
         } else {
             for (int i = 0; i < inputCommands.length - 1; i++) {
                 System.out.println("x:" + inputCommands[i + 1]);
+                
+
                 if (inputCommands[i].equals("-n")) { /* Search by name*/
-                    searchCriteria.setName(inputCommands[i + 1]);
+//                    searchCriteria.setName(inputCommands[i + 1]);
+                    Context context = new Context(new CommandSearchName());
+                    context.executeCommand("-n", inputCommands, i, searchCriteria);
                 }
                 if (inputCommands[i].equals("-p")) { /* Search by path*/
-                    searchCriteria.setPath(inputCommands[i + 1]);
+//                    searchCriteria.setPath(inputCommands[i + 1]);
+                    Context context = new Context(new CommandSearchPath());
+                    context.executeCommand("-p", inputCommands, i, searchCriteria);
                 }
                 if (inputCommands[i].equals("-h")) { /* Search by hidden*/
                     searchCriteria.setHidden(inputCommands[i + 1]);
@@ -77,7 +100,6 @@ public class CommandController implements Controller {
                 if (inputCommands[i].equals("-type")) { /* Search by owner*/
                     searchCriteria.setTypeFile(Integer.parseInt(inputCommands[i + 1]));
                 }
-
                 if (inputCommands[i].equals("-cd")) { /* Search by date*/
                     String[] date = inputCommands[i + 1].split("_");
                     searchCriteria.setFromDate(date[0]);
