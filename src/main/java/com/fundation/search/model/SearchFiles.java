@@ -16,6 +16,7 @@ import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
+import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -77,7 +78,7 @@ public class SearchFiles {
      */
     public void init() {
         arrayResultFiles = new ArrayList<>();
-        arrayFinalResult  = new ArrayList<>();
+        arrayFinalResult = new ArrayList<>();
         File filePath = new File(searchCriteria.getPath());
         assetFactory = new AssetFactory();
         if (searchCriteria.getPath() != null) {
@@ -162,17 +163,17 @@ public class SearchFiles {
                 if (fileEntry.isDirectory()) {
                     recoverFiles(fileEntry, arrayResultFiles);
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(),
-                        fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3,
-                        owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                        null, 0L, null, null, null, null));
+                            fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3,
+                            owner.getName().substring(owner.getName().indexOf("\\") + 1),
+                            null, 0L, null, null, null, null));
                 } else {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
                     String content = getFileContent(fileEntry, extension);
 
                     arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(),
-                        fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1,
-                        owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                        extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, content));
+                            fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1,
+                            owner.getName().substring(owner.getName().indexOf("\\") + 1),
+                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, content));
                 }
             }
         } catch (NullPointerException e) {
@@ -230,8 +231,9 @@ public class SearchFiles {
 
     /**
      * Method to search only files read only or not.
+     *
      * @param arrayResultFiles array of Assets.
-     * @param readOnly search criteria value.
+     * @param readOnly         search criteria value.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
     public boolean searchReadOnlyFiles(Asset arrayResultFiles, String readOnly) {
@@ -256,8 +258,9 @@ public class SearchFiles {
 
     /**
      * Method to search only files or directories or all of them.
+     *
      * @param arrayResultFiles array of Assets.
-     * @param typeFile search criteria value.
+     * @param typeFile         search criteria value.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
     public boolean searchFilesOrDirectoriesOnly(Asset arrayResultFiles, int typeFile) {
@@ -285,6 +288,7 @@ public class SearchFiles {
 
     /**
      * Method to filter a file for its owner.
+     *
      * @param arrayResultFiles
      * @param owner
      * @return
@@ -301,6 +305,7 @@ public class SearchFiles {
 
     /**
      * Method to filter a files for its extension.
+     *
      * @param arrayResultFiles
      * @param extension
      * @return
@@ -317,6 +322,7 @@ public class SearchFiles {
 
     /**
      * Method to filter a files for its size.
+     *
      * @param arrayResultFiles
      * @param sizeSign
      * @param sizeRequired
@@ -354,7 +360,7 @@ public class SearchFiles {
     public boolean searchDate(Asset arrayResultFiles, boolean createDate, boolean modifiedDate, boolean accessedDate, String fromDate, String toDate) {
         SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
         boolean dateInRange = true;
-        if (createDate || modifiedDate ||accessedDate) {
+        if (createDate || modifiedDate || accessedDate) {
             try {
                 Date dateFromDate = formatDate.parse(fromDate);
                 Date dateToDate = formatDate.parse(toDate);
@@ -393,7 +399,7 @@ public class SearchFiles {
                 XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(fis));
                 XWPFWordExtractor extractor = new XWPFWordExtractor(xdoc);
                 return extractor.getText();
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 return null;
             }
         }
@@ -402,11 +408,10 @@ public class SearchFiles {
             String content = null;
             try {
                 in = new Scanner(new FileReader(fileEntry));
-                while(in.hasNextLine()) {
+                while (in.hasNextLine()) {
                     content = in.nextLine();
                 }
-            }
-            catch(IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             return content;
@@ -446,8 +451,10 @@ public class SearchFiles {
 
         return false;
     }
+
     /**
      * method saveSearchCriteria
+     *
      * @return a string with the json search criterial
      */
     public String saveSearchCriteria() {
@@ -457,5 +464,14 @@ public class SearchFiles {
         SearchQuery searchQuery = new SearchQuery();
 
         return searchQuery.addCriteria(json);
+    }
+
+    public boolean isMultimedia(File file) {
+        MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
+        String mimeType = mimeTypesMap.getContentType(file.getName());
+        if (mimeType.contains("audio") || mimeType.contains("video")) {
+            return true;
+        }
+        return false;
     }
 }
