@@ -9,6 +9,10 @@ package com.fundation.search.model;
 import com.fundation.search.common.Converter;
 import com.fundation.search.common.SearchQuery;
 import com.google.gson.Gson;
+import it.sauronsoftware.jave.Encoder;
+import it.sauronsoftware.jave.EncoderException;
+import it.sauronsoftware.jave.InputFormatException;
+import it.sauronsoftware.jave.MultimediaInfo;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
@@ -165,20 +169,37 @@ public class SearchFiles {
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            null, 0L, null, null, null, null));
-                } else {
+                            null, 0L, null, null, null, null, null, null,0.0));
+                }
+                if (!isMultimedia(fileEntry)) {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
                     String content = getFileContent(fileEntry, extension);
 
                     arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, content));
+                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, content, null, null,0.0));
+
+                } else {
+                    String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
+                    Encoder encoder = new Encoder();
+                    MultimediaInfo multimediaInfo = encoder.getInfo(fileEntry);
+                    double duration = multimediaInfo.getDuration()*1000;
+                    String codecAudio = multimediaInfo.getAudio().getDecoder();
+                    String codecVideo = multimediaInfo.getVideo().getDecoder();
+                    arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
+                            fileEntry.isHidden(), duration, !fileEntry.canWrite(), 1,
+                            owner.getName().substring(owner.getName().indexOf("\\") + 1),
+                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, null, codecAudio, codecVideo,multimediaInfo.getVideo().getFrameRate()));
                 }
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InputFormatException e) {
+            e.printStackTrace();
+        } catch (EncoderException e) {
             e.printStackTrace();
         }
         return arrayResultFiles;

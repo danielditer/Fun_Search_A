@@ -12,6 +12,7 @@ package com.fundation.search.model;
  */
 public class ResultMultimediaFile extends Asset {
 
+    private double frameRate;
     /**
      * duration attribute to know its duration (hour minute second)*/
     private double duration;
@@ -29,6 +30,12 @@ public class ResultMultimediaFile extends Asset {
     /**File last modified time*/
     private String lastModifiedTime;
 
+    /**File codec Audio*/
+    private String codecAudio;
+
+    /**File codec Video*/
+    private String codecVideo;
+
     /**
      * Constructor for this class, recieves the same as the father class,
      * it sends them with super and sets its own attribute duration
@@ -37,13 +44,16 @@ public class ResultMultimediaFile extends Asset {
      * @param hidden if the file is hidden or not.
      * @param duration hour minute second of file.
      */
-    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime) {
+    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime, String codecAudio, String codecVideo, double frameRate) {
         super(path, fileName, hidden, true, typeFile, owner, size);
         this.duration = duration;
         this.extension = extension;
         this.creationTime = creationTime;
         this.lastModifiedTime = lastModifiedTime;
         this.lastAccessTime = lastAccessTime;
+        this.codecAudio = codecAudio;
+        this.codecVideo = codecVideo;
+        this.frameRate = frameRate;
     }
 
     /**
@@ -84,5 +94,17 @@ public class ResultMultimediaFile extends Asset {
      */
     public String getLastAccessTime() {
         return this.lastAccessTime;
+    }
+
+    public String getCodecAudio() {
+        return this.codecAudio;
+    }
+
+    public String getCodecVideo() {
+        return this.codecVideo;
+    }
+
+    public double getFrameRate() {
+        return this.frameRate;
     }
 }

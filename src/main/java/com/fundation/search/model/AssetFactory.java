@@ -19,9 +19,11 @@ public class AssetFactory {
      * @param fileName is the name of the file that program has to search.
      * @param hidden if the program has to search for hidden or not hidden files.
      * @param duration if the file is multimedia the program searches for its duration.
+     * @param codecAudio
+     * @param codecVideo
      * @return the method return the object instanced.
      */
-    public Asset getAsset(String assetType, String path, String fileName, boolean hidden, double duration, boolean readOnly, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime, String content) {
+    public Asset getAsset(String assetType, String path, String fileName, boolean hidden, double duration, boolean readOnly, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime, String content, String codecAudio, String codecVideo,double frameRate) {
         if (assetType == null) {
             return null;
         }
@@ -29,7 +31,7 @@ public class AssetFactory {
             return new ResultFile(path, fileName, hidden, readOnly, typeFile, owner, extension, size, creationTime, lastModifiedTime, lastAccessTime, content);
         }
         if (assetType.equalsIgnoreCase("multimedia")) {
-            return new ResultMultimediaFile(path, fileName, hidden, duration, typeFile, owner, extension, size, creationTime, lastModifiedTime, lastAccessTime);
+            return new ResultMultimediaFile(path, fileName, hidden, duration, typeFile, owner, extension, size, creationTime, lastModifiedTime, lastAccessTime,codecAudio,codecVideo, frameRate);
         }
         if (assetType.equalsIgnoreCase("directory")) {
             return new ResultDirectory(path, fileName, hidden, readOnly, typeFile, owner, size);
