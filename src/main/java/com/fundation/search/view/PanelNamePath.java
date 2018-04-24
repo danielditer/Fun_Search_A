@@ -9,12 +9,8 @@ package com.fundation.search.view;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JPanel;
-import javax.swing.JFileChooser;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -34,8 +30,11 @@ public class PanelNamePath extends JPanel {
     JButton buttonFileChooser;
 
     private JCheckBox checkBoxCaseSensitiveName;
-    private JCheckBox checkBoxOnlyFiles;
-    private JCheckBox checkBoxOnlyDirectory;
+    private JRadioButton radioBoxOnlyFiles;
+    private JRadioButton radioBoxOnlyDirectory;
+    private JRadioButton radioBoxAllFiles;
+
+    ButtonGroup btnGroupTypeFile;
 
     /**
      * Class constructor.
@@ -53,10 +52,12 @@ public class PanelNamePath extends JPanel {
         labelPath = new JLabel();
         textFieldPath = new JTextField();
         checkBoxCaseSensitiveName = new JCheckBox();
-        checkBoxOnlyFiles = new JCheckBox();
-        checkBoxOnlyDirectory = new JCheckBox();
+        radioBoxOnlyFiles = new JRadioButton();
+        radioBoxOnlyDirectory = new JRadioButton();
+        radioBoxAllFiles = new JRadioButton();
         fileChooser = new JFileChooser();
         buttonFileChooser = new JButton();
+        btnGroupTypeFile = new ButtonGroup();
 
         fileChooser.setCurrentDirectory(new java.io.File("/"));
         fileChooser.setDialogTitle("Folder chooser for search files");
@@ -69,7 +70,7 @@ public class PanelNamePath extends JPanel {
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
         //---- labelName ----
-        labelName.setText("Name:");
+        labelName.setText(" Name:");
         final Dimension preferredSize = new Dimension(120, 20);
         labelName.setPreferredSize(preferredSize);
         add(labelName, new TableLayoutConstraints(0, 0, 0, 0,
@@ -101,7 +102,7 @@ public class PanelNamePath extends JPanel {
         add(textFieldName, new TableLayoutConstraints(1, 0, 1, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //---- labelPath ----
-        labelPath.setText("Path:");
+        labelPath.setText(" Path:");
         add(labelPath, new TableLayoutConstraints(0, 1, 0, 1,
                 TableLayoutConstraints.FULL,
                 TableLayoutConstraints.FULL));
@@ -112,7 +113,7 @@ public class PanelNamePath extends JPanel {
                 TableLayoutConstraints.FULL));
         //---- File chooser ----
         buttonFileChooser.setText("...");
-        buttonFileChooser.setPreferredSize(new Dimension(20, 20));
+        buttonFileChooser.setPreferredSize(new Dimension(8, 20));
         buttonFileChooser.addActionListener(e -> folderChooser(e));
         add(buttonFileChooser, new TableLayoutConstraints(2, 1, 2, 1,
                 TableLayoutConstraints.FULL,
@@ -123,14 +124,28 @@ public class PanelNamePath extends JPanel {
         add(checkBoxCaseSensitiveName, new TableLayoutConstraints(0, 2, 0, 2,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
+        //---- All Files ----
+        radioBoxAllFiles.setText("All");
+        radioBoxAllFiles.setActionCommand("0");
+        radioBoxAllFiles.setSelected(true);
+        btnGroupTypeFile.add(radioBoxAllFiles);
+
+        add(radioBoxAllFiles, new TableLayoutConstraints(2, 3, 2, 3,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
         //---- Only Files ----
-        checkBoxOnlyFiles.setText("Only files");
-        add(checkBoxOnlyFiles, new TableLayoutConstraints(0, 3, 0, 3,
+        radioBoxOnlyFiles.setText("Only files");
+        radioBoxOnlyFiles.setActionCommand("1");
+        btnGroupTypeFile.add(radioBoxOnlyFiles);
+
+        add(radioBoxOnlyFiles, new TableLayoutConstraints(0, 3, 0, 3,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- Only directory ----
-        checkBoxOnlyDirectory.setText("Only directory");
-        add(checkBoxOnlyDirectory, new TableLayoutConstraints(1, 3, 1, 3,
+        radioBoxOnlyDirectory.setText("Only directories");
+        radioBoxOnlyDirectory.setActionCommand("3");
+        btnGroupTypeFile.add(radioBoxOnlyDirectory);
+        add(radioBoxOnlyDirectory, new TableLayoutConstraints(1, 3, 1, 3,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
 
@@ -181,15 +196,8 @@ public class PanelNamePath extends JPanel {
      * Getter for the only files search checkbox.
      * @return the boolean of ´checkBoxOnlyFiles´ checkbox.
      */
-    public boolean getCheckBoxOnlyFiles() {
-        return checkBoxOnlyFiles.isSelected();
-    }
-    /**
-     * Getter for the only Directory search checkbox.
-     * @return the boolean of ´checkBoxOnlyDirectory´ checkbox.
-     */
-    public boolean getCheckBoxOnlyDirectory() {
-        return checkBoxOnlyDirectory.isSelected();
+    public String getBtnGroupTypeFiles() {
+        return btnGroupTypeFile.getSelection().getActionCommand();
     }
 
     //setters
@@ -212,15 +220,19 @@ public class PanelNamePath extends JPanel {
         this.checkBoxCaseSensitiveName.setSelected(checkBoxCaseSensitiveName);
     }
     /**
-     * Setter for the case only files checkbox.
+     * Setter for the case only files radio buttons.
      */
-    public void setCheckBoxOnlyFiles(boolean checkBoxOnlyFiles) {
-        this.checkBoxOnlyFiles.setSelected(checkBoxOnlyFiles);
+    public void setBtnAllFiles(String btnAllFiles) {
+        if (btnAllFiles.equals("0")) {
+            radioBoxAllFiles.setSelected(true);
+        }
+        if (btnAllFiles.equals("1")) {
+            radioBoxOnlyFiles.setSelected(true);
+        }
+        if (btnAllFiles.equals("3")) {
+            radioBoxOnlyDirectory.setSelected(true);
+        }
+        //this.btnGroupHidden.getSelection().setActionCommand(btnGroupHidden);
     }
-    /**
-     * Setter for the only directory checkbox.
-     */
-    public void setCheckBoxOnlyDirectory(boolean checkBoxOnlyDirectory) {
-        this.checkBoxOnlyDirectory.setSelected(checkBoxOnlyDirectory);
-    }
+
 }

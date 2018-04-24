@@ -18,7 +18,10 @@ import javax.swing.JScrollPane;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 import java.awt.Dimension;
+import java.awt.Color;
 
 
 /**
@@ -54,10 +57,11 @@ public class PanelSearchCriterial extends JPanel {
         tableModel = new DefaultTableModel(0, 0);
         tableModel.setColumnIdentifiers(columnNames);
 
+
         setBorder(new TitledBorder("Search Criterial"));
         setOpaque(false);
         setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
+                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
         //---- labelName ----
         labelName.setText("Name:");
@@ -68,29 +72,41 @@ public class PanelSearchCriterial extends JPanel {
                 TableLayoutConstraints.FULL));
         //---- textFieldName ----
         textFieldName.setPreferredSize(preferredSize);
-        add(textFieldName, new TableLayoutConstraints(1, 0, 1, 0,
+        add(textFieldName, new TableLayoutConstraints(1, 0, 4, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- Button search criterial ----
         buttonSearch.setText("Search");
-        add(buttonSearch, new TableLayoutConstraints(2, 0, 2, 0,
+
+        add(buttonSearch, new TableLayoutConstraints(5, 0, 5, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- table results ----
         tableResult.setModel(tableModel);
-        tableResult.setPreferredScrollableViewportSize(new Dimension(400, 40));
+        tableResult.setPreferredScrollableViewportSize(new Dimension(420, 70));
         tableResult.setFillsViewportHeight(true);
+        //tableResult.setEnabled(false);
+        //change the header color
+        JTableHeader header = tableResult.getTableHeader();
+        header.setBackground(Color.darkGray);
+        header.setForeground(Color.white);
+        TableColumnModel columnModel = tableResult.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(10);
+
+
         JScrollPane scrollPane = new JScrollPane(tableResult);
-        add(scrollPane, new TableLayoutConstraints(0, 1, 2, 1,
+        add(scrollPane, new TableLayoutConstraints(0, 1, 5, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- Button select criterial ----
         buttonSelect.setText("Select");
-        add(buttonSelect, new TableLayoutConstraints(2, 2, 2, 2,
+
+        add(buttonSelect, new TableLayoutConstraints(5, 2, 5, 2,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- Button select criterial ----
         buttonLoad.setText("Load");
+
         add(buttonLoad, new TableLayoutConstraints(0, 2, 0, 2,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
@@ -136,7 +152,10 @@ public class PanelSearchCriterial extends JPanel {
     public JButton getButtonSelect(){
         return buttonSelect;
     }
-
+    /**
+     * method to get the table result
+     * @return tableResult.
+     */
     public JTable getTableResult() {
         return tableResult;
     }

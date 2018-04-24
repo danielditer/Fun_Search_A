@@ -107,19 +107,12 @@ public class PanelNormalSearch extends JPanel {
     /**
      * Getter for the case sensitive name.
      *
-     * @return ta boolean of ´checkBoxCaseSensitiveName´ text field.
+     * @return ta boolean of ´getRadioAllFiles´ text field.
      */
-    public boolean getCheckBoxOnlyFiles() {
-        return panelNamePath.getCheckBoxOnlyFiles();
+    public String getRadioAllFiles() {
+        return panelNamePath.getBtnGroupTypeFiles();
     }
-    /**
-     * Getter for the case sensitive name.
-     *
-     * @return ta boolean of ´checkBoxCaseSensitiveName´ text field.
-     */
-    public boolean getCheckBoxOnlyDirectory() {
-        return panelNamePath.getCheckBoxOnlyDirectory();
-    }
+
     /**
      * Getter for the Case sensitive input content.
      * @return the boolean of ´getContent´ method.
@@ -252,15 +245,10 @@ public class PanelNormalSearch extends JPanel {
     /**
      * Setter for the case only files checkbox.
      */
-    public void setCheckBoxOnlyFiles(boolean checkBoxOnlyFiles) {
-        panelNamePath.setCheckBoxOnlyFiles(checkBoxOnlyFiles);
+    public void setRadioAllFiles(String radioAllFiles) {
+        panelNamePath.setBtnAllFiles(radioAllFiles);
     }
-    /**
-     * Setter for the only directory checkbox.
-     */
-    public void setCheckBoxOnlyDirectory(boolean checkBoxOnlyDirectory) {
-        panelNamePath.setCheckBoxOnlyDirectory(checkBoxOnlyDirectory);
-    }
+
 
     /**
      * Setter for the only content textarea - panelFileContents.
