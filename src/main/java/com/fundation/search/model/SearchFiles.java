@@ -125,6 +125,9 @@ public class SearchFiles {
                     matchesCriteria = false;
                 }
             }
+
+            if (results instanceof ResultMultimediaFile) {
+            }
             if (matchesCriteria) {
                 arrayFinalResult.add(results);
             }
@@ -169,7 +172,7 @@ public class SearchFiles {
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            null, 0L, null, null, null, null, null, null,0.0));
+                            null, 0L, null, null, null, null, null, null, 0.0, 0, null));
                 }
                 if (!isMultimedia(fileEntry)) {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
@@ -178,19 +181,18 @@ public class SearchFiles {
                     arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, content, null, null,0.0));
+                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, content, null, null, 0.0, 0, null));
 
                 } else {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
                     Encoder encoder = new Encoder();
                     MultimediaInfo multimediaInfo = encoder.getInfo(fileEntry);
-                    double duration = multimediaInfo.getDuration()*1000;
-                    String codecAudio = multimediaInfo.getAudio().getDecoder();
-                    String codecVideo = multimediaInfo.getVideo().getDecoder();
+                    double duration = multimediaInfo.getDuration() / 1000;
+                    String videoSize = multimediaInfo.getVideo().getSize().getWidth() + "x" + multimediaInfo.getVideo().getSize().getHeight();
                     arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), duration, !fileEntry.canWrite(), 1,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, null, codecAudio, codecVideo,multimediaInfo.getVideo().getFrameRate()));
+                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, null, multimediaInfo.getAudio().getDecoder(), multimediaInfo.getVideo().getDecoder(), multimediaInfo.getVideo().getFrameRate(), multimediaInfo.getAudio().getBitRate(), videoSize));
                 }
             }
         } catch (NullPointerException e) {
@@ -490,9 +492,12 @@ public class SearchFiles {
     public boolean isMultimedia(File file) {
         MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
         String mimeType = mimeTypesMap.getContentType(file.getName());
-        if (mimeType.contains("audio") || mimeType.contains("video")) {
+        if (mimeType.contains("audio") || mimeType.contains("video"))
             return true;
-        }
+        return false;
+    }
+
+    public boolean searchAudioCodec() {
         return false;
     }
 }

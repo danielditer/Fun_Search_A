@@ -5,6 +5,7 @@ import info.clearthought.layout.TableLayoutConstraints;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
 
 public class PanelMultimediaSearch extends JPanel {
     private JPanel panelNamePath;
@@ -24,10 +25,12 @@ public class PanelMultimediaSearch extends JPanel {
     private JComboBox comboBoxVideoCodec;
     private JComboBox comboBoxAudioCodec;
     private PanelDate panelDate;
-    private JPanel panel8;
+    private JPanel panelAudioBitRate;
     private JCheckBox checkBox5;
     private JCheckBox checkBox6;
     private PanelButtonSearch panelButtonSearch;
+    private JSpinner spinnerAudioBitRate;
+    private JLabel labelKbps;
 
     public PanelMultimediaSearch() {
         initComponents();
@@ -40,8 +43,10 @@ public class PanelMultimediaSearch extends JPanel {
         spinner1 = new JSpinner();
         labelLessThan = new JLabel();
         spinner2 = new JSpinner();
+        spinnerAudioBitRate = new JSpinner();
         panelFrameRate = new JPanel();
         labelFps = new JLabel();
+        labelKbps = new JLabel();
         panelCodec = new JPanel();
         labelVideoCodec = new JLabel();
         labelAudioCodec = new JLabel();
@@ -50,7 +55,7 @@ public class PanelMultimediaSearch extends JPanel {
         comboBoxVideoCodec = new JComboBox();
         comboBoxAudioCodec = new JComboBox();
         panelDate = new PanelDate();
-        panel8 = new JPanel();
+        panelAudioBitRate = new JPanel();
         checkBox5 = new JCheckBox();
         checkBox6 = new JCheckBox();
         comboBoxFrameRate = new JComboBox();
@@ -112,7 +117,7 @@ public class PanelMultimediaSearch extends JPanel {
         panelFrameRate.add(labelFps, new TableLayoutConstraints(2, 0, 2, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
-        add(panelFrameRate, new TableLayoutConstraints(0, 2, 0, 2,
+        add(panelFrameRate, new TableLayoutConstraints(0, 4, 0, 4,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //======== panelCodec ========
@@ -159,7 +164,7 @@ public class PanelMultimediaSearch extends JPanel {
         panelCodec.add(comboBoxAudioCodec, new TableLayoutConstraints(5, 0, 7, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
-        add(panelCodec, new TableLayoutConstraints(0, 3, 0, 3, TableLayoutConstraints.FULL,
+        add(panelCodec, new TableLayoutConstraints(0, 2, 0, 2, TableLayoutConstraints.FULL,
                 TableLayoutConstraints.FULL));
 
         //======== panelResolution ========
@@ -170,56 +175,45 @@ public class PanelMultimediaSearch extends JPanel {
         ((TableLayout) panelResolution.getLayout()).setHGap(5);
         ((TableLayout) panelResolution.getLayout()).setVGap(5);
         comboBoxResolution.addItem("All");
-        comboBoxResolution.addItem("All(4:3)");
-        comboBoxResolution.addItem("All(16:9)");
-        comboBoxResolution.addItem("120x90(4:3)");
-        comboBoxResolution.addItem("320x240(4:3)");
-        comboBoxResolution.addItem("352x240(4:3)");
-        comboBoxResolution.addItem("352x288(4:3)");
-        comboBoxResolution.addItem("480x480(4:3)");
-        comboBoxResolution.addItem("480x480(16:9)");
-        comboBoxResolution.addItem("480x576(4:3)");
-        comboBoxResolution.addItem("480x576(16:9)");
-        comboBoxResolution.addItem("640x480(4:3)");
-        comboBoxResolution.addItem("640x480(16:9)");
-        comboBoxResolution.addItem("720x480(4:3)");
-        comboBoxResolution.addItem("720x480(16:9)");
-        comboBoxResolution.addItem("720x576(4:3)");
-        comboBoxResolution.addItem("720x576(16:9)");
-        comboBoxResolution.addItem("1280x720(16:9)");
-        comboBoxResolution.addItem("1366x768(16:9)");
-        comboBoxResolution.addItem("1920x1080(16:9)");
-        comboBoxResolution.addItem("3840x2160(16:9)");
+        comboBoxResolution.addItem("120x90");
+        comboBoxResolution.addItem("320x240");
+        comboBoxResolution.addItem("352x240");
+        comboBoxResolution.addItem("352x288");
+        comboBoxResolution.addItem("480x480");
+        comboBoxResolution.addItem("480x576");
+        comboBoxResolution.addItem("640x480");
+        comboBoxResolution.addItem("720x480");
+        comboBoxResolution.addItem("720x576");
+        comboBoxResolution.addItem("1280x720");
+        comboBoxResolution.addItem("1366x768");
+        comboBoxResolution.addItem("1920x1080");
+        comboBoxResolution.addItem("3840x2160");
         panelResolution.add(comboBoxResolution, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
-        add(panelResolution, new TableLayoutConstraints(0, 4, 0, 4,
+        add(panelResolution, new TableLayoutConstraints(0, 3, 0, 3,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //======== panelDate ========
-        add(panelDate, new TableLayoutConstraints(0, 5, 0, 5,
+        add(panelDate, new TableLayoutConstraints(0, 6, 0, 5,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
-        //======== panel8 ========
+        //======== panelAudioBitRate ========
 
-        panel8.setBorder(new TitledBorder("text"));
-        panel8.setLayout(new TableLayout(new double[][]{
+        panelAudioBitRate.setBorder(new TitledBorder("Audio Bit Rate"));
+        panelAudioBitRate.setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
                 {TableLayout.PREFERRED}}));
-        ((TableLayout) panel8.getLayout()).setHGap(5);
-        ((TableLayout) panel8.getLayout()).setVGap(5);
+        ((TableLayout) panelAudioBitRate.getLayout()).setHGap(5);
+        ((TableLayout) panelAudioBitRate.getLayout()).setVGap(5);
 
-        //---- checkBox5 ----
-        checkBox5.setText("Read-only");
-        panel8.add(checkBox5, new TableLayoutConstraints(0, 0, 0, 0,
+        labelKbps.setText("Kbps");
+        panelAudioBitRate.add(spinnerAudioBitRate, new TableLayoutConstraints(1, 0, 1, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        panelAudioBitRate.add(labelKbps, new TableLayoutConstraints(2, 0, 2, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
-        //---- checkBox6 ----
-        checkBox6.setText("Hidden");
-        panel8.add(checkBox6, new TableLayoutConstraints(2, 0, 2, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-
-        add(panel8, new TableLayoutConstraints(0, 6, 0, 6,
+        add(panelAudioBitRate, new TableLayoutConstraints(0, 5, 0, 5,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //======== panelButtonSearch ========

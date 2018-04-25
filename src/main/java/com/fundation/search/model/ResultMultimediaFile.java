@@ -12,6 +12,7 @@ package com.fundation.search.model;
  */
 public class ResultMultimediaFile extends Asset {
 
+    private int audioBitRate;
     private double frameRate;
     /**
      * duration attribute to know its duration (hour minute second)*/
@@ -36,6 +37,8 @@ public class ResultMultimediaFile extends Asset {
     /**File codec Video*/
     private String codecVideo;
 
+    public String videoSize;
+
     /**
      * Constructor for this class, recieves the same as the father class,
      * it sends them with super and sets its own attribute duration
@@ -43,8 +46,9 @@ public class ResultMultimediaFile extends Asset {
      * @param fileName the name of the file.
      * @param hidden if the file is hidden or not.
      * @param duration hour minute second of file.
+     * @param videoSize
      */
-    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime, String codecAudio, String codecVideo, double frameRate) {
+    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime, String codecAudio, String codecVideo, double frameRate, int audioBitRate, String videoSize) {
         super(path, fileName, hidden, true, typeFile, owner, size);
         this.duration = duration;
         this.extension = extension;
@@ -54,6 +58,8 @@ public class ResultMultimediaFile extends Asset {
         this.codecAudio = codecAudio;
         this.codecVideo = codecVideo;
         this.frameRate = frameRate;
+        this.audioBitRate = audioBitRate;
+        this.videoSize = videoSize;
     }
 
     /**
