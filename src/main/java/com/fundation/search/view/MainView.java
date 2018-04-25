@@ -14,6 +14,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JMenu;
+import javax.swing.JOptionPane;
+
 import javax.swing.border.EmptyBorder;
 
 import info.clearthought.layout.TableLayout;
@@ -26,17 +29,15 @@ import net.miginfocom.swing.MigLayout;
  */
 public class MainView extends JFrame {
     private JMenuBar menuBar;
-    private JMenu menuFile;
-    private JMenu menuEdit;
-    private JMenu menuView;
+
     private JMenu menuHelp;
     private JTabbedPane tabbedPane;
     private JPanel panelMultimediaSearch;
-    private JPanel panelTerminalSearch;
+
     private JPanel panelResults;
     private JPanel panelSearchCrit;
     private JPanel panelSaveCrit;
-    //private JPanel panelTabbedPane;
+
     private PanelNormalSearch panelNormalSearch;
     private PanelSearchResults panelSearchResult;
     private PanelSearchCriterial panelSearchCriterial;
@@ -53,9 +54,6 @@ public class MainView extends JFrame {
      */
     protected void initComponents() {
         menuBar = new JMenuBar();
-        menuFile = new JMenu();
-        menuEdit = new JMenu();
-        menuView = new JMenu();
         menuHelp = new JMenu();
         tabbedPane = new JTabbedPane();
         panelNormalSearch = new PanelNormalSearch();
@@ -73,23 +71,16 @@ public class MainView extends JFrame {
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
-        contentPane.setSize(50, 600);
+        //contentPane.setSize(50, 600);
+
         //======== menuBar ========
-        //======== menuFile ========
-        menuFile.setText("File");
-        menuBar.add(menuFile);
-        //======== menuEdit ========
-        menuEdit.setText("Edit");
-        menuBar.add(menuEdit);
-        //======== menuView ========
-        menuView.setText("View");
-        menuBar.add(menuView);
         //======== menuHelp ========
         menuHelp.setText("Help");
         menuBar.add(menuHelp);
         setJMenuBar(menuBar);
 
-        tabbedPane.setPreferredSize(new Dimension(620, 460));
+        tabbedPane.setPreferredSize(new Dimension(340, 490));
+        tabbedPane.setBorder(new EmptyBorder(5,15,5,10));
         //======== panelNormalSearch ========
         tabbedPane.addTab("Normal Search", panelNormalSearch);
         //======== panelMultimediaSearch ========
@@ -99,23 +90,24 @@ public class MainView extends JFrame {
         //======== panelTabbedPane ========
         setVisible(true);
         pack();
-        setLocationRelativeTo(getOwner());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1045,520);
+        setSize(900,550);
+        setLocationRelativeTo(null);
         setResizable(false);
 
+        EmptyBorder borderRes = new EmptyBorder(5,330,10,10);
         //======== panel Search Criterial ========
+        panelSearchCrit.setBorder(borderRes);
         panelSearchCrit.add(panelSearchCriterial);
-        panelSearchCrit.setBorder(new EmptyBorder(10,720,10,100));
         contentPane.add(panelSearchCrit, BorderLayout.CENTER);
 
         //======== panel Search Results ========
+        panelResults.setBorder(borderRes);
         panelResults.add(panelSearchResult);
-        panelResults.setBorder(new EmptyBorder(5,720,10,100));
         contentPane.add(panelResults, BorderLayout.SOUTH);
         //======== panel Search Results ========
+        panelSaveCrit.setBorder(borderRes);
         panelSaveCrit.add(panelSaveCriterial);
-        panelSaveCrit.setBorder(new EmptyBorder(5,720,10,100));
         contentPane.add(panelSaveCrit, BorderLayout.NORTH);
 
     }
@@ -149,5 +141,13 @@ public class MainView extends JFrame {
      */
     public JPanel getPanelSaveCriterial() {
         return panelSaveCriterial;
+    }
+
+    /*
+    * method displayResult tp display an error message
+    * @param result that contains the error message
+    **/
+    public void displayResult(String result){
+        JOptionPane.showMessageDialog(null, result, "Message", JOptionPane.INFORMATION_MESSAGE);
     }
 }

@@ -142,11 +142,4 @@ public class Asset {
         return getLastAccessTime();
     }
 
-    /**
-     * Method to get file content.
-     * @return content.
-     */
-    public String getContent() {
-        return getContent();
-    }
 }
