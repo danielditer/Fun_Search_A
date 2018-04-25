@@ -266,6 +266,9 @@ public class SearchFiles {
      * @return the array of coincidences, in this case hidden file coincidences.
      */
     public boolean searchFilesOrDirectoriesOnly(Asset arrayResultFiles, int typeFile) {
+        if (typeFile == 0) { /**when typeFile is 0 we look for all type of files*/
+            return true;
+        }
         if (typeFile == 1) { /**when typeFile is 1 we want to look only for files (.txt, .docx, .exe, etc)*/
             if (arrayResultFiles instanceof ResultFile) {
                 return true;
@@ -276,10 +279,6 @@ public class SearchFiles {
                 return true;
             }
         }
-        if (typeFile == 0) { /**when typeFile is 0 we look for all type of files*/
-            return true;
-        }
-
         return false;
     }
 
@@ -331,7 +330,6 @@ public class SearchFiles {
             return true;
         }
         double size = Double.parseDouble(sizeRequired);
-        //System.out.println("sizeSign:" + sizeSign + ",sizeRequired:" + size + ",sizeMeasure:" + sizeMeasure);
         size = Converter.convertToBytes(size, sizeMeasure);
         if (sizeSign.equalsIgnoreCase("minor")) {
             if (arrayResultFiles.getSize() < size) {
