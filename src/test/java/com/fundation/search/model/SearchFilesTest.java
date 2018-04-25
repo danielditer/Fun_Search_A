@@ -19,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
+
 /**
  * JUnit class developed in order to test all different methods for searching files.
  *
@@ -87,6 +88,7 @@ public class SearchFilesTest {
      * Test search by file name and if it is case sensitive or not.
      * @throws Exception
      */
+<<<<<<< HEAD
     @Test
     public void testModelSearchFile() throws Exception {
         searchCriteria.setName("test1.txt");
@@ -216,6 +218,7 @@ public class SearchFilesTest {
         assertTrue(Whitebox.invokeMethod(searchFiles, "searchHiddenFiles", expectedFile, searchCriteria.getHidden()));
         assertTrue(Whitebox.invokeMethod(searchFiles, "searchHiddenFiles", expectedFile2, searchCriteria.getHidden()));
     }
+
 
 
 

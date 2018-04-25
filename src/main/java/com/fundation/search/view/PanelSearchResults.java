@@ -14,7 +14,9 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.Dimension;
+import java.awt.Color;
 
 /**
  * Class PanelSearchResults that contain methods to set the result table.
@@ -50,8 +52,13 @@ public class PanelSearchResults extends JPanel {
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
 
         tableResult.setModel(tableModel);
-        tableResult.setPreferredScrollableViewportSize(new Dimension(400, 150));
+        tableResult.setPreferredScrollableViewportSize(new Dimension(480, 170));
         tableResult.setFillsViewportHeight(true);
+        tableResult.setEnabled(false);
+        JTableHeader header = tableResult.getTableHeader();
+        header.setBackground(Color.darkGray);
+        header.setForeground(Color.white);
+
         JScrollPane scrollPane = new JScrollPane(tableResult);
         add(scrollPane, new TableLayoutConstraints(1, 0, 1, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));

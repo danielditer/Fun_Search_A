@@ -20,7 +20,6 @@ import com.fundation.search.view.MainView;
 import com.google.gson.Gson;
 
 import javax.swing.JTable;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -66,6 +65,7 @@ public class SearchController implements Controller {
         saveActionPerformed();
         loadActionPerformed();
         selectActionPerformed();
+        clearActionPerformed();
     }
 
     /**
@@ -75,6 +75,15 @@ public class SearchController implements Controller {
         PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
         panel.getButtonSearch().addActionListener(e -> searchButtonActionListener(panel));
     }
+    /**
+     * Method to clear values the View.
+     */
+    public void clearActionPerformed() {
+        PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
+        PanelSaveCriterial panelSaveCriterial = (PanelSaveCriterial) mainView.getPanelSaveCriterial();
+        PanelSearchResults panelResults = (PanelSearchResults) mainView.getPanelResultList();
+        panel.getButtonClear().addActionListener(e -> clearButtonActionListener(panel,panelSaveCriterial,panelResults));
+    }
 
     /**
      * Method lambda to add action listener for button search.
@@ -82,15 +91,16 @@ public class SearchController implements Controller {
      * @param panel
      */
     public void searchButtonActionListener(PanelNormalSearch panel) {
-        int typeFile = 0;
-        if (panel.getCheckBoxOnlyFiles() && panel.getCheckBoxOnlyDirectory()) {
+        String typeFileString = panel.getRadioAllFiles();
+        int typeFile = Integer.parseInt(typeFileString);
+        /*if (panel.getCheckBoxOnlyFiles() && panel.getCheckBoxOnlyDirectory()) {
             typeFile = 0;
         } else if (panel.getCheckBoxOnlyFiles()) {
             typeFile = 1;
         } else if (panel.getCheckBoxOnlyDirectory()) {
             typeFile = 3;
-        }
-        if (areValidParams(panel.getPath(), panel.getName())) {
+        }*/
+        if (areValidParams(panel.getPath(), panel.getName(), panel.getFormattedTextFieldStart(), panel.getFormattedTextFieldEnd(), panel.getCheckBoxCreated(), panel.getCheckBoxModified(), panel.getCheckBoxAccessed(), panel.getTextFieldSize())) {
             sendSearchCriteriaToModel(panel.getPath(), panel.getName(), panel.getCheckBoxHidden(), panel.getCheckBoxReadOnly(),
                 typeFile, panel.getCaseSensitiveName(), panel.getTextFieldOwner(), panel.getTextFieldExt(),
                 panel.getComboBoxSize(), panel.getTextFieldSize(), panel.getComboBoxType(),
@@ -118,37 +128,44 @@ public class SearchController implements Controller {
     public void saveButtonActionListener(PanelSaveCriterial panel, PanelNormalSearch panelMain) {
         searchCriteriaForDB = new SearchCriteria();
         String nameSearchCriteria = panel.getName();
-        int typeFile = 0;
-        if (panelMain.getCheckBoxOnlyFiles() && panelMain.getCheckBoxOnlyDirectory()) {
+        //int typeFile = 0;
+       /* if (panelMain.getCheckBoxOnlyFiles() && panelMain.getCheckBoxOnlyDirectory()) {
             typeFile = 0;
         } else if (panelMain.getCheckBoxOnlyFiles()) {
             typeFile = 1;
         } else if (panelMain.getCheckBoxOnlyDirectory()) {
             typeFile = 3;
+        }*/
+        String typeFileString = panelMain.getRadioAllFiles();
+        int typeFile = Integer.parseInt(typeFileString);
+
+        boolean validParams = areValidParams(panelMain.getPath(), panelMain.getName(), panelMain.getFormattedTextFieldStart(), panelMain.getFormattedTextFieldEnd(), panelMain.getCheckBoxCreated(), panelMain.getCheckBoxModified(), panelMain.getCheckBoxAccessed(), panelMain.getTextFieldSize());
+        boolean validCriterialParams = areValidCriterialParams(panel.getName());
+        if (validParams && validCriterialParams) {
+
+            searchCriteriaForDB.setSearchCriteriaName(nameSearchCriteria);
+            searchCriteriaForDB.setPath(panelMain.getPath());
+            searchCriteriaForDB.setName(panelMain.getName());
+            searchCriteriaForDB.setHidden(panelMain.getCheckBoxHidden());
+            searchCriteriaForDB.setReadOnly(panelMain.getCheckBoxReadOnly());
+            searchCriteriaForDB.setTypeFile(typeFile);
+            searchCriteriaForDB.setNameFileCaseSensitive(panelMain.getCaseSensitiveName());
+            searchCriteriaForDB.setOwner(panelMain.getTextFieldOwner());
+            searchCriteriaForDB.setExtension(panelMain.getTextFieldExt());
+            searchCriteriaForDB.setSizeSign(panelMain.getComboBoxSize());
+            searchCriteriaForDB.setSizeRequired(panelMain.getTextFieldSize());
+            searchCriteriaForDB.setSizeMeasure(panelMain.getComboBoxType());
+            searchCriteriaForDB.setCreateDate(panelMain.getCheckBoxCreated());
+            searchCriteriaForDB.setModifiedDate(panelMain.getCheckBoxModified());
+            searchCriteriaForDB.setAccessedDate(panelMain.getCheckBoxAccessed());
+            searchCriteriaForDB.setFromDate(panelMain.getFormattedTextFieldStart());
+            searchCriteriaForDB.setToDate(panelMain.getFormattedTextFieldEnd());
+            searchCriteriaForDB.setContent(panelMain.getContent());
+            searchCriteriaForDB.setContentCaseSensitive(panelMain.getCaseSensitiveContent());
+
+            searchFile.setSearchCriteria(searchCriteriaForDB);
+            System.out.println("DB:" + searchFile.saveSearchCriteria());
         }
-
-        searchCriteriaForDB.setSearchCriteriaName(nameSearchCriteria);
-        searchCriteriaForDB.setPath(panelMain.getPath());
-        searchCriteriaForDB.setName(panelMain.getName());
-        searchCriteriaForDB.setHidden(panelMain.getCheckBoxHidden());
-        searchCriteriaForDB.setReadOnly(panelMain.getCheckBoxReadOnly());
-        searchCriteriaForDB.setTypeFile(typeFile);
-        searchCriteriaForDB.setNameFileCaseSensitive(panelMain.getCaseSensitiveName());
-        searchCriteriaForDB.setOwner(panelMain.getTextFieldOwner());
-        searchCriteriaForDB.setExtension(panelMain.getTextFieldExt());
-        searchCriteriaForDB.setSizeSign(panelMain.getComboBoxSize());
-        searchCriteriaForDB.setSizeRequired(panelMain.getTextFieldSize());
-        searchCriteriaForDB.setSizeMeasure(panelMain.getComboBoxType());
-        searchCriteriaForDB.setCreateDate(panelMain.getCheckBoxCreated());
-        searchCriteriaForDB.setModifiedDate(panelMain.getCheckBoxModified());
-        searchCriteriaForDB.setAccessedDate(panelMain.getCheckBoxAccessed());
-        searchCriteriaForDB.setFromDate(panelMain.getFormattedTextFieldStart());
-        searchCriteriaForDB.setToDate(panelMain.getFormattedTextFieldEnd());
-        searchCriteriaForDB.setContent(panelMain.getContent());
-        searchCriteriaForDB.setContentCaseSensitive(panelMain.getCaseSensitiveContent());
-
-        searchFile.setSearchCriteria(searchCriteriaForDB);
-        System.out.println("DB:" + searchFile.saveSearchCriteria());
     }
 
     /**
@@ -190,25 +207,57 @@ public class SearchController implements Controller {
 
 
     /**
-     * Method to validate each input.
+     * Method to validate each input in the normal search panel.
      *
      * @param path
      * @param name
+     * @param dateFrom
+     * @param dateTo
      * @return
      */
-    public boolean areValidParams(String path, String name) {
+    public boolean areValidParams(String path, String name, String dateFrom, String dateTo, boolean created, boolean modified, boolean accessed, String size) {
         Validator validator = new Validator();
         if (!validator.isAValidPath(path)) {
-            JOptionPane.showMessageDialog(null, "Invalid Path Name");
+            mainView.displayResult("Invalid Path Name");
             return false;
         }
         if (!validator.isAValidName(name)) {
-            JOptionPane.showMessageDialog(null, "Invalid File Name");
+            mainView.displayResult("Invalid File Name");
+            return false;
+        }
+        if (created || modified || accessed)
+        {
+            if(!validator.datesNotEmptyString(dateFrom, dateTo)) {
+                mainView.displayResult("Date from and date to can't be empty");
+                return false;
+            }
+
+            if (!validator.isAValidRangeDate(dateFrom, dateTo)) {
+                mainView.displayResult("Date To must be mayor to Date From");
+                return false;
+            }
+        }
+        if (size.compareTo("") != 0 && !validator.isANumber(size)) {
+            mainView.displayResult("The size must be a number");
             return false;
         }
         return true;
     }
 
+    /**
+     * Method to validate each input related to criterial name.
+     *
+     * @param nameCriterial is the name of the criterial
+     * @return true or false
+     */
+    public boolean areValidCriterialParams(String nameCriterial) {
+        Validator validator = new Validator();
+        if (!validator.nameCriterialIsNorEmpty(nameCriterial)) {
+            mainView.displayResult("Name criterial is empty");
+            return false;
+        }
+        return true;
+    }
     /**
      * Method to set search criteria for Model and start search.
      *
@@ -354,7 +403,7 @@ public class SearchController implements Controller {
         panel.setTextFieldName(mapSearchCriteriasResults.get(key).getName());
         panel.setTextFieldPath(mapSearchCriteriasResults.get(key).getPath());
         panel.setCheckBoxCaseSensitiveName(mapSearchCriteriasResults.get(key).getNameFileCaseSensitive());
-        if (mapSearchCriteriasResults.get(key).getTypeFile() == 1) {
+       /* if (mapSearchCriteriasResults.get(key).getTypeFile() == 1) {
             panel.setCheckBoxOnlyFiles(true);
         }
         if (mapSearchCriteriasResults.get(key).getTypeFile() == 3) {
@@ -363,7 +412,10 @@ public class SearchController implements Controller {
         if (mapSearchCriteriasResults.get(key).getTypeFile() == 0) {
             panel.setCheckBoxOnlyFiles(true);
             panel.setCheckBoxOnlyDirectory(true);
-        }
+        }*/
+        int typeFiles = mapSearchCriteriasResults.get(key).getTypeFile();
+        panel.setRadioAllFiles(Integer.toString(typeFiles));
+
         panel.setBtnGroupHiddenAttributes(mapSearchCriteriasResults.get(key).getHidden());
         panel.setBtnGroupReadOnlyAttributes(mapSearchCriteriasResults.get(key).getReadOnly());
         panel.setTextFieldExtAttributes(mapSearchCriteriasResults.get(key).getExtension());
@@ -392,6 +444,44 @@ public class SearchController implements Controller {
         }
         panel.setTextAreaContent(mapSearchCriteriasResults.get(key).getContent());
         panel.setCheckBoxCaseSensitiveContent(mapSearchCriteriasResults.get(key).getContentCaseSensitive());
+    }
+    /**
+     * This method clear the fields with the information retrieved of a search criteria selected.
+     *
+     * @param panelMain is the panel that contain all the elements for the normal search
+     */
+
+    public void clearButtonActionListener(PanelNormalSearch panelMain, PanelSaveCriterial panelSaveCriterial, PanelSearchResults panelResults) {
+        panelSaveCriterial.setTextFieldName("");
+        DefaultTableModel tableModel = panelResults.getTableModel();
+        tableModel.setRowCount(0);
+        panelResults.setTableModel(tableModel);
+        panelMain.setTextFieldName(null);
+        panelMain.setTextFieldPath(null);
+        panelMain.setCheckBoxCaseSensitiveName(false);
+       // panelMain.setCheckBoxOnlyFiles(false);
+        //panelMain.setCheckBoxOnlyDirectory(false);
+        panelMain.setRadioAllFiles("0");
+
+        panelMain.setBtnGroupHiddenAttributes("3");
+        panelMain.setBtnGroupReadOnlyAttributes("3");
+        panelMain.setTextFieldExtAttributes(null);
+
+        panelMain.setComboBoxSizeAttributes("Minor");
+        panelMain.setTextFieldSizeAttributes(null);
+        panelMain.setComboBoxTypeAttributes("bytes");
+
+        panelMain.setTextFieldOwnerAttributes(null);
+
+        panelMain.setCheckBoxCreatedPanel(false);
+        panelMain.setCheckBoxModifiedPanel(false);
+        panelMain.setCheckBoxAccessedPanel(false);
+
+        panelMain.setDateChooserFromPanel(null);
+        panelMain.setDateChooserToPanel(null);
+
+        panelMain.setTextAreaContent(null);
+        panelMain.setCheckBoxCaseSensitiveContent(false);
     }
 }
 

@@ -61,6 +61,8 @@ public class PanelNormalSearch extends JPanel {
         //======== panelButtonSearch ========
         add(panelButtonSearch, new TableLayoutConstraints(0, 4, 0, 4,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
+       
     }
     /**
      * Getter for the search button.
@@ -69,6 +71,14 @@ public class PanelNormalSearch extends JPanel {
      */
     public JButton getButtonSearch() {
         return panelButtonSearch.getButtonSearch();
+    }
+    /**
+     * Getter for the clear button.
+     *
+     * @return ´buttonClear´ button.
+     */
+    public JButton getButtonClear() {
+        return panelButtonSearch.getButtonClear();
     }
     /**
      * Getter for the path.
@@ -97,19 +107,12 @@ public class PanelNormalSearch extends JPanel {
     /**
      * Getter for the case sensitive name.
      *
-     * @return ta boolean of ´checkBoxCaseSensitiveName´ text field.
+     * @return ta boolean of ´getRadioAllFiles´ text field.
      */
-    public boolean getCheckBoxOnlyFiles() {
-        return panelNamePath.getCheckBoxOnlyFiles();
+    public String getRadioAllFiles() {
+        return panelNamePath.getBtnGroupTypeFiles();
     }
-    /**
-     * Getter for the case sensitive name.
-     *
-     * @return ta boolean of ´checkBoxCaseSensitiveName´ text field.
-     */
-    public boolean getCheckBoxOnlyDirectory() {
-        return panelNamePath.getCheckBoxOnlyDirectory();
-    }
+
     /**
      * Getter for the Case sensitive input content.
      * @return the boolean of ´getContent´ method.
@@ -242,15 +245,10 @@ public class PanelNormalSearch extends JPanel {
     /**
      * Setter for the case only files checkbox.
      */
-    public void setCheckBoxOnlyFiles(boolean checkBoxOnlyFiles) {
-        panelNamePath.setCheckBoxOnlyFiles(checkBoxOnlyFiles);
+    public void setRadioAllFiles(String radioAllFiles) {
+        panelNamePath.setBtnAllFiles(radioAllFiles);
     }
-    /**
-     * Setter for the only directory checkbox.
-     */
-    public void setCheckBoxOnlyDirectory(boolean checkBoxOnlyDirectory) {
-        panelNamePath.setCheckBoxOnlyDirectory(checkBoxOnlyDirectory);
-    }
+
 
     /**
      * Setter for the only content textarea - panelFileContents.
@@ -349,8 +347,6 @@ public class PanelNormalSearch extends JPanel {
         panelDate.setDateChooserTo(dateChooserTo);
     }
 
-
-
-
-
 }
+
+
