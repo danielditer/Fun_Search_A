@@ -582,5 +582,13 @@ public class SearchFilesTest {
         Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1.txt", expected.isHidden(), 0.0, !expected.canWrite(), 1, "Administrator", "txt", 100L, "04-10-2018", "04-20-2018", "04-23-2018");
         assertFalse(Whitebox.invokeMethod(searchFiles, "searchSize", expectedFile, searchCriteria.getSizeSign(), searchCriteria.getSizeRequired(), searchCriteria.getSizeMeasure()));
     }
+
+
+
+
+    @Test
+    public void TestSearchDate() throws Exception {
+
+    }
 }
 
