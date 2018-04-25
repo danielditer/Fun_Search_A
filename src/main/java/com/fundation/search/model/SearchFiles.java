@@ -116,11 +116,9 @@ public class SearchFiles {
                     matchesCriteria = false;
                 }
             }
-            if (searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate()) {
-                if (results instanceof ResultFile) {
-                    if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
-                        matchesCriteria = false;
-                    }
+            if ((searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate()) && results instanceof ResultFile) {
+                if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
+                    matchesCriteria = false;
                 }
             }
             if (searchCriteria.getContent() != null) {
@@ -270,11 +268,6 @@ public class SearchFiles {
     public boolean searchFilesOrDirectoriesOnly(Asset arrayResultFiles, int typeFile) {
         if (typeFile == 1) { /**when typeFile is 1 we want to look only for files (.txt, .docx, .exe, etc)*/
             if (arrayResultFiles instanceof ResultFile) {
-                return true;
-            }
-        }
-        if (typeFile == 2) { /**when typeFile is 2 we want to look only for multimedia files (.mp3, .mp4, etc)*/
-            if (arrayResultFiles instanceof ResultMultimediaFile) {
                 return true;
             }
         }

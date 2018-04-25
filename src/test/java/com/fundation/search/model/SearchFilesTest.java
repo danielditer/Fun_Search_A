@@ -302,5 +302,74 @@ public class SearchFilesTest {
         assertTrue(Whitebox.invokeMethod(searchFiles, "searchReadOnlyFiles", expectedFile, searchCriteria.getReadOnly()));
         assertTrue(Whitebox.invokeMethod(searchFiles, "searchReadOnlyFiles", expectedFile2, searchCriteria.getReadOnly()));
     }
+
+
+    /**
+     * Test search files or directories or all of them, search criteria with 1, search only files, should pass
+     * @throws Exception
+     */
+    @Test
+    public void testSearchFilesOrDirectoriesOnlyFilesPass() throws Exception {
+        searchCriteria.setTypeFile(1);
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt");
+        Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1.txt", expected.isHidden(), 0.0, !expected.canWrite(), 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchFilesOrDirectoriesOnly", expectedFile, searchCriteria.getTypeFile()));
+    }
+    /**
+     * Test search files or directories or all of them, search criteria with 1, search only files, should not pass
+     * @throws Exception
+     */
+    @Test
+    public void testSearchFilesOrDirectoriesOnlyFilesNotPass() throws Exception {
+        searchCriteria.setTypeFile(1);
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt");
+        Asset expectedFile = assetFactory.getAsset("directory", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder", "New folder", false, 0.0, false, 3, "Administrators", null, 0L, "", "", "");
+        assertFalse(Whitebox.invokeMethod(searchFiles, "searchFilesOrDirectoriesOnly", expectedFile, searchCriteria.getTypeFile()));
+    }
+    /**
+     * Test search files or directories or all of them, search criteria with 3, search only directories, should pass
+     * @throws Exception
+     */
+    @Test
+    public void testSearchFilesOrDirectoriesOnlyDirectoryPass() throws Exception {
+        searchCriteria.setTypeFile(3);
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt");
+        Asset expectedFile = assetFactory.getAsset("directory", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder", "New folder", false, 0.0, false, 3, "Administrators", null, 0L, "", "", "");
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchFilesOrDirectoriesOnly", expectedFile, searchCriteria.getTypeFile()));
+    }
+    /**
+     * Test search files or directories or all of them, search criteria with 3, search only directories, should not pass
+     * @throws Exception
+     */
+    @Test
+    public void testSearchFilesOrDirectoriesOnlyDirectoryNotPass() throws Exception {
+        searchCriteria.setTypeFile(3);
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt");
+        Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1.txt", expected.isHidden(), 0.0, !expected.canWrite(), 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertFalse(Whitebox.invokeMethod(searchFiles, "searchFilesOrDirectoriesOnly", expectedFile, searchCriteria.getTypeFile()));
+    }
+    /**
+     * Test search files or directories or all of them, search criteria with 0, search all files, should pass
+     * @throws Exception
+     */
+    @Test
+    public void testSearchFilesOrDirectoriesOnlyAllPass() throws Exception {
+        searchCriteria.setTypeFile(0);
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt");
+        Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1.txt", expected.isHidden(), 0.0, !expected.canWrite(), 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        Asset expectedFile2 = assetFactory.getAsset("directory", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder", "New folder", false, 0.0, false, 3, "Administrators", null, 0L, "", "", "");
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchFilesOrDirectoriesOnly", expectedFile, searchCriteria.getTypeFile()));
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchFilesOrDirectoriesOnly", expectedFile2, searchCriteria.getTypeFile()));
+    }
 }
 
