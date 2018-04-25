@@ -78,8 +78,10 @@ public class SearchFiles {
     public void init() {
         arrayResultFiles = new ArrayList<>();
         arrayFinalResult  = new ArrayList<>();
-        File filePath = new File(searchCriteria.getPath());
-        assetFactory = new AssetFactory();
+        File filePath = null;
+        if (searchCriteria.getPath() != null) {
+            filePath = new File(searchCriteria.getPath());
+        }
         if (searchCriteria.getPath() != null) {
             resultResultFiles = recoverFiles(filePath, arrayResultFiles);
         }
@@ -164,7 +166,7 @@ public class SearchFiles {
                 String creationTime = dateFormat.format(fileAttributes.creationTime().toMillis());
                 String lastAccessTime = dateFormat.format(fileAttributes.lastAccessTime().toMillis());
                 String lastModifiedTime = dateFormat.format(fileAttributes.lastModifiedTime().toMillis());
-
+                assetFactory = new AssetFactory();
                 if (fileEntry.isDirectory()) {
                     recoverFiles(fileEntry, arrayResultFiles);
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(),

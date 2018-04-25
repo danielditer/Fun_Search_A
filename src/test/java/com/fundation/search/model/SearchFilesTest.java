@@ -56,31 +56,31 @@ public class SearchFilesTest {
         List<Asset> arrayResultFiles = new ArrayList<>();
         List<Asset> expectedResultFiles = new ArrayList<>();
         AssetFactory assetFactory = new AssetFactory();
-        expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1-1.txt", false, 0.0, true, 1, "Administrators", "txt", 0L, "04-10-2018", "04-10-2018", "04-10-2018"));
+        expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1-1.txt", true, 0.0, false, 1, "Administrators", "txt", 0L, "04-10-2018", "04-10-2018", "04-10-2018"));
         expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test2-1.docx", "test2-1.docx", false, 0.0, false, 1, "Administrators", "docx", 0L, "04-10-2018", "04-10-2018", "04-10-2018"));
-        expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test3-1.xlsx", "test3-1.xlsx", false, 0.0, false, 1, "Administrators", "xlsx", 0L, "04-10-2018", "04-10-2018", "04-10-2018"));
+        expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test3-1.xlsx", "test3-1.xlsx", false, 0.0, true, 1, "Administrators", "xlsx", 0L, "04-10-2018", "04-10-2018", "04-10-2018"));
         expectedResultFiles.add(assetFactory.getAsset("directory", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder", "New folder", false, 0.0, false, 3, "Administrators", null, 0L, "", "", ""));
-        expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", false, 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018"));
-        expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test2.docx", "test2.docx", false, 0.0, false, 1, "Administrator", "docx", 11564L, "04-10-2018", "04-20-2018", "04-24-2018"));
+        expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", false, 0.0, false, 1, "Administrators", "txt", 460L, "04-10-2018", "04-20-2018", "04-23-2018"));
+        expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test2.docx", "test2.docx", false, 0.0, false, 1, "Administrators", "docx", 11427L, "04-10-2018", "04-20-2018", "04-24-2018"));
         expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test3.xlsx", "test3.xlsx", false, 0.0, false, 1, "Administrators", "xlsx", 0L, "04-10-2018", "04-10-2018", "04-10-2018"));
         expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test4.txt", "test4.txt", false, 0.0, false, 1, "Administrators", "txt", 0L, "04-10-2018", "04-19-2018", "04-19-2018"));
         expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test5.docx", "test5.docx", true, 0.0, true, 1, "Administrators", "docx", 0L, "04-10-2018", "04-10-2018", "04-10-2018"));
         expectedResultFiles.add(assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test5.pdf", "test5.pdf", false, 0.0, false, 1, "Administrators", "pdf", 92172L, "04-20-2018", "04-20-2018", "04-24-2018"));
         List<Asset> resultResultFiles = Whitebox.invokeMethod(searchFiles, "recoverFiles", path, arrayResultFiles);
         for (int i = 0; i < resultResultFiles.size(); i++) {
-            assertEquals(expectedResultFiles.get(i).getPath(), resultResultFiles.get(i).getPath());
-            assertEquals(expectedResultFiles.get(i).getFileName(), resultResultFiles.get(i).getFileName());
-            assertEquals(expectedResultFiles.get(i).getHidden(), resultResultFiles.get(i).getHidden());
-            assertEquals(expectedResultFiles.get(i).getReadOnly(), resultResultFiles.get(i).getReadOnly());
-            assertEquals(expectedResultFiles.get(i).getTypeFile(), resultResultFiles.get(i).getTypeFile());
-            assertEquals(expectedResultFiles.get(i).getOwner(), resultResultFiles.get(i).getOwner());
+            assertEquals("i:" + i, expectedResultFiles.get(i).getPath(), resultResultFiles.get(i).getPath());
+            assertEquals("i:" + i, expectedResultFiles.get(i).getFileName(), resultResultFiles.get(i).getFileName());
+            assertEquals("i:" + i, expectedResultFiles.get(i).getHidden(), resultResultFiles.get(i).getHidden());
+            assertEquals("i:" + i, expectedResultFiles.get(i).getReadOnly(), resultResultFiles.get(i).getReadOnly());
+            assertEquals("i:" + i, expectedResultFiles.get(i).getTypeFile(), resultResultFiles.get(i).getTypeFile());
+            assertEquals("i:" + i, expectedResultFiles.get(i).getOwner(), resultResultFiles.get(i).getOwner());
             if (expectedResultFiles instanceof ResultFile) {
-                assertEquals(expectedResultFiles.get(i).getExtension(), resultResultFiles.get(i).getExtension());
-                assertEquals(expectedResultFiles.get(i).getCreationTime(), resultResultFiles.get(i).getCreationTime());
-                assertEquals(expectedResultFiles.get(i).getLastModifiedTime(), resultResultFiles.get(i).getLastModifiedTime());
-                assertEquals(expectedResultFiles.get(i).getLastAccessTime(), resultResultFiles.get(i).getLastAccessTime());
+                assertEquals("i:" + i, expectedResultFiles.get(i).getExtension(), resultResultFiles.get(i).getExtension());
+                assertEquals("i:" + i, expectedResultFiles.get(i).getCreationTime(), resultResultFiles.get(i).getCreationTime());
+                assertEquals("i:" + i, expectedResultFiles.get(i).getLastModifiedTime(), resultResultFiles.get(i).getLastModifiedTime());
+                assertEquals("i:" + i, expectedResultFiles.get(i).getLastAccessTime(), resultResultFiles.get(i).getLastAccessTime());
             }
-            assertEquals(expectedResultFiles.get(i).getSize(), resultResultFiles.get(i).getSize());
+            assertEquals("i:" +i, expectedResultFiles.get(i).getSize(), resultResultFiles.get(i).getSize());
         }
     }
 
