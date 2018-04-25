@@ -185,4 +185,71 @@ public class ValidatorTest {
     public void testIsAInvalidPathNames(){
         assertFalse("Path", validator.isAValidPathName("folderr:rrrr\\file\\document\\"));
     }
+
+    /**
+     * method testIsANumberString validate is a string contain only numbers
+     */
+    @Test
+    public void testIsANumberString() {
+        assertFalse(validator.isANumber("test"));
+    }
+    /**
+     * method testIsANumberString validate is a string contain only numbers
+     */
+    @Test
+    public void testIsANumberWithString() {
+        assertFalse(validator.isANumber("123213test"));
+    }
+    /**
+     * method testIsANumberString validate is a string contain only numbers
+     */
+    @Test
+    public void testIsANumber() {
+        assertTrue(validator.isANumber("123213"));
+    }
+
+    /**
+     * method testDatesNotEmpty validate is the search have two dates: from and to
+     */
+    @Test
+    public void testDatesNotEmpty() {
+        assertTrue(validator.datesNotEmptyString("11-05-2018", "11-06-2018"));
+    }
+    /**
+     * method testDatesNotEmpty validate is the search have two dates: from and to
+     */
+    @Test
+    public void testDatesEmpty() {
+        assertFalse(validator.datesNotEmptyString(null, null));
+    }
+    /**
+     * method testIsNotAValidRangedate validate is the search have two dates: from and to
+     */
+    @Test
+    public void testIsNotAValidRangedate() {
+        assertFalse(validator.isAValidRangeDate("11-07-2018", "11-06-2018"));
+    }
+    /**
+     * method testDatesNotEmpty validate is the search have two dates: from and to
+     */
+    @Test
+    public void testNotAValidRangedate() {
+        assertTrue(validator.isAValidRangeDate("11-07-2018", "11-08-2018"));
+    }
+    /**
+     * method testNotValidNameCriterial validate is the name criterial is empty
+     */
+    @Test
+    public void testNotValidNameCriterial() {
+        assertFalse(validator.nameCriterialIsNorEmpty(""));
+    }
+    /**
+     * method testNotValidNameCriterial validate is the name criterial is not empty
+     */
+    @Test
+    public void testIsValidNameCriterial() {
+        assertTrue(validator.nameCriterialIsNorEmpty("test"));
+    }
+
+
 }

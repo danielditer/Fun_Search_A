@@ -52,7 +52,7 @@ public class PanelSaveCriterial extends JPanel {
                 TableLayoutConstraints.RIGHT,
                 TableLayoutConstraints.FULL));
         //---- textFieldName ----
-        final Dimension preferredSize = new Dimension(200, 20);
+        final Dimension preferredSize = new Dimension(280, 20);
         textFieldName.setPreferredSize(preferredSize);
         add(textFieldName, new TableLayoutConstraints(1, 0, 1, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
@@ -74,5 +74,12 @@ public class PanelSaveCriterial extends JPanel {
      */
     public JButton getButtonSave(){
         return buttonSave;
+    }
+
+    /**
+     * Setter for the name text field file.
+     */
+    public void setTextFieldName(String textFieldName) {
+        this.textFieldName.setText(textFieldName);
     }
 }

@@ -10,8 +10,6 @@ import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
 import javax.swing.JPanel;
-import javax.swing.JButton;
-
 import javax.swing.border.TitledBorder;
 import java.awt.Dimension;
 import javax.swing.JRadioButton;

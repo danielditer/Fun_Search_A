@@ -8,7 +8,6 @@ package com.fundation.search;
 
 import com.fundation.search.controller.CommandController;
 import com.fundation.search.controller.Controller;
-import com.fundation.search.controller.LoggerCreator;
 import com.fundation.search.controller.SearchController;
 import com.fundation.search.model.SearchFiles;
 import com.fundation.search.view.CommandResultView;
@@ -27,18 +26,18 @@ public class Main {
     public static void main (String[] args) {
         Controller controller;
         SearchFiles searchFile = new SearchFiles();
-        LoggerCreator.getInstance().info(searchFile.getClass().getName(), "Started Searchfiles");
+        //LoggerCreator.getInstance().info(searchFile.getClass().getName(), "Started Searchfiles");
 
         if (args.length > 0) {
             CommandResultView commandResultView = new CommandResultView();
-            LoggerCreator.getInstance().info(commandResultView.getClass().getName(), "Started CommandResultView");
+            //LoggerCreator.getInstance().info(commandResultView.getClass().getName(), "Started CommandResultView");
             controller = new CommandController(searchFile, commandResultView, args);
         } else {
             MainView mainView = new MainView();
-            LoggerCreator.getInstance().info(mainView.getClass().getName(), "Started MainView");
+            //LoggerCreator.getInstance().info(mainView.getClass().getName(), "Started MainView");
             controller = new SearchController(searchFile, mainView);
         }
         controller.init();
-        LoggerCreator.getInstance().info(controller.getClass().getName(), "Initialized Controller");
+        //LoggerCreator.getInstance().info(controller.getClass().getName(), "Initialized Controller");
     }
 }

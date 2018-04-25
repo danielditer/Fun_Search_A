@@ -9,7 +9,11 @@
 package com.fundation.search.common;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -61,12 +65,12 @@ public class Validator {
      * @return
      */
     public boolean isAValidPathName(String path) {
-        String[] directoryName = path.split("\\\\");
-        for (String value : directoryName) {
-            if (!isAValidName(value)) {
-                return false;
+            String[] directoryName = path.split("\\\\");
+            for (String value : directoryName) {
+                if (!isAValidName(value)) {
+                    return false;
+                }
             }
-        }
         return true;
     }
 
@@ -76,8 +80,9 @@ public class Validator {
      * @return boolean value is valid.
      */
     public boolean pathExists(String path) {
-        File file = new File(path);
-        return file.exists();
+
+            File file = new File(path);
+            return file.exists();
     }
 
     /**
@@ -86,16 +91,65 @@ public class Validator {
      * @return boolean value is valid.
      */
     public boolean isAValidPath(String path) {
+        String[] file = path.split(":");
+
         if (path.isEmpty()) {
             return false;
         }
         if (path.length() > MAX_PATH_VALUE) {
             return false;
         }
-        if (!pathExists(path.substring(0, path.indexOf("\\")))) {
+        if (file.length == 2)
+        {
+            if (!pathExists(file[1])) { //.substring(0, path.indexOf("\\")))
+                return false;
+            }
+        }
+        else {
             return false;
         }
         if (!isAValidPathName(path.substring(INDEX_THREE))) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Method to validate if a string is a number.
+     * @param size .
+     * @return boolean value is valid.
+     */
+    public boolean isANumber(String size) {
+        if (!size.matches("[0-9]+")) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean datesNotEmptyString (String fromDate, String toDate) {
+        if (fromDate == null || toDate == null ) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isAValidRangeDate(String fromDate, String toDate) {
+        SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
+        try {
+            Date dateFromDate = formatDate.parse(fromDate);
+            Date dateToDate = formatDate.parse(toDate);
+            if (dateFromDate.compareTo(dateToDate) >= 0) {
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    public boolean nameCriterialIsNorEmpty(String name) {
+        if (name.isEmpty() || name.compareTo(" ") == 0) {
             return false;
         }
         return true;
