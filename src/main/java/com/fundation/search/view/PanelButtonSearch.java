@@ -11,6 +11,8 @@ import info.clearthought.layout.TableLayoutConstraints;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
+import java.awt.event.ActionEvent;
+
 /**
  * Class to initialize panel for buttons.
  *
@@ -65,4 +67,5 @@ public class PanelButtonSearch extends JPanel {
     public JButton getButtonClear(){
         return buttonClear;
     }
+
 }

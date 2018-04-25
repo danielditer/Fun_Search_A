@@ -36,7 +36,6 @@ public class ResultFile extends Asset {
         this.creationTime = creationTime;
         this.lastModifiedTime = lastModifiedTime;
         this.lastAccessTime = lastAccessTime;
-
     }
 
     /**

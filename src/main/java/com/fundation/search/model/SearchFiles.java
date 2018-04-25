@@ -82,20 +82,14 @@ public class SearchFiles {
                     matchesCriteria = false;
                 }
             }
-//            if (!searchCriteria.getHidden().equals("3")) {
-                if (matchesCriteria && !searchHiddenFiles(results, searchCriteria.getHidden())) {
-                    matchesCriteria = false;
-                }
-//            }
-//            if (!searchCriteria.getReadOnly().equals("3")) {
-                if (matchesCriteria && !searchReadOnlyFiles(results, searchCriteria.getReadOnly())) {
-                    matchesCriteria = false;
-                }
-//            }
-            if (searchCriteria.getTypeFile() != 0) {
-                if (matchesCriteria && !searchFilesOrDirectoriesOnly(results, searchCriteria.getTypeFile())) {
-                    matchesCriteria = false;
-                }
+            if (matchesCriteria && !searchHiddenFiles(results, searchCriteria.getHidden())) {
+                matchesCriteria = false;
+            }
+            if (matchesCriteria && !searchReadOnlyFiles(results, searchCriteria.getReadOnly())) {
+                matchesCriteria = false;
+            }
+            if (matchesCriteria && !searchFilesOrDirectoriesOnly(results, searchCriteria.getTypeFile())) {
+                matchesCriteria = false;
             }
             if (searchCriteria.getOwner() != null) {
                 if (matchesCriteria && !searchOwner(results, searchCriteria.getOwner())) {
@@ -112,9 +106,11 @@ public class SearchFiles {
                     matchesCriteria = false;
                 }
             }
-            if (searchCriteria.getFromDate() != null && searchCriteria.getToDate() != null) {
-                if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
-                    matchesCriteria = false;
+            if (searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate()) {
+                if (results instanceof ResultFile) {
+                    if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
+                        matchesCriteria = false;
+                    }
                 }
             }
             if (searchCriteria.getContent() != null) {
@@ -139,25 +135,12 @@ public class SearchFiles {
     }
 
     /**
-     * method saveSearchCriteria
-     * @return a string with the json search criterial
-     */
-    public String saveSearchCriteria() {
-        Gson gson = new Gson();
-        String json = gson.toJson(searchCriteria);
-        System.out.println("JSON:" + json);
-        SearchQuery searchQuery = new SearchQuery();
-
-        return searchQuery.addCriteria(json);
-    }
-
-    /**
      * Method that is going to recover all File objects into an array.
      *
      * @param path is given in order to obtain all files of a path.
      * @return the array of Files object.
      */
-    private List<Asset> recoverFiles(File path, List<Asset> arrayResultFiles) {
+    public List<Asset> recoverFiles(File path, List<Asset> arrayResultFiles) {
         try {
             for (File fileEntry : path.listFiles()) {
                 /**
@@ -171,8 +154,8 @@ public class SearchFiles {
                 BasicFileAttributes fileAttributes = Files.readAttributes(fileEntry.toPath(), BasicFileAttributes.class);
                 DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
                 String creationTime = dateFormat.format(fileAttributes.creationTime().toMillis());
-                String lastModifiedTime = dateFormat.format(fileAttributes.lastModifiedTime().toMillis());
                 String lastAccessTime = dateFormat.format(fileAttributes.lastAccessTime().toMillis());
+                String lastModifiedTime = dateFormat.format(fileAttributes.lastModifiedTime().toMillis());
 
                 if (fileEntry.isDirectory()) {
                     recoverFiles(fileEntry, arrayResultFiles);
@@ -186,7 +169,7 @@ public class SearchFiles {
                     arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(),
                         fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1,
                         owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                        extension, fileEntry.length(), creationTime, lastModifiedTime, lastAccessTime));
+                        extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime));
                 }
             }
         } catch (NullPointerException e) {
@@ -222,7 +205,7 @@ public class SearchFiles {
      * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
-    private boolean searchHiddenFiles(Asset arrayResultFiles, String searchHidden) {
+    public boolean searchHiddenFiles(Asset arrayResultFiles, String searchHidden) {
         if (searchHidden == null) {
             return true;
         }
@@ -236,6 +219,9 @@ public class SearchFiles {
                 return true;
             }
         }
+        if (searchHidden.equals("3")) { /**All*/
+            return true;
+        }
         return false;
     }
 
@@ -245,19 +231,22 @@ public class SearchFiles {
      * @param readOnly search criteria value.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
-    private boolean searchReadOnlyFiles(Asset arrayResultFiles, String readOnly) {
+    public boolean searchReadOnlyFiles(Asset arrayResultFiles, String readOnly) {
         if (readOnly == null) {
             return true;
         }
-        if (readOnly.equals("1")) { /**Files Read Only*/
+        if (readOnly.equals("1")) {
             if (arrayResultFiles.getReadOnly()) {
                 return true;
             }
         }
-        if (readOnly.equals("2")) { /**Files not read only*/
+        if (readOnly.equals("2")) {
             if (!arrayResultFiles.getReadOnly()) {
                 return true;
             }
+        }
+        if (readOnly.equals("3")) { /**All*/
+            return true;
         }
         return false;
     }
@@ -268,7 +257,7 @@ public class SearchFiles {
      * @param typeFile search criteria value.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
-    private boolean searchFilesOrDirectoriesOnly(Asset arrayResultFiles, int typeFile) {
+    public boolean searchFilesOrDirectoriesOnly(Asset arrayResultFiles, int typeFile) {
         if (typeFile == 1) { /**when typeFile is 1 we want to look only for files (.txt, .docx, .exe, etc)*/
             if (arrayResultFiles instanceof ResultFile) {
                 return true;
@@ -284,6 +273,10 @@ public class SearchFiles {
                 return true;
             }
         }
+        if (typeFile == 0) { /**when typeFile is 0 we look for all type of files*/
+            return true;
+        }
+
         return false;
     }
 
@@ -293,11 +286,14 @@ public class SearchFiles {
      * @param owner
      * @return
      */
-    private boolean searchOwner(Asset arrayResultFiles, String owner) {
-        if (arrayResultFiles.getOwner().equalsIgnoreCase(owner)) {
-            return true;
+    public boolean searchOwner(Asset arrayResultFiles, String owner) {
+        if (owner != null) {
+            if (arrayResultFiles.getOwner().equalsIgnoreCase(owner)) {
+                return true;
+            }
+            return false;
         }
-        return false;
+        return true;
     }
 
     /**
@@ -306,14 +302,17 @@ public class SearchFiles {
      * @param extension
      * @return
      */
-    private boolean searchExtension(Asset arrayResultFiles, String extension) {
-        if (arrayResultFiles instanceof ResultDirectory) {
+    public boolean searchExtension(Asset arrayResultFiles, String extension) {
+        if (!(arrayResultFiles instanceof ResultFile)) {
             return false;
         }
-        if (arrayResultFiles.getExtension().equalsIgnoreCase(extension)) {
-            return true;
+        if (extension != null) {
+            if (arrayResultFiles.getExtension().equalsIgnoreCase(extension)) {
+                return true;
+            }
+            return false;
         }
-        return false;
+        return true;
     }
 
     /**
@@ -324,7 +323,10 @@ public class SearchFiles {
      * @param sizeMeasure
      * @return
      */
-    private boolean searchSize(Asset arrayResultFiles, String sizeSign, String sizeRequired, String sizeMeasure) {
+    public boolean searchSize(Asset arrayResultFiles, String sizeSign, String sizeRequired, String sizeMeasure) {
+        if (sizeRequired == null) {
+            return true;
+        }
         double size = Double.parseDouble(sizeRequired);
         //System.out.println("sizeSign:" + sizeSign + ",sizeRequired:" + size + ",sizeMeasure:" + sizeMeasure);
         size = Converter.convertToBytes(size, sizeMeasure);
@@ -349,13 +351,10 @@ public class SearchFiles {
         return true;
     }
 
-    private boolean searchDate(Asset arrayResultFiles, boolean createDate, boolean modifiedDate, boolean accessedDate, String fromDate, String toDate) {
+    public boolean searchDate(Asset arrayResultFiles, boolean createDate, boolean modifiedDate, boolean accessedDate, String fromDate, String toDate) {
+        SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
         boolean dateInRange = true;
         if (createDate || modifiedDate ||accessedDate) {
-            if (arrayResultFiles instanceof ResultDirectory) {
-                return false;
-            }
-            SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
             try {
                 Date dateFromDate = formatDate.parse(fromDate);
                 Date dateToDate = formatDate.parse(toDate);
@@ -370,7 +369,6 @@ public class SearchFiles {
                 }
                 if (dateInRange && modifiedDate) {
                     dateInRange = false;
-                    System.out.println("date from:" + dateFromDate + "date modification:" + dateModification);
                     if (dateFromDate.compareTo(dateModification) <= 0 && dateToDate.compareTo(dateModification) >= 0) {
                         dateInRange = true;
                     }
@@ -388,13 +386,7 @@ public class SearchFiles {
         return dateInRange;
     }
 
-    /**
-     * Method to get file's content.
-     * @param fileEntry
-     * @param extension
-     * @return
-     */
-    private String getFileContent(Asset fileEntry, String extension) {
+    public String getFileContent(Asset fileEntry, String extension) {
         if (extension.equalsIgnoreCase("docx") && fileEntry.getSize() > 0L) {
 //            try {
 //                FileInputStream fis = new FileInputStream(fileEntry.getPath());
@@ -438,18 +430,14 @@ public class SearchFiles {
         return null;
     }
 
-    /**
-     * Method to search file's content.
-     * @param arrayResultFiles
-     * @param content
-     * @param contentCaseSensitive
-     * @return
-     */
-    private boolean searchContent(Asset arrayResultFiles, String content, boolean contentCaseSensitive) {
-        if (arrayResultFiles instanceof ResultDirectory) {
+    public boolean searchContent(Asset arrayResultFiles, String content, boolean contentCaseSensitive) {
+        if (!(arrayResultFiles instanceof ResultFile)) {
             return false;
         }
         String fileContent = getFileContent(arrayResultFiles, arrayResultFiles.getExtension());
+        if (content == null) {
+            return true;
+        }
         if (contentCaseSensitive) {
             if (fileContent != null && fileContent.toUpperCase().contains(content.toUpperCase())) {
                 return true;
@@ -459,8 +447,19 @@ public class SearchFiles {
                 return true;
             }
         }
+
         return false;
     }
+    /**
+     * method saveSearchCriteria
+     * @return a string with the json search criterial
+     */
+    public String saveSearchCriteria() {
+        Gson gson = new Gson();
+        String json = gson.toJson(searchCriteria);
+        System.out.println("JSON:" + json);
+        SearchQuery searchQuery = new SearchQuery();
 
-
+        return searchQuery.addCriteria(json);
+    }
 }

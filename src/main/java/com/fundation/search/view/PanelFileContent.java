@@ -17,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JCheckBox;
 
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.Dimension;
 
 /**
@@ -68,10 +70,35 @@ public class PanelFileContent extends JPanel {
         scrollPaneContent.setViewportView(textAreaContent);
         add(scrollPaneContent, new TableLayoutConstraints(0, 1, 2, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
+
+        //
+        textAreaContent.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String inputText = textAreaContent.getText();
+                if(inputText.length() > 0) {
+                    checkBoxCaseSensitive.setEnabled(true);
+                }
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String inputText = textAreaContent.getText();
+                if(inputText.length() == 0) {
+                    checkBoxCaseSensitive.setEnabled(false);
+                    checkBoxCaseSensitive.setSelected(false);
+                }
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+            }
+        });
         //---- checkBoxCaseSensitive ----
         checkBoxCaseSensitive.setText("No Case sensitive");
         add(checkBoxCaseSensitive, new TableLayoutConstraints(0, 2, 0, 2,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        checkBoxCaseSensitive.setEnabled(false);
+        checkBoxCaseSensitive.setSelected(false);
     }
     /**
      * Getter for the Case sensitive for the content.
