@@ -99,23 +99,29 @@ public class SearchFiles {
             if (matchesCriteria && !searchFilesOrDirectoriesOnly(results, searchCriteria.getTypeFile())) {
                 matchesCriteria = false;
             }
-            if (matchesCriteria && !searchOwner(results, searchCriteria.getOwner())) {
-                matchesCriteria = false;
+            if (searchCriteria.getOwner() != null) {
+                if (matchesCriteria && !searchOwner(results, searchCriteria.getOwner())) {
+                    matchesCriteria = false;
+                }
             }
-            if (results instanceof ResultFile) {
+            if (searchCriteria.getExtension() != null) {
                 if (matchesCriteria && !searchExtension(results, searchCriteria.getExtension())) {
                     matchesCriteria = false;
                 }
             }
-            if (matchesCriteria && !searchSize(results, searchCriteria.getSizeSign(), searchCriteria.getSizeRequired(), searchCriteria.getSizeMeasure())) {
-                matchesCriteria = false;
-            }
-            if (results instanceof ResultFile) {
-                if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
+            if (searchCriteria.getSizeRequired() != null) {
+                if (matchesCriteria && !searchSize(results, searchCriteria.getSizeSign(), searchCriteria.getSizeRequired(), searchCriteria.getSizeMeasure())) {
                     matchesCriteria = false;
                 }
             }
-            if (results instanceof ResultFile) {
+            if (searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate()) {
+                if (results instanceof ResultFile) {
+                    if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
+                        matchesCriteria = false;
+                    }
+                }
+            }
+            if (searchCriteria.getContent() != null) {
                 if (matchesCriteria && !searchContent(results, searchCriteria.getContent(), searchCriteria.getContentCaseSensitive())) {
                     matchesCriteria = false;
                 }
@@ -164,15 +170,14 @@ public class SearchFiles {
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(),
                         fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3,
                         owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                        null, 0L, null, null, null, null));
+                        null, 0L, null, null, null));
                 } else {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
-                    String content = getFileContent(fileEntry, extension);
 
                     arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(),
                         fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1,
                         owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                        extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, content));
+                        extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime));
                 }
             }
         } catch (NullPointerException e) {
@@ -306,6 +311,9 @@ public class SearchFiles {
      * @return
      */
     public boolean searchExtension(Asset arrayResultFiles, String extension) {
+        if (!(arrayResultFiles instanceof ResultFile)) {
+            return false;
+        }
         if (extension != null) {
             if (arrayResultFiles.getExtension().equalsIgnoreCase(extension)) {
                 return true;
@@ -386,8 +394,8 @@ public class SearchFiles {
         return dateInRange;
     }
 
-    public String getFileContent(File fileEntry, String extension) {
-        if (extension.equalsIgnoreCase("docx") && fileEntry.length() > 0L) {
+    public String getFileContent(Asset fileEntry, String extension) {
+        if (extension.equalsIgnoreCase("docx") && fileEntry.getSize() > 0L) {
             try {
                 FileInputStream fis = new FileInputStream(fileEntry.getPath());
                 XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(fis));
@@ -397,11 +405,11 @@ public class SearchFiles {
                 return null;
             }
         }
-        if (extension.equalsIgnoreCase("txt") && fileEntry.length() > 0L) {
+        if (extension.equalsIgnoreCase("txt") && fileEntry.getSize() > 0L) {
             Scanner in = null;
             String content = null;
             try {
-                in = new Scanner(new FileReader(fileEntry));
+                in = new Scanner(new FileReader(fileEntry.getPath()));
                 while(in.hasNextLine()) {
                     content = in.nextLine();
                 }
@@ -411,9 +419,9 @@ public class SearchFiles {
             }
             return content;
         }
-        if (extension.equalsIgnoreCase("pdf") && fileEntry.length() > 0L) {
+        if (extension.equalsIgnoreCase("pdf") && fileEntry.getSize() > 0L) {
             try {
-                PDDocument document = PDDocument.load(fileEntry);
+                PDDocument document = PDDocument.load(new File(fileEntry.getPath()));
                 document.getClass();
                 if (!document.isEncrypted()) {
                     PDFTextStripperByArea stripper = new PDFTextStripperByArea();
@@ -431,15 +439,19 @@ public class SearchFiles {
     }
 
     public boolean searchContent(Asset arrayResultFiles, String content, boolean contentCaseSensitive) {
+        if (!(arrayResultFiles instanceof ResultFile)) {
+            return false;
+        }
+        String fileContent = getFileContent(arrayResultFiles, arrayResultFiles.getExtension());
         if (content == null) {
             return true;
         }
         if (contentCaseSensitive) {
-            if (arrayResultFiles.getContent() != null && arrayResultFiles.getContent().toUpperCase().contains(content.toUpperCase())) {
+            if (fileContent != null && fileContent.toUpperCase().contains(content.toUpperCase())) {
                 return true;
             }
         } else {
-            if (arrayResultFiles.getContent() != null && arrayResultFiles.getContent().contains(content)) {
+            if (fileContent != null && fileContent.contains(content)) {
                 return true;
             }
         }
