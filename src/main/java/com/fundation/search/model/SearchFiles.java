@@ -178,7 +178,7 @@ public class SearchFiles {
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            null, 0L, null, null, null, null, null, null, 0.0, 0, null));
+                            null, 0L, null, null, null, null, null, 0.0, 0, null));
                 }
                 if (!isMultimedia(fileEntry)) {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
@@ -186,7 +186,7 @@ public class SearchFiles {
                     arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, content, null, null, 0.0, 0, null));
+                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, null, null, 0.0, 0, null));
 
                 } else {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
@@ -197,7 +197,7 @@ public class SearchFiles {
                     arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), duration, !fileEntry.canWrite(), 1,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, null, multimediaInfo.getAudio().getDecoder(), multimediaInfo.getVideo().getDecoder(), multimediaInfo.getVideo().getFrameRate(), multimediaInfo.getAudio().getBitRate(), videoSize));
+                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, multimediaInfo.getAudio().getDecoder(), multimediaInfo.getVideo().getDecoder(), multimediaInfo.getVideo().getFrameRate(), multimediaInfo.getAudio().getBitRate(), videoSize));
                 }
             }
         } catch (NullPointerException e) {
@@ -438,7 +438,7 @@ public class SearchFiles {
             Scanner in = null;
             String content = null;
             try {
-                in = new Scanner(new FileReader(fileEntry));
+                in = new Scanner(new FileReader(fileEntry.getFileName()));
                 while (in.hasNextLine()) {
                     content = in.nextLine();
                 }
@@ -466,6 +466,7 @@ public class SearchFiles {
         return null;
     }
 
+
     public boolean searchContent(Asset arrayResultFiles, String content, boolean contentCaseSensitive) {
         if (!(arrayResultFiles instanceof ResultFile)) {
             return false;
@@ -487,11 +488,26 @@ public class SearchFiles {
         return false;
     }
 
+    public boolean searchVideoCodec(Asset arrayResultFiles, String codec) {
+        if (!(arrayResultFiles instanceof ResultMultimediaFile)) {
+            return false;
+        }
+        if (codec != null) {
+            if (((ResultMultimediaFile) arrayResultFiles).getCodecVideo().contains(codec)) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+
     /**
      * method saveSearchCriteria
      *
      * @return a string with the json search criterial
      */
+
     public String saveSearchCriteria() {
         Gson gson = new Gson();
         String json = gson.toJson(searchCriteria);

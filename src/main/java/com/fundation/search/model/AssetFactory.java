@@ -27,12 +27,12 @@ public class AssetFactory {
      * @param videoSize
      * @return the method return the object instanced.
      */
-    public Asset getAsset(String assetType, String path, String fileName, boolean hidden, double duration, boolean readOnly, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime, String content, String codecAudio, String codecVideo, double frameRate, int audioBitRate, String videoSize) {
+    public Asset getAsset(String assetType, String path, String fileName, boolean hidden, double duration, boolean readOnly, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime, String codecAudio, String codecVideo, double frameRate, int audioBitRate, String videoSize) {
         if (assetType == null) {
             return null;
         }
         if (assetType.equalsIgnoreCase("file")) {
-            return new ResultFile(path, fileName, hidden, readOnly, typeFile, owner, extension, size, creationTime, lastModifiedTime, lastAccessTime, content);
+            return new ResultFile(path, fileName, hidden, readOnly, typeFile, owner, extension, size, creationTime, lastModifiedTime, lastAccessTime);
         }
         if (assetType.equalsIgnoreCase("multimedia")) {
             return new ResultMultimediaFile(path, fileName, hidden, duration, typeFile, owner, extension, size, creationTime, lastModifiedTime, lastAccessTime, codecAudio, codecVideo, frameRate, audioBitRate, videoSize);
