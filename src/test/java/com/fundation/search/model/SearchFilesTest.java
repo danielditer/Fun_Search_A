@@ -88,7 +88,6 @@ public class SearchFilesTest {
      * Test search by file name and if it is case sensitive or not.
      * @throws Exception
      */
-<<<<<<< HEAD
     @Test
     public void testModelSearchFile() throws Exception {
         searchCriteria.setName("test1.txt");
