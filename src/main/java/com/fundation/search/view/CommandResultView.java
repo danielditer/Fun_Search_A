@@ -65,4 +65,12 @@ public class CommandResultView {
             }
         }
     }
+    /*
+     * method displayResult tp display an error message
+     * @param result that contains the error message
+     **/
+    public void displayResult(String result){
+        System.out.println(result);
+    }
+
 }

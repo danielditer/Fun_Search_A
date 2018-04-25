@@ -92,7 +92,7 @@ public class Validator {
      */
     public boolean isAValidPath(String path) {
         String[] file = path.split(":");
-
+System.out.println(path);
         if (path.isEmpty()) {
             return false;
         }
