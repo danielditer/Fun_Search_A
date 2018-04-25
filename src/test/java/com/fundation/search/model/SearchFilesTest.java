@@ -83,8 +83,12 @@ public class SearchFilesTest {
         }
     }
 
+    /**
+     * Test search by file name and if it is case sensitive or not.
+     * @throws Exception
+     */
     @Test
-    public void testModelSearchFile() throws Exception{
+    public void testModelSearchFile() throws Exception {
         searchCriteria.setName("test1.txt");
         searchFiles.setSearchCriteria(searchCriteria);
         AssetFactory assetFactory = new AssetFactory();
@@ -92,7 +96,7 @@ public class SearchFilesTest {
         assertTrue(Whitebox.invokeMethod(searchFiles, "searchFile", expected, searchCriteria.getNameFileCaseSensitive()));
     }
     @Test
-    public void testModelSearchFileNoCaseSensitive() throws Exception{
+    public void testModelSearchFileNoCaseSensitive() throws Exception {
         searchCriteria.setName("TEST1.txt");
         searchCriteria.setNameFileCaseSensitive(false);
         searchFiles.setSearchCriteria(searchCriteria);
@@ -100,9 +104,8 @@ public class SearchFilesTest {
         Asset expected = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", false, 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
         assertTrue(Whitebox.invokeMethod(searchFiles, "searchFile", expected, searchCriteria.getNameFileCaseSensitive()));
     }
-
     @Test
-    public void testModelSearchFileCaseSensitiveNotMatches() throws Exception{
+    public void testModelSearchFileCaseSensitiveNotMatches() throws Exception {
         searchCriteria.setName("TEST1.txt");
         searchCriteria.setNameFileCaseSensitive(true);
         searchFiles.setSearchCriteria(searchCriteria);
@@ -110,9 +113,8 @@ public class SearchFilesTest {
         Asset expected = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", false, 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
         assertFalse(Whitebox.invokeMethod(searchFiles, "searchFile", expected, searchCriteria.getNameFileCaseSensitive()));
     }
-
     @Test
-    public void testModelSearchFileCaseSensitiveMatches() throws Exception{
+    public void testModelSearchFileCaseSensitiveMatches() throws Exception {
         searchCriteria.setName("test1.txt");
         searchCriteria.setNameFileCaseSensitive(true);
         searchFiles.setSearchCriteria(searchCriteria);
@@ -120,4 +122,183 @@ public class SearchFilesTest {
         Asset expected = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", false, 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
         assertTrue(Whitebox.invokeMethod(searchFiles, "searchFile", expected, searchCriteria.getNameFileCaseSensitive()));
     }
+
+
+    /**
+     * Test hidden files if it is not set in search criteria, the file should pass.
+     * @throws Exception
+     */
+    @Test
+    public void testModelSearchHiddenFilesNotSetSearchCriteria() throws Exception {
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1.txt", false, 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        Asset expectedFile2 = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test5.docx", "test1.txt", false, 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchHiddenFiles", expectedFile, searchCriteria.getHidden()));
+    }
+    /**
+     * Test hidden files if it is set in search criteria with 1 -> hidden, the files should pass.
+     * @throws Exception
+     */
+    @Test
+    public void testModelSearchHiddenFilesOnlyHidden() throws Exception {
+        searchCriteria.setHidden("1");
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt");
+        File expected2 = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\test5.docx");
+        Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1.txt", expected.isHidden(), 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        Asset expectedFile2 = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test5.docx", "test1.txt", expected2.isHidden(), 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchHiddenFiles", expectedFile, searchCriteria.getHidden()));
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchHiddenFiles", expectedFile2, searchCriteria.getHidden()));
+    }
+    /**
+     * Test hidden files if it is set in search criteria with 1 -> hidden, the files should not pass.
+     * @throws Exception
+     */
+    @Test
+    public void testModelSearchHiddenNoHiddenFilesOnlyHidden() throws Exception {
+        searchCriteria.setHidden("1");
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test2-1.docx");
+        File expected2 = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\test3.xlsx");
+        Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test2-1.docx", "test1.txt", expected.isHidden(), 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        Asset expectedFile2 = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test3.xlsx", "test1.txt", expected2.isHidden(), 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertFalse(Whitebox.invokeMethod(searchFiles, "searchHiddenFiles", expectedFile, searchCriteria.getHidden()));
+        assertFalse(Whitebox.invokeMethod(searchFiles, "searchHiddenFiles", expectedFile2, searchCriteria.getHidden()));
+    }
+    /**
+     * Test hidden files if it is set in search criteria with 2 -> no hidden, the files should not pass.
+     * @throws Exception
+     */
+    @Test
+    public void testModelSearchHiddenFilesNotHidden() throws Exception {
+        searchCriteria.setHidden("2");
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt");
+        File expected2 = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\test5.docx");
+        Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1.txt", expected.isHidden(), 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        Asset expectedFile2 = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test5.docx", "test1.txt", expected2.isHidden(), 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertFalse(Whitebox.invokeMethod(searchFiles, "searchHiddenFiles", expectedFile, searchCriteria.getHidden()));
+        assertFalse(Whitebox.invokeMethod(searchFiles, "searchHiddenFiles", expectedFile2, searchCriteria.getHidden()));
+    }
+    /**
+     * Test hidden files if it is set in search criteria with 2 -> no hidden, the files should pass.
+     * @throws Exception
+     */
+    @Test
+    public void testModelSearchHiddenNoHiddenFilesNotHidden() throws Exception {
+        searchCriteria.setHidden("2");
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test2-1.docx");
+        File expected2 = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt");
+        Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test2-1.docx", "test1.txt", expected.isHidden(), 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        Asset expectedFile2 = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", expected2.isHidden(), 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchHiddenFiles", expectedFile, searchCriteria.getHidden()));
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchHiddenFiles", expectedFile2, searchCriteria.getHidden()));
+    }
+    /**
+     * Test hidden files if it is set in search criteria with 3 -> all files, the files should pass.
+     * @throws Exception
+     */
+    @Test
+    public void testModelSearchHiddenAllFiles() throws Exception {
+        searchCriteria.setHidden("3");
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt");
+        File expected2 = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt");
+        Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1.txt", expected.isHidden(), 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        Asset expectedFile2 = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", expected2.isHidden(), 0.0, false, 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchHiddenFiles", expectedFile, searchCriteria.getHidden()));
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchHiddenFiles", expectedFile2, searchCriteria.getHidden()));
+    }
+
+
+
+
+    /**
+     * Test read only files if it is set in search criteria with 1 -> read only files, the files should pass.
+     * @throws Exception
+     */
+    @Test
+    public void testModelSearchReadOnlyFiles() throws Exception {
+        searchCriteria.setReadOnly("1");
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test3-1.xlsx");
+        File expected2 = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\test5.docx");
+        Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1.txt", expected.isHidden(), 0.0, !expected.canWrite(), 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        Asset expectedFile2 = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", expected2.isHidden(), 0.0, !expected2.canWrite(), 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchReadOnlyFiles", expectedFile, searchCriteria.getReadOnly()));
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchReadOnlyFiles", expectedFile2, searchCriteria.getReadOnly()));
+    }
+    /**
+     * Test read only files if it is set in search criteria with 1 -> read only files, the files should not pass.
+     * @throws Exception
+     */
+    @Test
+    public void testModelSearchReadOnlyFilesNoReadOnly() throws Exception {
+        searchCriteria.setReadOnly("1");
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test2-1.docx");
+        File expected2 = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt");
+        Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1.txt", expected.isHidden(), 0.0, !expected.canWrite(), 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        Asset expectedFile2 = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", expected2.isHidden(), 0.0, !expected2.canWrite(), 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertFalse(Whitebox.invokeMethod(searchFiles, "searchReadOnlyFiles", expectedFile, searchCriteria.getReadOnly()));
+        assertFalse(Whitebox.invokeMethod(searchFiles, "searchReadOnlyFiles", expectedFile2, searchCriteria.getReadOnly()));
+    }
+    /**
+     * Test read only files if it is set in search criteria with 2 -> read only files, the files should pass.
+     * @throws Exception
+     */
+    @Test
+    public void testModelSearchReadOnlyFilesNoReadOnlyPass() throws Exception {
+        searchCriteria.setReadOnly("2");
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt");
+        File expected2 = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\test2.docx");
+        Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1.txt", expected.isHidden(), 0.0, !expected.canWrite(), 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        Asset expectedFile2 = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", expected2.isHidden(), 0.0, !expected2.canWrite(), 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchReadOnlyFiles", expectedFile, searchCriteria.getReadOnly()));
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchReadOnlyFiles", expectedFile2, searchCriteria.getReadOnly()));
+    }
+    /**
+     * Test read only files if it is set in search criteria with 2 -> read only files, the files should not pass.
+     * @throws Exception
+     */
+    @Test
+    public void testModelSearchReadOnlyFilesNoReadOnlyNotPass() throws Exception {
+        searchCriteria.setReadOnly("2");
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test3-1.xlsx");
+        File expected2 = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\test5.docx");
+        Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1.txt", expected.isHidden(), 0.0, !expected.canWrite(), 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        Asset expectedFile2 = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", expected2.isHidden(), 0.0, !expected2.canWrite(), 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertFalse(Whitebox.invokeMethod(searchFiles, "searchReadOnlyFiles", expectedFile, searchCriteria.getReadOnly()));
+        assertFalse(Whitebox.invokeMethod(searchFiles, "searchReadOnlyFiles", expectedFile2, searchCriteria.getReadOnly()));
+    }
+    /**
+     * Test read only files if it is set in search criteria with 3 -> all files, the files should pass.
+     * @throws Exception
+     */
+    @Test
+    public void testModelSearchReadOnlyFilesAll() throws Exception {
+        searchCriteria.setReadOnly("3");
+        searchFiles.setSearchCriteria(searchCriteria);
+        AssetFactory assetFactory = new AssetFactory();
+        File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt");
+        File expected2 = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\test5.docx");
+        Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\New folder\\test1-1.txt", "test1.txt", expected.isHidden(), 0.0, !expected.canWrite(), 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        Asset expectedFile2 = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test1.txt", "test1.txt", expected2.isHidden(), 0.0, !expected2.canWrite(), 1, "Administrator", "txt", 1L, "04-10-2018", "04-20-2018", "04-23-2018");
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchReadOnlyFiles", expectedFile, searchCriteria.getReadOnly()));
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchReadOnlyFiles", expectedFile2, searchCriteria.getReadOnly()));
+    }
 }
+
