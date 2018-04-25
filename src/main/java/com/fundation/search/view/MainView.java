@@ -9,7 +9,13 @@ package com.fundation.search.view;
 import java.awt.Dimension;
 import java.awt.Container;
 import java.awt.BorderLayout;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JTabbedPane;
+import javax.swing.JPanel;
+import javax.swing.JMenu;
+import javax.swing.JOptionPane;
+
 import javax.swing.border.EmptyBorder;
 
 import info.clearthought.layout.TableLayout;
@@ -22,17 +28,15 @@ import net.miginfocom.swing.MigLayout;
  */
 public class MainView extends JFrame {
     private JMenuBar menuBar;
-    private JMenu menuFile;
-    private JMenu menuEdit;
-    private JMenu menuView;
+
     private JMenu menuHelp;
     private JTabbedPane tabbedPane;
     private JPanel panelMultimediaSearch;
-    private JPanel panelTerminalSearch;
+
     private JPanel panelResults;
     private JPanel panelSearchCrit;
     private JPanel panelSaveCrit;
-    //private JPanel panelTabbedPane;
+
     private PanelNormalSearch panelNormalSearch;
     private PanelSearchResults panelSearchResult;
     private PanelSearchCriterial panelSearchCriterial;
@@ -49,9 +53,6 @@ public class MainView extends JFrame {
      */
     protected void initComponents() {
         menuBar = new JMenuBar();
-        menuFile = new JMenu();
-        menuEdit = new JMenu();
-        menuView = new JMenu();
         menuHelp = new JMenu();
         tabbedPane = new JTabbedPane();
         panelNormalSearch = new PanelNormalSearch();
