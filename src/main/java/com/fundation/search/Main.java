@@ -13,6 +13,8 @@ import com.fundation.search.model.SearchFiles;
 import com.fundation.search.view.CommandResultView;
 import com.fundation.search.view.MainView;
 
+import java.io.IOException;
+
 /**
  * Main class to run project.
  * @version
@@ -23,7 +25,7 @@ public class Main {
      * Method main to run project.
      * @param args, commands as an input to search files
      */
-    public static void main (String[] args) {
+    public static void main (String[] args) throws IOException {
         Controller controller;
         SearchFiles searchFile = new SearchFiles();
         //LoggerCreator.getInstance().info(searchFile.getClass().getName(), "Started Searchfiles");

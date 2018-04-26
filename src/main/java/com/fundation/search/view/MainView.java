@@ -10,8 +10,9 @@ import java.awt.Dimension;
 import java.awt.Container;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 import javax.swing.JTabbedPane;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
@@ -31,7 +32,7 @@ public class MainView extends JFrame {
 
     private JMenu menuHelp;
     private JTabbedPane tabbedPane;
-    private JPanel panelMultimediaSearch;
+    private PanelMultimediaSearch panelMultimediaSearch;
 
     private JPanel panelResults;
     private JPanel panelSearchCrit;
@@ -148,5 +149,9 @@ public class MainView extends JFrame {
     **/
     public void displayResult(String result){
         JOptionPane.showMessageDialog(null, result, "Message", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public PanelMultimediaSearch getPanelMultimediaSearch() {
+        return panelMultimediaSearch;
     }
 }

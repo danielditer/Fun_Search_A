@@ -32,6 +32,7 @@ public class Asset {
     /**Size of file*/
     private long size;
 
+
     /**
      * Constructor.
      * @param path the path of file.

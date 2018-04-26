@@ -36,6 +36,10 @@ dependencies {
     compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.6'
 
     compile group: 'org.powermock', name: 'powermock-reflect', version: '1.6.1'
+
+    // https://mvnrepository.com/artifact/net.bramp.ffmpeg/ffmpeg
+    compile group: 'net.bramp.ffmpeg', name: 'ffmpeg', version: '0.6.2'
+
 }
 
 // Checkstyle configuration
