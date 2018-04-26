@@ -9,10 +9,9 @@ package com.fundation.search.model;
 import com.fundation.search.common.Converter;
 import com.fundation.search.common.SearchQuery;
 import com.google.gson.Gson;
-import it.sauronsoftware.jave.Encoder;
-import it.sauronsoftware.jave.EncoderException;
-import it.sauronsoftware.jave.InputFormatException;
-import it.sauronsoftware.jave.MultimediaInfo;
+import net.bramp.ffmpeg.FFprobe;
+import net.bramp.ffmpeg.probe.FFmpegStream;
+import org.apache.commons.lang3.math.Fraction;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
@@ -67,6 +66,11 @@ public class SearchFiles {
      * Object to create asset objects (files, multimedia, directory).
      */
     private AssetFactory assetFactory;
+
+    FFprobe fFprobe = new FFprobe("C:\\FFMPEG\\bin\\ffprobe.exe");
+
+    public SearchFiles() throws IOException {
+    }
 
     /**
      * Method to set searchCriteria attribute.
@@ -178,7 +182,7 @@ public class SearchFiles {
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            null, 0L, null, null, null, null, null, 0.0, 0, null));
+                            null, 0L, null, null, null, null, 0.0, 0, null, null));
                 }
                 if (!isMultimedia(fileEntry)) {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
@@ -186,27 +190,22 @@ public class SearchFiles {
                     arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, null, null, 0.0, 0, null));
+                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, null, 0.0, 0, null,null));
 
                 } else {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
-                    Encoder encoder = new Encoder();
-                    MultimediaInfo multimediaInfo = encoder.getInfo(fileEntry);
-                    double duration = multimediaInfo.getDuration() / 1000;
-                    String videoSize = multimediaInfo.getVideo().getSize().getWidth() + "x" + multimediaInfo.getVideo().getSize().getHeight();
+                    FFmpegStream multimediaFile = fFprobe.probe(fileEntry.getPath()).getStreams().get(0);
+                    double duration = multimediaFile.duration;
+                    String videoSize = multimediaFile.width + "x" + multimediaFile.height;
                     arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), duration, !fileEntry.canWrite(), 1,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, multimediaInfo.getAudio().getDecoder(), multimediaInfo.getVideo().getDecoder(), multimediaInfo.getVideo().getFrameRate(), multimediaInfo.getAudio().getBitRate(), videoSize));
+                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, multimediaFile.codec_name,getFrameRate(multimediaFile.r_frame_rate), (int) multimediaFile.bit_rate/1000, videoSize, multimediaFile.display_aspect_ratio));
                 }
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InputFormatException e) {
-            e.printStackTrace();
-        } catch (EncoderException e) {
             e.printStackTrace();
         }
         return arrayResultFiles;
@@ -488,20 +487,6 @@ public class SearchFiles {
         return false;
     }
 
-    public boolean searchVideoCodec(Asset arrayResultFiles, String codec) {
-        if (!(arrayResultFiles instanceof ResultMultimediaFile)) {
-            return false;
-        }
-        if (codec != null) {
-            if (((ResultMultimediaFile) arrayResultFiles).getCodecVideo().contains(codec)) {
-                return true;
-            }
-            return false;
-        }
-        return false;
-    }
-
-
     /**
      * method saveSearchCriteria
      *
@@ -525,7 +510,7 @@ public class SearchFiles {
         return false;
     }
 
-    public boolean searchAudioCodec() {
-        return false;
+    public double getFrameRate(Fraction fraction){
+        return fraction.doubleValue();
     }
 }
