@@ -11,7 +11,7 @@ package com.fundation.search.model;
  *
  * @version 27 Mar 2018  * @Juan Manuel
  */
-public class SearchCriteria {
+public class SearchCriteria extends AbstractSearchCriteria{
     private String searchCriteriaName;
 
     /**
@@ -92,6 +92,7 @@ public class SearchCriteria {
      *
      * @param searchCriteriaName
      */
+    @Override
     public void setSearchCriteriaName(String searchCriteriaName) {
         this.searchCriteriaName = searchCriteriaName;
     }
@@ -101,6 +102,7 @@ public class SearchCriteria {
      *
      * @param name, is the file name the user is searching.
      */
+    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -110,6 +112,7 @@ public class SearchCriteria {
      *
      * @param path, is the path where the user is searching a file.
      */
+    @Override
     public void setPath(String path) {
         this.path = path;
     }
@@ -119,6 +122,7 @@ public class SearchCriteria {
      *
      * @param hidden
      */
+    @Override
     public void setHidden(String hidden) {
         this.hidden = hidden;
     }
@@ -128,6 +132,7 @@ public class SearchCriteria {
      *
      * @param readOnly boolean attribute;
      */
+    @Override
     public void setReadOnly(String readOnly) {
         this.readOnly = readOnly;
     }
@@ -137,6 +142,7 @@ public class SearchCriteria {
      *
      * @param setTypeFile 1, 2, 3, 0 to know if search is file, multimedia, directory or all of them.
      */
+    @Override
     public void setTypeFile(int setTypeFile) {
         this.typeFile = setTypeFile;
     }
@@ -146,6 +152,7 @@ public class SearchCriteria {
      *
      * @param nameFileCaseSensitive true for case sensitive search.
      */
+    @Override
     public void setNameFileCaseSensitive(boolean nameFileCaseSensitive) {
         this.nameFileCaseSensitive = nameFileCaseSensitive;
     }
@@ -155,6 +162,7 @@ public class SearchCriteria {
      *
      * @param owner input from UI.
      */
+    @Override
     public void setOwner(String owner) {
         this.owner = owner;
     }
@@ -164,6 +172,7 @@ public class SearchCriteria {
      *
      * @param extension input from UI.
      */
+    @Override
     public void setExtension(String extension) {
         this.extension = extension;
     }
@@ -173,6 +182,7 @@ public class SearchCriteria {
      *
      * @param sizeSign input from UI.
      */
+    @Override
     public void setSizeSign(String sizeSign) {
         this.sizeSign = sizeSign;
     }
@@ -182,6 +192,7 @@ public class SearchCriteria {
      *
      * @param sizeRequired
      */
+    @Override
     public void setSizeRequired(String sizeRequired) {
         this.sizeRequired = sizeRequired;
     }
@@ -191,6 +202,7 @@ public class SearchCriteria {
      *
      * @param sizeMeasure
      */
+    @Override
     public void setSizeMeasure(String sizeMeasure) {
         this.sizeMeasure = sizeMeasure;
     }
@@ -200,6 +212,7 @@ public class SearchCriteria {
      *
      * @param createDate
      */
+    @Override
     public void setCreateDate(boolean createDate) {
         this.createDate = createDate;
     }
@@ -209,6 +222,7 @@ public class SearchCriteria {
      *
      * @param modifiedDate
      */
+    @Override
     public void setModifiedDate(boolean modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
@@ -218,6 +232,7 @@ public class SearchCriteria {
      *
      * @param accessedDate
      */
+    @Override
     public void setAccessedDate(boolean accessedDate) {
         this.accessedDate = accessedDate;
     }
@@ -227,6 +242,7 @@ public class SearchCriteria {
      *
      * @param fromDate
      */
+    @Override
     public void setFromDate(String fromDate) {
         this.fromDate = fromDate;
     }
@@ -236,6 +252,7 @@ public class SearchCriteria {
      *
      * @param toDate
      */
+    @Override
     public void setToDate(String toDate) {
         this.toDate = toDate;
     }
@@ -245,6 +262,7 @@ public class SearchCriteria {
      *
      * @param content
      */
+    @Override
     public void setContent(String content) {
         this.content = content;
     }
@@ -254,6 +272,7 @@ public class SearchCriteria {
      *
      * @param contentCaseSensitive
      */
+    @Override
     public void setContentCaseSensitive(boolean contentCaseSensitive) {
         this.contentCaseSensitive = contentCaseSensitive;
     }
@@ -263,6 +282,7 @@ public class SearchCriteria {
      *
      * @return
      */
+    @Override
     public String getSearchCriteriaName() {
         return this.searchCriteriaName;
     }
@@ -272,6 +292,7 @@ public class SearchCriteria {
      *
      * @return name, is the file name set in previous method.
      */
+    @Override
     public String getName() {
         return this.name;
     }
@@ -281,6 +302,7 @@ public class SearchCriteria {
      *
      * @return path, is the path set in previous method.
      */
+    @Override
     public String getPath() {
         return this.path;
     }
@@ -290,6 +312,7 @@ public class SearchCriteria {
      *
      * @return hidden attribute.
      */
+    @Override
     public String getHidden() {
         return this.hidden;
     }
@@ -297,6 +320,7 @@ public class SearchCriteria {
     /**
      * Getter for readonly attribute
      */
+    @Override
     public String getReadOnly() {
         return this.readOnly;
     }
@@ -306,6 +330,7 @@ public class SearchCriteria {
      *
      * @return type file attribute.
      */
+    @Override
     public int getTypeFile() {
         return this.typeFile;
     }
@@ -315,6 +340,7 @@ public class SearchCriteria {
      *
      * @return name file case sensitive.
      */
+    @Override
     public boolean getNameFileCaseSensitive() {
         return this.nameFileCaseSensitive;
     }
@@ -324,6 +350,7 @@ public class SearchCriteria {
      *
      * @return owner attribute.
      */
+    @Override
     public String getOwner() {
         return this.owner;
     }
@@ -333,6 +360,7 @@ public class SearchCriteria {
      *
      * @return extesntion attribute.
      */
+    @Override
     public String getExtension() {
         return this.extension;
     }
@@ -342,6 +370,7 @@ public class SearchCriteria {
      *
      * @return size sign.
      */
+    @Override
     public String getSizeSign() {
         return this.sizeSign;
     }
@@ -351,6 +380,7 @@ public class SearchCriteria {
      *
      * @return
      */
+    @Override
     public String getSizeRequired() {
         return this.sizeRequired;
     }
@@ -360,6 +390,7 @@ public class SearchCriteria {
      *
      * @return
      */
+    @Override
     public String getSizeMeasure() {
         return this.sizeMeasure;
     }
@@ -369,6 +400,7 @@ public class SearchCriteria {
      *
      * @return
      */
+    @Override
     public boolean getCreatedDate() {
         return this.createDate;
     }
@@ -378,6 +410,7 @@ public class SearchCriteria {
      *
      * @return
      */
+    @Override
     public boolean getModifiedDate() {
         return this.modifiedDate;
     }
@@ -387,6 +420,7 @@ public class SearchCriteria {
      *
      * @return
      */
+    @Override
     public boolean getAccessedDate() {
         return this.accessedDate;
     }
@@ -396,6 +430,7 @@ public class SearchCriteria {
      *
      * @return creationTime
      */
+    @Override
     public String getFromDate() {
         return this.fromDate;
     }
@@ -405,6 +440,7 @@ public class SearchCriteria {
      *
      * @return lastModifiedTime.
      */
+    @Override
     public String getToDate() {
         return this.toDate;
     }
@@ -414,6 +450,7 @@ public class SearchCriteria {
      *
      * @return
      */
+    @Override
     public String getContent() {
         return this.content;
     }
@@ -423,7 +460,98 @@ public class SearchCriteria {
      *
      * @return
      */
+    @Override
     public boolean getContentCaseSensitive() {
         return this.contentCaseSensitive;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    private String codec;
+    private String frameRate;
+    private int bitRate;
+    private String videoSize;
+    private String aspectRatio;
+    private double minorDuration;
+    private double majorDuration;
+
+    @Override
+    public String getCodec() {
+        return codec;
+    }
+
+    @Override
+    public void setCodec(String codec) {
+        this.codec = codec;
+    }
+
+    @Override
+    public String getFrameRate() {
+        return frameRate;
+    }
+
+    @Override
+    public void setFrameRate(String frameRate) {
+        this.frameRate = frameRate;
+    }
+
+    @Override
+    public int getBitRate() {
+        return bitRate;
+    }
+
+    @Override
+    public void setBitRate(int bitRate) {
+        this.bitRate = bitRate;
+    }
+
+    @Override
+    public String getVideoSize() {
+        return videoSize;
+    }
+
+    @Override
+    public void setVideoSize(String videoSize) {
+        this.videoSize = videoSize;
+    }
+
+    @Override
+    public String getAspectRatio() {
+        return aspectRatio;
+    }
+
+    @Override
+    public void setAspectRatio(String aspectRatio) {
+        this.aspectRatio = aspectRatio;
+    }
+
+    @Override
+    public double getMinorDuration() {
+        return minorDuration;
+    }
+
+    @Override
+    public void setMinorDuration(double minorDuration) {
+        this.minorDuration = minorDuration;
+    }
+
+    @Override
+    public double getMajorDuration() {
+        return majorDuration;
+    }
+
+    @Override
+    public void setMajorDuration(double majorDuration) {
+        this.majorDuration = majorDuration;
+    }
+
 }

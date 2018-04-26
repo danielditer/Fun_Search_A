@@ -11,7 +11,7 @@ package com.fundation.search.model;
  *
  * @version 27 Mar 2018  * @Juan Manuel
  */
-public class SearchCriteriaMultimedia {
+public class SearchCriteriaMultimedia extends AbstractSearchCriteria {
     private String searchCriteriaName;
 
     /**
@@ -87,64 +87,78 @@ public class SearchCriteriaMultimedia {
      */
     private boolean contentCaseSensitive;
 
+    @Override
     public String getCodec() {
         return codec;
     }
 
+    @Override
     public void setCodec(String codec) {
         this.codec = codec;
     }
 
-    public double getFrameRate() {
+    @Override
+    public String getFrameRate() {
         return frameRate;
     }
 
-    public void setFrameRate(double frameRate) {
+    @Override
+    public void setFrameRate(String frameRate) {
         this.frameRate = frameRate;
     }
 
+    @Override
     public int getBitRate() {
         return bitRate;
     }
 
+    @Override
     public void setBitRate(int bitRate) {
         this.bitRate = bitRate;
     }
 
+    @Override
     public String getVideoSize() {
         return videoSize;
     }
 
+    @Override
     public void setVideoSize(String videoSize) {
         this.videoSize = videoSize;
     }
 
+    @Override
     public String getAspectRatio() {
         return aspectRatio;
     }
 
+    @Override
     public void setAspectRatio(String aspectRatio) {
         this.aspectRatio = aspectRatio;
     }
 
     private String codec;
-    private double frameRate;
+    private String frameRate;
     private int bitRate;
     private String videoSize;
     private String aspectRatio;
 
+    @Override
     public double getMinorDuration() {
         return minorDuration;
     }
 
+    @Override
     public void setMinorDuration(double minorDuration) {
         this.minorDuration = minorDuration;
     }
 
+    @Override
     public double getMajorDuration() {
         return majorDuration;
     }
 
+    @Override
     public void setMajorDuration(double majorDuration) {
         this.majorDuration = majorDuration;
     }
@@ -158,6 +172,7 @@ public class SearchCriteriaMultimedia {
      *
      * @param searchCriteriaName
      */
+    @Override
     public void setSearchCriteriaName(String searchCriteriaName) {
         this.searchCriteriaName = searchCriteriaName;
     }

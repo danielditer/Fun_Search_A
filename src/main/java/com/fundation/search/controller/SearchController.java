@@ -60,6 +60,8 @@ public class SearchController implements Controller {
         loadActionPerformed();
         selectActionPerformed();
         clearActionPerformed();
+
+        searchMultimediaActionPerformed();
     }
 
     /**
@@ -68,6 +70,13 @@ public class SearchController implements Controller {
     public void getActionPerformed() {
         PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
         panel.getButtonSearch().addActionListener(e -> searchButtonActionListener(panel));
+    }
+    /**
+     * Method to get values from button search in the tab Multimedia.
+     */
+    public void searchMultimediaActionPerformed() {
+        PanelMultimediaSearch panel = mainView.getPanelMultimediaSearch();
+        panel.getSearchMultimediaButton().addActionListener(e -> searchButtonMultimediaActionListener(panel));
     }
 
     /**
@@ -106,27 +115,9 @@ public class SearchController implements Controller {
     }
 
     public void searchButtonMultimediaActionListener(PanelMultimediaSearch panel) {
-        String typeFileString = panel.getRadioAllFiles();
-        int typeFile = Integer.parseInt(typeFileString);
-        /*if (panel.getCheckBoxOnlyFiles() && panel.getCheckBoxOnlyDirectory()) {
-            typeFile = 0;
-        } else if (panel.getCheckBoxOnlyFiles()) {
-            typeFile = 1;
-        } else if (panel.getCheckBoxOnlyDirectory()) {
-            typeFile = 3;
-        }*/
-        if (areValidParams(panel.getPath(), panel.getName(), panel.getFormattedTextFieldStart(), panel.getFormattedTextFieldEnd(), panel.getCheckBoxCreated(), panel.getCheckBoxModified(), panel.getCheckBoxAccessed(), panel.getTextFieldSize())) {
-            sendSearchCriteriaToModel(panel.getPath(), panel.getName(), panel.getCheckBoxHidden(), panel.getCheckBoxReadOnly(),
-                    typeFile, panel.getCaseSensitiveName(), panel.getTextFieldOwner(), panel.getTextFieldExt(),
-                    panel.getComboBoxSize(), panel.getTextFieldSize(), panel.getComboBoxType(),
-                    panel.getCheckBoxCreated(), panel.getCheckBoxModified(), panel.getCheckBoxAccessed(),
-                    panel.getFormattedTextFieldStart(), panel.getFormattedTextFieldEnd(), panel.getContent(),
-                    panel.getCaseSensitiveContent());
+        if (areValidMultimediaParams(panel.getPath(), panel.getName())) {
+            sendSearchCriteriaMultimediaToModel(panel.getPath(), panel.getName(), panel.getCaseSensitiveName(), panel.getCodec(), panel.getResolution(), panel.getFrameRate());
         }
-    }
-
-    public void areValidMultimediaParams() {
-
     }
 
     /**
@@ -262,7 +253,7 @@ public class SearchController implements Controller {
         return true;
     }
 
-    public boolean areValidMultimediaParams(String path, String name, double minorDuration, double majorDuration) {
+    public boolean areValidMultimediaParams(String path, String name) {
         Validator validator = new Validator();
         if (!validator.isAValidPath(path)) {
             mainView.displayResult("Invalid Path Name");
@@ -272,7 +263,7 @@ public class SearchController implements Controller {
             mainView.displayResult("Invalid File Name");
             return false;
         }
-        if (minorDuration == majorDuration) {
+        /*if (minorDuration == majorDuration) {
             mainView.displayResult("Duration times should be different");
             return false;
         }
@@ -280,7 +271,7 @@ public class SearchController implements Controller {
         if (minorDuration > majorDuration) {
             mainView.displayResult("More than should be a major time");
             return false;
-        }
+        }*/
         return true;
     }
 
@@ -360,64 +351,23 @@ public class SearchController implements Controller {
         }
         searchCriteria.setContentCaseSensitive(contentCaseSensitive);
         searchFile.setSearchCriteria(searchCriteria);
-        searchFile.init();
+        searchFile.init("1");
         setResultsToTable();
     }
 
-    public void sendSearchCriteriaMultimediaToModel(String path, String name, String hidden, String readOnly, int typeFile, boolean nameFileCaseSensitive, String owner, String extension, String sizeSign, String sizeRequired, String sizeMeasure, boolean create, boolean modified, boolean accessed, String fromDate,
-                                                    String toDate, String content, boolean contentCaseSensitive, String codec, String resolution, String aspecRatio, int audioBitRate, double frameRate, double minorDuration, double majorDuration, String videoSize) {
+    public void sendSearchCriteriaMultimediaToModel(String path, String name, boolean nameFileCaseSensitive, String codec, String resolution, String frameRate) {
         searchCriteriaMultimedia = new SearchCriteriaMultimedia();
         searchCriteriaMultimedia.setPath(path);
         if (!name.isEmpty()) {
             searchCriteriaMultimedia.setName(name);
         }
-        searchCriteriaMultimedia.setHidden(hidden);
-        searchCriteriaMultimedia.setReadOnly(readOnly);
-        searchCriteriaMultimedia.setTypeFile(typeFile);
         searchCriteriaMultimedia.setNameFileCaseSensitive(nameFileCaseSensitive);
-        if (!owner.isEmpty()) {
-            searchCriteriaMultimedia.setOwner(owner);
-        } else {
-            searchCriteriaMultimedia.setOwner(null);
-        }
-        if (!extension.isEmpty()) {
-            searchCriteriaMultimedia.setExtension(extension);
-        } else {
-            searchCriteriaMultimedia.setExtension(null);
-        }
-        searchCriteriaMultimedia.setSizeSign(sizeSign);
-        if (!sizeRequired.isEmpty()) {
-            searchCriteriaMultimedia.setSizeRequired(sizeRequired);
-        }
-        searchCriteriaMultimedia.setSizeMeasure(sizeMeasure);
-        searchCriteriaMultimedia.setCreateDate(create);
-        searchCriteriaMultimedia.setModifiedDate(modified);
-        searchCriteriaMultimedia.setAccessedDate(accessed);
-        if (fromDate != null) {
-            searchCriteriaMultimedia.setFromDate(fromDate);
-        } else {
-            searchCriteriaMultimedia.setFromDate(null);
-        }
-        if (toDate != null) {
-            searchCriteriaMultimedia.setToDate(toDate);
-        } else {
-            searchCriteriaMultimedia.setToDate(null);
-        }
-        if (!content.isEmpty()) {
-            searchCriteriaMultimedia.setContent(content);
-        } else {
-            searchCriteriaMultimedia.setContent(null);
-        }
-        searchCriteriaMultimedia.setContentCaseSensitive(contentCaseSensitive);
         searchCriteriaMultimedia.setCodec(codec);
-        searchCriteriaMultimedia.setAspectRatio(aspecRatio);
-        searchCriteriaMultimedia.setVideoSize(videoSize);
+        searchCriteriaMultimedia.setVideoSize(resolution);
         searchCriteriaMultimedia.setFrameRate(frameRate);
-        searchCriteriaMultimedia.setBitRate(audioBitRate);
-        searchCriteriaMultimedia.setMajorDuration(majorDuration);
-        searchCriteriaMultimedia.setMinorDuration(minorDuration);
+
         searchFile.setSearchCriteria(searchCriteriaMultimedia);
-        searchFile.init();
+        searchFile.init("2");
         setResultsToTable();
     }
 

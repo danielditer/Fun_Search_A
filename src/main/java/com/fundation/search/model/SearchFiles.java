@@ -31,6 +31,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileOwnerAttributeView;
 import java.nio.file.attribute.UserPrincipal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class SearchFiles {
     /**
      * searchCriteria is the attribute that is used for setting the criteria of searching.
      */
-    private SearchCriteria searchCriteria;
+    private AbstractSearchCriteria searchCriteria;
     /**
      * resultResultFiles is the attribute in which we are going to recover files depending the type of searching.
      */
@@ -62,7 +63,7 @@ public class SearchFiles {
      */
     private List<Asset> arrayFinalResult;
 
-    private SearchCriteriaMultimedia searchCriteriaMultimedia;
+    //private SearchCriteriaMultimedia searchCriteriaMultimedia;
     /**
      * Object to create asset objects (files, multimedia, directory).
      */
@@ -78,70 +79,96 @@ public class SearchFiles {
      *
      * @param searchCriteria is the param received in order to set the search criteria.
      */
-    public void setSearchCriteria(SearchCriteria searchCriteria) {
+    public void setSearchCriteria(AbstractSearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
     }
 
     /**
      * Method to initialize search.
      */
-    public void init() {
+    public void init(String searchType) {
         arrayResultFiles = new ArrayList<>();
-        arrayFinalResult  = new ArrayList<>();
+        arrayFinalResult = new ArrayList<>();
         assetFactory = new AssetFactory();
         File filePath = null;
-        if (searchCriteria.getPath() != null) {
-            filePath = new File(searchCriteria.getPath());
-        }
-        if (searchCriteria.getPath() != null) {
-            resultResultFiles = recoverFiles(filePath, arrayResultFiles);
-        }
-        for (Asset results : resultResultFiles) {
-            boolean matchesCriteria = true;
-            if (searchCriteria.getName() != null) {
-                if (!searchFile(results, searchCriteria.getNameFileCaseSensitive())) {
+        if ("1".equals(searchType)) {
+            if (searchCriteria.getPath() != null) {
+                filePath = new File(searchCriteria.getPath());
+            }
+            if (searchCriteria.getPath() != null) {
+                resultResultFiles = recoverFiles(filePath, arrayResultFiles);
+            }
+            for (Asset results : resultResultFiles) {
+                boolean matchesCriteria = true;
+                if (searchCriteria.getName() != null) {
+                    if (!searchFile(results, searchCriteria.getNameFileCaseSensitive())) {
+                        matchesCriteria = false;
+                    }
+                }
+                if (matchesCriteria && !searchHiddenFiles(results, searchCriteria.getHidden())) {
                     matchesCriteria = false;
                 }
-            }
-            if (matchesCriteria && !searchHiddenFiles(results, searchCriteria.getHidden())) {
-                matchesCriteria = false;
-            }
-            if (matchesCriteria && !searchReadOnlyFiles(results, searchCriteria.getReadOnly())) {
-                matchesCriteria = false;
-            }
-            if (matchesCriteria && !searchFilesOrDirectoriesOnly(results, searchCriteria.getTypeFile())) {
-                matchesCriteria = false;
-            }
-            if (searchCriteria.getOwner() != null) {
-                if (matchesCriteria && !searchOwner(results, searchCriteria.getOwner())) {
+                if (matchesCriteria && !searchReadOnlyFiles(results, searchCriteria.getReadOnly())) {
                     matchesCriteria = false;
                 }
-            }
-            if (searchCriteria.getExtension() != null) {
-                if (matchesCriteria && !searchExtension(results, searchCriteria.getExtension())) {
+                if (matchesCriteria && !searchFilesOrDirectoriesOnly(results, searchCriteria.getTypeFile())) {
                     matchesCriteria = false;
                 }
-            }
-            if (searchCriteria.getSizeRequired() != null) {
-                if (matchesCriteria && !searchSize(results, searchCriteria.getSizeSign(), searchCriteria.getSizeRequired(), searchCriteria.getSizeMeasure())) {
-                    matchesCriteria = false;
+                if (searchCriteria.getOwner() != null) {
+                    if (matchesCriteria && !searchOwner(results, searchCriteria.getOwner())) {
+                        matchesCriteria = false;
+                    }
+                }
+                if (searchCriteria.getExtension() != null) {
+                    if (matchesCriteria && !searchExtension(results, searchCriteria.getExtension())) {
+                        matchesCriteria = false;
+                    }
+                }
+                if (searchCriteria.getSizeRequired() != null) {
+                    if (matchesCriteria && !searchSize(results, searchCriteria.getSizeSign(), searchCriteria.getSizeRequired(), searchCriteria.getSizeMeasure())) {
+                        matchesCriteria = false;
+                    }
+                }
+                if ((searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate()) && results instanceof ResultFile) {
+                    if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
+                        matchesCriteria = false;
+                    }
+                }
+                if (searchCriteria.getContent() != null) {
+                    if (matchesCriteria && !searchContent(results, searchCriteria.getContent(), searchCriteria.getContentCaseSensitive())) {
+                        matchesCriteria = false;
+                    }
+                }
+                if (matchesCriteria) {
+                    arrayFinalResult.add(results);
                 }
             }
-            if ((searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate()) && results instanceof ResultFile) {
-                if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
-                    matchesCriteria = false;
+        } else if("2".equals(searchType)) {
+            if (searchCriteria.getPath() != null) {
+                filePath = new File(searchCriteria.getPath());
+            }
+            if (searchCriteria.getPath() != null) {
+                resultResultFiles = recoverFiles(filePath, arrayResultFiles);
+            }
+            for (Asset results : resultResultFiles) {
+                boolean matchesCriteriaMulti = true;
+                if (searchCriteria.getName() != null) {
+                    if (!searchFile(results, searchCriteria.getNameFileCaseSensitive())) {
+                        matchesCriteriaMulti = false;
+                    }
                 }
-            }
-            if (searchCriteria.getContent() != null) {
-                if (matchesCriteria && !searchContent(results, searchCriteria.getContent(), searchCriteria.getContentCaseSensitive())) {
-                    matchesCriteria = false;
+                if (matchesCriteriaMulti && !searchCodec(results, searchCriteria.getCodec())) {
+                    matchesCriteriaMulti = false;
                 }
-            }
-
-            if (results instanceof ResultMultimediaFile) {
-            }
-            if (matchesCriteria) {
-                arrayFinalResult.add(results);
+                if (matchesCriteriaMulti && !searchResolution(results, searchCriteria.getVideoSize())) {
+                    matchesCriteriaMulti = false;
+                }
+                if (matchesCriteriaMulti && !searchFrameRate(results, searchCriteria.getFrameRate())) {
+                    matchesCriteriaMulti = false;
+                }
+                if (matchesCriteriaMulti) {
+                    arrayFinalResult.add(results);
+                }
             }
         }
 
@@ -195,9 +222,10 @@ public class SearchFiles {
                 } else if (isMultimedia(fileEntry)){
                     fFprobe = new FFprobe("C:\\FFMPEG\\bin\\ffprobe.exe");
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
-                    FFmpegStream multimediaFile = fFprobe.probe(fileEntry.getPath()).getStreams().get(0);
+                    FFmpegStream multimediaFile = fFprobe.probe(fileEntry.getPath()).getStreams().get(1);
                     double duration = multimediaFile.duration;
                     String videoSize = multimediaFile.width + "x" + multimediaFile.height;
+                    System.out.println("frame rate:" + getFrameRate(multimediaFile.r_frame_rate));
                     arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), duration, !fileEntry.canWrite(), 1,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
@@ -565,7 +593,33 @@ public class SearchFiles {
         return fraction.doubleValue();
     }
 
-    public void setSearchCriteria(SearchCriteriaMultimedia searchCriteria){
-        this.searchCriteriaMultimedia = searchCriteria;
+    public boolean searchCodec(Asset asset, String codec) {
+        if ("all".equalsIgnoreCase(codec)) {
+            return true;
+        }
+        if (asset instanceof ResultMultimediaFile) {
+            return ((ResultMultimediaFile) asset).getCodec().equalsIgnoreCase(codec);
+        }
+        return false;
+    }
+    public boolean searchResolution(Asset asset, String resolution) {
+        if ("all".equalsIgnoreCase(resolution)) {
+            return true;
+        }
+        if (asset instanceof ResultMultimediaFile) {
+            return ((ResultMultimediaFile) asset).getVideoSize().equalsIgnoreCase(resolution);
+        }
+        return false;
+    }
+    public boolean searchFrameRate(Asset asset, String frameRate) {
+        if ("all".equalsIgnoreCase(frameRate)) {
+            return true;
+        }
+        DecimalFormat df = new DecimalFormat("#.##");
+        String fileFrameRate = df.format(((ResultMultimediaFile) asset).getFrameRate());
+        if (asset instanceof ResultMultimediaFile) {
+            return frameRate.equals(fileFrameRate);
+        }
+        return false;
     }
 }

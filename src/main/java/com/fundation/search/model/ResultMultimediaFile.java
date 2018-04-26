@@ -129,8 +129,11 @@ public class ResultMultimediaFile extends Asset {
     public String getAspectRatio() {
         return aspectRatio;
     }
-
+    public String getVideoSize() {
+        return this.videoSize;
+    }
     public void setAspectRatio(String aspectRatio) {
         this.aspectRatio = aspectRatio;
     }
+
 }

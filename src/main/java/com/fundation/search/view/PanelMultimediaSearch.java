@@ -3,19 +3,13 @@ package com.fundation.search.view;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JSpinner;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
+import javax.swing.*;
+
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class PanelMultimediaSearch extends JPanel {
-    private JPanel panelNamePath;
+    private PanelNamePath panelNamePath;
     private JPanel panelDuration;
     private JLabel labelMoreThan;
     private JSpinner spinner1;
@@ -140,13 +134,13 @@ public class PanelMultimediaSearch extends JPanel {
         //---- labelVideoCodec ----
         labelVideoCodec.setText("Video codec");
         comboBoxVideoCodec.addItem("All");
-        comboBoxVideoCodec.addItem("MPEG-4 Video(*.mp4)");
-        comboBoxVideoCodec.addItem("H.264 Video(*.mp4)");
-        comboBoxVideoCodec.addItem("H.265 Video(*.mp4)");
+        comboBoxVideoCodec.addItem("MPEG-4");
+        comboBoxVideoCodec.addItem("H264");
+        comboBoxVideoCodec.addItem("H265");
         comboBoxVideoCodec.addItem("Flash Video(*.flv)");
         comboBoxVideoCodec.addItem("WebM Video Format(*.webm)");
-        comboBoxVideoCodec.addItem("MPEG-1 Video(*.mpg)");
-        comboBoxVideoCodec.addItem("MPEG-2 Video(*.mpg)");
+        comboBoxVideoCodec.addItem("MPEG-1");
+        comboBoxVideoCodec.addItem("MPEG-2");
         comboBoxVideoCodec.addItem("MOV - QuickTime(*.mov)");
         comboBoxVideoCodec.addItem("Windows Media Video(*.wmv)");
         panelCodec.add(labelVideoCodec, new TableLayoutConstraints(0, 0, 0, 0,
@@ -186,10 +180,12 @@ public class PanelMultimediaSearch extends JPanel {
         comboBoxResolution.addItem("320x240");
         comboBoxResolution.addItem("352x240");
         comboBoxResolution.addItem("352x288");
+        comboBoxResolution.addItem("428x240");
         comboBoxResolution.addItem("480x480");
         comboBoxResolution.addItem("480x576");
         comboBoxResolution.addItem("640x480");
         comboBoxResolution.addItem("720x480");
+        comboBoxResolution.addItem("854x480");
         comboBoxResolution.addItem("720x576");
         comboBoxResolution.addItem("1280x720");
         comboBoxResolution.addItem("1366x768");
@@ -228,4 +224,28 @@ public class PanelMultimediaSearch extends JPanel {
         add(panelButtonSearch, new TableLayoutConstraints(0, 7, 0, 7,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
     }
+
+    public String getName() {
+        return panelNamePath.getName();
+    }
+    public String getPath() {
+        return panelNamePath.getPath();
+    }
+    public boolean getCaseSensitiveName() {
+        return panelNamePath.getCaseSensitive();
+    }
+    public JButton getSearchMultimediaButton() {
+        return panelButtonSearch.getButtonSearch();
+    }
+    public String getCodec() {
+        return comboBoxVideoCodec.getSelectedItem().toString();
+    }
+    public String getResolution() {
+        return comboBoxResolution.getSelectedItem().toString();
+    }
+    public String getFrameRate() {
+        return comboBoxFrameRate.getSelectedItem().toString();
+    }
+
+
 }
