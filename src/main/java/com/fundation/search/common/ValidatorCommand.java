@@ -54,7 +54,7 @@ public class ValidatorCommand {
         VALID_TYPES.add('1');
         VALID_TYPES.add('2');
         VALID_TYPES.add('3');
-        VALID_TYPES.add('3');
+        VALID_TYPES.add('0');
     }
 
 
@@ -287,21 +287,21 @@ public class ValidatorCommand {
      */
     public boolean isAValidDate(String[] command) {
         Validator val = new Validator();
-        if (Arrays.asList(command).contains("-dc")) {
+        if (Arrays.asList(command).contains("-cd")) {
             int positionPath =  Arrays.asList(command).indexOf("-dc");
             if (!validDate(command[positionPath + 1])) {
                 return false;
             }
 
         }
-        if (Arrays.asList(command).contains("-dm")) {
+        if (Arrays.asList(command).contains("-md")) {
             int positionPath =  Arrays.asList(command).indexOf("-dc");
             if (!validDate(command[positionPath + 1])) {
                 return false;
             }
 
         }
-        if (Arrays.asList(command).contains("-da")) {
+        if (Arrays.asList(command).contains("-ad")) {
             int positionPath =  Arrays.asList(command).indexOf("-dc");
             if (!validDate(command[positionPath + 1])) {
                 return false;
@@ -317,21 +317,21 @@ public class ValidatorCommand {
      */
     public boolean isAValidRangeDate(String[] command) {
         Validator val = new Validator();
-        if (Arrays.asList(command).contains("-dc")) {
+        if (Arrays.asList(command).contains("-cd")) {
             int positionPath =  Arrays.asList(command).indexOf("-dc");
             if (!validRangeDate(command[positionPath + 1])) {
                 return false;
             }
 
         }
-        if (Arrays.asList(command).contains("-dm")) {
+        if (Arrays.asList(command).contains("-md")) {
             int positionPath =  Arrays.asList(command).indexOf("-dc");
             if (!validRangeDate(command[positionPath + 1])) {
                 return false;
             }
 
         }
-        if (Arrays.asList(command).contains("-da")) {
+        if (Arrays.asList(command).contains("-ad")) {
             int positionPath =  Arrays.asList(command).indexOf("-dc");
             if (!validRangeDate(command[positionPath + 1])) {
                 return false;
