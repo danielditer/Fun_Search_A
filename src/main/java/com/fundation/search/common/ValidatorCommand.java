@@ -66,9 +66,15 @@ public class ValidatorCommand {
      */
     public boolean isAValidArgumentAfterCommand(String[] command) {
         for (int i = 0; i < command.length; i += 2) {
-            if (command[i+1].substring(0, 1).equals(INI_COMMAND) ) {
+            if(command[i+1].length() > 1) {
+                if (command[i+1].substring(0, 1).equals(INI_COMMAND) ) {
                     return false;
+                } 
             }
+            else if (command[i+1].equals(INI_COMMAND) ) {
+                    return false;
+                }
+
         }
         return true;
     }
@@ -365,6 +371,16 @@ public class ValidatorCommand {
         char[] nameCharacters = command.toCharArray();
         for (char value : nameCharacters) {
             if (VALID_VALUES.contains(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean validatePath(String path){
+        Validator validatorNormal = new Validator();
+        if(!path.equals("")) {
+            if (validatorNormal.isAValidPath(path)) {
                 return true;
             }
         }

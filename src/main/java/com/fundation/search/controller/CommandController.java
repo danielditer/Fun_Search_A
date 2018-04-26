@@ -92,7 +92,7 @@ public class CommandController implements Controller {
             return false;
         }
         int positionPath =  Arrays.asList(inputCommands).indexOf("-p");
-        if (!validatorNormal.isAValidPath(inputCommands[positionPath+1])) {
+        if (!validator.validatePath(inputCommands[positionPath + 1])) {
             commandResultView.displayResult("COMMAND INFO: Invalid Path Name");
             return false;
         }
