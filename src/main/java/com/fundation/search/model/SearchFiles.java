@@ -78,8 +78,10 @@ public class SearchFiles {
     public void init() {
         arrayResultFiles = new ArrayList<>();
         arrayFinalResult  = new ArrayList<>();
-        File filePath = new File(searchCriteria.getPath());
-        assetFactory = new AssetFactory();
+        File filePath = null;
+        if (searchCriteria.getPath() != null) {
+            filePath = new File(searchCriteria.getPath());
+        }
         if (searchCriteria.getPath() != null) {
             resultResultFiles = recoverFiles(filePath, arrayResultFiles);
         }
@@ -114,11 +116,9 @@ public class SearchFiles {
                     matchesCriteria = false;
                 }
             }
-            if (searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate()) {
-                if (results instanceof ResultFile) {
-                    if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
-                        matchesCriteria = false;
-                    }
+            if ((searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate()) && results instanceof ResultFile) {
+                if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
+                    matchesCriteria = false;
                 }
             }
             if (searchCriteria.getContent() != null) {
@@ -164,7 +164,7 @@ public class SearchFiles {
                 String creationTime = dateFormat.format(fileAttributes.creationTime().toMillis());
                 String lastAccessTime = dateFormat.format(fileAttributes.lastAccessTime().toMillis());
                 String lastModifiedTime = dateFormat.format(fileAttributes.lastModifiedTime().toMillis());
-
+                assetFactory = new AssetFactory();
                 if (fileEntry.isDirectory()) {
                     recoverFiles(fileEntry, arrayResultFiles);
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(),
@@ -266,13 +266,11 @@ public class SearchFiles {
      * @return the array of coincidences, in this case hidden file coincidences.
      */
     public boolean searchFilesOrDirectoriesOnly(Asset arrayResultFiles, int typeFile) {
+        if (typeFile == 0) { /**when typeFile is 0 we look for all type of files*/
+            return true;
+        }
         if (typeFile == 1) { /**when typeFile is 1 we want to look only for files (.txt, .docx, .exe, etc)*/
             if (arrayResultFiles instanceof ResultFile) {
-                return true;
-            }
-        }
-        if (typeFile == 2) { /**when typeFile is 2 we want to look only for multimedia files (.mp3, .mp4, etc)*/
-            if (arrayResultFiles instanceof ResultMultimediaFile) {
                 return true;
             }
         }
@@ -281,10 +279,6 @@ public class SearchFiles {
                 return true;
             }
         }
-        if (typeFile == 0) { /**when typeFile is 0 we look for all type of files*/
-            return true;
-        }
-
         return false;
     }
 
@@ -336,7 +330,6 @@ public class SearchFiles {
             return true;
         }
         double size = Double.parseDouble(sizeRequired);
-        //System.out.println("sizeSign:" + sizeSign + ",sizeRequired:" + size + ",sizeMeasure:" + sizeMeasure);
         size = Converter.convertToBytes(size, sizeMeasure);
         if (sizeSign.equalsIgnoreCase("minor")) {
             if (arrayResultFiles.getSize() < size) {
