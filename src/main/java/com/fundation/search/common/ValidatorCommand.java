@@ -1,12 +1,12 @@
-package com.fundation.search.common;
+ package com.fundation.search.common;
 
-import org.apache.commons.codec.binary.StringUtils;
+ import org.apache.commons.codec.binary.StringUtils;
 
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+ import java.util.*;
+ import java.util.function.Function;
+ import java.util.stream.Collectors;
 
-/**
+ /**
  * Class ValidatorCommand to validate commands introduced by the user.
  *
  * @version 29 Mar 2018  * @Maria Canqui
@@ -66,9 +66,15 @@ public class ValidatorCommand {
      */
     public boolean isAValidArgumentAfterCommand(String[] command) {
         for (int i = 0; i < command.length; i += 2) {
-            if (command[i+1].substring(0, 1).equals(INI_COMMAND) ) {
+            if(command[i+1].length() > 1) {
+                if (command[i+1].substring(0, 1).equals(INI_COMMAND) ) {
                     return false;
+                }
             }
+            else if (command[i+1].equals(INI_COMMAND) ) {
+                return false;
+            }
+
         }
         return true;
     }
@@ -173,7 +179,7 @@ public class ValidatorCommand {
     public boolean isAValidName(String[] command) {
         INVALID_CHARACTERS.remove((Character) '*');
         if (Arrays.asList(command).contains("-n")) {
-        int positionPath =  Arrays.asList(command).indexOf("-n");
+            int positionPath =  Arrays.asList(command).indexOf("-n");
             char[] nameCharacters = command[positionPath+1].toCharArray();
             for (char value : nameCharacters) {
                 if (INVALID_CHARACTERS.contains(value)) {
@@ -344,17 +350,17 @@ public class ValidatorCommand {
         return false;
     }
     public boolean validDate(String command) {
-       String[] twoDates = command.split("_");
-       if (twoDates.length == 2) {
-           if (twoDates[0].length() == 10 && twoDates[1].length() == 10) {
-               String[] from = twoDates[0].split("-");
-               String[] to = twoDates[0].split("-");
-               if (from.length == 3 && to.length == 3) {
+        String[] twoDates = command.split("_");
+        if (twoDates.length == 2) {
+            if (twoDates[0].length() == 10 && twoDates[1].length() == 10) {
+                String[] from = twoDates[0].split("-");
+                String[] to = twoDates[0].split("-");
+                if (from.length == 3 && to.length == 3) {
                     return true;
-               }
+                }
             }
-       }
-       return false;
+        }
+        return false;
     }
     /**
      * Method to validate hidden command, it should not contains special characters for windows..
@@ -365,6 +371,16 @@ public class ValidatorCommand {
         char[] nameCharacters = command.toCharArray();
         for (char value : nameCharacters) {
             if (VALID_VALUES.contains(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean validatePath(String path){
+        Validator validatorNormal = new Validator();
+        if(!path.equals("")) {
+            if (validatorNormal.isAValidPath(path)) {
                 return true;
             }
         }
