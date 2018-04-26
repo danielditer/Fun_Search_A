@@ -68,7 +68,7 @@ public class SearchFiles {
      */
     private AssetFactory assetFactory;
 
-    FFprobe fFprobe = new FFprobe("C:\\FFMPEG\\bin\\ffprobe.exe");
+    FFprobe fFprobe;
 
     public SearchFiles() throws IOException {
     }
@@ -87,8 +87,8 @@ public class SearchFiles {
      */
     public void init() {
         arrayResultFiles = new ArrayList<>();
-        assetFactory = new AssetFactory();
         arrayFinalResult  = new ArrayList<>();
+        assetFactory = new AssetFactory();
         File filePath = null;
         if (searchCriteria.getPath() != null) {
             filePath = new File(searchCriteria.getPath());
@@ -185,16 +185,15 @@ public class SearchFiles {
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
                             null, 0L, null, null, null, null, 0.0, 0, null, null));
-                }
-                if (!isMultimedia(fileEntry)) {
+                } else if (!isMultimedia(fileEntry)) {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
 
                     arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, null, 0.0, 0, null,null));
-
-                } else {
+                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, null, 0.0, 0, null, null));
+                } else if (isMultimedia(fileEntry)){
+                    fFprobe = new FFprobe("C:\\FFMPEG\\bin\\ffprobe.exe");
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
                     FFmpegStream multimediaFile = fFprobe.probe(fileEntry.getPath()).getStreams().get(0);
                     double duration = multimediaFile.duration;
