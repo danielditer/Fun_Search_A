@@ -87,9 +87,12 @@ public class SearchFiles {
      */
     public void init() {
         arrayResultFiles = new ArrayList<>();
-        arrayFinalResult = new ArrayList<>();
-        File filePath = new File(searchCriteria.getPath());
         assetFactory = new AssetFactory();
+        arrayFinalResult  = new ArrayList<>();
+        File filePath = null;
+        if (searchCriteria.getPath() != null) {
+            filePath = new File(searchCriteria.getPath());
+        }
         if (searchCriteria.getPath() != null) {
             resultResultFiles = recoverFiles(filePath, arrayResultFiles);
         }
@@ -124,11 +127,9 @@ public class SearchFiles {
                     matchesCriteria = false;
                 }
             }
-            if (searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate()) {
-                if (results instanceof ResultFile) {
-                    if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
-                        matchesCriteria = false;
-                    }
+            if ((searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate()) && results instanceof ResultFile) {
+                if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
+                    matchesCriteria = false;
                 }
             }
             if (searchCriteria.getContent() != null) {
@@ -177,7 +178,7 @@ public class SearchFiles {
                 String creationTime = dateFormat.format(fileAttributes.creationTime().toMillis());
                 String lastAccessTime = dateFormat.format(fileAttributes.lastAccessTime().toMillis());
                 String lastModifiedTime = dateFormat.format(fileAttributes.lastModifiedTime().toMillis());
-
+                assetFactory = new AssetFactory();
                 if (fileEntry.isDirectory()) {
                     recoverFiles(fileEntry, arrayResultFiles);
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(),
@@ -220,15 +221,72 @@ public class SearchFiles {
      */
     private boolean searchFile(Asset arrayResultFiles, boolean nameFileCaseSensitive) {
         if (nameFileCaseSensitive) {
+            if (searchWildcardCaseSensitive(arrayResultFiles)) {
+                return true;
+            }
             if (arrayResultFiles.getFileName().equals(searchCriteria.getName())) {
                 return true;
             }
         } else {
+            if (searchWildcardNoCaseSensitive(arrayResultFiles)) {
+                return true;
+            }
             if (arrayResultFiles.getFileName().equalsIgnoreCase(searchCriteria.getName())) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Method to search for file's name wildcard when it is case sensitive.
+     * @param asset the file.
+     * @return true or false.
+     */
+    private boolean searchWildcardCaseSensitive(Asset asset) {
+        try {
+            if ("*".equals(searchCriteria.getName())) {
+                return true;
+            }
+            if ("*".equals(searchCriteria.getName().substring(0, 1)) && "*".equals(searchCriteria.getName().substring(searchCriteria.getName().length() - 1))) {
+                return asset.getFileName().contains(searchCriteria.getName().substring(1,searchCriteria.getName().length() - 1));
+            }
+            if ("*".equals(searchCriteria.getName().substring(0, 1))) {
+                return asset.getFileName().endsWith(searchCriteria.getName().substring(1));
+            }
+            if ("*".equals(searchCriteria.getName().substring(searchCriteria.getName().length() - 1))) {
+                return asset.getFileName().startsWith(searchCriteria.getName().substring(0, searchCriteria.getName().length() - 1));
+            }
+            return false;
+        } catch (StringIndexOutOfBoundsException ex) {
+            return false;
+        }
+    }
+
+    /**
+     * Method to search for file's name wildcard when it is not case sensitive.
+     * @param asset the file.
+     * @return true or false.
+     */
+    private boolean searchWildcardNoCaseSensitive(Asset asset) {
+        try {
+            if ("*".equals(searchCriteria.getName())) {
+                return true;
+            }
+            if ("*".equals(searchCriteria.getName().substring(0, 1)) && "*".equals(searchCriteria.getName().substring(searchCriteria.getName().length() - 1))) {
+                return asset.getFileName().toUpperCase().contains(searchCriteria.getName().toUpperCase().substring(1,searchCriteria.getName().length() - 1));
+            }
+            if ("*".equals(searchCriteria.getName().substring(0, 1))) {
+                return asset.getFileName().toUpperCase().endsWith(searchCriteria.getName().toUpperCase().substring(1));
+            }
+            if ("*".equals(searchCriteria.getName().substring(searchCriteria.getName().length() - 1))) {
+                return asset.getFileName().toUpperCase().startsWith(searchCriteria.getName().toUpperCase().substring(0, searchCriteria.getName().length() - 1));
+            }
+            return false;
+        } catch (StringIndexOutOfBoundsException ex) {
+            return false;
+        }
+
     }
 
     /**
@@ -292,13 +350,11 @@ public class SearchFiles {
      * @return the array of coincidences, in this case hidden file coincidences.
      */
     public boolean searchFilesOrDirectoriesOnly(Asset arrayResultFiles, int typeFile) {
+        if (typeFile == 0) { /**when typeFile is 0 we look for all type of files*/
+            return true;
+        }
         if (typeFile == 1) { /**when typeFile is 1 we want to look only for files (.txt, .docx, .exe, etc)*/
             if (arrayResultFiles instanceof ResultFile) {
-                return true;
-            }
-        }
-        if (typeFile == 2) { /**when typeFile is 2 we want to look only for multimedia files (.mp3, .mp4, etc)*/
-            if (arrayResultFiles instanceof ResultMultimediaFile) {
                 return true;
             }
         }
@@ -307,10 +363,6 @@ public class SearchFiles {
                 return true;
             }
         }
-        if (typeFile == 0) { /**when typeFile is 0 we look for all type of files*/
-            return true;
-        }
-
         return false;
     }
 
@@ -365,7 +417,6 @@ public class SearchFiles {
             return true;
         }
         double size = Double.parseDouble(sizeRequired);
-        //System.out.println("sizeSign:" + sizeSign + ",sizeRequired:" + size + ",sizeMeasure:" + sizeMeasure);
         size = Converter.convertToBytes(size, sizeMeasure);
         if (sizeSign.equalsIgnoreCase("minor")) {
             if (arrayResultFiles.getSize() < size) {
