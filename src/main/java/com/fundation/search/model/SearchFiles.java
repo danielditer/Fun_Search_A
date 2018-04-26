@@ -196,15 +196,72 @@ public class SearchFiles {
      */
     private boolean searchFile(Asset arrayResultFiles, boolean nameFileCaseSensitive) {
         if (nameFileCaseSensitive) {
+            if (searchWildcardCaseSensitive(arrayResultFiles)) {
+                return true;
+            }
             if (arrayResultFiles.getFileName().equals(searchCriteria.getName())) {
                 return true;
             }
         } else {
+            if (searchWildcardNoCaseSensitive(arrayResultFiles)) {
+                return true;
+            }
             if (arrayResultFiles.getFileName().equalsIgnoreCase(searchCriteria.getName())) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Method to search for file's name wildcard when it is case sensitive.
+     * @param asset the file.
+     * @return true or false.
+     */
+    private boolean searchWildcardCaseSensitive(Asset asset) {
+        try {
+            if ("*".equals(searchCriteria.getName())) {
+                return true;
+            }
+            if ("*".equals(searchCriteria.getName().substring(0, 1)) && "*".equals(searchCriteria.getName().substring(searchCriteria.getName().length() - 1))) {
+                return asset.getFileName().contains(searchCriteria.getName().substring(1,searchCriteria.getName().length() - 1));
+            }
+            if ("*".equals(searchCriteria.getName().substring(0, 1))) {
+                return asset.getFileName().endsWith(searchCriteria.getName().substring(1));
+            }
+            if ("*".equals(searchCriteria.getName().substring(searchCriteria.getName().length() - 1))) {
+                return asset.getFileName().startsWith(searchCriteria.getName().substring(0, searchCriteria.getName().length() - 1));
+            }
+            return false;
+        } catch (StringIndexOutOfBoundsException ex) {
+            return false;
+        }
+    }
+
+    /**
+     * Method to search for file's name wildcard when it is not case sensitive.
+     * @param asset the file.
+     * @return true or false.
+     */
+    private boolean searchWildcardNoCaseSensitive(Asset asset) {
+        try {
+            if ("*".equals(searchCriteria.getName())) {
+                return true;
+            }
+            if ("*".equals(searchCriteria.getName().substring(0, 1)) && "*".equals(searchCriteria.getName().substring(searchCriteria.getName().length() - 1))) {
+                return asset.getFileName().toUpperCase().contains(searchCriteria.getName().toUpperCase().substring(1,searchCriteria.getName().length() - 1));
+            }
+            if ("*".equals(searchCriteria.getName().substring(0, 1))) {
+                return asset.getFileName().toUpperCase().endsWith(searchCriteria.getName().toUpperCase().substring(1));
+            }
+            if ("*".equals(searchCriteria.getName().substring(searchCriteria.getName().length() - 1))) {
+                return asset.getFileName().toUpperCase().startsWith(searchCriteria.getName().toUpperCase().substring(0, searchCriteria.getName().length() - 1));
+            }
+            return false;
+        } catch (StringIndexOutOfBoundsException ex) {
+            return false;
+        }
+
     }
 
     /**
