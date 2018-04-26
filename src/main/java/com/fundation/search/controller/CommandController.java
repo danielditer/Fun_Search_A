@@ -97,15 +97,38 @@ public class CommandController implements Controller {
             return false;
         }
 
-
         if (!validator.isAValidName(inputCommands)) {
             commandResultView.displayResult("COMMAND INFO: Invalid Name");
             return false;
         }
-
-
-
-
+        //hidden validator
+        if (!validator.isAValidHidden(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Invalid hidden value");
+            return false;
+        }
+        //readonly validator
+        if (!validator.isAValidReadOnly(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Invalid readonly value");
+            return false;
+        }
+        //case sensitive validator
+        if (!validator.isAValidCaseSensitiveContainName(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Introduce name command");
+            return false;
+        }
+        if (!validator.isAValidCaseSensitive(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Invalid case sensitive value");
+            return false;
+        }
+        if (!validator.isAValidType(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Invalid type file value");
+            return false;
+        }
+        //date validator
+        if (!validator.isAValidDate(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Invalid date value");
+            return false;
+        }
         return true;
     }
 
