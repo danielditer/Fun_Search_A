@@ -10,15 +10,12 @@ package com.fundation.search.model;
 import org.junit.Before;
 import org.junit.Test;
 import org.powermock.reflect.Whitebox;
-import sun.reflect.annotation.ExceptionProxy;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 
 /**
@@ -583,12 +580,5 @@ public class SearchFilesTest {
         assertFalse(Whitebox.invokeMethod(searchFiles, "searchSize", expectedFile, searchCriteria.getSizeSign(), searchCriteria.getSizeRequired(), searchCriteria.getSizeMeasure()));
     }
 
-
-
-
-    @Test
-    public void TestSearchDate() throws Exception {
-
-    }
 }
 
