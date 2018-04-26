@@ -92,7 +92,7 @@ public class CommandController implements Controller {
             return false;
         }
         int positionPath =  Arrays.asList(inputCommands).indexOf("-p");
-        if (!validatorNormal.isAValidPath(inputCommands[positionPath+1])) {
+        if (!validator.validatePath(inputCommands[positionPath + 1])) {
             commandResultView.displayResult("COMMAND INFO: Invalid Path Name");
             return false;
         }
@@ -212,6 +212,6 @@ public class CommandController implements Controller {
         System.out.printf("%-15s %-20s %20s %n", "", "[-size major xx mb]", "display the major files in a range of sizes");
         System.out.printf("%-15s %-20s %20s %n", "", "[-size minor xx mb]", "display the minor files in a range of sizes");
         System.out.printf("%-15s %-20s %20s %n", "", "[-size equals xx mb]", "display the equals files in a range of sizes");
-        
+
     }
 }
