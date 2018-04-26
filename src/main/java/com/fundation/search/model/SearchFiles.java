@@ -62,6 +62,7 @@ public class SearchFiles {
      */
     private List<Asset> arrayFinalResult;
 
+    private SearchCriteriaMultimedia searchCriteriaMultimedia;
     /**
      * Object to create asset objects (files, multimedia, directory).
      */
@@ -512,5 +513,9 @@ public class SearchFiles {
 
     public double getFrameRate(Fraction fraction){
         return fraction.doubleValue();
+    }
+
+    public void setSearchCriteria(SearchCriteriaMultimedia searchCriteria){
+        this.searchCriteriaMultimedia = searchCriteria;
     }
 }

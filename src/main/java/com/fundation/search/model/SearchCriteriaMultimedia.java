@@ -11,7 +11,7 @@ package com.fundation.search.model;
  *
  * @version 27 Mar 2018  * @Juan Manuel
  */
-public class SearchCriteria {
+public class SearchCriteriaMultimedia {
     private String searchCriteriaName;
 
     /**
@@ -86,6 +86,72 @@ public class SearchCriteria {
      * Attribute for content case sensitive check
      */
     private boolean contentCaseSensitive;
+
+    public String getCodec() {
+        return codec;
+    }
+
+    public void setCodec(String codec) {
+        this.codec = codec;
+    }
+
+    public double getFrameRate() {
+        return frameRate;
+    }
+
+    public void setFrameRate(double frameRate) {
+        this.frameRate = frameRate;
+    }
+
+    public int getBitRate() {
+        return bitRate;
+    }
+
+    public void setBitRate(int bitRate) {
+        this.bitRate = bitRate;
+    }
+
+    public String getVideoSize() {
+        return videoSize;
+    }
+
+    public void setVideoSize(String videoSize) {
+        this.videoSize = videoSize;
+    }
+
+    public String getAspectRatio() {
+        return aspectRatio;
+    }
+
+    public void setAspectRatio(String aspectRatio) {
+        this.aspectRatio = aspectRatio;
+    }
+
+    private String codec;
+    private double frameRate;
+    private int bitRate;
+    private String videoSize;
+    private String aspectRatio;
+
+    public double getMinorDuration() {
+        return minorDuration;
+    }
+
+    public void setMinorDuration(double minorDuration) {
+        this.minorDuration = minorDuration;
+    }
+
+    public double getMajorDuration() {
+        return majorDuration;
+    }
+
+    public void setMajorDuration(double majorDuration) {
+        this.majorDuration = majorDuration;
+    }
+
+    private double minorDuration;
+
+    private double majorDuration;
 
     /**
      * Setter for search criteria name to save in DB.
