@@ -211,6 +211,7 @@ public class PanelMultimediaSearch extends JPanel {
         ((TableLayout) panelAudioBitRate.getLayout()).setVGap(5);
 
         labelKbps.setText("Kbps");
+        spinnerAudioBitRate.setModel(new SpinnerNumberModel(0, 0, 1000.0, 1));
         panelAudioBitRate.add(spinnerAudioBitRate, new TableLayoutConstraints(1, 0, 1, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         panelAudioBitRate.add(labelKbps, new TableLayoutConstraints(2, 0, 2, 0,
@@ -246,6 +247,7 @@ public class PanelMultimediaSearch extends JPanel {
     public String getFrameRate() {
         return comboBoxFrameRate.getSelectedItem().toString();
     }
-
-
+    public String getBitRate() {
+        return spinnerAudioBitRate.getValue().toString();
+    }
 }

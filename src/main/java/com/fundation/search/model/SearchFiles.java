@@ -166,6 +166,11 @@ public class SearchFiles {
                 if (matchesCriteriaMulti && !searchFrameRate(results, searchCriteria.getFrameRate())) {
                     matchesCriteriaMulti = false;
                 }
+                if (searchCriteria.getBitRate() != null) {
+                    if (matchesCriteriaMulti && !searchBitRate(results, searchCriteria.getBitRate())) {
+                        matchesCriteriaMulti = false;
+                    }
+                }
                 if (matchesCriteriaMulti) {
                     arrayFinalResult.add(results);
                 }
@@ -615,10 +620,21 @@ public class SearchFiles {
         if ("all".equalsIgnoreCase(frameRate)) {
             return true;
         }
-        DecimalFormat df = new DecimalFormat("#.##");
-        String fileFrameRate = df.format(((ResultMultimediaFile) asset).getFrameRate());
         if (asset instanceof ResultMultimediaFile) {
+            DecimalFormat df = new DecimalFormat("#.##");
+            String fileFrameRate = df.format(((ResultMultimediaFile) asset).getFrameRate());
             return frameRate.equals(fileFrameRate);
+        }
+        return false;
+    }
+    public boolean searchBitRate(Asset asset, String bitRate) {
+        if (asset instanceof ResultMultimediaFile) {
+            int bit = (int)Double.parseDouble(bitRate);
+            if (bit > 0) {
+                System.out.println("bit rate:" + ((ResultMultimediaFile) asset).getAudioBitRate());
+                return ((ResultMultimediaFile) asset).getAudioBitRate() == bit;
+            }
+            return true;
         }
         return false;
     }

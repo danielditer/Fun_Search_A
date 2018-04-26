@@ -10,9 +10,9 @@ public abstract class AbstractSearchCriteria {
 
     public abstract void setFrameRate(String frameRate);
 
-    public abstract int getBitRate();
+    public abstract String getBitRate();
 
-    public abstract void setBitRate(int bitRate);
+    public abstract void setBitRate(String bitRate);
 
     public abstract String getVideoSize();
 

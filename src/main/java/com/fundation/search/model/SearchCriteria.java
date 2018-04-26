@@ -478,7 +478,7 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     private String codec;
     private String frameRate;
-    private int bitRate;
+    private String bitRate;
     private String videoSize;
     private String aspectRatio;
     private double minorDuration;
@@ -505,12 +505,12 @@ public class SearchCriteria extends AbstractSearchCriteria{
     }
 
     @Override
-    public int getBitRate() {
+    public String getBitRate() {
         return bitRate;
     }
 
     @Override
-    public void setBitRate(int bitRate) {
+    public void setBitRate(String bitRate) {
         this.bitRate = bitRate;
     }
 

@@ -116,7 +116,7 @@ public class SearchController implements Controller {
 
     public void searchButtonMultimediaActionListener(PanelMultimediaSearch panel) {
         if (areValidMultimediaParams(panel.getPath(), panel.getName())) {
-            sendSearchCriteriaMultimediaToModel(panel.getPath(), panel.getName(), panel.getCaseSensitiveName(), panel.getCodec(), panel.getResolution(), panel.getFrameRate());
+            sendSearchCriteriaMultimediaToModel(panel.getPath(), panel.getName(), panel.getCaseSensitiveName(), panel.getCodec(), panel.getResolution(), panel.getFrameRate(), panel.getBitRate());
         }
     }
 
@@ -355,7 +355,7 @@ public class SearchController implements Controller {
         setResultsToTable();
     }
 
-    public void sendSearchCriteriaMultimediaToModel(String path, String name, boolean nameFileCaseSensitive, String codec, String resolution, String frameRate) {
+    public void sendSearchCriteriaMultimediaToModel(String path, String name, boolean nameFileCaseSensitive, String codec, String resolution, String frameRate, String bitRate) {
         searchCriteriaMultimedia = new SearchCriteriaMultimedia();
         searchCriteriaMultimedia.setPath(path);
         if (!name.isEmpty()) {
@@ -365,6 +365,7 @@ public class SearchController implements Controller {
         searchCriteriaMultimedia.setCodec(codec);
         searchCriteriaMultimedia.setVideoSize(resolution);
         searchCriteriaMultimedia.setFrameRate(frameRate);
+        searchCriteriaMultimedia.setBitRate(bitRate);
 
         searchFile.setSearchCriteria(searchCriteriaMultimedia);
         searchFile.init("2");

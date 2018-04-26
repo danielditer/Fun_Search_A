@@ -135,5 +135,7 @@ public class ResultMultimediaFile extends Asset {
     public void setAspectRatio(String aspectRatio) {
         this.aspectRatio = aspectRatio;
     }
-
+    public int getAudioBitRate() {
+        return this.audioBitRate;
+    }
 }

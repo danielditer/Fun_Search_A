@@ -167,7 +167,7 @@ public class CommandController implements Controller {
                 }
             }
             searchFiles.setSearchCriteria(searchCriteria);
-            searchFiles.init();
+            searchFiles.init("1");
         }
     }
 
