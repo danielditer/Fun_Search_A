@@ -29,12 +29,10 @@ import java.awt.Color;
  * Class that contains the components of the Panel Search criterial.
  */
 public class PanelSearchCriterial extends JPanel {
-    JLabel labelName;
-    JTextField textFieldName;
+
     private DefaultTableModel tableModel;
     private JTable tableResult;
     JButton buttonSelect;
-    JButton buttonSearch;
     JButton buttonLoad;
     /**
      * Class constructor.
@@ -46,10 +44,8 @@ public class PanelSearchCriterial extends JPanel {
      * Initializes panel components.
      */
     public void initComponents() {
-        labelName = new JLabel();
-        textFieldName = new JTextField();
+
         buttonSelect = new JButton();
-        buttonSearch = new JButton();
         buttonLoad = new JButton();
         tableResult = new JTable();
         String columnNames[] = new String[]{"Id", "Name"};
@@ -63,27 +59,11 @@ public class PanelSearchCriterial extends JPanel {
         setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
-        //---- labelName ----
-        labelName.setText("Name:");
-        final Dimension preferredSize = new Dimension(120, 20);
-        labelName.setPreferredSize(preferredSize);
-        add(labelName, new TableLayoutConstraints(0, 0, 0, 0,
-                TableLayoutConstraints.RIGHT,
-                TableLayoutConstraints.FULL));
-        //---- textFieldName ----
-        textFieldName.setPreferredSize(preferredSize);
-        add(textFieldName, new TableLayoutConstraints(1, 0, 4, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
-        //---- Button search criterial ----
-        buttonSearch.setText("Search");
-
-        add(buttonSearch, new TableLayoutConstraints(5, 0, 5, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- table results ----
         tableResult.setModel(tableModel);
-        tableResult.setPreferredScrollableViewportSize(new Dimension(420, 70));
+        tableResult.setPreferredScrollableViewportSize(new Dimension(480, 80));
         tableResult.setFillsViewportHeight(true);
         //tableResult.setEnabled(false);
         //change the header color
@@ -95,19 +75,19 @@ public class PanelSearchCriterial extends JPanel {
 
 
         JScrollPane scrollPane = new JScrollPane(tableResult);
-        add(scrollPane, new TableLayoutConstraints(0, 1, 5, 1,
+        add(scrollPane, new TableLayoutConstraints(0, 0, 5, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- Button select criterial ----
         buttonSelect.setText("Select");
 
-        add(buttonSelect, new TableLayoutConstraints(5, 2, 5, 2,
+        add(buttonSelect, new TableLayoutConstraints(5, 1, 5, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- Button select criterial ----
         buttonLoad.setText("Load");
 
-        add(buttonLoad, new TableLayoutConstraints(0, 2, 0, 2,
+        add(buttonLoad, new TableLayoutConstraints(0, 1, 0, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
 
@@ -127,19 +107,7 @@ public class PanelSearchCriterial extends JPanel {
     public void setTableResultModel() {
         this.tableResult.setModel(this.tableModel);
     }
-    /**
-     * Getter for the file name.
-     * @return the String of ´textFieldName´ text field.
-     */
-    public String getName() {
-        return textFieldName.getText();
-    }
-    /**
-     * @return buttonSearch.
-     */
-    public JButton getButtonSearch(){
-        return buttonSearch;
-    }
+
     /**
      * @return buttonLoad.
      */

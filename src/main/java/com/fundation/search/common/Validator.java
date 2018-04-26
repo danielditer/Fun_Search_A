@@ -50,9 +50,11 @@ public class Validator {
      * @return boolean value is valid.
      */
     public boolean isAValidName(String name) {
+        INVALID_CHARACTERS.remove((Character) '*');
         char[] nameCharacters = name.toCharArray();
         for (char value : nameCharacters) {
             if (INVALID_CHARACTERS.contains(value)) {
+                INVALID_CHARACTERS.add('*');
                 return false;
             }
         }
@@ -65,14 +67,29 @@ public class Validator {
      * @return
      */
     public boolean isAValidPathName(String path) {
-            String[] directoryName = path.split("\\\\");
-            for (String value : directoryName) {
-                if (!isAValidName(value)) {
-                    return false;
-                }
+        String[] directoryName = path.split("\\\\");
+        for (String value : directoryName) {
+            if (!isAValidNameForPath(value)) {
+                return false;
             }
+        }
         return true;
     }
+    /**
+     * Method to validate if is a valid name path.
+     * @param name
+     * @return
+     */
+    public boolean isAValidNameForPath(String name) {
+        char[] nameCharacters = name.toCharArray();
+        for (char value : nameCharacters) {
+            if (INVALID_CHARACTERS.contains(value)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     /**
      * Method to validate path exists.
@@ -92,7 +109,7 @@ public class Validator {
      */
     public boolean isAValidPath(String path) {
         String[] file = path.split(":");
-
+System.out.println(path);
         if (path.isEmpty()) {
             return false;
         }

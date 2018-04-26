@@ -30,7 +30,7 @@ public class Main {
         SearchFiles searchFile = new SearchFiles();
         //LoggerCreator.getInstance().info(searchFile.getClass().getName(), "Started Searchfiles");
 
-        if (args.length > 0) {
+        if (System.console() != null) {
             CommandResultView commandResultView = new CommandResultView();
             //LoggerCreator.getInstance().info(commandResultView.getClass().getName(), "Started CommandResultView");
             controller = new CommandController(searchFile, commandResultView, args);

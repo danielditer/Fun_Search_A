@@ -6,12 +6,17 @@
  */
 package com.fundation.search.controller;
 
+import com.fundation.search.common.Validator;
+import com.fundation.search.common.ValidatorCommand;
 import com.fundation.search.model.SearchCriteria;
 import com.fundation.search.model.SearchFiles;
 import com.fundation.search.view.CommandResultView;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import static jdk.nashorn.internal.objects.NativeString.indexOf;
 
 
 /**
@@ -35,9 +40,96 @@ public class CommandController implements Controller {
 
     @Override
     public void init() {
-        exeCmd();
+        // exeCmd();
+        validateCommand();
         commandResultView.setResultFileList(searchFiles.getResultResultFiles());
         commandResultView.printResults();
+    }
+    /**
+     * Method to verify if the command is valid.
+     */
+    private void validateCommand() {
+        if(isAValidCommand()) {
+            exeCmd();
+        }
+    }
+    /**
+     * Method to verify if the command is valid.
+     */
+    public boolean isAValidCommand() {
+        ValidatorCommand validator = new ValidatorCommand();
+        Validator validatorNormal = new Validator();
+        if (!validator.isNotEmptyCommand(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Please insert commands");
+            return false;
+        }
+        if (!validator.isNotContainCapitalLetters(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: The command must contain lowercase letters");
+            return false;
+        }
+
+        if (!validator.containPath(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Declare a valid Path");
+            return false;
+        }
+
+        if (!validator.containRepeatCommands(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Exists repeat commands");
+            return false;
+        }
+
+        if (!validator.isAValidNumberArguments(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: An argument or command is missing");
+            return false;
+        }
+        if (!validator.isAValidArgumentAfterCommand(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: An argument or command is missing");
+            return false;
+        }
+
+        if (!validator.containAValidCommand(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Enter a valid command");
+            return false;
+        }
+        int positionPath =  Arrays.asList(inputCommands).indexOf("-p");
+        if (!validator.validatePath(inputCommands[positionPath + 1])) {
+            commandResultView.displayResult("COMMAND INFO: Invalid Path Name");
+            return false;
+        }
+
+        if (!validator.isAValidName(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Invalid Name");
+            return false;
+        }
+        //hidden validator
+        if (!validator.isAValidHidden(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Invalid hidden value");
+            return false;
+        }
+        //readonly validator
+        if (!validator.isAValidReadOnly(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Invalid readonly value");
+            return false;
+        }
+        //case sensitive validator
+        if (!validator.isAValidCaseSensitiveContainName(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Introduce name command");
+            return false;
+        }
+        if (!validator.isAValidCaseSensitive(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Invalid case sensitive value");
+            return false;
+        }
+        if (!validator.isAValidType(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Invalid type file value");
+            return false;
+        }
+        //date validator
+        if (!validator.isAValidDate(inputCommands)) {
+            commandResultView.displayResult("COMMAND INFO: Invalid date value");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -120,6 +212,6 @@ public class CommandController implements Controller {
         System.out.printf("%-15s %-20s %20s %n", "", "[-size major xx mb]", "display the major files in a range of sizes");
         System.out.printf("%-15s %-20s %20s %n", "", "[-size minor xx mb]", "display the minor files in a range of sizes");
         System.out.printf("%-15s %-20s %20s %n", "", "[-size equals xx mb]", "display the equals files in a range of sizes");
-        
+
     }
 }
