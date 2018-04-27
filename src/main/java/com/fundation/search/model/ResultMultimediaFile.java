@@ -13,6 +13,7 @@ package com.fundation.search.model;
  */
 public class ResultMultimediaFile extends Asset {
 
+    private final String videoCodec;
     private String aspectRatio;
     private int audioBitRate;
     private double frameRate;
@@ -44,7 +45,7 @@ public class ResultMultimediaFile extends Asset {
     /**
      * File codec
      */
-    private String codec;
+    private String audioCodec;
 
     public String videoSize;
 
@@ -59,14 +60,15 @@ public class ResultMultimediaFile extends Asset {
      * @param duration  hour minute second of file.
      * @param videoSize
      */
-    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime, String codec, double frameRate, int audioBitRate, String videoSize, String aspectRatio) {
+    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime, String videoCodec, String audioCodec, double frameRate, int audioBitRate, String videoSize, String aspectRatio) {
         super(path, fileName, hidden, true, typeFile, owner, size);
         this.duration = duration;
         this.extension = extension;
         this.creationTime = creationTime;
         this.lastModifiedTime = lastModifiedTime;
         this.lastAccessTime = lastAccessTime;
-        this.codec = codec;
+        this.audioCodec = audioCodec;
+        this.videoCodec = videoCodec;
         this.frameRate = frameRate;
         this.audioBitRate = audioBitRate;
         this.videoSize = videoSize;
@@ -118,8 +120,12 @@ public class ResultMultimediaFile extends Asset {
         return this.lastAccessTime;
     }
 
-    public String getCodec() {
-        return this.codec;
+    public String getVideoCodec() {
+        return this.videoCodec;
+    }
+
+    public String getAudioCodec() {
+        return this.audioCodec;
     }
 
     public double getFrameRate() {
@@ -129,12 +135,11 @@ public class ResultMultimediaFile extends Asset {
     public String getAspectRatio() {
         return aspectRatio;
     }
+
     public String getVideoSize() {
         return this.videoSize;
     }
-    public void setAspectRatio(String aspectRatio) {
-        this.aspectRatio = aspectRatio;
-    }
+
     public int getAudioBitRate() {
         return this.audioBitRate;
     }

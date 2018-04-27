@@ -88,13 +88,23 @@ public class SearchCriteriaMultimedia extends AbstractSearchCriteria {
     private boolean contentCaseSensitive;
 
     @Override
-    public String getCodec() {
-        return codec;
+    public String getVideoCodec() {
+        return videoCodec;
     }
 
     @Override
-    public void setCodec(String codec) {
-        this.codec = codec;
+    public String getAudioCodec() {
+        return audioCodec;
+    }
+
+    @Override
+    public void setVideoCodec(String videoCodec) {
+        this.videoCodec = videoCodec;
+    }
+
+    @Override
+    public void setAudioCodec(String audioCodec) {
+        this.audioCodec = audioCodec;
     }
 
     @Override
@@ -137,11 +147,12 @@ public class SearchCriteriaMultimedia extends AbstractSearchCriteria {
         this.aspectRatio = aspectRatio;
     }
 
-    private String codec;
+    private String videoCodec;
     private String frameRate;
     private String bitRate;
     private String videoSize;
     private String aspectRatio;
+    private String audioCodec;
 
     @Override
     public double getMinorDuration() {

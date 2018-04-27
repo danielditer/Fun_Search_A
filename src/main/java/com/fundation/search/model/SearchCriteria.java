@@ -86,6 +86,7 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Attribute for content case sensitive check
      */
     private boolean contentCaseSensitive;
+    private String audioCodec;
 
     /**
      * Setter for search criteria name to save in DB.
@@ -467,16 +468,7 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
 
 
-
-
-
-
-
-
-
-
-
-    private String codec;
+    private String videoCodec;
     private String frameRate;
     private String bitRate;
     private String videoSize;
@@ -485,13 +477,23 @@ public class SearchCriteria extends AbstractSearchCriteria{
     private double majorDuration;
 
     @Override
-    public String getCodec() {
-        return codec;
+    public String getVideoCodec() {
+        return videoCodec;
     }
 
     @Override
-    public void setCodec(String codec) {
-        this.codec = codec;
+    public String getAudioCodec() {
+        return audioCodec;
+    }
+
+    @Override
+    public void setVideoCodec(String videoCodec) {
+        this.videoCodec = videoCodec;
+    }
+
+    @Override
+    public void setAudioCodec(String audioCodec) {
+        this.audioCodec = audioCodec;
     }
 
     @Override
