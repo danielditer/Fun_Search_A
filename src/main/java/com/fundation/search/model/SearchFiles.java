@@ -11,7 +11,6 @@ import com.fundation.search.common.SearchQuery;
 import com.google.gson.Gson;
 import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.probe.FFmpegStream;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.math.Fraction;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -20,7 +19,6 @@ import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
-import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -31,7 +29,6 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileOwnerAttributeView;
 import java.nio.file.attribute.UserPrincipal;
-import java.nio.file.spi.FileTypeDetector;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -159,7 +156,10 @@ public class SearchFiles {
                         matchesCriteriaMulti = false;
                     }
                 }
-                if (matchesCriteriaMulti && !searchCodec(results, searchCriteria.getCodec())) {
+                if (matchesCriteriaMulti && !searchVideoCodec(results, searchCriteria.getVideoCodec())) {
+                    matchesCriteriaMulti = false;
+                }
+                if (matchesCriteriaMulti && !searchAudioCodec(results, searchCriteria.getAudioCodec())) {
                     matchesCriteriaMulti = false;
                 }
                 if (matchesCriteriaMulti && !searchResolution(results, searchCriteria.getVideoSize())) {
@@ -221,14 +221,14 @@ public class SearchFiles {
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            null, 0L, null, null, null, null, 0.0, 0, null, null));
+                            null, 0L, null, null, null, null, null, 0.0, 0, null, null));
                 } else if (!isMultimedia(fileEntry)) {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
 
                     arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, null, 0.0, 0, null, null));
+                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, null, null, 0.0, 0, null, null));
                 } else if (isMultimedia(fileEntry)) {
                     fFprobe = new FFprobe("C:\\FFMPEG\\bin\\ffprobe.exe");
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
@@ -240,13 +240,13 @@ public class SearchFiles {
                         arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
                                 fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
                                 owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                                extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, multimediaFile.codec_name, getFrameRate(multimediaFile.r_frame_rate), 0, videoSize, multimediaFile.display_aspect_ratio));
+                                extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, multimediaFile.codec_name, multimediaFile.codec_name, getFrameRate(multimediaFile.r_frame_rate), 0, videoSize, multimediaFile.display_aspect_ratio));
                     } else {
                         String videoSize = multimediaFile.width + "x" + multimediaFile.height;
                         arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
                                 fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
                                 owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                                extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, multimediaFile.codec_name, 0.0, (int) multimediaFile.bit_rate / 1000, videoSize, multimediaFile.display_aspect_ratio));
+                                extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, multimediaFile.codec_name, multimediaFile.codec_name, 0.0, (int) multimediaFile.bit_rate / 1000, videoSize, multimediaFile.display_aspect_ratio));
                     }
                 }
             }
@@ -630,12 +630,22 @@ public class SearchFiles {
         return fraction.doubleValue();
     }
 
-    public boolean searchCodec(Asset asset, String codec) {
+    public boolean searchVideoCodec(Asset asset, String codec) {
         if ("all".equalsIgnoreCase(codec)) {
             return true;
         }
         if (asset instanceof ResultMultimediaFile) {
-            return (codec.toLowerCase().contains(((ResultMultimediaFile) asset).getCodec()));
+            return (codec.toLowerCase().contains(((ResultMultimediaFile) asset).getVideoCodec()));
+        }
+        return false;
+    }
+
+    public boolean searchAudioCodec(Asset asset, String codec) {
+        if ("all".equalsIgnoreCase(codec)) {
+            return true;
+        }
+        if (asset instanceof ResultMultimediaFile) {
+            return (codec.toLowerCase().contains(((ResultMultimediaFile) asset).getAudioCodec()));
         }
         return false;
     }
@@ -654,11 +664,8 @@ public class SearchFiles {
         if ("all".equalsIgnoreCase(aspectRatio)) {
             return true;
         }
-        if ("null".equalsIgnoreCase(aspectRatio)) {
-            return false;
-        }
         if (asset instanceof ResultMultimediaFile) {
-            System.out.println("aspect ratio:"+((ResultMultimediaFile) asset).getAspectRatio());
+            System.out.println("aspect ratio:" + ((ResultMultimediaFile) asset).getAspectRatio());
             return ((ResultMultimediaFile) asset).getAspectRatio().equalsIgnoreCase(aspectRatio);
         }
         return false;

@@ -2,9 +2,13 @@ package com.fundation.search.model;
 
 public abstract class AbstractSearchCriteria {
 
-    public abstract String getCodec();
+    public abstract String getVideoCodec();
 
-    public abstract void setCodec(String codec);
+    public abstract String getAudioCodec();
+
+    public abstract void setVideoCodec(String videoCodec);
+
+    public abstract void setAudioCodec(String audioCodec);
 
     public abstract String getFrameRate();
 
