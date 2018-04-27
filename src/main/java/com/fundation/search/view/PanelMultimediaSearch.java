@@ -32,6 +32,7 @@ public class PanelMultimediaSearch extends JPanel {
     private PanelButtonSearch panelButtonSearch;
     private JSpinner spinnerAudioBitRate;
     private JLabel labelKbps;
+    private JComboBox comboBoxAspectRatio;
 
     public PanelMultimediaSearch() {
         initComponents();
@@ -61,6 +62,7 @@ public class PanelMultimediaSearch extends JPanel {
         checkBox6 = new JCheckBox();
         comboBoxFrameRate = new JComboBox();
         panelButtonSearch = new PanelButtonSearch();
+        comboBoxAspectRatio = new JComboBox();
 
         //======== this ========
         setLayout(new TableLayout(new double[][]{
@@ -125,44 +127,43 @@ public class PanelMultimediaSearch extends JPanel {
 
         panelCodec.setBorder(new TitledBorder("Codec"));
         panelCodec.setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
-                        TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
+                {TableLayout.PREFERRED, TableLayout.PREFERRED},
                 {TableLayout.PREFERRED, TableLayout.PREFERRED}}));
         ((TableLayout) panelCodec.getLayout()).setHGap(5);
         ((TableLayout) panelCodec.getLayout()).setVGap(5);
 
         //---- labelVideoCodec ----
         labelVideoCodec.setText("Video codec");
+        comboBoxVideoCodec.setMaximumSize(new Dimension(60,25));
         comboBoxVideoCodec.addItem("All");
-        comboBoxVideoCodec.addItem("MPEG-4");
-        comboBoxVideoCodec.addItem("H264");
-        comboBoxVideoCodec.addItem("H265");
-        comboBoxVideoCodec.addItem("Flash Video(*.flv)");
-        comboBoxVideoCodec.addItem("WebM Video Format(*.webm)");
-        comboBoxVideoCodec.addItem("MPEG-1");
-        comboBoxVideoCodec.addItem("MPEG-2");
-        comboBoxVideoCodec.addItem("MOV - QuickTime(*.mov)");
-        comboBoxVideoCodec.addItem("Windows Media Video(*.wmv)");
+        comboBoxVideoCodec.addItem("None");
+        comboBoxVideoCodec.addItem("FLV(flv1)");
+        comboBoxVideoCodec.addItem("H.264(h264)");
+        comboBoxVideoCodec.addItem("H.265(hevc)");
+        comboBoxVideoCodec.addItem("MPEG-1 video(mpeg1video)");
+        comboBoxVideoCodec.addItem("MPEG-2 video(mpeg2video)");
+        comboBoxVideoCodec.addItem("VP8(vp8)");
+        comboBoxVideoCodec.addItem("VP9(vp9)");
+        comboBoxVideoCodec.addItem("Windows Media Video 7(wmv1)");
+        comboBoxVideoCodec.addItem("Windows Media Video 8(wmv2)");
+        comboBoxVideoCodec.addItem("Windows Media Video 9(wmv3)");
         panelCodec.add(labelVideoCodec, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        panelCodec.add(comboBoxVideoCodec, new TableLayoutConstraints(1, 0, 3, 0,
+        panelCodec.add(comboBoxVideoCodec, new TableLayoutConstraints(1, 0, 1, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- labelAudioCodec ----
         labelAudioCodec.setText("Audio codec");
         comboBoxAudioCodec.addItem("All");
-        comboBoxAudioCodec.addItem("MP3 - MPEG Layer-3 Audio(*.mp3)");
-        comboBoxAudioCodec.addItem("WAV - Waveform Audio(*.wav)");
-        comboBoxAudioCodec.addItem("M4A - MPEG-4 Audio(*.m4a)");
-        comboBoxAudioCodec.addItem("AAC - Advanced Audio Coding(*.aac)");
-        comboBoxAudioCodec.addItem("OGG - Ogg Vorbis Audio(*.ogg)");
-        comboBoxAudioCodec.addItem("AC3 - Dolby Digital AC-3(*.ac3)");
-        comboBoxAudioCodec.addItem("WMA - Windows Media Audio(*.wma)");
-        comboBoxAudioCodec.addItem("FLAC - Free Lossless Audio Codec(*.flac)");
-        comboBoxAudioCodec.addItem("AIFF - Audio Interchange File Format(*.aiff)");
-        panelCodec.add(labelAudioCodec, new TableLayoutConstraints(4, 0, 4, 0,
+        comboBoxAudioCodec.addItem("MP3(mp3)");
+        comboBoxAudioCodec.addItem("AAC(aac)");
+        comboBoxAudioCodec.addItem("AC3(ac3)");
+        comboBoxAudioCodec.addItem("Windows Media Audio 2(wmav2)");
+        comboBoxAudioCodec.addItem("FLAC(flac)");
+        comboBoxAudioCodec.addItem("Vorbis(vorbis)");
+        panelCodec.add(labelAudioCodec, new TableLayoutConstraints(0, 1, 0, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        panelCodec.add(comboBoxAudioCodec, new TableLayoutConstraints(5, 0, 7, 0,
+        panelCodec.add(comboBoxAudioCodec, new TableLayoutConstraints(1, 1, 1, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         add(panelCodec, new TableLayoutConstraints(0, 2, 0, 2, TableLayoutConstraints.FULL,
@@ -171,7 +172,7 @@ public class PanelMultimediaSearch extends JPanel {
         //======== panelResolution ========
         panelResolution.setBorder(new TitledBorder("Resolution"));
         panelResolution.setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED},
+                {TableLayout.PREFERRED,TableLayout.PREFERRED},
                 {TableLayout.PREFERRED}}));
         ((TableLayout) panelResolution.getLayout()).setHGap(5);
         ((TableLayout) panelResolution.getLayout()).setVGap(5);
@@ -191,9 +192,13 @@ public class PanelMultimediaSearch extends JPanel {
         comboBoxResolution.addItem("1366x768");
         comboBoxResolution.addItem("1920x1080");
         comboBoxResolution.addItem("3840x2160");
+        comboBoxAspectRatio.addItem("4:3");
+        comboBoxAspectRatio.addItem("16:9");
+        comboBoxAspectRatio.addItem("All");
         panelResolution.add(comboBoxResolution, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-
+        panelResolution.add(comboBoxAspectRatio, new TableLayoutConstraints(1, 0, 1, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         add(panelResolution, new TableLayoutConstraints(0, 3, 0, 3,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
@@ -241,6 +246,9 @@ public class PanelMultimediaSearch extends JPanel {
     public String getCodec() {
         return comboBoxVideoCodec.getSelectedItem().toString();
     }
+    public String getAudioCodec(){
+        return comboBoxAudioCodec.getSelectedItem().toString();
+    }
     public String getResolution() {
         return comboBoxResolution.getSelectedItem().toString();
     }
@@ -250,4 +258,5 @@ public class PanelMultimediaSearch extends JPanel {
     public String getBitRate() {
         return spinnerAudioBitRate.getValue().toString();
     }
+    public String getAspectRatio(){return  comboBoxAspectRatio.getSelectedItem().toString();}
 }

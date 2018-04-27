@@ -11,6 +11,7 @@ import com.fundation.search.common.SearchQuery;
 import com.google.gson.Gson;
 import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.probe.FFmpegStream;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.math.Fraction;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -30,6 +31,7 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileOwnerAttributeView;
 import java.nio.file.attribute.UserPrincipal;
+import java.nio.file.spi.FileTypeDetector;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -143,7 +145,7 @@ public class SearchFiles {
                     arrayFinalResult.add(results);
                 }
             }
-        } else if("2".equals(searchType)) {
+        } else if ("2".equals(searchType)) {
             if (searchCriteria.getPath() != null) {
                 filePath = new File(searchCriteria.getPath());
             }
@@ -161,6 +163,9 @@ public class SearchFiles {
                     matchesCriteriaMulti = false;
                 }
                 if (matchesCriteriaMulti && !searchResolution(results, searchCriteria.getVideoSize())) {
+                    matchesCriteriaMulti = false;
+                }
+                if (matchesCriteriaMulti && !searchAspectRatio(results, searchCriteria.getAspectRatio())) {
                     matchesCriteriaMulti = false;
                 }
                 if (matchesCriteriaMulti && !searchFrameRate(results, searchCriteria.getFrameRate())) {
@@ -224,17 +229,25 @@ public class SearchFiles {
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
                             extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, null, 0.0, 0, null, null));
-                } else if (isMultimedia(fileEntry)){
+                } else if (isMultimedia(fileEntry)) {
                     fFprobe = new FFprobe("C:\\FFMPEG\\bin\\ffprobe.exe");
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
-                    FFmpegStream multimediaFile = fFprobe.probe(fileEntry.getPath()).getStreams().get(1);
+                    FFmpegStream multimediaFile = fFprobe.probe(fileEntry.getPath()).getStreams().get(0);
                     double duration = multimediaFile.duration;
-                    String videoSize = multimediaFile.width + "x" + multimediaFile.height;
-                    System.out.println("frame rate:" + getFrameRate(multimediaFile.r_frame_rate));
-                    arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
-                            fileEntry.isHidden(), duration, !fileEntry.canWrite(), 1,
-                            owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, multimediaFile.codec_name,getFrameRate(multimediaFile.r_frame_rate), (int) multimediaFile.bit_rate/1000, videoSize, multimediaFile.display_aspect_ratio));
+                    if (!isAudio(fileEntry)) {
+                        String videoSize = multimediaFile.width + "x" + multimediaFile.height;
+                        System.out.println("frame rate:" + getFrameRate(multimediaFile.r_frame_rate));
+                        arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
+                                fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
+                                owner.getName().substring(owner.getName().indexOf("\\") + 1),
+                                extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, multimediaFile.codec_name, getFrameRate(multimediaFile.r_frame_rate), 0, videoSize, multimediaFile.display_aspect_ratio));
+                    } else {
+                        String videoSize = multimediaFile.width + "x" + multimediaFile.height;
+                        arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
+                                fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
+                                owner.getName().substring(owner.getName().indexOf("\\") + 1),
+                                extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, multimediaFile.codec_name, 0.0, (int) multimediaFile.bit_rate / 1000, videoSize, multimediaFile.display_aspect_ratio));
+                    }
                 }
             }
         } catch (NullPointerException e) {
@@ -243,6 +256,17 @@ public class SearchFiles {
             e.printStackTrace();
         }
         return arrayResultFiles;
+    }
+
+    private boolean isAudio(File fileEntry) {
+        String ext = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
+        System.out.println(ext);
+        if (ext.equalsIgnoreCase("mp3") || ext.equalsIgnoreCase("aac") || ext.equalsIgnoreCase("ogg")
+                || ext.equalsIgnoreCase("wma") || ext.equalsIgnoreCase("wav") || ext.equalsIgnoreCase("flac")
+                || ext.equalsIgnoreCase("m4a")) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -272,6 +296,7 @@ public class SearchFiles {
 
     /**
      * Method to search for file's name wildcard when it is case sensitive.
+     *
      * @param asset the file.
      * @return true or false.
      */
@@ -281,7 +306,7 @@ public class SearchFiles {
                 return true;
             }
             if ("*".equals(searchCriteria.getName().substring(0, 1)) && "*".equals(searchCriteria.getName().substring(searchCriteria.getName().length() - 1))) {
-                return asset.getFileName().contains(searchCriteria.getName().substring(1,searchCriteria.getName().length() - 1));
+                return asset.getFileName().contains(searchCriteria.getName().substring(1, searchCriteria.getName().length() - 1));
             }
             if ("*".equals(searchCriteria.getName().substring(0, 1))) {
                 return asset.getFileName().endsWith(searchCriteria.getName().substring(1));
@@ -297,6 +322,7 @@ public class SearchFiles {
 
     /**
      * Method to search for file's name wildcard when it is not case sensitive.
+     *
      * @param asset the file.
      * @return true or false.
      */
@@ -306,7 +332,7 @@ public class SearchFiles {
                 return true;
             }
             if ("*".equals(searchCriteria.getName().substring(0, 1)) && "*".equals(searchCriteria.getName().substring(searchCriteria.getName().length() - 1))) {
-                return asset.getFileName().toUpperCase().contains(searchCriteria.getName().toUpperCase().substring(1,searchCriteria.getName().length() - 1));
+                return asset.getFileName().toUpperCase().contains(searchCriteria.getName().toUpperCase().substring(1, searchCriteria.getName().length() - 1));
             }
             if ("*".equals(searchCriteria.getName().substring(0, 1))) {
                 return asset.getFileName().toUpperCase().endsWith(searchCriteria.getName().toUpperCase().substring(1));
@@ -587,14 +613,20 @@ public class SearchFiles {
     }
 
     public boolean isMultimedia(File file) {
-        MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
-        String mimeType = mimeTypesMap.getContentType(file.getName());
-        if (mimeType.contains("audio") || mimeType.contains("video"))
+        String ext = file.getName().substring(file.getName().lastIndexOf(".") + 1);
+        System.out.println(ext);
+        if (ext.equalsIgnoreCase("mp3") || ext.equalsIgnoreCase("mp4") || ext.equalsIgnoreCase("aac") || ext.equalsIgnoreCase("ogg") || ext.equalsIgnoreCase("avi")
+                || ext.equalsIgnoreCase("wma") || ext.equalsIgnoreCase("wav") || ext.equalsIgnoreCase("flac") || ext.equalsIgnoreCase("mpg") || ext.equalsIgnoreCase("flv")
+                || ext.equalsIgnoreCase("m4a") || ext.equalsIgnoreCase("mkv")
+                || ext.equalsIgnoreCase("mov") || ext.equalsIgnoreCase("wmv")
+                || ext.equalsIgnoreCase("webm") || ext.equalsIgnoreCase("vob")) {
             return true;
+        }
         return false;
     }
 
-    public double getFrameRate(Fraction fraction){
+
+    public double getFrameRate(Fraction fraction) {
         return fraction.doubleValue();
     }
 
@@ -603,10 +635,11 @@ public class SearchFiles {
             return true;
         }
         if (asset instanceof ResultMultimediaFile) {
-            return ((ResultMultimediaFile) asset).getCodec().equalsIgnoreCase(codec);
+            return (codec.toLowerCase().contains(((ResultMultimediaFile) asset).getCodec()));
         }
         return false;
     }
+
     public boolean searchResolution(Asset asset, String resolution) {
         if ("all".equalsIgnoreCase(resolution)) {
             return true;
@@ -616,6 +649,21 @@ public class SearchFiles {
         }
         return false;
     }
+
+    public boolean searchAspectRatio(Asset asset, String aspectRatio) {
+        if ("all".equalsIgnoreCase(aspectRatio)) {
+            return true;
+        }
+        if ("null".equalsIgnoreCase(aspectRatio)) {
+            return false;
+        }
+        if (asset instanceof ResultMultimediaFile) {
+            System.out.println("aspect ratio:"+((ResultMultimediaFile) asset).getAspectRatio());
+            return ((ResultMultimediaFile) asset).getAspectRatio().equalsIgnoreCase(aspectRatio);
+        }
+        return false;
+    }
+
     public boolean searchFrameRate(Asset asset, String frameRate) {
         if ("all".equalsIgnoreCase(frameRate)) {
             return true;
@@ -627,9 +675,10 @@ public class SearchFiles {
         }
         return false;
     }
+
     public boolean searchBitRate(Asset asset, String bitRate) {
         if (asset instanceof ResultMultimediaFile) {
-            int bit = (int)Double.parseDouble(bitRate);
+            int bit = (int) Double.parseDouble(bitRate);
             if (bit > 0) {
                 System.out.println("bit rate:" + ((ResultMultimediaFile) asset).getAudioBitRate());
                 return ((ResultMultimediaFile) asset).getAudioBitRate() == bit;

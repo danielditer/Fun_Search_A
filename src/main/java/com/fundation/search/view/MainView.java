@@ -85,7 +85,6 @@ public class MainView extends JFrame {
         tabbedPane.addTab("Normal Search", panelNormalSearch);
         //======== panelMultimediaSearch ========
         tabbedPane.addTab("Multimedia Search", panelMultimediaSearch);
-
         contentPane.add(tabbedPane, BorderLayout.CENTER);
         //======== panelTabbedPane ========
         setVisible(true);
