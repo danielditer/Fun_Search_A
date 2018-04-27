@@ -116,7 +116,7 @@ public class SearchController implements Controller {
 
     public void searchButtonMultimediaActionListener(PanelMultimediaSearch panel) {
         if (areValidMultimediaParams(panel.getPath(), panel.getName())) {
-            sendSearchCriteriaMultimediaToModel(panel.getPath(), panel.getName(), panel.getCaseSensitiveName(), panel.getCodec(),panel.getResolution(), panel.getFrameRate(), panel.getBitRate(),panel.getAspectRatio());
+            sendSearchCriteriaMultimediaToModel(panel.getPath(), panel.getName(), panel.getCaseSensitiveName(), panel.getCodec(),panel.getResolution(), panel.getFrameRate(), panel.getBitRate(),panel.getAspectRatio(), panel.getAudioCodec());
         }
     }
 
@@ -355,14 +355,15 @@ public class SearchController implements Controller {
         setResultsToTable();
     }
 
-    public void sendSearchCriteriaMultimediaToModel(String path, String name, boolean nameFileCaseSensitive, String codec, String resolution, String frameRate, String bitRate,String aspectRatio) {
+    public void sendSearchCriteriaMultimediaToModel(String path, String name, boolean nameFileCaseSensitive, String codec, String resolution, String frameRate, String bitRate, String aspectRatio, String audioCodec) {
         searchCriteriaMultimedia = new SearchCriteriaMultimedia();
         searchCriteriaMultimedia.setPath(path);
         if (!name.isEmpty()) {
             searchCriteriaMultimedia.setName(name);
         }
         searchCriteriaMultimedia.setNameFileCaseSensitive(nameFileCaseSensitive);
-        searchCriteriaMultimedia.setCodec(codec);
+        searchCriteriaMultimedia.setVideoCodec(codec);
+        searchCriteriaMultimedia.setAudioCodec(audioCodec);
         searchCriteriaMultimedia.setVideoSize(resolution);
         searchCriteriaMultimedia.setFrameRate(frameRate);
         searchCriteriaMultimedia.setBitRate(bitRate);
