@@ -36,22 +36,17 @@ public class PanelButtonSearch extends JPanel {
         buttonSearch = new JButton();
         buttonClear = new JButton();
 
-
         setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
-                        TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
-                        TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
-                        TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
-                        TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
+                {TableLayout.PREFERRED, TableLayout.PREFERRED},
                 {TableLayout.PREFERRED}}));
         //---- buttonSearch ----
         buttonSearch.setText("Search");
         buttonClear.setText("Clear");
 
-        add(buttonSearch, new TableLayoutConstraints(4, 0, 4, 0,
+        add(buttonSearch, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
-        add(buttonClear, new TableLayoutConstraints(5, 0, 5, 0,
+        add(buttonClear, new TableLayoutConstraints(1, 0, 1, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
     }
 

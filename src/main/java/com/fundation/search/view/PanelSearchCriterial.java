@@ -54,7 +54,7 @@ public class PanelSearchCriterial extends JPanel {
         tableModel.setColumnIdentifiers(columnNames);
 
 
-        setBorder(new TitledBorder("Search Criterial"));
+        setBorder(new TitledBorder("Search Criteria"));
         setOpaque(false);
         setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},

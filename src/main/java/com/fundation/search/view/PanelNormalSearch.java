@@ -27,7 +27,7 @@ public class PanelNormalSearch extends JPanel {
     /**
      * Class constructor to initialize components and set visible this panel.
      */
-    public PanelNormalSearch() {
+    public  PanelNormalSearch() {
         initComponents();
         setVisible(true);
     }
@@ -46,8 +46,10 @@ public class PanelNormalSearch extends JPanel {
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
                         TableLayout.PREFERRED}}));
         //======== panelNamePath ========
-        add(panelNamePath, new TableLayoutConstraints(0, 0, 0, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        /*add(panelNamePath, new TableLayoutConstraints(0, 0, 0, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));*/
+
+
         //======== panelFileContent ========
         add(panelFileContents, new TableLayoutConstraints(0, 1, 0, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
@@ -59,8 +61,8 @@ public class PanelNormalSearch extends JPanel {
         add(panelAttributes, new TableLayoutConstraints(0, constraints1, 0, constraints1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         //======== panelButtonSearch ========
-        add(panelButtonSearch, new TableLayoutConstraints(0, 4, 0, 4,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        /*add(panelButtonSearch, new TableLayoutConstraints(0, 4, 0, 4,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));*/
 
        
     }

@@ -42,6 +42,12 @@ public class MainView extends JFrame {
     private PanelSearchResults panelSearchResult;
     private PanelSearchCriterial panelSearchCriterial;
     private PanelSaveCriterial panelSaveCriterial;
+
+
+    private JPanel panelSearch;
+    private PanelNamePath panelNamePath;
+    private JPanel panelButton;
+    private PanelButtonSearch panelButtonSearch;
     /**
      * MainView constructor.
      */
@@ -61,7 +67,13 @@ public class MainView extends JFrame {
         panelMultimediaSearch = new PanelMultimediaSearch();
         panelSearchCriterial = new PanelSearchCriterial();
         panelSaveCriterial = new PanelSaveCriterial();
-        //panelTerminalSearch = new JPanel();
+
+        /*********/
+        panelSearch = new JPanel();
+        panelNamePath = new PanelNamePath();
+        panelButton = new JPanel();
+        panelButtonSearch = new PanelButtonSearch();
+        /*********/
 
         panelResults = new JPanel();
         panelSearchCrit = new JPanel();
@@ -79,22 +91,39 @@ public class MainView extends JFrame {
         menuBar.add(menuHelp);
         setJMenuBar(menuBar);
 
-        tabbedPane.setPreferredSize(new Dimension(340, 490));
+
+        //======== panel Search Name, Path ========
+        panelSearch.setBorder(new EmptyBorder(5,15,5,10));
+        panelSearch.add(panelNamePath);
+        contentPane.add(panelSearch, BorderLayout.NORTH);
+
+
+        tabbedPane.setPreferredSize(new Dimension(340, 350));
         tabbedPane.setBorder(new EmptyBorder(5,15,5,10));
         //======== panelNormalSearch ========
         tabbedPane.addTab("Normal Search", panelNormalSearch);
         //======== panelMultimediaSearch ========
         tabbedPane.addTab("Multimedia Search", panelMultimediaSearch);
         contentPane.add(tabbedPane, BorderLayout.CENTER);
+
+        //======== panelButtonSearch ========
+        panelButton.setBorder(new EmptyBorder(5,15,5,10));
+        panelButton.add(panelButtonSearch);
+        contentPane.add(panelButton, BorderLayout.SOUTH);
+
         //======== panelTabbedPane ========
         setVisible(true);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900,550);
+        setSize(1000,650);
         setLocationRelativeTo(null);
         setResizable(false);
 
         EmptyBorder borderRes = new EmptyBorder(5,330,10,10);
+        //======== panel Search Results ========
+        panelSaveCrit.setBorder(borderRes);
+        panelSaveCrit.add(panelSaveCriterial);
+        contentPane.add(panelSaveCrit, BorderLayout.NORTH);
         //======== panel Search Criterial ========
         panelSearchCrit.setBorder(borderRes);
         panelSearchCrit.add(panelSearchCriterial);
@@ -104,10 +133,6 @@ public class MainView extends JFrame {
         panelResults.setBorder(borderRes);
         panelResults.add(panelSearchResult);
         contentPane.add(panelResults, BorderLayout.SOUTH);
-        //======== panel Search Results ========
-        panelSaveCrit.setBorder(borderRes);
-        panelSaveCrit.add(panelSaveCriterial);
-        contentPane.add(panelSaveCrit, BorderLayout.NORTH);
 
     }
 

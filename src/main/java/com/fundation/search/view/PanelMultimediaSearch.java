@@ -71,8 +71,8 @@ public class PanelMultimediaSearch extends JPanel {
                         TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
 
         //======== panelNamePath ========
-        add(panelNamePath, new TableLayoutConstraints(0, 0, 0, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        /*add(panelNamePath, new TableLayoutConstraints(0, 0, 0, 0,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));*/
 
         //======== panelDuration ========
 
@@ -227,8 +227,8 @@ public class PanelMultimediaSearch extends JPanel {
 
         //======== panelButtonSearch ========
 
-        add(panelButtonSearch, new TableLayoutConstraints(0, 7, 0, 7,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        /*add(panelButtonSearch, new TableLayoutConstraints(0, 7, 0, 7,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));*/
     }
 
     public String getName() {
