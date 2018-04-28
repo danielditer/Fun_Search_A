@@ -12,8 +12,10 @@ package com.fundation.search.model;
  * @version 27 Mar 2018  * @Juan Manuel
  */
 public class SearchCriteria extends AbstractSearchCriteria{
+    /**
+     * Attribute to know which name the user set to save search criteria in DB.
+     */
     private String searchCriteriaName;
-
     /**
      * Attribute of file name
      */
@@ -86,7 +88,38 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Attribute for content case sensitive check
      */
     private boolean contentCaseSensitive;
+    /**
+     * Attribute for multimedia files, video codec.
+     */
+    private String videoCodec;
+    /**
+     * Attribute for multimedia files, frame rate.
+     */
+    private String frameRate;
+    /**
+     * Attribute for multimedia files, bit rate.
+     */
+    private String bitRate;
+    /**
+     * Attribute for multimedia files, video size.
+     */
+    private String videoSize;
+    /**
+     * Attribute for multimedia files, aspect ratio.
+     */
+    private String aspectRatio;
+    /**
+     * Attribute for multimedia files, audio codec.
+     */
     private String audioCodec;
+    /**
+     * Attribute for multimedia files, minor duration.
+     */
+    private double minorDuration;
+    /**
+     * Attribute for multimedia files, major duration.
+     */
+    private double majorDuration;
 
     /**
      * Setter for search criteria name to save in DB.
@@ -140,7 +173,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Setter for typeFile.
-     *
      * @param setTypeFile 1, 2, 3, 0 to know if search is file, multimedia, directory or all of them.
      */
     @Override
@@ -150,7 +182,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Setter for nameFileCaseSensitive.
-     *
      * @param nameFileCaseSensitive true for case sensitive search.
      */
     @Override
@@ -160,7 +191,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Setter for owner attribute.
-     *
      * @param owner input from UI.
      */
     @Override
@@ -170,7 +200,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Setter for extension attribute.
-     *
      * @param extension input from UI.
      */
     @Override
@@ -180,7 +209,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Setter for size sign.
-     *
      * @param sizeSign input from UI.
      */
     @Override
@@ -190,7 +218,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Setter for size required.
-     *
      * @param sizeRequired
      */
     @Override
@@ -200,7 +227,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Setter for size measure.
-     *
      * @param sizeMeasure
      */
     @Override
@@ -210,7 +236,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Setter for create date.
-     *
      * @param createDate
      */
     @Override
@@ -220,7 +245,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Setter for modified date.
-     *
      * @param modifiedDate
      */
     @Override
@@ -230,7 +254,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Setter for accessed date.
-     *
      * @param accessedDate
      */
     @Override
@@ -240,7 +263,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Setter for from date.
-     *
      * @param fromDate
      */
     @Override
@@ -250,7 +272,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Setter for to date.
-     *
      * @param toDate
      */
     @Override
@@ -260,7 +281,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Setter for content.
-     *
      * @param content
      */
     @Override
@@ -270,13 +290,98 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Setter for content case sensitive.
-     *
      * @param contentCaseSensitive
      */
     @Override
     public void setContentCaseSensitive(boolean contentCaseSensitive) {
         this.contentCaseSensitive = contentCaseSensitive;
     }
+
+    /**
+     * Setter for multimedia attribute, video codec.
+     * @param videoCodec
+     */
+    @Override
+    public void setVideoCodec(String videoCodec) {
+        this.videoCodec = videoCodec;
+    }
+
+    /**
+     * Setter for multimedia attribute, frame rate.
+     * @param videoCodec
+     */
+    @Override
+    public void setFrameRate(String frameRate) {
+        this.frameRate = frameRate;
+    }
+
+    /**
+     * Setter for multimedia attribute, bit rate.
+     * @param videoCodec
+     */
+    @Override
+    public void setBitRate(String bitRate) {
+        this.bitRate = bitRate;
+    }
+
+    /**
+     * Setter for multimedia attribute, video size.
+     * @param videoCodec
+     */
+    @Override
+    public void setVideoSize(String videoSize) {
+        this.videoSize = videoSize;
+    }
+
+    /**
+     * Setter for multimedia attribute, aspect ratio.
+     * @param videoCodec
+     */
+    @Override
+    public void setAspectRatio(String aspectRatio) {
+        this.aspectRatio = aspectRatio;
+    }
+
+    /**
+     * Setter for multimedia attribute, audio codec.
+     * @param videoCodec
+     */
+    @Override
+    public void setAudioCodec(String audioCodec) {
+        this.audioCodec = audioCodec;
+    }
+
+    /**
+     * Setter for multimedia attribute, minor duration.
+     * @param videoCodec
+     */
+    @Override
+    public void setMinorDuration(double minorDuration) {
+        this.minorDuration = minorDuration;
+    }
+
+    /**
+     * Setter for multimedia attribute, major duration.
+     * @param videoCodec
+     */
+    @Override
+    public void setMajorDuration(double majorDuration) {
+        this.majorDuration = majorDuration;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Getter for search criteria name saved in DB
@@ -448,7 +553,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Getter for content.
-     *
      * @return
      */
     @Override
@@ -458,7 +562,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
 
     /**
      * Getter for content case sensitive.
-     *
      * @return
      */
     @Override
@@ -467,93 +570,77 @@ public class SearchCriteria extends AbstractSearchCriteria{
     }
 
 
-
-    private String videoCodec;
-    private String frameRate;
-    private String bitRate;
-    private String videoSize;
-    private String aspectRatio;
-    private double minorDuration;
-    private double majorDuration;
-
+    /**
+     * Getter for multimedia attribute, video codec.
+     * @return
+     */
     @Override
     public String getVideoCodec() {
         return videoCodec;
     }
 
-    @Override
-    public String getAudioCodec() {
-        return audioCodec;
-    }
-
-    @Override
-    public void setVideoCodec(String videoCodec) {
-        this.videoCodec = videoCodec;
-    }
-
-    @Override
-    public void setAudioCodec(String audioCodec) {
-        this.audioCodec = audioCodec;
-    }
-
+    /**
+     * Getter for multimedia attribute, frame rate.
+     * @return
+     */
     @Override
     public String getFrameRate() {
         return frameRate;
     }
 
-    @Override
-    public void setFrameRate(String frameRate) {
-        this.frameRate = frameRate;
-    }
-
+    /**
+     * Getter for multimedia attribute, bit rate.
+     * @return
+     */
     @Override
     public String getBitRate() {
         return bitRate;
     }
 
-    @Override
-    public void setBitRate(String bitRate) {
-        this.bitRate = bitRate;
-    }
-
+    /**
+     * Getter for multimedia attribute, video size.
+     * @return
+     */
     @Override
     public String getVideoSize() {
         return videoSize;
     }
 
-    @Override
-    public void setVideoSize(String videoSize) {
-        this.videoSize = videoSize;
-    }
-
+    /**
+     * Getter for multimedia attribute, aspect ratio.
+     * @return
+     */
     @Override
     public String getAspectRatio() {
         return aspectRatio;
     }
 
+    /**
+     * Getter for multimedia attribute, audio codec.
+     * @return
+     */
     @Override
-    public void setAspectRatio(String aspectRatio) {
-        this.aspectRatio = aspectRatio;
+    public String getAudioCodec() {
+        return audioCodec;
     }
 
+    /**
+     * Getter for multimedia attribute, minor duration.
+     * @return
+     */
     @Override
     public double getMinorDuration() {
         return minorDuration;
     }
 
-    @Override
-    public void setMinorDuration(double minorDuration) {
-        this.minorDuration = minorDuration;
-    }
-
+    /**
+     * Getter for multimedia attribute, major duration.
+     * @return
+     */
     @Override
     public double getMajorDuration() {
         return majorDuration;
     }
 
-    @Override
-    public void setMajorDuration(double majorDuration) {
-        this.majorDuration = majorDuration;
-    }
 
 }
