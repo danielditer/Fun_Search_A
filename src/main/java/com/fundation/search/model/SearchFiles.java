@@ -48,7 +48,7 @@ public class SearchFiles {
     /**
      * searchCriteria is the attribute that is used for setting the criteria of searching.
      */
-    private AbstractSearchCriteria searchCriteria;
+    private SearchCriteria searchCriteria;
     /**
      * resultResultFiles is the attribute in which we are going to recover files depending the type of searching.
      */
@@ -61,8 +61,7 @@ public class SearchFiles {
      * arrayCoincidences is the array in which all the search coincidences depending the method used, are going to be stored.
      */
     private List<Asset> arrayFinalResult;
-
-    //private SearchCriteriaMultimedia searchCriteriaMultimedia;
+    
     /**
      * Object to create asset objects (files, multimedia, directory).
      */
@@ -78,7 +77,7 @@ public class SearchFiles {
      *
      * @param searchCriteria is the param received in order to set the search criteria.
      */
-    public void setSearchCriteria(AbstractSearchCriteria searchCriteria) {
+    public void setSearchCriteria(SearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
     }
 

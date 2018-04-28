@@ -11,7 +11,7 @@ package com.fundation.search.model;
  *
  * @version 27 Mar 2018  * @Juan Manuel
  */
-public class SearchCriteria extends AbstractSearchCriteria{
+public class SearchCriteria {
     /**
      * Attribute to know which name the user set to save search criteria in DB.
      */
@@ -121,12 +121,12 @@ public class SearchCriteria extends AbstractSearchCriteria{
      */
     private double majorDuration;
 
+    /**SETTERS*/
     /**
      * Setter for search criteria name to save in DB.
      *
      * @param searchCriteriaName
      */
-    @Override
     public void setSearchCriteriaName(String searchCriteriaName) {
         this.searchCriteriaName = searchCriteriaName;
     }
@@ -136,7 +136,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @param name, is the file name the user is searching.
      */
-    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -146,7 +145,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @param path, is the path where the user is searching a file.
      */
-    @Override
     public void setPath(String path) {
         this.path = path;
     }
@@ -156,7 +154,7 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @param hidden
      */
-    @Override
+    
     public void setHidden(String hidden) {
         this.hidden = hidden;
     }
@@ -166,7 +164,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @param readOnly boolean attribute;
      */
-    @Override
     public void setReadOnly(String readOnly) {
         this.readOnly = readOnly;
     }
@@ -175,7 +172,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for typeFile.
      * @param setTypeFile 1, 2, 3, 0 to know if search is file, multimedia, directory or all of them.
      */
-    @Override
     public void setTypeFile(int setTypeFile) {
         this.typeFile = setTypeFile;
     }
@@ -184,7 +180,7 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for nameFileCaseSensitive.
      * @param nameFileCaseSensitive true for case sensitive search.
      */
-    @Override
+
     public void setNameFileCaseSensitive(boolean nameFileCaseSensitive) {
         this.nameFileCaseSensitive = nameFileCaseSensitive;
     }
@@ -193,7 +189,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for owner attribute.
      * @param owner input from UI.
      */
-    @Override
     public void setOwner(String owner) {
         this.owner = owner;
     }
@@ -202,7 +197,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for extension attribute.
      * @param extension input from UI.
      */
-    @Override
     public void setExtension(String extension) {
         this.extension = extension;
     }
@@ -211,7 +205,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for size sign.
      * @param sizeSign input from UI.
      */
-    @Override
     public void setSizeSign(String sizeSign) {
         this.sizeSign = sizeSign;
     }
@@ -220,7 +213,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for size required.
      * @param sizeRequired
      */
-    @Override
     public void setSizeRequired(String sizeRequired) {
         this.sizeRequired = sizeRequired;
     }
@@ -229,7 +221,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for size measure.
      * @param sizeMeasure
      */
-    @Override
     public void setSizeMeasure(String sizeMeasure) {
         this.sizeMeasure = sizeMeasure;
     }
@@ -238,7 +229,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for create date.
      * @param createDate
      */
-    @Override
     public void setCreateDate(boolean createDate) {
         this.createDate = createDate;
     }
@@ -247,7 +237,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for modified date.
      * @param modifiedDate
      */
-    @Override
     public void setModifiedDate(boolean modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
@@ -256,7 +245,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for accessed date.
      * @param accessedDate
      */
-    @Override
     public void setAccessedDate(boolean accessedDate) {
         this.accessedDate = accessedDate;
     }
@@ -265,7 +253,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for from date.
      * @param fromDate
      */
-    @Override
     public void setFromDate(String fromDate) {
         this.fromDate = fromDate;
     }
@@ -274,7 +261,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for to date.
      * @param toDate
      */
-    @Override
     public void setToDate(String toDate) {
         this.toDate = toDate;
     }
@@ -283,7 +269,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for content.
      * @param content
      */
-    @Override
     public void setContent(String content) {
         this.content = content;
     }
@@ -292,7 +277,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for content case sensitive.
      * @param contentCaseSensitive
      */
-    @Override
     public void setContentCaseSensitive(boolean contentCaseSensitive) {
         this.contentCaseSensitive = contentCaseSensitive;
     }
@@ -301,7 +285,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for multimedia attribute, video codec.
      * @param videoCodec
      */
-    @Override
     public void setVideoCodec(String videoCodec) {
         this.videoCodec = videoCodec;
     }
@@ -310,7 +293,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for multimedia attribute, frame rate.
      * @param videoCodec
      */
-    @Override
     public void setFrameRate(String frameRate) {
         this.frameRate = frameRate;
     }
@@ -319,7 +301,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for multimedia attribute, bit rate.
      * @param videoCodec
      */
-    @Override
     public void setBitRate(String bitRate) {
         this.bitRate = bitRate;
     }
@@ -328,7 +309,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for multimedia attribute, video size.
      * @param videoCodec
      */
-    @Override
     public void setVideoSize(String videoSize) {
         this.videoSize = videoSize;
     }
@@ -337,7 +317,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for multimedia attribute, aspect ratio.
      * @param videoCodec
      */
-    @Override
     public void setAspectRatio(String aspectRatio) {
         this.aspectRatio = aspectRatio;
     }
@@ -346,7 +325,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for multimedia attribute, audio codec.
      * @param videoCodec
      */
-    @Override
     public void setAudioCodec(String audioCodec) {
         this.audioCodec = audioCodec;
     }
@@ -355,7 +333,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for multimedia attribute, minor duration.
      * @param videoCodec
      */
-    @Override
     public void setMinorDuration(double minorDuration) {
         this.minorDuration = minorDuration;
     }
@@ -364,31 +341,16 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Setter for multimedia attribute, major duration.
      * @param videoCodec
      */
-    @Override
     public void setMajorDuration(double majorDuration) {
         this.majorDuration = majorDuration;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**GETTERS*/
     /**
      * Getter for search criteria name saved in DB
      *
      * @return
      */
-    @Override
     public String getSearchCriteriaName() {
         return this.searchCriteriaName;
     }
@@ -398,7 +360,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return name, is the file name set in previous method.
      */
-    @Override
     public String getName() {
         return this.name;
     }
@@ -408,7 +369,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return path, is the path set in previous method.
      */
-    @Override
     public String getPath() {
         return this.path;
     }
@@ -418,7 +378,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return hidden attribute.
      */
-    @Override
     public String getHidden() {
         return this.hidden;
     }
@@ -426,7 +385,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
     /**
      * Getter for readonly attribute
      */
-    @Override
     public String getReadOnly() {
         return this.readOnly;
     }
@@ -436,7 +394,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return type file attribute.
      */
-    @Override
     public int getTypeFile() {
         return this.typeFile;
     }
@@ -446,7 +403,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return name file case sensitive.
      */
-    @Override
     public boolean getNameFileCaseSensitive() {
         return this.nameFileCaseSensitive;
     }
@@ -456,7 +412,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return owner attribute.
      */
-    @Override
     public String getOwner() {
         return this.owner;
     }
@@ -466,7 +421,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return extesntion attribute.
      */
-    @Override
     public String getExtension() {
         return this.extension;
     }
@@ -476,7 +430,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return size sign.
      */
-    @Override
     public String getSizeSign() {
         return this.sizeSign;
     }
@@ -486,7 +439,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return
      */
-    @Override
     public String getSizeRequired() {
         return this.sizeRequired;
     }
@@ -496,7 +448,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return
      */
-    @Override
     public String getSizeMeasure() {
         return this.sizeMeasure;
     }
@@ -506,7 +457,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return
      */
-    @Override
     public boolean getCreatedDate() {
         return this.createDate;
     }
@@ -516,7 +466,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return
      */
-    @Override
     public boolean getModifiedDate() {
         return this.modifiedDate;
     }
@@ -526,7 +475,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return
      */
-    @Override
     public boolean getAccessedDate() {
         return this.accessedDate;
     }
@@ -536,7 +484,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return creationTime
      */
-    @Override
     public String getFromDate() {
         return this.fromDate;
     }
@@ -546,7 +493,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return lastModifiedTime.
      */
-    @Override
     public String getToDate() {
         return this.toDate;
     }
@@ -555,7 +501,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Getter for content.
      * @return
      */
-    @Override
     public String getContent() {
         return this.content;
     }
@@ -564,7 +509,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Getter for content case sensitive.
      * @return
      */
-    @Override
     public boolean getContentCaseSensitive() {
         return this.contentCaseSensitive;
     }
@@ -574,7 +518,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Getter for multimedia attribute, video codec.
      * @return
      */
-    @Override
     public String getVideoCodec() {
         return videoCodec;
     }
@@ -583,7 +526,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Getter for multimedia attribute, frame rate.
      * @return
      */
-    @Override
     public String getFrameRate() {
         return frameRate;
     }
@@ -592,7 +534,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Getter for multimedia attribute, bit rate.
      * @return
      */
-    @Override
     public String getBitRate() {
         return bitRate;
     }
@@ -601,7 +542,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Getter for multimedia attribute, video size.
      * @return
      */
-    @Override
     public String getVideoSize() {
         return videoSize;
     }
@@ -610,7 +550,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Getter for multimedia attribute, aspect ratio.
      * @return
      */
-    @Override
     public String getAspectRatio() {
         return aspectRatio;
     }
@@ -619,7 +558,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Getter for multimedia attribute, audio codec.
      * @return
      */
-    @Override
     public String getAudioCodec() {
         return audioCodec;
     }
@@ -628,7 +566,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Getter for multimedia attribute, minor duration.
      * @return
      */
-    @Override
     public double getMinorDuration() {
         return minorDuration;
     }
@@ -637,10 +574,7 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Getter for multimedia attribute, major duration.
      * @return
      */
-    @Override
     public double getMajorDuration() {
         return majorDuration;
     }
-
-
 }

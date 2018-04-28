@@ -9,7 +9,6 @@
 package com.fundation.search.common;
 
 import java.io.File;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -156,7 +155,7 @@ System.out.println(path);
         try {
             Date dateFromDate = formatDate.parse(fromDate);
             Date dateToDate = formatDate.parse(toDate);
-            if (dateFromDate.compareTo(dateToDate) >= 0) {
+            if (dateFromDate.compareTo(dateToDate) > 0) {
                 return false;
             }
         } catch (ParseException e) {
