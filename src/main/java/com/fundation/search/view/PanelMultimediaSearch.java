@@ -12,9 +12,9 @@ public class PanelMultimediaSearch extends JPanel {
     private PanelNamePath panelNamePath;
     private JPanel panelDuration;
     private JLabel labelMoreThan;
-    private JSpinner spinner1;
+    private JSpinner spinnerMinorDuration;
     private JLabel labelLessThan;
-    private JSpinner spinner2;
+    private JSpinner spinnerMajorDuration;
     private JPanel panelFrameRate;
     private JComboBox comboBoxFrameRate;
     private JLabel labelFps;
@@ -42,9 +42,9 @@ public class PanelMultimediaSearch extends JPanel {
         panelNamePath = new PanelNamePath();
         panelDuration = new JPanel();
         labelMoreThan = new JLabel();
-        spinner1 = new JSpinner();
+        spinnerMinorDuration = new JSpinner();
         labelLessThan = new JLabel();
-        spinner2 = new JSpinner();
+        spinnerMajorDuration = new JSpinner();
         spinnerAudioBitRate = new JSpinner();
         panelFrameRate = new JPanel();
         labelFps = new JLabel();
@@ -85,14 +85,14 @@ public class PanelMultimediaSearch extends JPanel {
         labelMoreThan.setText("More than");
         panelDuration.add(labelMoreThan, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        panelDuration.add(spinner1, new TableLayoutConstraints(1, 0, 1, 0,
+        panelDuration.add(spinnerMinorDuration, new TableLayoutConstraints(1, 0, 1, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- labelLessThan ----
         labelLessThan.setText("Less than");
         panelDuration.add(labelLessThan, new TableLayoutConstraints(2, 0, 2, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        panelDuration.add(spinner2, new TableLayoutConstraints(3, 0, 3, 0,
+        panelDuration.add(spinnerMajorDuration, new TableLayoutConstraints(3, 0, 3, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         add(panelDuration, new TableLayoutConstraints(0, 1, 0, 1,
@@ -192,9 +192,9 @@ public class PanelMultimediaSearch extends JPanel {
         comboBoxResolution.addItem("1366x768");
         comboBoxResolution.addItem("1920x1080");
         comboBoxResolution.addItem("3840x2160");
+		comboBoxAspectRatio.addItem("All");
         comboBoxAspectRatio.addItem("4:3");
-        comboBoxAspectRatio.addItem("16:9");
-        comboBoxAspectRatio.addItem("All");
+        comboBoxAspectRatio.addItem("16:9");        
         panelResolution.add(comboBoxResolution, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         panelResolution.add(comboBoxAspectRatio, new TableLayoutConstraints(1, 0, 1, 0,
@@ -259,4 +259,8 @@ public class PanelMultimediaSearch extends JPanel {
         return spinnerAudioBitRate.getValue().toString();
     }
     public String getAspectRatio(){return  comboBoxAspectRatio.getSelectedItem().toString();}
+    public double getMinorDuration(){return Double.valueOf(String.valueOf(spinnerMinorDuration.getValue()));
+    }
+    public double getMajorDuration(){return Double.valueOf(String.valueOf(spinnerMajorDuration.getValue()));
+    }
 }

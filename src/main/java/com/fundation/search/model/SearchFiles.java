@@ -162,6 +162,9 @@ public class SearchFiles {
                 if (matchesCriteriaMulti && !searchAudioCodec(results, searchCriteria.getAudioCodec())) {
                     matchesCriteriaMulti = false;
                 }
+                if (matchesCriteriaMulti && !searchDuration(results, searchCriteria.getMajorDuration(), searchCriteria.getMinorDuration())) {
+                    matchesCriteriaMulti = false;
+                }
                 if (matchesCriteriaMulti && !searchResolution(results, searchCriteria.getVideoSize())) {
                     matchesCriteriaMulti = false;
                 }
@@ -694,4 +697,16 @@ public class SearchFiles {
         }
         return false;
     }
+
+    public boolean searchDuration(Asset asset, double majorDuration, double minorDuration) {
+        if (asset instanceof ResultMultimediaFile) {
+            if ((((ResultMultimediaFile) asset).getDuration() < majorDuration) &&
+                    (((ResultMultimediaFile) asset).getDuration() > minorDuration)) {
+
+                return true;
+            }
+        }
+        return false;
+    }
 }
+
