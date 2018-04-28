@@ -18,11 +18,8 @@ import java.util.Date;
  * @version 27 Mar 2018  * @Daniel Caballero.
  */
 public class PanelNormalSearch extends JPanel {
-    private PanelNamePath panelNamePath;
-
     private PanelDate panelDate;
     private PanelAttributes panelAttributes;
-    private PanelButtonSearch panelButtonSearch;
     private PanelFileContent panelFileContents;
     /**
      * Class constructor to initialize components and set visible this panel.
@@ -35,20 +32,14 @@ public class PanelNormalSearch extends JPanel {
      * Initializes panel components.
      */
     public void initComponents() {
-        panelNamePath = new PanelNamePath();
         panelFileContents = new PanelFileContent();
         panelDate = new PanelDate();
         panelAttributes = new PanelAttributes();
-        panelButtonSearch = new PanelButtonSearch();
 
         setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED},
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
                         TableLayout.PREFERRED}}));
-        //======== panelNamePath ========
-        /*add(panelNamePath, new TableLayoutConstraints(0, 0, 0, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));*/
-
 
         //======== panelFileContent ========
         add(panelFileContents, new TableLayoutConstraints(0, 1, 0, 1,
@@ -60,59 +51,6 @@ public class PanelNormalSearch extends JPanel {
         final int constraints1 = 3;
         add(panelAttributes, new TableLayoutConstraints(0, constraints1, 0, constraints1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-        //======== panelButtonSearch ========
-        /*add(panelButtonSearch, new TableLayoutConstraints(0, 4, 0, 4,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));*/
-
-       
-    }
-    /**
-     * Getter for the search button.
-     *
-     * @return ´buttonSearch´ button.
-     */
-    public JButton getButtonSearch() {
-        return panelButtonSearch.getButtonSearch();
-    }
-    /**
-     * Getter for the clear button.
-     *
-     * @return ´buttonClear´ button.
-     */
-    public JButton getButtonClear() {
-        return panelButtonSearch.getButtonClear();
-    }
-    /**
-     * Getter for the path.
-     *
-     * @return the String of ´textFieldPath´ text field.
-     */
-    public String getPath() {
-        return panelNamePath.getPath();
-    }
-    /**
-     * Getter for the file name.
-     *
-     * @return the String of ´textFieldName´ text field.
-     */
-    public String getName() {
-        return panelNamePath.getName();
-    }
-    /**
-     * Getter for the case sensitive name.
-     *
-     * @return ta boolean of ´checkBoxCaseSensitiveName´ text field.
-     */
-    public boolean getCaseSensitiveName() {
-        return panelNamePath.getCaseSensitive();
-    }
-    /**
-     * Getter for the case sensitive name.
-     *
-     * @return ta boolean of ´getRadioAllFiles´ text field.
-     */
-    public String getRadioAllFiles() {
-        return panelNamePath.getBtnGroupTypeFiles();
     }
 
     /**
@@ -224,33 +162,7 @@ public class PanelNormalSearch extends JPanel {
     }
 
 
-    //setters
-
-    /**
-     * Setter for the name text field file.
-     */
-    public void setTextFieldName(String value) {
-        panelNamePath.setTextFieldName(value);
-    }
-    /**
-     * Setter for the path text field file.
-     */
-    public void setTextFieldPath(String textFieldPath) {
-        panelNamePath.setTextFieldPath(textFieldPath);
-    }
-    /**
-     * Setter for the case sensitive checkbox.
-     */
-    public void setCheckBoxCaseSensitiveName(boolean checkBoxCaseSensitiveName) {
-        panelNamePath.setCheckBoxCaseSensitiveName(checkBoxCaseSensitiveName);
-    }
-    /**
-     * Setter for the case only files checkbox.
-     */
-    public void setRadioAllFiles(String radioAllFiles) {
-        panelNamePath.setBtnAllFiles(radioAllFiles);
-    }
-
+    /**Setters*/
 
     /**
      * Setter for the only content textarea - panelFileContents.

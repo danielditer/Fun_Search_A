@@ -6,21 +6,9 @@
  */
 package com.fundation.search.view;
 
-import java.awt.Dimension;
-import java.awt.Container;
-import java.awt.BorderLayout;
-import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JMenu;
-import javax.swing.JOptionPane;
-
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import info.clearthought.layout.TableLayout;
-import net.miginfocom.swing.MigLayout;
+import java.awt.*;
 
 /**
  * @version
@@ -78,14 +66,9 @@ public class MainView extends JFrame {
         panelResults = new JPanel();
         panelSearchCrit = new JPanel();
         panelSaveCrit = new JPanel();
-        //panelTabbedPane = new JPanel();
         //======== this ========
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
-
-        //contentPane.setSize(50, 600);
-
-        //======== menuBar ========
         //======== menuHelp ========
         menuHelp.setText("Help");
         menuBar.add(menuHelp);
@@ -141,6 +124,12 @@ public class MainView extends JFrame {
      */
     public JPanel getPanel() {
         return panelNormalSearch;
+    }
+    public JPanel getPanelButton() {
+        return panelButtonSearch;
+    }
+    public JPanel getPanelNamePath() {
+        return panelNamePath;
     }
 
     /**
