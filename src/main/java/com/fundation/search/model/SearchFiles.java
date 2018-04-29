@@ -140,39 +140,31 @@ public class SearchFiles {
             }
             /**
              * Search multimedia files*/
-            System.out.println("matchesCriteria1:" + matchesCriteria);
             if (matchesCriteria && !searchVideoCodec(results, searchCriteria.getVideoCodec())) {
                 matchesCriteria = false;
             }
-            System.out.println("matchesCriteria2:" + matchesCriteria);
             if (matchesCriteria && !searchAudioCodec(results, searchCriteria.getAudioCodec())) {
                 matchesCriteria = false;
             }
-            System.out.println("matchesCriteria3:" + matchesCriteria);
             if (searchCriteria.getMajorDuration() > 0.0 || searchCriteria.getMinorDuration() > 0.0) {
                 if (matchesCriteria && !searchDuration(results, searchCriteria.getMajorDuration(), searchCriteria.getMinorDuration())) {
                     matchesCriteria = false;
                 }
             }
-            System.out.println("matchesCriteria4:" + matchesCriteria);
             if (matchesCriteria && !searchResolution(results, searchCriteria.getVideoSize())) {
                 matchesCriteria = false;
             }
-            System.out.println("matchesCriteria5:" + matchesCriteria);
             if (matchesCriteria && !searchAspectRatio(results, searchCriteria.getAspectRatio())) {
                 matchesCriteria = false;
             }
-            System.out.println("matchesCriteria6:" + matchesCriteria);
             if (matchesCriteria && !searchFrameRate(results, searchCriteria.getFrameRate())) {
                 matchesCriteria = false;
             }
-            System.out.println("matchesCriteria7:" + matchesCriteria);
             if (searchCriteria.getBitRate() != null && Double.parseDouble(searchCriteria.getBitRate()) > 0.0) {
                 if (matchesCriteria && !searchBitRate(results, searchCriteria.getBitRate())) {
                     matchesCriteria = false;
                 }
             }
-            System.out.println("matchesCriteria8:" + matchesCriteria);
             if (matchesCriteria) {
                 arrayFinalResult.add(results);
             }
@@ -240,9 +232,6 @@ public class SearchFiles {
                                 owner.getName().substring(owner.getName().indexOf("\\") + 1),
                                 extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
                                 multimediaFile.codec_name, multimediaFile.codec_name, getFrameRate(multimediaFile.r_frame_rate), 0, videoSize, multimediaFile.display_aspect_ratio));
-
-                        System.out.println("codec1:" + multimediaFile.codec_name + ",codec:" + multimediaFile.codec_name + ",framerate:" +
-                                getFrameRate(multimediaFile.r_frame_rate) + "bitrate:" + 0 + "videosize" + videoSize + "aspectratio" + multimediaFile.display_aspect_ratio);
                     } else {
                         String videoSize = multimediaFile.width + "x" + multimediaFile.height;
                         arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
@@ -250,9 +239,6 @@ public class SearchFiles {
                                 owner.getName().substring(owner.getName().indexOf("\\") + 1),
                                 extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
                                 multimediaFile.codec_name, multimediaFile.codec_name, 0.0, (int) multimediaFile.bit_rate / 1000, videoSize, multimediaFile.display_aspect_ratio));
-
-                        System.out.println("codec2:" + multimediaFile.codec_name + ",codec:" + multimediaFile.codec_name + ",framerate:" +
-                                0.0 + "bitrate:" + (int) multimediaFile.bit_rate / 1000 + "videosize" + videoSize + "aspectratio" + multimediaFile.display_aspect_ratio);
                     }
                 }
             }

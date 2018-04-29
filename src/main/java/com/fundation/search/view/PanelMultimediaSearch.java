@@ -85,6 +85,7 @@ public class PanelMultimediaSearch extends JPanel {
         labelMoreThan.setText("More than");
         panelDuration.add(labelMoreThan, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        spinnerMinorDuration.setModel(new SpinnerNumberModel(0, 0, 1000.0, 1));
         panelDuration.add(spinnerMinorDuration, new TableLayoutConstraints(1, 0, 1, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
@@ -92,6 +93,7 @@ public class PanelMultimediaSearch extends JPanel {
         labelLessThan.setText("Less than");
         panelDuration.add(labelLessThan, new TableLayoutConstraints(2, 0, 2, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        spinnerMajorDuration.setModel(new SpinnerNumberModel(0, 0, 1000.0, 1));
         panelDuration.add(spinnerMajorDuration, new TableLayoutConstraints(3, 0, 3, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
