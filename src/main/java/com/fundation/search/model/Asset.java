@@ -32,6 +32,14 @@ public class Asset {
     /**Size of file*/
     private long size;
 
+    /**File creation time*/
+    private String creationTime;
+
+    /**File last access time*/
+    private String lastAccessTime;
+
+    /**File last modified time*/
+    private String lastModifiedTime;
 
     /**
      * Constructor.
@@ -44,7 +52,7 @@ public class Asset {
      * @param size file size.
      */
 
-    public Asset(String path, String fileName, boolean hidden, boolean readOnly, int typeFile, String owner, long size) {
+    public Asset(String path, String fileName, boolean hidden, boolean readOnly, int typeFile, String owner, long size, String creationTime, String lastModifiedTime, String lastAccessTime) {
         this.path = path;
         this.fileName = fileName;
         this.hidden = hidden;
@@ -52,6 +60,9 @@ public class Asset {
         this.typeFile = typeFile;
         this.owner = owner;
         this.size = size;
+        this.creationTime = creationTime;
+        this.lastAccessTime = lastAccessTime;
+        this.lastModifiedTime = lastModifiedTime;
     }
 
     /**
@@ -123,7 +134,7 @@ public class Asset {
      * @return creationTime.
      */
     public String getCreationTime() {
-        return getCreationTime();
+        return this.creationTime;
     }
 
     /**
@@ -131,7 +142,7 @@ public class Asset {
      * @return lastModifiedTime.
      */
     public String getLastModifiedTime() {
-        return getLastModifiedTime();
+        return this.lastModifiedTime;
     }
 
     /**
@@ -139,7 +150,7 @@ public class Asset {
      * @return lastAccessedTime.
      */
     public String getLastAccessTime() {
-        return getLastAccessTime();
+        return this.lastAccessTime;
     }
 
 }

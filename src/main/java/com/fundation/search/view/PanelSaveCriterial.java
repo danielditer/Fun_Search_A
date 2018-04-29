@@ -40,7 +40,7 @@ public class PanelSaveCriterial extends JPanel {
         textFieldName = new JTextField();
         buttonSave = new JButton();
 
-        setBorder(new TitledBorder("Save Criterial"));
+        setBorder(new TitledBorder("Save Search Criteria"));
         setOpaque(false);
         setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},

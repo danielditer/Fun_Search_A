@@ -13,10 +13,6 @@ package com.fundation.search.model;
  */
 public class ResultMultimediaFile extends Asset {
 
-    private final String videoCodec;
-    private String aspectRatio;
-    private int audioBitRate;
-    private double frameRate;
     /**
      * duration attribute to know its duration (hour minute second)
      */
@@ -28,26 +24,29 @@ public class ResultMultimediaFile extends Asset {
     private String extension;
 
     /**
-     * File creation time
-     */
-    private String creationTime;
-
-    /**
-     * File last access time
-     */
-    private String lastAccessTime;
-
-    /**
-     * File last modified time
-     */
-    private String lastModifiedTime;
-
-    /**
-     * File codec
+     * Attribute audio codec.
      */
     private String audioCodec;
-
-    public String videoSize;
+    /**
+     * Attribute video codec.
+     */
+    private final String videoCodec;
+    /**
+     * Attribute aspect ratio.
+     */
+    private String aspectRatio;
+    /**
+     * Attribute audio bit rate.
+     */
+    private int audioBitRate;
+    /**
+     * Attribute frame rate.
+     */
+    private double frameRate;
+    /**
+     * Attribute video size.
+     */
+    private String videoSize;
 
 
     /**
@@ -61,12 +60,9 @@ public class ResultMultimediaFile extends Asset {
      * @param videoSize
      */
     public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime, String videoCodec, String audioCodec, double frameRate, int audioBitRate, String videoSize, String aspectRatio) {
-        super(path, fileName, hidden, true, typeFile, owner, size);
-        this.duration = duration;
+        super(path, fileName, hidden, true, typeFile, owner, size, creationTime, lastModifiedTime, lastAccessTime);
         this.extension = extension;
-        this.creationTime = creationTime;
-        this.lastModifiedTime = lastModifiedTime;
-        this.lastAccessTime = lastAccessTime;
+        this.duration = duration;
         this.audioCodec = audioCodec;
         this.videoCodec = videoCodec;
         this.frameRate = frameRate;
@@ -94,52 +90,49 @@ public class ResultMultimediaFile extends Asset {
     }
 
     /**
-     * Method to get creation time.
-     *
-     * @return creationTime attribute.
+     * Getter for video codec attribute.
+     * @return
      */
-    public String getCreationTime() {
-        return this.creationTime;
-    }
-
-    /**
-     * Method to get last modified time.
-     *
-     * @return lastModifiedTime attribute.
-     */
-    public String getLastModifiedTime() {
-        return this.lastModifiedTime;
-    }
-
-    /**
-     * Method to get last accessed time.
-     *
-     * @return lastAccessedTime attribute.
-     */
-    public String getLastAccessTime() {
-        return this.lastAccessTime;
-    }
-
     public String getVideoCodec() {
         return this.videoCodec;
     }
 
+    /**
+     * Getter for audio codec attribute.
+     * @return
+     */
     public String getAudioCodec() {
         return this.audioCodec;
     }
 
+    /**
+     * Getter for frame rate attribute.
+     * @return
+     */
     public double getFrameRate() {
         return this.frameRate;
     }
 
+    /**
+     * Getter for aspect ratio attribute.
+     * @return
+     */
     public String getAspectRatio() {
-        return aspectRatio;
+        return this.aspectRatio;
     }
 
+    /**
+     * Getter for video size attribute.
+     * @return
+     */
     public String getVideoSize() {
         return this.videoSize;
     }
 
+    /**
+     * Getter for audio bit rate attribute.
+     * @return
+     */
     public int getAudioBitRate() {
         return this.audioBitRate;
     }

@@ -9,19 +9,12 @@ package com.fundation.search.view;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
-import java.awt.Dimension;
-import java.awt.Color;
+import java.awt.*;
 
 
 /**
@@ -54,7 +47,7 @@ public class PanelSearchCriterial extends JPanel {
         tableModel.setColumnIdentifiers(columnNames);
 
 
-        setBorder(new TitledBorder("Search Criterial"));
+        setBorder(new TitledBorder("Search Criteria"));
         setOpaque(false);
         setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
@@ -63,7 +56,7 @@ public class PanelSearchCriterial extends JPanel {
 
         //---- table results ----
         tableResult.setModel(tableModel);
-        tableResult.setPreferredScrollableViewportSize(new Dimension(480, 80));
+        tableResult.setPreferredScrollableViewportSize(new Dimension(600, 100));
         tableResult.setFillsViewportHeight(true);
         //tableResult.setEnabled(false);
         //change the header color

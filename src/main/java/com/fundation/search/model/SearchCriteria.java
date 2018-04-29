@@ -11,9 +11,11 @@ package com.fundation.search.model;
  *
  * @version 27 Mar 2018  * @Juan Manuel
  */
-public class SearchCriteria extends AbstractSearchCriteria{
+public class SearchCriteria {
+    /**
+     * Attribute to know which name the user set to save search criteria in DB.
+     */
     private String searchCriteriaName;
-
     /**
      * Attribute of file name
      */
@@ -86,14 +88,45 @@ public class SearchCriteria extends AbstractSearchCriteria{
      * Attribute for content case sensitive check
      */
     private boolean contentCaseSensitive;
+    /**
+     * Attribute for multimedia files, video codec.
+     */
+    private String videoCodec;
+    /**
+     * Attribute for multimedia files, frame rate.
+     */
+    private String frameRate;
+    /**
+     * Attribute for multimedia files, bit rate.
+     */
+    private String bitRate;
+    /**
+     * Attribute for multimedia files, video size.
+     */
+    private String videoSize;
+    /**
+     * Attribute for multimedia files, aspect ratio.
+     */
+    private String aspectRatio;
+    /**
+     * Attribute for multimedia files, audio codec.
+     */
     private String audioCodec;
+    /**
+     * Attribute for multimedia files, minor duration.
+     */
+    private double minorDuration;
+    /**
+     * Attribute for multimedia files, major duration.
+     */
+    private double majorDuration;
 
+    /**SETTERS*/
     /**
      * Setter for search criteria name to save in DB.
      *
      * @param searchCriteriaName
      */
-    @Override
     public void setSearchCriteriaName(String searchCriteriaName) {
         this.searchCriteriaName = searchCriteriaName;
     }
@@ -103,7 +136,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @param name, is the file name the user is searching.
      */
-    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -113,7 +145,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @param path, is the path where the user is searching a file.
      */
-    @Override
     public void setPath(String path) {
         this.path = path;
     }
@@ -123,7 +154,7 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @param hidden
      */
-    @Override
+    
     public void setHidden(String hidden) {
         this.hidden = hidden;
     }
@@ -133,157 +164,193 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @param readOnly boolean attribute;
      */
-    @Override
     public void setReadOnly(String readOnly) {
         this.readOnly = readOnly;
     }
 
     /**
      * Setter for typeFile.
-     *
      * @param setTypeFile 1, 2, 3, 0 to know if search is file, multimedia, directory or all of them.
      */
-    @Override
     public void setTypeFile(int setTypeFile) {
         this.typeFile = setTypeFile;
     }
 
     /**
      * Setter for nameFileCaseSensitive.
-     *
      * @param nameFileCaseSensitive true for case sensitive search.
      */
-    @Override
+
     public void setNameFileCaseSensitive(boolean nameFileCaseSensitive) {
         this.nameFileCaseSensitive = nameFileCaseSensitive;
     }
 
     /**
      * Setter for owner attribute.
-     *
      * @param owner input from UI.
      */
-    @Override
     public void setOwner(String owner) {
         this.owner = owner;
     }
 
     /**
      * Setter for extension attribute.
-     *
      * @param extension input from UI.
      */
-    @Override
     public void setExtension(String extension) {
         this.extension = extension;
     }
 
     /**
      * Setter for size sign.
-     *
      * @param sizeSign input from UI.
      */
-    @Override
     public void setSizeSign(String sizeSign) {
         this.sizeSign = sizeSign;
     }
 
     /**
      * Setter for size required.
-     *
      * @param sizeRequired
      */
-    @Override
     public void setSizeRequired(String sizeRequired) {
         this.sizeRequired = sizeRequired;
     }
 
     /**
      * Setter for size measure.
-     *
      * @param sizeMeasure
      */
-    @Override
     public void setSizeMeasure(String sizeMeasure) {
         this.sizeMeasure = sizeMeasure;
     }
 
     /**
      * Setter for create date.
-     *
      * @param createDate
      */
-    @Override
     public void setCreateDate(boolean createDate) {
         this.createDate = createDate;
     }
 
     /**
      * Setter for modified date.
-     *
      * @param modifiedDate
      */
-    @Override
     public void setModifiedDate(boolean modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 
     /**
      * Setter for accessed date.
-     *
      * @param accessedDate
      */
-    @Override
     public void setAccessedDate(boolean accessedDate) {
         this.accessedDate = accessedDate;
     }
 
     /**
      * Setter for from date.
-     *
      * @param fromDate
      */
-    @Override
     public void setFromDate(String fromDate) {
         this.fromDate = fromDate;
     }
 
     /**
      * Setter for to date.
-     *
      * @param toDate
      */
-    @Override
     public void setToDate(String toDate) {
         this.toDate = toDate;
     }
 
     /**
      * Setter for content.
-     *
      * @param content
      */
-    @Override
     public void setContent(String content) {
         this.content = content;
     }
 
     /**
      * Setter for content case sensitive.
-     *
      * @param contentCaseSensitive
      */
-    @Override
     public void setContentCaseSensitive(boolean contentCaseSensitive) {
         this.contentCaseSensitive = contentCaseSensitive;
     }
 
     /**
+     * Setter for multimedia attribute, video codec.
+     * @param videoCodec
+     */
+    public void setVideoCodec(String videoCodec) {
+        this.videoCodec = videoCodec;
+    }
+
+    /**
+     * Setter for multimedia attribute, frame rate.
+     * @param videoCodec
+     */
+    public void setFrameRate(String frameRate) {
+        this.frameRate = frameRate;
+    }
+
+    /**
+     * Setter for multimedia attribute, bit rate.
+     * @param videoCodec
+     */
+    public void setBitRate(String bitRate) {
+        this.bitRate = bitRate;
+    }
+
+    /**
+     * Setter for multimedia attribute, video size.
+     * @param videoCodec
+     */
+    public void setVideoSize(String videoSize) {
+        this.videoSize = videoSize;
+    }
+
+    /**
+     * Setter for multimedia attribute, aspect ratio.
+     * @param videoCodec
+     */
+    public void setAspectRatio(String aspectRatio) {
+        this.aspectRatio = aspectRatio;
+    }
+
+    /**
+     * Setter for multimedia attribute, audio codec.
+     * @param videoCodec
+     */
+    public void setAudioCodec(String audioCodec) {
+        this.audioCodec = audioCodec;
+    }
+
+    /**
+     * Setter for multimedia attribute, minor duration.
+     * @param videoCodec
+     */
+    public void setMinorDuration(double minorDuration) {
+        this.minorDuration = minorDuration;
+    }
+
+    /**
+     * Setter for multimedia attribute, major duration.
+     * @param videoCodec
+     */
+    public void setMajorDuration(double majorDuration) {
+        this.majorDuration = majorDuration;
+    }
+
+    /**GETTERS*/
+    /**
      * Getter for search criteria name saved in DB
      *
      * @return
      */
-    @Override
     public String getSearchCriteriaName() {
         return this.searchCriteriaName;
     }
@@ -293,7 +360,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return name, is the file name set in previous method.
      */
-    @Override
     public String getName() {
         return this.name;
     }
@@ -303,7 +369,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return path, is the path set in previous method.
      */
-    @Override
     public String getPath() {
         return this.path;
     }
@@ -313,7 +378,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return hidden attribute.
      */
-    @Override
     public String getHidden() {
         return this.hidden;
     }
@@ -321,7 +385,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
     /**
      * Getter for readonly attribute
      */
-    @Override
     public String getReadOnly() {
         return this.readOnly;
     }
@@ -331,7 +394,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return type file attribute.
      */
-    @Override
     public int getTypeFile() {
         return this.typeFile;
     }
@@ -341,7 +403,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return name file case sensitive.
      */
-    @Override
     public boolean getNameFileCaseSensitive() {
         return this.nameFileCaseSensitive;
     }
@@ -351,7 +412,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return owner attribute.
      */
-    @Override
     public String getOwner() {
         return this.owner;
     }
@@ -361,7 +421,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return extesntion attribute.
      */
-    @Override
     public String getExtension() {
         return this.extension;
     }
@@ -371,7 +430,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return size sign.
      */
-    @Override
     public String getSizeSign() {
         return this.sizeSign;
     }
@@ -381,7 +439,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return
      */
-    @Override
     public String getSizeRequired() {
         return this.sizeRequired;
     }
@@ -391,7 +448,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return
      */
-    @Override
     public String getSizeMeasure() {
         return this.sizeMeasure;
     }
@@ -401,7 +457,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return
      */
-    @Override
     public boolean getCreatedDate() {
         return this.createDate;
     }
@@ -411,7 +466,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return
      */
-    @Override
     public boolean getModifiedDate() {
         return this.modifiedDate;
     }
@@ -421,7 +475,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return
      */
-    @Override
     public boolean getAccessedDate() {
         return this.accessedDate;
     }
@@ -431,7 +484,6 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return creationTime
      */
-    @Override
     public String getFromDate() {
         return this.fromDate;
     }
@@ -441,119 +493,88 @@ public class SearchCriteria extends AbstractSearchCriteria{
      *
      * @return lastModifiedTime.
      */
-    @Override
     public String getToDate() {
         return this.toDate;
     }
 
     /**
      * Getter for content.
-     *
      * @return
      */
-    @Override
     public String getContent() {
         return this.content;
     }
 
     /**
      * Getter for content case sensitive.
-     *
      * @return
      */
-    @Override
     public boolean getContentCaseSensitive() {
         return this.contentCaseSensitive;
     }
 
 
-
-    private String videoCodec;
-    private String frameRate;
-    private String bitRate;
-    private String videoSize;
-    private String aspectRatio;
-    private double minorDuration;
-    private double majorDuration;
-
-    @Override
+    /**
+     * Getter for multimedia attribute, video codec.
+     * @return
+     */
     public String getVideoCodec() {
         return videoCodec;
     }
 
-    @Override
-    public String getAudioCodec() {
-        return audioCodec;
-    }
-
-    @Override
-    public void setVideoCodec(String videoCodec) {
-        this.videoCodec = videoCodec;
-    }
-
-    @Override
-    public void setAudioCodec(String audioCodec) {
-        this.audioCodec = audioCodec;
-    }
-
-    @Override
+    /**
+     * Getter for multimedia attribute, frame rate.
+     * @return
+     */
     public String getFrameRate() {
         return frameRate;
     }
 
-    @Override
-    public void setFrameRate(String frameRate) {
-        this.frameRate = frameRate;
-    }
-
-    @Override
+    /**
+     * Getter for multimedia attribute, bit rate.
+     * @return
+     */
     public String getBitRate() {
         return bitRate;
     }
 
-    @Override
-    public void setBitRate(String bitRate) {
-        this.bitRate = bitRate;
-    }
-
-    @Override
+    /**
+     * Getter for multimedia attribute, video size.
+     * @return
+     */
     public String getVideoSize() {
         return videoSize;
     }
 
-    @Override
-    public void setVideoSize(String videoSize) {
-        this.videoSize = videoSize;
-    }
-
-    @Override
+    /**
+     * Getter for multimedia attribute, aspect ratio.
+     * @return
+     */
     public String getAspectRatio() {
         return aspectRatio;
     }
 
-    @Override
-    public void setAspectRatio(String aspectRatio) {
-        this.aspectRatio = aspectRatio;
+    /**
+     * Getter for multimedia attribute, audio codec.
+     * @return
+     */
+    public String getAudioCodec() {
+        return audioCodec;
     }
 
-    @Override
+    /**
+     * Getter for multimedia attribute, minor duration.
+     * @return
+     */
     public double getMinorDuration() {
         return minorDuration;
     }
 
-    @Override
-    public void setMinorDuration(double minorDuration) {
-        this.minorDuration = minorDuration;
-    }
-
-    @Override
+    /**
+     * Getter for multimedia attribute, major duration.
+     * @return
+     */
     public double getMajorDuration() {
         return majorDuration;
     }
-
-    @Override
-    public void setMajorDuration(double majorDuration) {
-        this.majorDuration = majorDuration;
-    }
-
 }

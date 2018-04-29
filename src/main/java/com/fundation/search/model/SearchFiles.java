@@ -11,6 +11,7 @@ import com.fundation.search.common.SearchQuery;
 import com.google.gson.Gson;
 import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.probe.FFmpegStream;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.math.Fraction;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -48,7 +49,7 @@ public class SearchFiles {
     /**
      * searchCriteria is the attribute that is used for setting the criteria of searching.
      */
-    private AbstractSearchCriteria searchCriteria;
+    private SearchCriteria searchCriteria;
     /**
      * resultResultFiles is the attribute in which we are going to recover files depending the type of searching.
      */
@@ -62,7 +63,6 @@ public class SearchFiles {
      */
     private List<Asset> arrayFinalResult;
 
-    //private SearchCriteriaMultimedia searchCriteriaMultimedia;
     /**
      * Object to create asset objects (files, multimedia, directory).
      */
@@ -78,7 +78,7 @@ public class SearchFiles {
      *
      * @param searchCriteria is the param received in order to set the search criteria.
      */
-    public void setSearchCriteria(AbstractSearchCriteria searchCriteria) {
+    public void setSearchCriteria(SearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
     }
 
@@ -90,101 +90,95 @@ public class SearchFiles {
         arrayFinalResult = new ArrayList<>();
         assetFactory = new AssetFactory();
         File filePath = null;
-        if ("1".equals(searchType)) {
-            if (searchCriteria.getPath() != null) {
-                filePath = new File(searchCriteria.getPath());
-            }
-            if (searchCriteria.getPath() != null) {
-                resultResultFiles = recoverFiles(filePath, arrayResultFiles);
-            }
-            for (Asset results : resultResultFiles) {
-                boolean matchesCriteria = true;
-                if (searchCriteria.getName() != null) {
-                    if (!searchFile(results, searchCriteria.getNameFileCaseSensitive())) {
-                        matchesCriteria = false;
-                    }
-                }
-                if (matchesCriteria && !searchHiddenFiles(results, searchCriteria.getHidden())) {
+
+        if (searchCriteria.getPath() != null) {
+            filePath = new File(searchCriteria.getPath());
+        }
+        if (searchCriteria.getPath() != null) {
+            resultResultFiles = recoverFiles(filePath, arrayResultFiles);
+        }
+        for (Asset results : resultResultFiles) {
+            boolean matchesCriteria = true;
+            if (searchCriteria.getName() != null) {
+                if (!searchFile(results, searchCriteria.getNameFileCaseSensitive())) {
                     matchesCriteria = false;
                 }
-                if (matchesCriteria && !searchReadOnlyFiles(results, searchCriteria.getReadOnly())) {
+            }
+            if (matchesCriteria && !searchHiddenFiles(results, searchCriteria.getHidden())) {
+                matchesCriteria = false;
+            }
+            if (matchesCriteria && !searchReadOnlyFiles(results, searchCriteria.getReadOnly())) {
+                matchesCriteria = false;
+            }
+            if (matchesCriteria && !searchFilesOrDirectoriesOnly(results, searchCriteria.getTypeFile())) {
+                matchesCriteria = false;
+            }
+            if (searchCriteria.getOwner() != null) {
+                if (matchesCriteria && !searchOwner(results, searchCriteria.getOwner())) {
                     matchesCriteria = false;
                 }
-                if (matchesCriteria && !searchFilesOrDirectoriesOnly(results, searchCriteria.getTypeFile())) {
+            }
+            if (searchCriteria.getExtension() != null) {
+                if (matchesCriteria && !searchExtension(results, searchCriteria.getExtension())) {
                     matchesCriteria = false;
                 }
-                if (searchCriteria.getOwner() != null) {
-                    if (matchesCriteria && !searchOwner(results, searchCriteria.getOwner())) {
-                        matchesCriteria = false;
-                    }
-                }
-                if (searchCriteria.getExtension() != null) {
-                    if (matchesCriteria && !searchExtension(results, searchCriteria.getExtension())) {
-                        matchesCriteria = false;
-                    }
-                }
-                if (searchCriteria.getSizeRequired() != null) {
-                    if (matchesCriteria && !searchSize(results, searchCriteria.getSizeSign(), searchCriteria.getSizeRequired(), searchCriteria.getSizeMeasure())) {
-                        matchesCriteria = false;
-                    }
-                }
-                if ((searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate()) && results instanceof ResultFile) {
-                    if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
-                        matchesCriteria = false;
-                    }
-                }
-                if (searchCriteria.getContent() != null) {
-                    if (matchesCriteria && !searchContent(results, searchCriteria.getContent(), searchCriteria.getContentCaseSensitive())) {
-                        matchesCriteria = false;
-                    }
-                }
-                if (matchesCriteria) {
-                    arrayFinalResult.add(results);
+            }
+            if (searchCriteria.getSizeRequired() != null) {
+                if (matchesCriteria && !searchSize(results, searchCriteria.getSizeSign(), searchCriteria.getSizeRequired(), searchCriteria.getSizeMeasure())) {
+                    matchesCriteria = false;
                 }
             }
-        } else if ("2".equals(searchType)) {
-            if (searchCriteria.getPath() != null) {
-                filePath = new File(searchCriteria.getPath());
+            if ((searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate()) && results instanceof ResultFile) {
+                if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
+                    matchesCriteria = false;
+                }
             }
-            if (searchCriteria.getPath() != null) {
-                resultResultFiles = recoverFiles(filePath, arrayResultFiles);
+            if (searchCriteria.getContent() != null) {
+                if (matchesCriteria && !searchContent(results, searchCriteria.getContent(), searchCriteria.getContentCaseSensitive())) {
+                    matchesCriteria = false;
+                }
             }
-            for (Asset results : resultResultFiles) {
-                boolean matchesCriteriaMulti = true;
-                if (searchCriteria.getName() != null) {
-                    if (!searchFile(results, searchCriteria.getNameFileCaseSensitive())) {
-                        matchesCriteriaMulti = false;
-                    }
+            /**
+             * Search multimedia files*/
+            if (searchCriteria.getVideoCodec() != null) {
+                if (matchesCriteria && !searchVideoCodec(results, searchCriteria.getVideoCodec())) {
+                    matchesCriteria = false;
                 }
-                if (matchesCriteriaMulti && !searchVideoCodec(results, searchCriteria.getVideoCodec())) {
-                    matchesCriteriaMulti = false;
+            }
+            if (searchCriteria.getAudioCodec() != null) {
+                if (matchesCriteria && !searchAudioCodec(results, searchCriteria.getAudioCodec())) {
+                    matchesCriteria = false;
                 }
-                if (matchesCriteriaMulti && !searchAudioCodec(results, searchCriteria.getAudioCodec())) {
-                    matchesCriteriaMulti = false;
+            }
+            if (searchCriteria.getMajorDuration() > 0.0 || searchCriteria.getMinorDuration() > 0.0) {
+                if (matchesCriteria && !searchDuration(results, searchCriteria.getMajorDuration(), searchCriteria.getMinorDuration())) {
+                    matchesCriteria = false;
                 }
-                if (matchesCriteriaMulti && !searchDuration(results, searchCriteria.getMajorDuration(), searchCriteria.getMinorDuration())) {
-                    matchesCriteriaMulti = false;
+            }
+            if (searchCriteria.getVideoSize() != null) {
+                if (matchesCriteria && !searchResolution(results, searchCriteria.getVideoSize())) {
+                    matchesCriteria = false;
                 }
-                if (matchesCriteriaMulti && !searchResolution(results, searchCriteria.getVideoSize())) {
-                    matchesCriteriaMulti = false;
+            }
+            if (searchCriteria.getAspectRatio() != null) {
+                if (matchesCriteria && !searchAspectRatio(results, searchCriteria.getAspectRatio())) {
+                    matchesCriteria = false;
                 }
-                if (matchesCriteriaMulti && !searchAspectRatio(results, searchCriteria.getAspectRatio())) {
-                    matchesCriteriaMulti = false;
+            }
+            if (searchCriteria.getFrameRate() != null) {
+                if (matchesCriteria && !searchFrameRate(results, searchCriteria.getFrameRate())) {
+                    matchesCriteria = false;
                 }
-                if (matchesCriteriaMulti && !searchFrameRate(results, searchCriteria.getFrameRate())) {
-                    matchesCriteriaMulti = false;
+            }
+            if (searchCriteria.getBitRate() != null && Double.parseDouble(searchCriteria.getBitRate()) > 0.0) {
+                if (matchesCriteria && !searchBitRate(results, searchCriteria.getBitRate())) {
+                    matchesCriteria = false;
                 }
-                if (searchCriteria.getBitRate() != null) {
-                    if (matchesCriteriaMulti && !searchBitRate(results, searchCriteria.getBitRate())) {
-                        matchesCriteriaMulti = false;
-                    }
-                }
-                if (matchesCriteriaMulti) {
-                    arrayFinalResult.add(results);
-                }
+            }
+            if (matchesCriteria) {
+                arrayFinalResult.add(results);
             }
         }
-
     }
 
     /**
@@ -220,18 +214,22 @@ public class SearchFiles {
                 String lastModifiedTime = dateFormat.format(fileAttributes.lastModifiedTime().toMillis());
                 assetFactory = new AssetFactory();
                 if (fileEntry.isDirectory()) {
+                    long directorySize = FileUtils.sizeOfDirectory(fileEntry);
+
                     recoverFiles(fileEntry, arrayResultFiles);
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            null, 0L, null, null, null, null, null, 0.0, 0, null, null));
+                            null, directorySize, creationTime, lastAccessTime, lastModifiedTime,
+                            null, null, 0.0, 0, null, null));
                 } else if (!isMultimedia(fileEntry)) {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
 
                     arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, null, null, 0.0, 0, null, null));
+                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
+                            null, null, 0.0, 0, null, null));
                 } else if (isMultimedia(fileEntry)) {
                     fFprobe = new FFprobe("C:\\FFMPEG\\bin\\ffprobe.exe");
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
@@ -239,17 +237,18 @@ public class SearchFiles {
                     double duration = multimediaFile.duration;
                     if (!isAudio(fileEntry)) {
                         String videoSize = multimediaFile.width + "x" + multimediaFile.height;
-                        System.out.println("frame rate:" + getFrameRate(multimediaFile.r_frame_rate));
                         arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
                                 fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
                                 owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                                extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, multimediaFile.codec_name, multimediaFile.codec_name, getFrameRate(multimediaFile.r_frame_rate), 0, videoSize, multimediaFile.display_aspect_ratio));
+                                extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
+                                multimediaFile.codec_name, multimediaFile.codec_name, getFrameRate(multimediaFile.r_frame_rate), 0, videoSize, multimediaFile.display_aspect_ratio));
                     } else {
                         String videoSize = multimediaFile.width + "x" + multimediaFile.height;
                         arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
                                 fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
                                 owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                                extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, multimediaFile.codec_name, multimediaFile.codec_name, 0.0, (int) multimediaFile.bit_rate / 1000, videoSize, multimediaFile.display_aspect_ratio));
+                                extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
+                                multimediaFile.codec_name, multimediaFile.codec_name, 0.0, (int) multimediaFile.bit_rate / 1000, videoSize, multimediaFile.display_aspect_ratio));
                     }
                 }
             }
@@ -263,7 +262,6 @@ public class SearchFiles {
 
     private boolean isAudio(File fileEntry) {
         String ext = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
-        System.out.println(ext);
         if (ext.equalsIgnoreCase("mp3") || ext.equalsIgnoreCase("aac") || ext.equalsIgnoreCase("ogg")
                 || ext.equalsIgnoreCase("wma") || ext.equalsIgnoreCase("wav") || ext.equalsIgnoreCase("flac")
                 || ext.equalsIgnoreCase("m4a")) {
@@ -356,7 +354,7 @@ public class SearchFiles {
      * @param arrayResultFiles is the array of ResultFile objects.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
-    public boolean searchHiddenFiles(Asset arrayResultFiles, String searchHidden) {
+    private boolean searchHiddenFiles(Asset arrayResultFiles, String searchHidden) {
         if (searchHidden == null) {
             return true;
         }
@@ -383,7 +381,7 @@ public class SearchFiles {
      * @param readOnly         search criteria value.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
-    public boolean searchReadOnlyFiles(Asset arrayResultFiles, String readOnly) {
+    private boolean searchReadOnlyFiles(Asset arrayResultFiles, String readOnly) {
         if (readOnly == null) {
             return true;
         }
@@ -410,7 +408,7 @@ public class SearchFiles {
      * @param typeFile         search criteria value.
      * @return the array of coincidences, in this case hidden file coincidences.
      */
-    public boolean searchFilesOrDirectoriesOnly(Asset arrayResultFiles, int typeFile) {
+    private boolean searchFilesOrDirectoriesOnly(Asset arrayResultFiles, int typeFile) {
         if (typeFile == 0) { /**when typeFile is 0 we look for all type of files*/
             return true;
         }
@@ -434,7 +432,7 @@ public class SearchFiles {
      * @param owner
      * @return
      */
-    public boolean searchOwner(Asset arrayResultFiles, String owner) {
+    private boolean searchOwner(Asset arrayResultFiles, String owner) {
         if (owner != null) {
             if (arrayResultFiles.getOwner().equalsIgnoreCase(owner)) {
                 return true;
@@ -451,8 +449,8 @@ public class SearchFiles {
      * @param extension
      * @return
      */
-    public boolean searchExtension(Asset arrayResultFiles, String extension) {
-        if (!(arrayResultFiles instanceof ResultFile)) {
+    private boolean searchExtension(Asset arrayResultFiles, String extension) {
+        if (!(arrayResultFiles instanceof ResultFile || arrayResultFiles instanceof ResultMultimediaFile)) {
             return false;
         }
         if (extension != null) {
@@ -473,7 +471,7 @@ public class SearchFiles {
      * @param sizeMeasure
      * @return
      */
-    public boolean searchSize(Asset arrayResultFiles, String sizeSign, String sizeRequired, String sizeMeasure) {
+    private boolean searchSize(Asset arrayResultFiles, String sizeSign, String sizeRequired, String sizeMeasure) {
         if (sizeRequired == null) {
             return true;
         }
@@ -500,7 +498,18 @@ public class SearchFiles {
         return true;
     }
 
-    public boolean searchDate(Asset arrayResultFiles, boolean createDate, boolean modifiedDate, boolean accessedDate, String fromDate, String toDate) {
+    /**
+     * Method to search files for its date (creation, modification, and last accessed date)
+     *
+     * @param arrayResultFiles
+     * @param createDate
+     * @param modifiedDate
+     * @param accessedDate
+     * @param fromDate
+     * @param toDate
+     * @return
+     */
+    private boolean searchDate(Asset arrayResultFiles, boolean createDate, boolean modifiedDate, boolean accessedDate, String fromDate, String toDate) {
         SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
         boolean dateInRange = true;
         if (createDate || modifiedDate || accessedDate) {
@@ -535,7 +544,14 @@ public class SearchFiles {
         return dateInRange;
     }
 
-    public String getFileContent(Asset fileEntry, String extension) {
+    /**
+     * Method to get file's content.
+     *
+     * @param fileEntry
+     * @param extension
+     * @return
+     */
+    private String getFileContent(Asset fileEntry, String extension) {
         if (extension.equalsIgnoreCase("docx") && fileEntry.getSize() > 0L) {
             try {
                 FileInputStream fis = new FileInputStream(fileEntry.getPath());
@@ -547,10 +563,9 @@ public class SearchFiles {
             }
         }
         if (extension.equalsIgnoreCase("txt") && fileEntry.getSize() > 0L) {
-            Scanner in = null;
             String content = null;
             try {
-                in = new Scanner(new FileReader(fileEntry.getFileName()));
+                Scanner in = new Scanner(new FileReader(fileEntry.getPath()));
                 while (in.hasNextLine()) {
                     content = in.nextLine();
                 }
@@ -578,8 +593,15 @@ public class SearchFiles {
         return null;
     }
 
-
-    public boolean searchContent(Asset arrayResultFiles, String content, boolean contentCaseSensitive) {
+    /**
+     * Method to search for file's content.
+     *
+     * @param arrayResultFiles
+     * @param content
+     * @param contentCaseSensitive
+     * @return
+     */
+    private boolean searchContent(Asset arrayResultFiles, String content, boolean contentCaseSensitive) {
         if (!(arrayResultFiles instanceof ResultFile)) {
             return false;
         }
@@ -601,11 +623,10 @@ public class SearchFiles {
     }
 
     /**
-     * method saveSearchCriteria
+     * Method to saveSearchCriteria
      *
      * @return a string with the json search criterial
      */
-
     public String saveSearchCriteria() {
         Gson gson = new Gson();
         String json = gson.toJson(searchCriteria);
@@ -615,9 +636,14 @@ public class SearchFiles {
         return searchQuery.addCriteria(json);
     }
 
+    /**
+     * Method to filter multimedia files.
+     *
+     * @param file
+     * @return
+     */
     public boolean isMultimedia(File file) {
         String ext = file.getName().substring(file.getName().lastIndexOf(".") + 1);
-        System.out.println(ext);
         if (ext.equalsIgnoreCase("mp3") || ext.equalsIgnoreCase("mp4") || ext.equalsIgnoreCase("aac") || ext.equalsIgnoreCase("ogg") || ext.equalsIgnoreCase("avi")
                 || ext.equalsIgnoreCase("wma") || ext.equalsIgnoreCase("wav") || ext.equalsIgnoreCase("flac") || ext.equalsIgnoreCase("mpg") || ext.equalsIgnoreCase("flv")
                 || ext.equalsIgnoreCase("m4a") || ext.equalsIgnoreCase("mkv")
@@ -628,11 +654,23 @@ public class SearchFiles {
         return false;
     }
 
-
+    /**
+     * Method to get video frame rate.
+     *
+     * @param fraction
+     * @return
+     */
     public double getFrameRate(Fraction fraction) {
         return fraction.doubleValue();
     }
 
+    /**
+     * Method to search video codec.
+     *
+     * @param asset
+     * @param codec
+     * @return
+     */
     public boolean searchVideoCodec(Asset asset, String codec) {
         if ("all".equalsIgnoreCase(codec)) {
             return true;
@@ -643,6 +681,13 @@ public class SearchFiles {
         return false;
     }
 
+    /**
+     * Method to search audio codec.
+     *
+     * @param asset
+     * @param codec
+     * @return
+     */
     public boolean searchAudioCodec(Asset asset, String codec) {
         if ("all".equalsIgnoreCase(codec)) {
             return true;
@@ -653,27 +698,47 @@ public class SearchFiles {
         return false;
     }
 
+    /**
+     * Method to search resolution.
+     *
+     * @param asset
+     * @param resolution
+     * @return
+     */
     public boolean searchResolution(Asset asset, String resolution) {
         if ("all".equalsIgnoreCase(resolution)) {
             return true;
         }
         if (asset instanceof ResultMultimediaFile) {
-            return ((ResultMultimediaFile) asset).getVideoSize().equalsIgnoreCase(resolution);
+            return resolution.equalsIgnoreCase(((ResultMultimediaFile) asset).getVideoSize());
         }
         return false;
     }
 
+    /**
+     * Method to search aspect ratio.
+     *
+     * @param asset
+     * @param aspectRatio
+     * @return
+     */
     public boolean searchAspectRatio(Asset asset, String aspectRatio) {
         if ("all".equalsIgnoreCase(aspectRatio)) {
             return true;
         }
         if (asset instanceof ResultMultimediaFile) {
-            System.out.println("aspect ratio:" + ((ResultMultimediaFile) asset).getAspectRatio());
-            return ((ResultMultimediaFile) asset).getAspectRatio().equalsIgnoreCase(aspectRatio);
+            return aspectRatio.equalsIgnoreCase(((ResultMultimediaFile) asset).getAspectRatio());
         }
         return false;
     }
 
+    /**
+     * Method to search frame rate.
+     *
+     * @param asset
+     * @param frameRate
+     * @return
+     */
     public boolean searchFrameRate(Asset asset, String frameRate) {
         if ("all".equalsIgnoreCase(frameRate)) {
             return true;
@@ -686,25 +751,34 @@ public class SearchFiles {
         return false;
     }
 
+    /**
+     * Method to search bit rate.
+     * @param asset
+     * @param bitRate
+     * @return
+     */
     public boolean searchBitRate(Asset asset, String bitRate) {
+        int bit = (int) Double.parseDouble(bitRate);
         if (asset instanceof ResultMultimediaFile) {
-            int bit = (int) Double.parseDouble(bitRate);
-            if (bit > 0) {
-                System.out.println("bit rate:" + ((ResultMultimediaFile) asset).getAudioBitRate());
-                return ((ResultMultimediaFile) asset).getAudioBitRate() == bit;
-            }
-            return true;
+            return ((ResultMultimediaFile) asset).getAudioBitRate() == bit;
         }
         return false;
     }
 
+    /**
+     * Method to search duration.
+     * @param asset
+     * @param majorDuration
+     * @param minorDuration
+     * @return
+     */
     public boolean searchDuration(Asset asset, double majorDuration, double minorDuration) {
         if (asset instanceof ResultMultimediaFile) {
             if ((((ResultMultimediaFile) asset).getDuration() < majorDuration) &&
                     (((ResultMultimediaFile) asset).getDuration() > minorDuration)) {
-
                 return true;
             }
+            return false;
         }
         return false;
     }
