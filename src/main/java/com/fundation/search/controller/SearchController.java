@@ -361,11 +361,9 @@ public class SearchController implements Controller {
         tableModel.setRowCount(0);
 
         for (int i = 0; i < resultFileList.size(); i++) {
-            if (resultFileList.get(i) instanceof ResultFile) {
+            //if (resultFileList.get(i) instanceof ResultFile) {
                 tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly(), resultFileList.get(i).getOwner(), resultFileList.get(i).getSize(), resultFileList.get(i).getCreationTime(), resultFileList.get(i).getLastModifiedTime(), resultFileList.get(i).getLastAccessTime()});
-            } else {
-                tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly(), resultFileList.get(i).getOwner(), 0L, null, null, null});
-            }
+            //}
 
             System.out.println(resultFileList.get(i).getFileName() + "\t" + resultFileList.get(i).getPath() + "\t" + resultFileList.get(i).getHidden());
         }
@@ -427,7 +425,7 @@ public class SearchController implements Controller {
     private void fillFields(Object criteriaSelected) {
         int key = (Integer) criteriaSelected;
         PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
-        PanelNamePath panelNamePath = (PanelNamePath) mainView.getPanel();
+        PanelNamePath panelNamePath = (PanelNamePath) mainView.getPanelNamePath();
         panelNamePath.setTextFieldName(mapSearchCriteriasResults.get(key).getName());
         panelNamePath.setTextFieldPath(mapSearchCriteriasResults.get(key).getPath());
         panelNamePath.setCheckBoxCaseSensitiveName(mapSearchCriteriasResults.get(key).getNameFileCaseSensitive());

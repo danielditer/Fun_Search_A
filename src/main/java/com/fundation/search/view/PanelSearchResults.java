@@ -52,7 +52,7 @@ public class PanelSearchResults extends JPanel {
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
 
         tableResult.setModel(tableModel);
-        tableResult.setPreferredScrollableViewportSize(new Dimension(600, 170));
+        tableResult.setPreferredScrollableViewportSize(new Dimension(600, 250));
         tableResult.setFillsViewportHeight(true);
         tableResult.setEnabled(false);
         JTableHeader header = tableResult.getTableHeader();

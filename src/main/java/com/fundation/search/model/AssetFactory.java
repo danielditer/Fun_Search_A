@@ -36,7 +36,7 @@ public class AssetFactory {
             return new ResultMultimediaFile(path, fileName, hidden, duration, typeFile, owner, extension, size, creationTime, lastModifiedTime, lastAccessTime, videoCodec, audioCodec, frameRate, audioBitRate, videoSize, aspectRatio);
         }
         if (assetType.equalsIgnoreCase("directory")) {
-            return new ResultDirectory(path, fileName, hidden, readOnly, typeFile, owner, size);
+            return new ResultDirectory(path, fileName, hidden, readOnly, typeFile, owner, size, creationTime, lastModifiedTime, lastAccessTime);
         }
         return null;
     }

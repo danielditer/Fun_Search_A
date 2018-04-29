@@ -56,7 +56,7 @@ public class PanelSearchCriterial extends JPanel {
 
         //---- table results ----
         tableResult.setModel(tableModel);
-        tableResult.setPreferredScrollableViewportSize(new Dimension(600, 80));
+        tableResult.setPreferredScrollableViewportSize(new Dimension(600, 100));
         tableResult.setFillsViewportHeight(true);
         //tableResult.setEnabled(false);
         //change the header color
