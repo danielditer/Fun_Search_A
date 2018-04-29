@@ -140,25 +140,35 @@ public class SearchFiles {
             }
             /**
              * Search multimedia files*/
-            if (matchesCriteria && !searchVideoCodec(results, searchCriteria.getVideoCodec())) {
-                matchesCriteria = false;
+            if (searchCriteria.getVideoCodec() != null) {
+                if (matchesCriteria && !searchVideoCodec(results, searchCriteria.getVideoCodec())) {
+                    matchesCriteria = false;
+                }
             }
-            if (matchesCriteria && !searchAudioCodec(results, searchCriteria.getAudioCodec())) {
-                matchesCriteria = false;
+            if (searchCriteria.getAudioCodec() != null) {
+                if (matchesCriteria && !searchAudioCodec(results, searchCriteria.getAudioCodec())) {
+                    matchesCriteria = false;
+                }
             }
             if (searchCriteria.getMajorDuration() > 0.0 || searchCriteria.getMinorDuration() > 0.0) {
                 if (matchesCriteria && !searchDuration(results, searchCriteria.getMajorDuration(), searchCriteria.getMinorDuration())) {
                     matchesCriteria = false;
                 }
             }
-            if (matchesCriteria && !searchResolution(results, searchCriteria.getVideoSize())) {
-                matchesCriteria = false;
+            if (searchCriteria.getVideoSize() != null) {
+                if (matchesCriteria && !searchResolution(results, searchCriteria.getVideoSize())) {
+                    matchesCriteria = false;
+                }
             }
-            if (matchesCriteria && !searchAspectRatio(results, searchCriteria.getAspectRatio())) {
-                matchesCriteria = false;
+            if (searchCriteria.getAspectRatio() != null) {
+                if (matchesCriteria && !searchAspectRatio(results, searchCriteria.getAspectRatio())) {
+                    matchesCriteria = false;
+                }
             }
-            if (matchesCriteria && !searchFrameRate(results, searchCriteria.getFrameRate())) {
-                matchesCriteria = false;
+            if (searchCriteria.getFrameRate() != null) {
+                if (matchesCriteria && !searchFrameRate(results, searchCriteria.getFrameRate())) {
+                    matchesCriteria = false;
+                }
             }
             if (searchCriteria.getBitRate() != null && Double.parseDouble(searchCriteria.getBitRate()) > 0.0) {
                 if (matchesCriteria && !searchBitRate(results, searchCriteria.getBitRate())) {
