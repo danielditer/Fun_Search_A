@@ -93,7 +93,7 @@ public class SearchController implements Controller {
     public void saveActionPerformed() {
         PanelSaveCriterial panel = (PanelSaveCriterial) mainView.getPanelSaveCriterial();
         PanelNormalSearch panelMain = (PanelNormalSearch) mainView.getPanel();
-        PanelNamePath panelNamePath = (PanelNamePath) mainView.getPanel();
+        PanelNamePath panelNamePath = (PanelNamePath) mainView.getPanelNamePath();
         panel.getButtonSave().addActionListener(e -> saveButtonActionListener(panel, panelMain, panelNamePath));
     }
 
@@ -362,9 +362,9 @@ public class SearchController implements Controller {
 
         for (int i = 0; i < resultFileList.size(); i++) {
             if (resultFileList.get(i) instanceof ResultFile) {
-                tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly(), resultFileList.get(i).getOwner(), resultFileList.get(i).getSize()});
+                tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly(), resultFileList.get(i).getOwner(), resultFileList.get(i).getSize(), resultFileList.get(i).getCreationTime(), resultFileList.get(i).getLastModifiedTime(), resultFileList.get(i).getLastAccessTime()});
             } else {
-                tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly(), resultFileList.get(i).getOwner(), 0L});
+                tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly(), resultFileList.get(i).getOwner(), 0L, null, null, null});
             }
 
             System.out.println(resultFileList.get(i).getFileName() + "\t" + resultFileList.get(i).getPath() + "\t" + resultFileList.get(i).getHidden());

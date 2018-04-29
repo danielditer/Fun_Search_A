@@ -89,7 +89,7 @@ public class SearchFiles {
         arrayFinalResult = new ArrayList<>();
         assetFactory = new AssetFactory();
         File filePath = null;
-        if ("1".equals(searchType)) {
+
             if (searchCriteria.getPath() != null) {
                 filePath = new File(searchCriteria.getPath());
             }
@@ -137,53 +137,35 @@ public class SearchFiles {
                         matchesCriteria = false;
                     }
                 }
+                /**
+                 * Search multimedia files*/
+                /*if (matchesCriteria && !searchVideoCodec(results, searchCriteria.getVideoCodec())) {
+                    matchesCriteria = false;
+                }
+                if (matchesCriteria && !searchAudioCodec(results, searchCriteria.getAudioCodec())) {
+                    matchesCriteria = false;
+                }
+                if (matchesCriteria && !searchDuration(results, searchCriteria.getMajorDuration(), searchCriteria.getMinorDuration())) {
+                    matchesCriteria = false;
+                }
+                if (matchesCriteria && !searchResolution(results, searchCriteria.getVideoSize())) {
+                    matchesCriteria = false;
+                }
+                if (matchesCriteria && !searchAspectRatio(results, searchCriteria.getAspectRatio())) {
+                    matchesCriteria = false;
+                }
+                if (matchesCriteria && !searchFrameRate(results, searchCriteria.getFrameRate())) {
+                    matchesCriteria = false;
+                }
+                if (searchCriteria.getBitRate() != null) {
+                    if (matchesCriteria && !searchBitRate(results, searchCriteria.getBitRate())) {
+                        matchesCriteria = false;
+                    }
+                }*/
                 if (matchesCriteria) {
                     arrayFinalResult.add(results);
                 }
             }
-        } else if ("2".equals(searchType)) {
-            if (searchCriteria.getPath() != null) {
-                filePath = new File(searchCriteria.getPath());
-            }
-            if (searchCriteria.getPath() != null) {
-                resultResultFiles = recoverFiles(filePath, arrayResultFiles);
-            }
-            for (Asset results : resultResultFiles) {
-                boolean matchesCriteriaMulti = true;
-                if (searchCriteria.getName() != null) {
-                    if (!searchFile(results, searchCriteria.getNameFileCaseSensitive())) {
-                        matchesCriteriaMulti = false;
-                    }
-                }
-                if (matchesCriteriaMulti && !searchVideoCodec(results, searchCriteria.getVideoCodec())) {
-                    matchesCriteriaMulti = false;
-                }
-                if (matchesCriteriaMulti && !searchAudioCodec(results, searchCriteria.getAudioCodec())) {
-                    matchesCriteriaMulti = false;
-                }
-                if (matchesCriteriaMulti && !searchDuration(results, searchCriteria.getMajorDuration(), searchCriteria.getMinorDuration())) {
-                    matchesCriteriaMulti = false;
-                }
-                if (matchesCriteriaMulti && !searchResolution(results, searchCriteria.getVideoSize())) {
-                    matchesCriteriaMulti = false;
-                }
-                if (matchesCriteriaMulti && !searchAspectRatio(results, searchCriteria.getAspectRatio())) {
-                    matchesCriteriaMulti = false;
-                }
-                if (matchesCriteriaMulti && !searchFrameRate(results, searchCriteria.getFrameRate())) {
-                    matchesCriteriaMulti = false;
-                }
-                if (searchCriteria.getBitRate() != null) {
-                    if (matchesCriteriaMulti && !searchBitRate(results, searchCriteria.getBitRate())) {
-                        matchesCriteriaMulti = false;
-                    }
-                }
-                if (matchesCriteriaMulti) {
-                    arrayFinalResult.add(results);
-                }
-            }
-        }
-
     }
 
     /**
@@ -223,7 +205,7 @@ public class SearchFiles {
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                            null, 0L, null, null, null, null, null, 0.0, 0, null, null));
+                            null, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime, null, null, 0.0, 0, null, null));
                 } else if (!isMultimedia(fileEntry)) {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
 
@@ -701,7 +683,6 @@ public class SearchFiles {
         if (asset instanceof ResultMultimediaFile) {
             if ((((ResultMultimediaFile) asset).getDuration() < majorDuration) &&
                     (((ResultMultimediaFile) asset).getDuration() > minorDuration)) {
-
                 return true;
             }
         }
