@@ -231,7 +231,7 @@ public class SearchFiles {
                             extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
                             null, null, 0.0, 0, null, null));
                 } else if (isMultimedia(fileEntry)) {
-                    fFprobe = new FFprobe("C:\\FFMPEG\\bin\\ffprobe.exe");
+                    fFprobe = new FFprobe("./bin/ffprobe.exe");
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
                     FFmpegStream multimediaFile = fFprobe.probe(fileEntry.getPath()).getStreams().get(0);
                     double duration = multimediaFile.duration;
