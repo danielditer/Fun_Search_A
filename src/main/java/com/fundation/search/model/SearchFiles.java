@@ -203,7 +203,7 @@ public class SearchFiles {
      * @param path is given in order to obtain all files of a path.
      * @return the array of Files object.
      */
-    public List<Asset> recoverFiles(File path, List<Asset> arrayResultFiles) {
+    private List<Asset> recoverFiles(File path, List<Asset> arrayResultFiles) {
         try {
             for (File fileEntry : path.listFiles()) {
                 /**
@@ -397,8 +397,6 @@ public class SearchFiles {
                 return true;
             }
         }
-
-
         return false;
     }
 
