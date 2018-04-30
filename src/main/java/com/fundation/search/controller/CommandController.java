@@ -129,6 +129,10 @@ public class CommandController implements Controller {
             commandResultView.displayResult("COMMAND INFO: Invalid date value");
             return false;
         }
+        if(!validator.isAValidWildCard(inputCommands)){
+            commandResultView.displayResult("COMMAND INFO: Wildcard should be at the beginning or at the end");
+            return false;
+        }
         return true;
     }
 

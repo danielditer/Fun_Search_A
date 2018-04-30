@@ -387,4 +387,11 @@ public class ValidatorCommand {
         return false;
     }
 
+     public boolean isAValidWildCard(String[] name) {
+         if (Arrays.asList(name).contains("*") && Arrays.toString(name).startsWith("*") && Arrays.toString(name).endsWith("*")) {
+             System.out.println(Arrays.asList(name));
+             return false;
+         }
+         return true;
+     }
 }
