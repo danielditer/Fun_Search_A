@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * This class Validator will have methods to validate the criterias used in the program.
@@ -66,7 +67,7 @@ public class Validator {
      * @return
      */
     public boolean isAValidPathName(String path) {
-        String[] directoryName = path.split("\\\\");
+        String[] directoryName = path.split(Pattern.quote(File.separator));
         for (String value : directoryName) {
             if (!isAValidNameForPath(value)) {
                 return false;
@@ -166,6 +167,13 @@ System.out.println(path);
 
     public boolean nameCriterialIsNorEmpty(String name) {
         if (name.isEmpty() || name.compareTo(" ") == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isAValidWildCard(String name) {
+        if(name.contains("*") && !name.endsWith("*") && !name.startsWith("*")){
             return false;
         }
         return true;

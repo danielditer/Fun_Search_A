@@ -257,6 +257,10 @@ public class SearchController implements Controller {
             mainView.displayResult("The size must be a number");
             return false;
         }
+        if(!validator.isAValidWildCard(name)){
+            mainView.displayResult("Wildcard should be at the beginning or at the end");
+            return false;
+        }
         return true;
     }
 
