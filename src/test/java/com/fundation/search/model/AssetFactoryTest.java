@@ -1,6 +1,5 @@
 /**
  * @(#)AssetFactoryTest.java 04/30/2018
- * <p>
  * Copyright (c) 2018 Jala Foundation.
  * Cochabamba, Bolivia.
  * Project Search for Prog102.
@@ -8,11 +7,11 @@
 package com.fundation.search.model;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
 
 /**
  * JUnit class to asset factory class.
- *
  * @version April, 30th 2018  * @Manuel Valdez
  */
 public class AssetFactoryTest {
