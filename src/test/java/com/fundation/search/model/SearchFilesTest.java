@@ -16,7 +16,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * JUnit class developed in order to test all different methods for searching files.
@@ -1122,7 +1125,7 @@ public class SearchFilesTest {
         AssetFactory assetFactory = new AssetFactory();
         File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\test2.docx");
         Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test2.docx", "test2.docx", expected.isHidden(), 0.0, !expected.canWrite(), 1, "Administrator", "docx", 100L, "04-10-2018", "04-25-2018", "04-30-2018", "0.0", "0.0", 0.0, 0, "", "", false);
-        assertFalse(Whitebox.invokeMethod(searchFiles, "searchContent", expectedFile, searchCriteria.getContent(), searchCriteria.getContentCaseSensitive()));
+        assertTrue(Whitebox.invokeMethod(searchFiles, "searchContent", expectedFile, searchCriteria.getContent(), searchCriteria.getContentCaseSensitive()));
     }
 }
 
