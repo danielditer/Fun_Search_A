@@ -74,6 +74,7 @@ public class SearchFiles {
     FFprobe fFprobe;
 
     public SearchFiles() throws IOException {
+        fFprobe = new FFprobe("./bin/ffprobe.exe");
     }
 
     /**
@@ -230,7 +231,7 @@ public class SearchFiles {
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
                             null, directorySize, creationTime, lastAccessTime, lastModifiedTime,
-                            null, null, 0.0, 0, null, null, isFileSystem ));
+                            null, null, 0.0, 0, null, null, isFileSystem));
                 } else if (!isMultimedia(fileEntry)) {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
 
@@ -240,24 +241,37 @@ public class SearchFiles {
                             extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
                             null, null, 0.0, 0, null, null, isFileSystem));
                 } else if (isMultimedia(fileEntry)) {
-                    fFprobe = new FFprobe("./bin/ffprobe.exe");
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
-                    FFmpegStream multimediaFile = fFprobe.probe(fileEntry.getPath()).getStreams().get(0);
-                    double duration = multimediaFile.duration;
-                    if (!isAudio(fileEntry)) {
-                        String videoSize = multimediaFile.width + "x" + multimediaFile.height;
-                        arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
-                                fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
-                                owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                                extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
-                                multimediaFile.codec_name, multimediaFile.codec_name, getFrameRate(multimediaFile.r_frame_rate), 0, videoSize, multimediaFile.display_aspect_ratio , isFileSystem));
+                    List<FFmpegStream> streams = fFprobe.probe(fileEntry.getPath()).getStreams();
+                    if (streams.size() >= 1 && !isAudio(fileEntry)) {
+                        for (int i = 0; i < streams.size(); i++) {
+                            FFmpegStream stream = fFprobe.probe(fileEntry.getPath()).getStreams().get(i);
+                            if (stream.codec_type.name().equalsIgnoreCase("video")) {
+                                double duration = stream.duration;
+                                String videoSize = stream.width + "x" + stream.height;
+                                arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
+                                        fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
+                                        owner.getName().substring(owner.getName().indexOf("\\") + 1),
+                                        extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
+                                        stream.codec_name, "", getFrameRate(stream.r_frame_rate), 0, videoSize, stream.display_aspect_ratio, isFileSystem));
+                            }
+                        }
+
+
                     } else {
-                        String videoSize = multimediaFile.width + "x" + multimediaFile.height;
-                        arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
-                                fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
-                                owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                                extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
-                                multimediaFile.codec_name, multimediaFile.codec_name, 0.0, (int) multimediaFile.bit_rate / 1000, videoSize, multimediaFile.display_aspect_ratio, isFileSystem));
+                        if (streams.size() >= 1 && isAudio(fileEntry)) {
+                            for (int i = 0; i < streams.size(); i++) {
+                                FFmpegStream stream = fFprobe.probe(fileEntry.getPath()).getStreams().get(i);
+                                if (stream.codec_type.name().equalsIgnoreCase("audio")) {
+                                    double duration = stream.duration;
+                                    arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
+                                            fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
+                                            owner.getName().substring(owner.getName().indexOf("\\") + 1),
+                                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
+                                            "", stream.codec_name, getFrameRate(stream.r_frame_rate), (int) stream.bit_rate / 1000, "", stream.display_aspect_ratio, isFileSystem));
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -265,6 +279,7 @@ public class SearchFiles {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return arrayResultFiles;
     }
 
@@ -356,6 +371,7 @@ public class SearchFiles {
 
     }
 //
+
     /**
      * Method that returns an array of file system coincidences of a path.
      *
@@ -547,7 +563,8 @@ public class SearchFiles {
      * @param toDate
      * @return
      */
-    private boolean searchDate(Asset arrayResultFiles, boolean createDate, boolean modifiedDate, boolean accessedDate, String fromDate, String toDate) {
+    private boolean searchDate(Asset arrayResultFiles, boolean createDate, boolean modifiedDate,
+                               boolean accessedDate, String fromDate, String toDate) {
         SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
         boolean dateInRange = true;
         if (createDate || modifiedDate || accessedDate) {
@@ -791,6 +808,7 @@ public class SearchFiles {
 
     /**
      * Method to search bit rate.
+     *
      * @param asset
      * @param bitRate
      * @return
@@ -805,6 +823,7 @@ public class SearchFiles {
 
     /**
      * Method to search duration.
+     *
      * @param asset
      * @param majorDuration
      * @param minorDuration

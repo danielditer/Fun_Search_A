@@ -41,7 +41,7 @@ public class PanelSearchResults extends JPanel {
     public void initComponents() {
         tableResult = new JTable();
 
-        String columnNames[] = new String[]{"File Name", "File Path", "Hidden", "Read Only", "Owner", "Size (bytes)", "Created", "Modified", "Accessed"};
+        String columnNames[] = new String[]{"File Name", "File Path", "Hidden", "Read Only", "Owner", "Size (bytes)", "Created", "Modified", "Accessed","Duration(sec)","Video Codec","Audio Codec","Resolution","Aspect ratio","Frame rate","Bit rate"};
 
         tableModel = new DefaultTableModel(0, 0);
         tableModel.setColumnIdentifiers(columnNames);
@@ -52,7 +52,7 @@ public class PanelSearchResults extends JPanel {
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
 
         tableResult.setModel(tableModel);
-        tableResult.setPreferredScrollableViewportSize(new Dimension(600, 250));
+        tableResult.setPreferredScrollableViewportSize(new Dimension(970, 250));
         tableResult.setFillsViewportHeight(true);
         tableResult.setEnabled(false);
         JTableHeader header = tableResult.getTableHeader();
