@@ -147,13 +147,13 @@ public class PanelAttributes extends JPanel{
         comboBoxSize.setPreferredSize(preferredSize);
         comboBoxSize.addItem("Minor");
         comboBoxSize.addItem("Equals");
-        comboBoxSize.addItem("Mayor");
+        comboBoxSize.addItem("Major");
         add(comboBoxSize, new TableLayoutConstraints(1, 3, 1, 3,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- comboBoxSize ----
         comboBoxType.setPreferredSize(new Dimension(50, 20));
-        comboBoxType.addItem("bytes");
+        comboBoxType.addItem("Bytes");
         comboBoxType.addItem("Kb");
         comboBoxType.addItem("Mb");
         comboBoxType.addItem("Gb");

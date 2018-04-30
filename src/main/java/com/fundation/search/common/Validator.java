@@ -44,6 +44,9 @@ public class Validator {
         INVALID_CHARACTERS.add('\\');
     }
 
+    public Validator() {
+
+    }
     /**
      * Method to validate file name, it should not contains special characters for windows..
      * @param name file name.
@@ -97,7 +100,6 @@ public class Validator {
      * @return boolean value is valid.
      */
     public boolean pathExists(String path) {
-
             File file = new File(path);
             return file.exists();
     }
@@ -109,7 +111,6 @@ public class Validator {
      */
     public boolean isAValidPath(String path) {
         String[] file = path.split(":");
-System.out.println(path);
         if (path.isEmpty()) {
             return false;
         }
@@ -125,11 +126,7 @@ System.out.println(path);
         else {
             return false;
         }
-        if (!isAValidPathName(path.substring(INDEX_THREE))) {
-            return false;
-        }
-
-        return true;
+        return isAValidPathName(path.substring(INDEX_THREE));
     }
 
     /**
@@ -138,19 +135,23 @@ System.out.println(path);
      * @return boolean value is valid.
      */
     public boolean isANumber(String size) {
-        if (!size.matches("[0-9]+")) {
-            return false;
-        }
-        return true;
+        return size.matches("[0-9]+");
     }
-
+    /**
+     * Method to validate the dates are not empty.
+     * @param fromDate
+     * @param toDate
+     * @return boolean value is valid.
+     */
     public boolean datesNotEmptyString (String fromDate, String toDate) {
-        if (fromDate == null || toDate == null ) {
-            return false;
-        }
-        return true;
+        return fromDate != null && toDate != null;
     }
-
+    /**
+     * Method to validate if is a valid range dates.
+     * @param fromDate
+     * @param toDate
+     * @return boolean value is valid.
+     */
     public boolean isAValidRangeDate(String fromDate, String toDate) {
         SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
         try {
@@ -164,18 +165,20 @@ System.out.println(path);
         }
         return true;
     }
-
+    /**
+     * Method to validate if name criterial is not empty.
+     * @param name
+     * @return boolean value is valid.
+     */
     public boolean nameCriterialIsNorEmpty(String name) {
-        if (name.isEmpty() || name.compareTo(" ") == 0) {
-            return false;
-        }
-        return true;
+        return !name.isEmpty() && name.compareTo(" ") != 0;
     }
-
+    /**
+     * Method to validate if is a valid range dates.
+     * @param name
+     * @return boolean value is valid.
+     */
     public boolean isAValidWildCard(String name) {
-        if(name.contains("*") && !name.endsWith("*") && !name.startsWith("*")){
-            return false;
-        }
-        return true;
+        return !name.contains("*") || name.endsWith("*") || name.startsWith("*");
     }
 }
