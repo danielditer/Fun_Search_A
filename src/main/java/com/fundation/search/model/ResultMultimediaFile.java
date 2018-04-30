@@ -63,7 +63,7 @@ public class ResultMultimediaFile extends Asset {
      * @param duration  hour minute second of file.
      * @param videoSize
      */
-    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime, String videoCodec, String audioCodec, double frameRate, int audioBitRate, String videoSize, String aspectRatio , boolean fileSystem) {
+    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime, String videoCodec, String audioCodec, double frameRate, int audioBitRate, String videoSize, String aspectRatio, boolean fileSystem) {
         super(path, fileName, hidden, true, typeFile, owner, size, creationTime, lastModifiedTime, lastAccessTime, fileSystem);
         this.extension = extension;
         this.duration = duration;
@@ -96,6 +96,7 @@ public class ResultMultimediaFile extends Asset {
 
     /**
      * Getter for video codec attribute.
+     *
      * @return
      */
     public String getVideoCodec() {
@@ -104,6 +105,7 @@ public class ResultMultimediaFile extends Asset {
 
     /**
      * Getter for audio codec attribute.
+     *
      * @return
      */
     public String getAudioCodec() {
@@ -112,6 +114,7 @@ public class ResultMultimediaFile extends Asset {
 
     /**
      * Getter for frame rate attribute.
+     *
      * @return
      */
     public double getFrameRate() {
@@ -120,6 +123,7 @@ public class ResultMultimediaFile extends Asset {
 
     /**
      * Getter for aspect ratio attribute.
+     *
      * @return
      */
     public String getAspectRatio() {
@@ -128,6 +132,7 @@ public class ResultMultimediaFile extends Asset {
 
     /**
      * Getter for video size attribute.
+     *
      * @return
      */
     public String getVideoSize() {
@@ -136,13 +141,16 @@ public class ResultMultimediaFile extends Asset {
 
     /**
      * Getter for audio bit rate attribute.
+     *
      * @return
      */
     public int getAudioBitRate() {
         return this.audioBitRate;
     }
+
     /**
      * Getter for audio bit rate attribute.
+     *
      * @return
      */
     public boolean getFileSystem() {

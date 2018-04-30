@@ -244,37 +244,37 @@ public class SearchFiles {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
                     List<FFmpegStream> streams = fFprobe.probe(fileEntry.getPath()).getStreams();
                     if (streams.size() >= 1 && !isAudio(fileEntry)) {
+                        String codecVideo = "";
+                        String codecAudio = "";
+                        double frameRate = 0.0;
+                        double duration = 0.0;
+                        String videoSize = "";
+                        int audioBitRate = 0;
+                        String aspectRatio = "";
                         for (int i = 0; i < streams.size(); i++) {
                             FFmpegStream stream = fFprobe.probe(fileEntry.getPath()).getStreams().get(i);
                             if (stream.codec_type.name().equalsIgnoreCase("video")) {
-                                double duration = stream.duration;
-                                String videoSize = stream.width + "x" + stream.height;
-                                arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
-                                        fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
-                                        owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                                        extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
-                                        stream.codec_name, "", getFrameRate(stream.r_frame_rate), 0, videoSize, stream.display_aspect_ratio, isFileSystem));
+                                videoSize = stream.width + "x" + stream.height;
+                                codecVideo = stream.codec_name;
+                                frameRate = getFrameRate(stream.r_frame_rate);
+                                aspectRatio = stream.display_aspect_ratio;
+                                duration = stream.duration;
+
+                            }
+                            if (stream.codec_type.name().equalsIgnoreCase("audio")) {
+                                codecAudio = stream.codec_name;
+                                audioBitRate = (int) stream.bit_rate / 1000;
                             }
                         }
-
-
-                    } else {
-                        if (streams.size() >= 1 && isAudio(fileEntry)) {
-                            for (int i = 0; i < streams.size(); i++) {
-                                FFmpegStream stream = fFprobe.probe(fileEntry.getPath()).getStreams().get(i);
-                                if (stream.codec_type.name().equalsIgnoreCase("audio")) {
-                                    double duration = stream.duration;
-                                    arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
-                                            fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
-                                            owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                                            extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
-                                            "", stream.codec_name, getFrameRate(stream.r_frame_rate), (int) stream.bit_rate / 1000, "", stream.display_aspect_ratio, isFileSystem));
-                                }
-                            }
-                        }
+                        arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
+                                fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
+                                owner.getName().substring(owner.getName().indexOf("\\") + 1),
+                                extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
+                                codecVideo, codecAudio, frameRate, audioBitRate, videoSize, aspectRatio, isFileSystem));
                     }
                 }
             }
+
         } catch (NullPointerException e) {
         } catch (IOException e) {
             e.printStackTrace();
@@ -697,9 +697,9 @@ public class SearchFiles {
      */
     public boolean isMultimedia(File file) {
         String ext = file.getName().substring(file.getName().lastIndexOf(".") + 1);
-        if (ext.equalsIgnoreCase("mp3") || ext.equalsIgnoreCase("mp4") || ext.equalsIgnoreCase("aac") || ext.equalsIgnoreCase("ogg") || ext.equalsIgnoreCase("avi")
-                || ext.equalsIgnoreCase("wma") || ext.equalsIgnoreCase("wav") || ext.equalsIgnoreCase("flac") || ext.equalsIgnoreCase("mpg") || ext.equalsIgnoreCase("flv")
-                || ext.equalsIgnoreCase("m4a") || ext.equalsIgnoreCase("mkv")
+        if (ext.equalsIgnoreCase("mp4") || ext.equalsIgnoreCase("avi")
+                || ext.equalsIgnoreCase("mpg") || ext.equalsIgnoreCase("flv")
+                || ext.equalsIgnoreCase("mkv")
                 || ext.equalsIgnoreCase("mov") || ext.equalsIgnoreCase("wmv")
                 || ext.equalsIgnoreCase("webm") || ext.equalsIgnoreCase("vob")) {
             return true;

@@ -382,8 +382,8 @@ public class SearchController implements Controller {
 
         for (int i = 0; i < resultFileList.size(); i++) {
             DecimalFormat df = new DecimalFormat("#.##");
-            if (resultFileList.get(i) instanceof ResultFile) {
-                tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly(), resultFileList.get(i).getOwner(), resultFileList.get(i).getSize(), resultFileList.get(i).getCreationTime(), resultFileList.get(i).getLastModifiedTime(), resultFileList.get(i).getLastAccessTime(),"-------------","-------------","-------------","-------------","-------------","-------------","-------------"});
+            if (resultFileList.get(i) instanceof ResultFile || resultFileList.get(i) instanceof ResultDirectory) {
+                tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly(), resultFileList.get(i).getOwner(), resultFileList.get(i).getSize(), resultFileList.get(i).getCreationTime(), resultFileList.get(i).getLastModifiedTime(), resultFileList.get(i).getLastAccessTime(), "-------------", "-------------", "-------------", "-------------", "-------------", "-------------", "-------------"});
             } else {
                 if (resultFileList.get(i) instanceof ResultMultimediaFile) {
                     ResultMultimediaFile resultMultimediaFile = (ResultMultimediaFile) resultFileList.get(i);
