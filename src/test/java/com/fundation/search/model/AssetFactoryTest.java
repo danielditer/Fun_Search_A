@@ -1,5 +1,5 @@
 /**
- * @(#)SearchFilesTest.java 04/30/2018
+ * @(#)AssetFactoryTest.java 04/30/2018
  * <p>
  * Copyright (c) 2018 Jala Foundation.
  * Cochabamba, Bolivia.
@@ -11,7 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * JUnit class developed in order to test method of asset factory class.
+ * JUnit class to asset factory class.
  *
  * @version April, 30th 2018  * @Manuel Valdez
  */
