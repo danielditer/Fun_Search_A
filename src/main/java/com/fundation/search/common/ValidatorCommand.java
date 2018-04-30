@@ -1,12 +1,9 @@
- package com.fundation.search.common;
+package com.fundation.search.common;
 
- import org.apache.commons.codec.binary.StringUtils;
 
- import java.util.*;
- import java.util.function.Function;
- import java.util.stream.Collectors;
+import java.util.*;
 
- /**
+/**
  * Class ValidatorCommand to validate commands introduced by the user.
  *
  * @version 29 Mar 2018  * @Maria Canqui
@@ -38,6 +35,7 @@ public class ValidatorCommand {
     }
 
     static final List<Character> VALID_HIDDEN = new ArrayList<>();
+
     /**
      * static method to fill list with valid hidden values.
      * */
@@ -46,7 +44,9 @@ public class ValidatorCommand {
         VALID_HIDDEN.add('2');
         VALID_HIDDEN.add('3');
     }
+
     static final List<Character> VALID_TYPES = new ArrayList<>();
+
     /**
      * static method to fill list with valid type file values.
      * */
@@ -66,18 +66,18 @@ public class ValidatorCommand {
      */
     public boolean isAValidArgumentAfterCommand(String[] command) {
         for (int i = 0; i < command.length; i += 2) {
-            if(command[i+1].length() > 1) {
-                if (command[i+1].substring(0, 1).equals(INI_COMMAND) ) {
+            if (command[i + 1].length() > 1) {
+                if (command[i + 1].substring(0, 1).equals(INI_COMMAND)) {
                     return false;
                 }
-            }
-            else if (command[i+1].equals(INI_COMMAND) ) {
+            } else if (command[i + 1].equals(INI_COMMAND)) {
                 return false;
             }
 
         }
         return true;
     }
+
     /**
      * Method to validate if the command is followed by an argument.
      *
@@ -113,17 +113,19 @@ public class ValidatorCommand {
         }
         return true;
     }
+
     /**
      * Method exeCmd receive a command, separe the string by command and set criteria attributes.
      *
      * @return list of files found
      */
     public boolean isNotEmptyCommand(String[] command) {
-        if(command.length == 0) {
+        if (command.length == 0) {
             return false;
         }
         return true;
     }
+
     /**
      * Method to validate if the command contain a capital letter.
      *
@@ -132,7 +134,7 @@ public class ValidatorCommand {
      */
     public static boolean isNotContainCapitalLetters(String[] command) {
         boolean hasUppercase = true;
-        for (int i = 0; i < command.length; i ++) {
+        for (int i = 0; i < command.length; i++) {
             hasUppercase = command[i].equals(command[i].toLowerCase());
             if (command[i].contains("-") && command[i].length() == 2 && !hasUppercase) {
                 return false;
@@ -141,6 +143,7 @@ public class ValidatorCommand {
         }
         return hasUppercase;
     }
+
     /**
      * Method to validate if the command contain a path.
      *
@@ -153,6 +156,7 @@ public class ValidatorCommand {
         }
         return false;
     }
+
     /**
      * Method to validate if the command contain a path.
      *
@@ -161,8 +165,7 @@ public class ValidatorCommand {
      */
     public static boolean containRepeatCommands(String[] command) {
         Set<String> lump = new HashSet<String>();
-        for (int i = 0; i < command.length; i += 2)
-        {
+        for (int i = 0; i < command.length; i += 2) {
             if (lump.contains(command[i])) {
                 return false;
             }
@@ -173,14 +176,15 @@ public class ValidatorCommand {
 
     /**
      * Method to validate file name, it should not contains special characters for windows..
+     *
      * @param command file name.
      * @return boolean value is valid.
      */
     public boolean isAValidName(String[] command) {
         INVALID_CHARACTERS.remove((Character) '*');
         if (Arrays.asList(command).contains("-n")) {
-            int positionPath =  Arrays.asList(command).indexOf("-n");
-            char[] nameCharacters = command[positionPath+1].toCharArray();
+            int positionPath = Arrays.asList(command).indexOf("-n");
+            char[] nameCharacters = command[positionPath + 1].toCharArray();
             for (char value : nameCharacters) {
                 if (INVALID_CHARACTERS.contains(value)) {
                     INVALID_CHARACTERS.add('*');
@@ -188,34 +192,49 @@ public class ValidatorCommand {
                 }
             }
         }
+        return true;
+    }
 
+    /**
+     * Methods to validate help message, it should display the help message.
+     *
+     * @param command file name.
+     * @return boolean value is valid.
+     */
+    public boolean isValidHelp(String[] command) {
+        if (Arrays.asList(command).contains("-help")) {
+            return false;
+        }
         return true;
     }
 
     /**
      * Method to validate hidden command, it should not contains special characters for windows..
+     *
      * @param command file name.
      * @return boolean value is valid.
      */
     public boolean isAValidHidden(String[] command) {
         Validator val = new Validator();
         if (Arrays.asList(command).contains("-h")) {
-            int positionPath =  Arrays.asList(command).indexOf("-h");
+            int positionPath = Arrays.asList(command).indexOf("-h");
             if (!containAValidValue(command[positionPath + 1], VALID_HIDDEN) || !val.isANumber(command[positionPath + 1]) || command[positionPath + 1].length() != 1) {
                 return false;
             }
         }
         return true;
     }
+
     /**
      * Method to validate read only command, it should not contains special characters for windows..
+     *
      * @param command file name.
      * @return boolean value is valid.
      */
     public boolean isAValidReadOnly(String[] command) {
         Validator val = new Validator();
         if (Arrays.asList(command).contains("-r")) {
-            int positionPath =  Arrays.asList(command).indexOf("-r");
+            int positionPath = Arrays.asList(command).indexOf("-r");
             if (command[positionPath].compareTo("-r") == 0) {
                 if (!containAValidValue(command[positionPath + 1], VALID_HIDDEN) || !val.isANumber(command[positionPath + 1]) || command[positionPath + 1].length() != 1) {
                     return false;
@@ -229,29 +248,31 @@ public class ValidatorCommand {
 
     /**
      * Method to validate hidden command, it should not contains special characters for windows..
+     *
      * @param command file name.
      * @return boolean value is valid.
      */
     public boolean isAValidCaseSensitive(String[] command) {
         int count = 0;
         if (Arrays.asList(command).contains("-s")) {
-            int positionPath =  Arrays.asList(command).indexOf("-s");
+            int positionPath = Arrays.asList(command).indexOf("-s");
             if (command[positionPath + 1].equals("false")) {
                 count++;
             }
             if (command[positionPath + 1].equals("true")) {
                 count++;
             }
-            if (count == 0)
-            {
+            if (count == 0) {
                 return false;
             }
         }
 
         return true;
     }
+
     /**
      * Method to validate case sensitive command have a name.
+     *
      * @param command file name.
      * @return boolean value is valid.
      */
@@ -267,42 +288,45 @@ public class ValidatorCommand {
 
     /**
      * Method to validate hidden command, it should not contains special characters for windows..
+     *
      * @param command file name.
      * @return boolean value is valid.
      */
     public boolean isAValidType(String[] command) {
         Validator val = new Validator();
         if (Arrays.asList(command).contains("-type")) {
-            int positionPath =  Arrays.asList(command).indexOf("-type");
+            int positionPath = Arrays.asList(command).indexOf("-type");
             if (!containAValidValue(command[positionPath + 1], VALID_TYPES) || !val.isANumber(command[positionPath + 1]) || command[positionPath + 1].length() != 1) {
                 return false;
             }
         }
         return true;
     }
+
     /**
      * Method to validate hidden command, it should not contains special characters for windows..
+     *
      * @param command file name.
      * @return boolean value is valid.
      */
     public boolean isAValidDate(String[] command) {
         Validator val = new Validator();
         if (Arrays.asList(command).contains("-cd")) {
-            int positionPath =  Arrays.asList(command).indexOf("-dc");
+            int positionPath = Arrays.asList(command).indexOf("-dc");
             if (!validDate(command[positionPath + 1])) {
                 return false;
             }
 
         }
         if (Arrays.asList(command).contains("-md")) {
-            int positionPath =  Arrays.asList(command).indexOf("-dc");
+            int positionPath = Arrays.asList(command).indexOf("-dc");
             if (!validDate(command[positionPath + 1])) {
                 return false;
             }
 
         }
         if (Arrays.asList(command).contains("-ad")) {
-            int positionPath =  Arrays.asList(command).indexOf("-dc");
+            int positionPath = Arrays.asList(command).indexOf("-dc");
             if (!validDate(command[positionPath + 1])) {
                 return false;
             }
@@ -310,29 +334,31 @@ public class ValidatorCommand {
         }
         return true;
     }
+
     /**
      * Method to validate hidden command, it should not contains special characters for windows..
+     *
      * @param command file name.
      * @return boolean value is valid.
      */
     public boolean isAValidRangeDate(String[] command) {
         Validator val = new Validator();
         if (Arrays.asList(command).contains("-cd")) {
-            int positionPath =  Arrays.asList(command).indexOf("-dc");
+            int positionPath = Arrays.asList(command).indexOf("-dc");
             if (!validRangeDate(command[positionPath + 1])) {
                 return false;
             }
 
         }
         if (Arrays.asList(command).contains("-md")) {
-            int positionPath =  Arrays.asList(command).indexOf("-dc");
+            int positionPath = Arrays.asList(command).indexOf("-dc");
             if (!validRangeDate(command[positionPath + 1])) {
                 return false;
             }
 
         }
         if (Arrays.asList(command).contains("-ad")) {
-            int positionPath =  Arrays.asList(command).indexOf("-dc");
+            int positionPath = Arrays.asList(command).indexOf("-dc");
             if (!validRangeDate(command[positionPath + 1])) {
                 return false;
             }
@@ -341,14 +367,15 @@ public class ValidatorCommand {
         return true;
     }
 
-    public boolean validRangeDate (String command) {
+    public boolean validRangeDate(String command) {
         String[] twoDates = command.split("_");
         Validator valNormal = new Validator();
-        if (valNormal.isAValidRangeDate(twoDates[0],twoDates[1])) {
+        if (valNormal.isAValidRangeDate(twoDates[0], twoDates[1])) {
             return true;
         }
         return false;
     }
+
     public boolean validDate(String command) {
         String[] twoDates = command.split("_");
         if (twoDates.length == 2) {
@@ -362,8 +389,10 @@ public class ValidatorCommand {
         }
         return false;
     }
+
     /**
      * Method to validate hidden command, it should not contains special characters for windows..
+     *
      * @param command file name.
      * @return boolean value is valid.
      */
@@ -377,9 +406,9 @@ public class ValidatorCommand {
         return false;
     }
 
-    public boolean validatePath(String path){
+    public boolean validatePath(String path) {
         Validator validatorNormal = new Validator();
-        if(!path.equals("")) {
+        if (!path.equals("")) {
             if (validatorNormal.isAValidPath(path)) {
                 return true;
             }
@@ -387,11 +416,11 @@ public class ValidatorCommand {
         return false;
     }
 
-     public boolean isAValidWildCard(String[] name) {
-         if (Arrays.asList(name).contains("*") && Arrays.toString(name).startsWith("*") && Arrays.toString(name).endsWith("*")) {
-             System.out.println(Arrays.asList(name));
-             return false;
-         }
-         return true;
-     }
+    public boolean isAValidWildCard(String[] name) {
+        if (Arrays.asList(name).contains("*") && Arrays.toString(name).startsWith("*") && Arrays.toString(name).endsWith("*")) {
+            System.out.println(Arrays.asList(name));
+            return false;
+        }
+        return true;
+    }
 }
