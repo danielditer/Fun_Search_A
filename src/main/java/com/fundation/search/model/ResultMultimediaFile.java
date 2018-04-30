@@ -47,6 +47,10 @@ public class ResultMultimediaFile extends Asset {
      * Attribute video size.
      */
     private String videoSize;
+    /**
+     * Attribute is file system.
+     */
+    private boolean fileSystem;
 
 
     /**
@@ -59,8 +63,8 @@ public class ResultMultimediaFile extends Asset {
      * @param duration  hour minute second of file.
      * @param videoSize
      */
-    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime, String videoCodec, String audioCodec, double frameRate, int audioBitRate, String videoSize, String aspectRatio) {
-        super(path, fileName, hidden, true, typeFile, owner, size, creationTime, lastModifiedTime, lastAccessTime);
+    public ResultMultimediaFile(String path, String fileName, boolean hidden, double duration, int typeFile, String owner, String extension, long size, String creationTime, String lastModifiedTime, String lastAccessTime, String videoCodec, String audioCodec, double frameRate, int audioBitRate, String videoSize, String aspectRatio , boolean fileSystem) {
+        super(path, fileName, hidden, true, typeFile, owner, size, creationTime, lastModifiedTime, lastAccessTime, fileSystem);
         this.extension = extension;
         this.duration = duration;
         this.audioCodec = audioCodec;
@@ -69,6 +73,7 @@ public class ResultMultimediaFile extends Asset {
         this.audioBitRate = audioBitRate;
         this.videoSize = videoSize;
         this.aspectRatio = aspectRatio;
+        this.fileSystem = fileSystem;
     }
 
     /**
@@ -135,5 +140,12 @@ public class ResultMultimediaFile extends Asset {
      */
     public int getAudioBitRate() {
         return this.audioBitRate;
+    }
+    /**
+     * Getter for audio bit rate attribute.
+     * @return
+     */
+    public boolean getFileSystem() {
+        return this.fileSystem;
     }
 }

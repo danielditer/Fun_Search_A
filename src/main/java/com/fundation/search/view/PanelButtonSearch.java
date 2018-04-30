@@ -9,8 +9,9 @@ package com.fundation.search.view;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.JPanel;
-import javax.swing.JButton;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
@@ -20,7 +21,8 @@ import java.awt.event.ActionEvent;
  */
 public class PanelButtonSearch extends JPanel {
 
-    JButton buttonSearch = new JButton();
+    private static final String SEPARATOR = System.getProperty("file.separator") ;
+    JButton buttonSearch = new JButton(new ImageIcon(System.getProperty("user.dir") +  SEPARATOR + "resources" + SEPARATOR + "icons" + SEPARATOR + "search.png"));
     JButton buttonClear = new JButton();
 
     /**
@@ -42,6 +44,7 @@ public class PanelButtonSearch extends JPanel {
         //---- buttonSearch ----
         buttonSearch.setText("Search");
         buttonClear.setText("Clear");
+
 
         add(buttonSearch, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));

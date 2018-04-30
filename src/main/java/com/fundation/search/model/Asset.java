@@ -23,6 +23,9 @@ public class Asset {
     /**Readonly property of file*/
     private boolean readOnly;
 
+    /**Readonly property of system file*/
+    private boolean fileSystem;
+
     /**Type of file*/
     private int typeFile;
 
@@ -50,9 +53,10 @@ public class Asset {
      * @param typeFile type of file.
      * @param owner file owner.
      * @param size file size.
+     * @param fileSystem is the file a system file.
      */
 
-    public Asset(String path, String fileName, boolean hidden, boolean readOnly, int typeFile, String owner, long size, String creationTime, String lastModifiedTime, String lastAccessTime) {
+    public Asset(String path, String fileName, boolean hidden, boolean readOnly, int typeFile, String owner, long size, String creationTime, String lastModifiedTime, String lastAccessTime, boolean fileSystem) {
         this.path = path;
         this.fileName = fileName;
         this.hidden = hidden;
@@ -63,6 +67,7 @@ public class Asset {
         this.creationTime = creationTime;
         this.lastAccessTime = lastAccessTime;
         this.lastModifiedTime = lastModifiedTime;
+        this.fileSystem = fileSystem;
     }
 
     /**
@@ -151,6 +156,14 @@ public class Asset {
      */
     public String getLastAccessTime() {
         return this.lastAccessTime;
+    }
+
+    /**
+     * Method to get last accessed time.
+     * @return file system.
+     */
+    public boolean getFileSystem() {
+        return this.fileSystem;
     }
 
 }

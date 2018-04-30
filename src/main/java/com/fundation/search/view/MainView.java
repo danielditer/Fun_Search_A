@@ -6,7 +6,12 @@
  */
 package com.fundation.search.view;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JTabbedPane;
+import javax.swing.JMenu;
+import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
@@ -76,7 +81,7 @@ public class MainView extends JFrame {
 
 
         //======== panel Search Name, Path ========
-        panelSearch.setBorder(new EmptyBorder(5,15,5,10));
+        panelSearch.setBorder(new EmptyBorder(5,5,5,5));
         panelSearch.add(panelNamePath);
         contentPane.add(panelSearch, BorderLayout.NORTH);
 

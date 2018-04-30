@@ -41,6 +41,10 @@ public class SearchCriteria {
      */
     private boolean nameFileCaseSensitive;
     /**
+     * Attribute to know if search including system files
+     */
+    private boolean fileSystem;
+    /**
      * Attribute to know a file's or directory's ownes
      */
     private String owner;
@@ -183,6 +187,15 @@ public class SearchCriteria {
 
     public void setNameFileCaseSensitive(boolean nameFileCaseSensitive) {
         this.nameFileCaseSensitive = nameFileCaseSensitive;
+    }
+
+    /**
+     * Setter for nameFileCaseSensitive.
+     * @param fileSystem true for file system search.
+     */
+
+    public void setFileSystem(boolean fileSystem) {
+        this.fileSystem = fileSystem;
     }
 
     /**
@@ -405,6 +418,14 @@ public class SearchCriteria {
      */
     public boolean getNameFileCaseSensitive() {
         return this.nameFileCaseSensitive;
+    }
+    /**
+     * Getter for name file case sensitive.
+     *
+     * @return file system.
+     */
+    public boolean getFileSystem() {
+        return this.fileSystem;
     }
 
     /**
