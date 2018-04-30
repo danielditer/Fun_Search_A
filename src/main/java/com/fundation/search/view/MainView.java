@@ -103,7 +103,7 @@ public class MainView extends JFrame {
         setVisible(true);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000,650);
+        setSize(1366,650);
         setLocationRelativeTo(null);
         setResizable(false);
 

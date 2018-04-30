@@ -111,9 +111,9 @@ public class PanelMultimediaSearch extends JPanel {
 
         //---- labelFps ----
         comboBoxFrameRate.addItem("All");
-        comboBoxFrameRate.addItem("23.97");
+        comboBoxFrameRate.addItem("23,97");
         comboBoxFrameRate.addItem("25");
-        comboBoxFrameRate.addItem("29.97");
+        comboBoxFrameRate.addItem("29,97");
         comboBoxFrameRate.addItem("30");
         comboBoxFrameRate.addItem("60");
         labelFps.setText("fps");
@@ -157,6 +157,8 @@ public class PanelMultimediaSearch extends JPanel {
         //---- labelAudioCodec ----
         labelAudioCodec.setText("Audio codec");
         comboBoxAudioCodec.addItem("All");
+        comboBoxAudioCodec.addItem("None");
+        comboBoxAudioCodec.addItem("WAV(pcm_s16le)");
         comboBoxAudioCodec.addItem("MP3(mp3)");
         comboBoxAudioCodec.addItem("AAC(aac)");
         comboBoxAudioCodec.addItem("AC3(ac3)");
@@ -195,6 +197,9 @@ public class PanelMultimediaSearch extends JPanel {
         comboBoxResolution.addItem("1920x1080");
         comboBoxResolution.addItem("3840x2160");
 		comboBoxAspectRatio.addItem("All");
+        comboBoxAspectRatio.addItem("1:1");
+        comboBoxAspectRatio.addItem("2:1");
+        comboBoxAspectRatio.addItem("3:2");
         comboBoxAspectRatio.addItem("4:3");
         comboBoxAspectRatio.addItem("16:9");        
         panelResolution.add(comboBoxResolution, new TableLayoutConstraints(0, 0, 0, 0,

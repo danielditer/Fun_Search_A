@@ -16,6 +16,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -31,19 +32,30 @@ import java.util.Map;
  * @version 28 Mar 2018  * @Juan Manuel
  */
 public class SearchController implements Controller {
-    /**Model instance*/
+    /**
+     * Model instance
+     */
     private SearchFiles searchFile;
-    /**View instance*/
+    /**
+     * View instance
+     */
     private MainView mainView;
-    /**Search criteria to search files*/
+    /**
+     * Search criteria to search files
+     */
     private SearchCriteria searchCriteria;
-    /**Search criteria to save in DB*/
+    /**
+     * Search criteria to save in DB
+     */
     private SearchCriteria searchCriteriaForDB;
-    /**Map with search criteria results of DB query*/
+    /**
+     * Map with search criteria results of DB query
+     */
     private Map<Integer, SearchCriteria> mapSearchCriteriasResults;
 
     /**
      * Constructor for controller.
+     *
      * @param searchFile
      * @param mainView
      */
@@ -123,13 +135,13 @@ public class SearchController implements Controller {
         int typeFile = Integer.parseInt(typeFileString);
         if (areValidParams(panelNamePath.getPath(), panelNamePath.getName(), panel.getFormattedTextFieldStart(), panel.getFormattedTextFieldEnd(), panel.getCheckBoxCreated(), panel.getCheckBoxModified(), panel.getCheckBoxAccessed(), panel.getTextFieldSize())) {
             sendSearchCriteriaToModel(panelNamePath.getPath(), panelNamePath.getName(), panel.getCheckBoxHidden(), panel.getCheckBoxReadOnly(),
-                    typeFile, panelNamePath.getCaseSensitive(),panelNamePath.getFileSystem(), panel.getTextFieldOwner(), panel.getTextFieldExt(),
+                    typeFile, panelNamePath.getCaseSensitive(), panelNamePath.getFileSystem(), panel.getTextFieldOwner(), panel.getTextFieldExt(),
                     panel.getComboBoxSize(), panel.getTextFieldSize(), panel.getComboBoxType(),
                     panel.getCheckBoxCreated(), panel.getCheckBoxModified(), panel.getCheckBoxAccessed(),
                     panel.getFormattedTextFieldStart(), panel.getFormattedTextFieldEnd(),
                     panel.getContent(), panel.getCaseSensitiveContent(),
-                    panelMultimediaSearch.getMajorDuration(),panelMultimediaSearch.getMinorDuration(),
-                    panelMultimediaSearch.getCodec(),panelMultimediaSearch.getResolution(), panelMultimediaSearch.getFrameRate(), panelMultimediaSearch.getBitRate(),panelMultimediaSearch.getAspectRatio(), panelMultimediaSearch.getAudioCodec());
+                    panelMultimediaSearch.getMajorDuration(), panelMultimediaSearch.getMinorDuration(),
+                    panelMultimediaSearch.getCodec(), panelMultimediaSearch.getResolution(), panelMultimediaSearch.getFrameRate(), panelMultimediaSearch.getBitRate(), panelMultimediaSearch.getAspectRatio(), panelMultimediaSearch.getAudioCodec());
         }
     }
 
@@ -259,7 +271,7 @@ public class SearchController implements Controller {
             mainView.displayResult("The size must be a number");
             return false;
         }
-        if(!validator.isAValidWildCard(name)){
+        if (!validator.isAValidWildCard(name)) {
             mainView.displayResult("Wildcard should be at the beginning or at the end");
             return false;
         }
@@ -283,6 +295,7 @@ public class SearchController implements Controller {
 
     /**
      * Method to set search criteria for Model and start search.
+     *
      * @param path                  the path from UI.
      * @param name                  the name from UI.
      * @param hidden                value from UI.
@@ -298,7 +311,7 @@ public class SearchController implements Controller {
     public void sendSearchCriteriaToModel(String path, String name, String hidden, String readOnly, int typeFile, boolean nameFileCaseSensitive, boolean fileSystem, String owner, String extension, String sizeSign, String sizeRequired, String sizeMeasure,
                                           boolean create, boolean modified, boolean accessed, String fromDate, String toDate,
                                           String content, boolean contentCaseSensitive,
-                                          double majorDuration,double minorDuration, String codec, String resolution, String frameRate, String bitRate, String aspectRatio, String audioCodec) {
+                                          double majorDuration, double minorDuration, String codec, String resolution, String frameRate, String bitRate, String aspectRatio, String audioCodec) {
         searchCriteria = new SearchCriteria();
         searchCriteria.setPath(path);
         if (!name.isEmpty()) {
@@ -368,11 +381,16 @@ public class SearchController implements Controller {
         tableModel.setRowCount(0);
 
         for (int i = 0; i < resultFileList.size(); i++) {
-            //if (resultFileList.get(i) instanceof ResultFile) {
-                tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly(), resultFileList.get(i).getOwner(), resultFileList.get(i).getSize(), resultFileList.get(i).getCreationTime(), resultFileList.get(i).getLastModifiedTime(), resultFileList.get(i).getLastAccessTime()});
-            //}
-
-            System.out.println(resultFileList.get(i).getFileName() + "\t" + resultFileList.get(i).getPath() + "\t" + resultFileList.get(i).getHidden()+ "\t" + resultFileList.get(i).getFileSystem());
+            DecimalFormat df = new DecimalFormat("#.##");
+            if (resultFileList.get(i) instanceof ResultFile) {
+                tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly(), resultFileList.get(i).getOwner(), resultFileList.get(i).getSize(), resultFileList.get(i).getCreationTime(), resultFileList.get(i).getLastModifiedTime(), resultFileList.get(i).getLastAccessTime(),"-------------","-------------","-------------","-------------","-------------","-------------","-------------"});
+            } else {
+                if (resultFileList.get(i) instanceof ResultMultimediaFile) {
+                    ResultMultimediaFile resultMultimediaFile = (ResultMultimediaFile) resultFileList.get(i);
+                    tableModel.addRow(new Object[]{resultMultimediaFile.getFileName(), resultMultimediaFile.getPath(), resultMultimediaFile.getHidden(), resultMultimediaFile.getReadOnly(), resultMultimediaFile.getOwner(), resultMultimediaFile.getSize(), resultMultimediaFile.getCreationTime(), resultMultimediaFile.getLastModifiedTime(), resultMultimediaFile.getLastAccessTime(), df.format(resultMultimediaFile.getDuration()), resultMultimediaFile.getVideoCodec(), resultMultimediaFile.getAudioCodec(), resultMultimediaFile.getVideoSize(), resultMultimediaFile.getAspectRatio(), df.format(resultMultimediaFile.getFrameRate()), resultMultimediaFile.getAudioBitRate()});
+                }
+            }
+            System.out.println(resultFileList.get(i).getFileName() + "\t" + resultFileList.get(i).getPath() + "\t" + resultFileList.get(i).getHidden() + "\t" + resultFileList.get(i).getFileSystem());
         }
         panel.setTableModel(tableModel);
         panel.setTableResultModel();
