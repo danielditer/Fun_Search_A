@@ -28,6 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.DosFileAttributes;
 import java.nio.file.attribute.FileOwnerAttributeView;
 import java.nio.file.attribute.UserPrincipal;
 import java.text.DateFormat;
@@ -68,6 +69,8 @@ public class SearchFiles {
      */
     private AssetFactory assetFactory;
 
+    private static final String OS = System.getProperty("os.name").toLowerCase();
+
     FFprobe fFprobe;
 
     public SearchFiles() throws IOException {
@@ -103,6 +106,9 @@ public class SearchFiles {
                 if (!searchFile(results, searchCriteria.getNameFileCaseSensitive())) {
                     matchesCriteria = false;
                 }
+            }
+            if (matchesCriteria && !searchFileSystem(results, searchCriteria.getFileSystem())) {
+                matchesCriteria = false;
             }
             if (matchesCriteria && !searchHiddenFiles(results, searchCriteria.getHidden())) {
                 matchesCriteria = false;
@@ -212,16 +218,19 @@ public class SearchFiles {
                 String creationTime = dateFormat.format(fileAttributes.creationTime().toMillis());
                 String lastAccessTime = dateFormat.format(fileAttributes.lastAccessTime().toMillis());
                 String lastModifiedTime = dateFormat.format(fileAttributes.lastModifiedTime().toMillis());
+
+                boolean isFileSystem = OS.contains("windows") ? Files.readAttributes(path.toPath(), DosFileAttributes.class).isSystem() : false;
+
+
                 assetFactory = new AssetFactory();
                 if (fileEntry.isDirectory()) {
                     long directorySize = FileUtils.sizeOfDirectory(fileEntry);
-
                     recoverFiles(fileEntry, arrayResultFiles);
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(),
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
                             null, directorySize, creationTime, lastAccessTime, lastModifiedTime,
-                            null, null, 0.0, 0, null, null));
+                            null, null, 0.0, 0, null, null, isFileSystem ));
                 } else if (!isMultimedia(fileEntry)) {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
 
@@ -229,7 +238,7 @@ public class SearchFiles {
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 1,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
                             extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
-                            null, null, 0.0, 0, null, null));
+                            null, null, 0.0, 0, null, null, isFileSystem));
                 } else if (isMultimedia(fileEntry)) {
                     fFprobe = new FFprobe("./bin/ffprobe.exe");
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
@@ -241,19 +250,18 @@ public class SearchFiles {
                                 fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
                                 owner.getName().substring(owner.getName().indexOf("\\") + 1),
                                 extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
-                                multimediaFile.codec_name, multimediaFile.codec_name, getFrameRate(multimediaFile.r_frame_rate), 0, videoSize, multimediaFile.display_aspect_ratio));
+                                multimediaFile.codec_name, multimediaFile.codec_name, getFrameRate(multimediaFile.r_frame_rate), 0, videoSize, multimediaFile.display_aspect_ratio , isFileSystem));
                     } else {
                         String videoSize = multimediaFile.width + "x" + multimediaFile.height;
                         arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
                                 fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
                                 owner.getName().substring(owner.getName().indexOf("\\") + 1),
                                 extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
-                                multimediaFile.codec_name, multimediaFile.codec_name, 0.0, (int) multimediaFile.bit_rate / 1000, videoSize, multimediaFile.display_aspect_ratio));
+                                multimediaFile.codec_name, multimediaFile.codec_name, 0.0, (int) multimediaFile.bit_rate / 1000, videoSize, multimediaFile.display_aspect_ratio, isFileSystem));
                     }
                 }
             }
         } catch (NullPointerException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -346,6 +354,36 @@ public class SearchFiles {
             return false;
         }
 
+    }
+//
+    /**
+     * Method that returns an array of file system coincidences of a path.
+     *
+     * @param arrayResultFiles is the array of ResultFile objects.
+     * @return the array of coincidences, in this case hidden file coincidences.
+     */
+    private boolean searchFileSystem(Asset arrayResultFiles, boolean fileSystem) {
+        if (!fileSystem) { /**file system*/
+            if (arrayResultFiles.getFileSystem()) {
+                return false;
+            }
+            if (!arrayResultFiles.getFileSystem()) {
+                return true;
+            }
+
+        }
+
+        if (fileSystem) { /**file system*/
+            if (arrayResultFiles.getFileSystem()) {
+                return true;
+            }
+            if (!arrayResultFiles.getFileSystem()) {
+                return true;
+            }
+        }
+
+
+        return false;
     }
 
     /**

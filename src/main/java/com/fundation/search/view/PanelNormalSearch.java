@@ -9,7 +9,8 @@ package com.fundation.search.view;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+
 import java.util.Date;
 
 /**

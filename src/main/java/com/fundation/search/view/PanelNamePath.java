@@ -41,6 +41,8 @@ public class PanelNamePath extends JPanel {
     private JRadioButton radioBoxOnlyDirectory;
     private JRadioButton radioBoxAllFiles;
 
+    JCheckBox checkBoxFileSystem;
+
     ButtonGroup btnGroupTypeFile;
 
     /**
@@ -65,6 +67,7 @@ public class PanelNamePath extends JPanel {
         fileChooser = new JFileChooser();
         buttonFileChooser = new JButton();
         btnGroupTypeFile = new ButtonGroup();
+        checkBoxFileSystem = new JCheckBox();
 
         fileChooser.setCurrentDirectory(new java.io.File("/"));
         fileChooser.setDialogTitle("Folder chooser for search files");
@@ -78,7 +81,7 @@ public class PanelNamePath extends JPanel {
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
         //---- labelName ----
         labelName.setText(" Name:");
-        final Dimension preferredSize = new Dimension(120, 20);
+        final Dimension preferredSize = new Dimension(140, 20);
         labelName.setPreferredSize(preferredSize);
         add(labelName, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.RIGHT,
@@ -129,6 +132,10 @@ public class PanelNamePath extends JPanel {
         checkBoxCaseSensitiveName.setText("Case sensitive");
         checkBoxCaseSensitiveName.setEnabled(false);
         add(checkBoxCaseSensitiveName, new TableLayoutConstraints(0, 2, 0, 2,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+        //----- File System ----
+        checkBoxFileSystem.setText("Include System Files");
+        add(checkBoxFileSystem, new TableLayoutConstraints(1, 2, 1, 2,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- All Files ----
@@ -199,6 +206,15 @@ public class PanelNamePath extends JPanel {
     public boolean getCaseSensitive() {
         return checkBoxCaseSensitiveName.isSelected();
     }
+
+    /**
+     * Getter for the Case sensitive file name.
+     * @return the boolean of ´checkBoxCaseSensitiveName´ checkbox.
+     */
+
+    public boolean getFileSystem() {
+        return checkBoxFileSystem.isSelected();
+    }
     /**
      * Getter for the only files search checkbox.
      * @return the boolean of ´checkBoxOnlyFiles´ checkbox.
@@ -225,6 +241,12 @@ public class PanelNamePath extends JPanel {
      */
     public void setCheckBoxCaseSensitiveName(boolean checkBoxCaseSensitiveName) {
         this.checkBoxCaseSensitiveName.setSelected(checkBoxCaseSensitiveName);
+    }
+    /**
+     * Setter for the case sensitive checkbox.
+     */
+    public void setCheckBoxFileSystem(boolean checkBoxFileSystem) {
+        this.checkBoxFileSystem.setSelected(checkBoxFileSystem);
     }
     /**
      * Setter for the case only files radio buttons.

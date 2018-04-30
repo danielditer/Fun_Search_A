@@ -123,7 +123,7 @@ public class SearchController implements Controller {
         int typeFile = Integer.parseInt(typeFileString);
         if (areValidParams(panelNamePath.getPath(), panelNamePath.getName(), panel.getFormattedTextFieldStart(), panel.getFormattedTextFieldEnd(), panel.getCheckBoxCreated(), panel.getCheckBoxModified(), panel.getCheckBoxAccessed(), panel.getTextFieldSize())) {
             sendSearchCriteriaToModel(panelNamePath.getPath(), panelNamePath.getName(), panel.getCheckBoxHidden(), panel.getCheckBoxReadOnly(),
-                    typeFile, panelNamePath.getCaseSensitive(), panel.getTextFieldOwner(), panel.getTextFieldExt(),
+                    typeFile, panelNamePath.getCaseSensitive(),panelNamePath.getFileSystem(), panel.getTextFieldOwner(), panel.getTextFieldExt(),
                     panel.getComboBoxSize(), panel.getTextFieldSize(), panel.getComboBoxType(),
                     panel.getCheckBoxCreated(), panel.getCheckBoxModified(), panel.getCheckBoxAccessed(),
                     panel.getFormattedTextFieldStart(), panel.getFormattedTextFieldEnd(),
@@ -147,6 +147,7 @@ public class SearchController implements Controller {
         panelNamePath.setTextFieldPath(null);
         panelNamePath.setCheckBoxCaseSensitiveName(false);
         panelNamePath.setBtnAllFiles("0");
+        panelNamePath.setCheckBoxFileSystem(false);
         panelMain.setBtnGroupHiddenAttributes("3");
         panelMain.setBtnGroupReadOnlyAttributes("3");
         panelMain.setTextFieldExtAttributes(null);
@@ -196,6 +197,7 @@ public class SearchController implements Controller {
             searchCriteriaForDB.setToDate(panelMain.getFormattedTextFieldEnd());
             searchCriteriaForDB.setContent(panelMain.getContent());
             searchCriteriaForDB.setContentCaseSensitive(panelMain.getCaseSensitiveContent());
+            searchCriteriaForDB.setFileSystem(panelNamePath.getFileSystem());
             searchFile.setSearchCriteria(searchCriteriaForDB);
             System.out.println("DB:" + searchFile.saveSearchCriteria());
         }
@@ -293,7 +295,7 @@ public class SearchController implements Controller {
      * @param sizeRequired          value from UI.
      * @param sizeMeasure           value from UI.
      */
-    public void sendSearchCriteriaToModel(String path, String name, String hidden, String readOnly, int typeFile, boolean nameFileCaseSensitive, String owner, String extension, String sizeSign, String sizeRequired, String sizeMeasure,
+    public void sendSearchCriteriaToModel(String path, String name, String hidden, String readOnly, int typeFile, boolean nameFileCaseSensitive, boolean fileSystem, String owner, String extension, String sizeSign, String sizeRequired, String sizeMeasure,
                                           boolean create, boolean modified, boolean accessed, String fromDate, String toDate,
                                           String content, boolean contentCaseSensitive,
                                           double majorDuration,double minorDuration, String codec, String resolution, String frameRate, String bitRate, String aspectRatio, String audioCodec) {
@@ -306,6 +308,7 @@ public class SearchController implements Controller {
         searchCriteria.setReadOnly(readOnly);
         searchCriteria.setTypeFile(typeFile);
         searchCriteria.setNameFileCaseSensitive(nameFileCaseSensitive);
+        searchCriteria.setFileSystem(fileSystem);
         if (!owner.isEmpty()) {
             searchCriteria.setOwner(owner);
         } else {
@@ -369,7 +372,7 @@ public class SearchController implements Controller {
                 tableModel.addRow(new Object[]{resultFileList.get(i).getFileName(), resultFileList.get(i).getPath(), resultFileList.get(i).getHidden(), resultFileList.get(i).getReadOnly(), resultFileList.get(i).getOwner(), resultFileList.get(i).getSize(), resultFileList.get(i).getCreationTime(), resultFileList.get(i).getLastModifiedTime(), resultFileList.get(i).getLastAccessTime()});
             //}
 
-            System.out.println(resultFileList.get(i).getFileName() + "\t" + resultFileList.get(i).getPath() + "\t" + resultFileList.get(i).getHidden());
+            System.out.println(resultFileList.get(i).getFileName() + "\t" + resultFileList.get(i).getPath() + "\t" + resultFileList.get(i).getHidden()+ "\t" + resultFileList.get(i).getFileSystem());
         }
         panel.setTableModel(tableModel);
         panel.setTableResultModel();
@@ -433,6 +436,7 @@ public class SearchController implements Controller {
         panelNamePath.setTextFieldName(mapSearchCriteriasResults.get(key).getName());
         panelNamePath.setTextFieldPath(mapSearchCriteriasResults.get(key).getPath());
         panelNamePath.setCheckBoxCaseSensitiveName(mapSearchCriteriasResults.get(key).getNameFileCaseSensitive());
+        panelNamePath.setCheckBoxFileSystem(mapSearchCriteriasResults.get(key).getFileSystem());
         int typeFiles = mapSearchCriteriasResults.get(key).getTypeFile();
         panelNamePath.setBtnAllFiles(Integer.toString(typeFiles));
         panel.setBtnGroupHiddenAttributes(mapSearchCriteriasResults.get(key).getHidden());
