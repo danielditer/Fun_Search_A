@@ -96,7 +96,8 @@ public class SearchController implements Controller {
         PanelSearchResults panelResults = (PanelSearchResults) mainView.getPanelResultList();
         PanelButtonSearch panelButtonSearch = (PanelButtonSearch) mainView.getPanelButton();
         PanelNamePath panelNamePath = (PanelNamePath) mainView.getPanelNamePath();
-        panelButtonSearch.getButtonClear().addActionListener(e -> clearButtonActionListener(panel, panelSaveCriterial, panelResults, panelNamePath));
+        PanelMultimediaSearch panelMultimediaSearch = mainView.getPanelMultimediaSearch();
+        panelButtonSearch.getButtonClear().addActionListener(e -> clearButtonActionListener(panel, panelSaveCriterial, panelResults, panelNamePath, panelMultimediaSearch));
     }
 
     /**
@@ -106,7 +107,8 @@ public class SearchController implements Controller {
         PanelSaveCriterial panel = (PanelSaveCriterial) mainView.getPanelSaveCriterial();
         PanelNormalSearch panelMain = (PanelNormalSearch) mainView.getPanel();
         PanelNamePath panelNamePath = (PanelNamePath) mainView.getPanelNamePath();
-        panel.getButtonSave().addActionListener(e -> saveButtonActionListener(panel, panelMain, panelNamePath));
+        PanelMultimediaSearch panelMultimediaSearch = mainView.getPanelMultimediaSearch();
+        panel.getButtonSave().addActionListener(e -> saveButtonActionListener(panel, panelMain, panelNamePath, panelMultimediaSearch));
     }
 
     /**
@@ -150,7 +152,7 @@ public class SearchController implements Controller {
      *
      * @param panelMain is the panel that contain all the elements for the normal search
      */
-    public void clearButtonActionListener(PanelNormalSearch panelMain, PanelSaveCriterial panelSaveCriterial, PanelSearchResults panelResults, PanelNamePath panelNamePath) {
+    public void clearButtonActionListener(PanelNormalSearch panelMain, PanelSaveCriterial panelSaveCriterial, PanelSearchResults panelResults, PanelNamePath panelNamePath, PanelMultimediaSearch panelMultimediaSearch) {
         panelSaveCriterial.setTextFieldName("");
         DefaultTableModel tableModel = panelResults.getTableModel();
         tableModel.setRowCount(0);
@@ -174,6 +176,15 @@ public class SearchController implements Controller {
         panelMain.setDateChooserToPanel(null);
         panelMain.setTextAreaContent(null);
         panelMain.setCheckBoxCaseSensitiveContent(false);
+
+        panelMultimediaSearch.setMajorDuration(0);
+        panelMultimediaSearch.setMinorDuration(0);
+        panelMultimediaSearch.setCodec("All");
+        panelMultimediaSearch.setAudioCodec("All");
+        panelMultimediaSearch.setResolution("All");
+        panelMultimediaSearch.setFrameRate("All");
+        panelMultimediaSearch.setBitRate(0);
+        panelMultimediaSearch.setAspectRatio("All");
     }
 
     /**
@@ -182,7 +193,7 @@ public class SearchController implements Controller {
      * @param panel
      * @param panelMain
      */
-    public void saveButtonActionListener(PanelSaveCriterial panel, PanelNormalSearch panelMain, PanelNamePath panelNamePath) {
+    public void saveButtonActionListener(PanelSaveCriterial panel, PanelNormalSearch panelMain, PanelNamePath panelNamePath, PanelMultimediaSearch panelMultimediaSearch) {
         searchCriteriaForDB = new SearchCriteria();
         String nameSearchCriteria = panel.getName();
         String typeFileString = panelNamePath.getBtnGroupTypeFiles();
@@ -210,6 +221,16 @@ public class SearchController implements Controller {
             searchCriteriaForDB.setContent(panelMain.getContent());
             searchCriteriaForDB.setContentCaseSensitive(panelMain.getCaseSensitiveContent());
             searchCriteriaForDB.setFileSystem(panelNamePath.getFileSystem());
+
+            searchCriteriaForDB.setMajorDuration(panelMultimediaSearch.getMajorDuration());
+            searchCriteriaForDB.setMinorDuration(panelMultimediaSearch.getMinorDuration());
+            searchCriteriaForDB.setVideoCodec(panelMultimediaSearch.getCodec());
+            searchCriteriaForDB.setAudioCodec(panelMultimediaSearch.getAudioCodec());
+            searchCriteriaForDB.setVideoSize(panelMultimediaSearch.getResolution());
+            searchCriteriaForDB.setFrameRate(panelMultimediaSearch.getFrameRate());
+            searchCriteriaForDB.setBitRate(panelMultimediaSearch.getBitRate());
+            searchCriteriaForDB.setAspectRatio(panelMultimediaSearch.getAspectRatio());
+
             searchFile.setSearchCriteria(searchCriteriaForDB);
             System.out.println("DB:" + searchFile.saveSearchCriteria());
         }
@@ -451,6 +472,7 @@ public class SearchController implements Controller {
         int key = (Integer) criteriaSelected;
         PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
         PanelNamePath panelNamePath = (PanelNamePath) mainView.getPanelNamePath();
+        PanelMultimediaSearch panelMultimediaSearch = mainView.getPanelMultimediaSearch();
         panelNamePath.setTextFieldName(mapSearchCriteriasResults.get(key).getName());
         panelNamePath.setTextFieldPath(mapSearchCriteriasResults.get(key).getPath());
         panelNamePath.setCheckBoxCaseSensitiveName(mapSearchCriteriasResults.get(key).getNameFileCaseSensitive());
@@ -481,6 +503,15 @@ public class SearchController implements Controller {
         }
         panel.setTextAreaContent(mapSearchCriteriasResults.get(key).getContent());
         panel.setCheckBoxCaseSensitiveContent(mapSearchCriteriasResults.get(key).getContentCaseSensitive());
+
+        panelMultimediaSearch.setMajorDuration(mapSearchCriteriasResults.get(key).getMajorDuration());
+        panelMultimediaSearch.setMinorDuration(mapSearchCriteriasResults.get(key).getMinorDuration());
+        panelMultimediaSearch.setCodec(mapSearchCriteriasResults.get(key).getVideoCodec());
+        panelMultimediaSearch.setAudioCodec(mapSearchCriteriasResults.get(key).getAudioCodec());
+        panelMultimediaSearch.setResolution(mapSearchCriteriasResults.get(key).getVideoSize());
+        panelMultimediaSearch.setFrameRate(mapSearchCriteriasResults.get(key).getFrameRate());
+        panelMultimediaSearch.setBitRate(Double.parseDouble(mapSearchCriteriasResults.get(key).getBitRate()));
+        panelMultimediaSearch.setAspectRatio(mapSearchCriteriasResults.get(key).getAspectRatio());
     }
 }
 
