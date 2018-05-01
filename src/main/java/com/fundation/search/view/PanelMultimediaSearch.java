@@ -1,13 +1,28 @@
+/**
+ * @(#)PanelMultimediaSearch.java 03/27/18.
+ * Copyright (c) 2018 Jala Foundation.
+ * Cochabamba, Bolivia.
+ * Project Search for Prog102.
+ */
 package com.fundation.search.view;
 
+import com.fundation.search.controller.LoggerCreator;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.*;
-
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
-import java.awt.*;
+import javax.swing.SpinnerNumberModel;
+import java.awt.Dimension;
 
+/**
+ * Class to initialize panel for multimedia search tab.
+ *
+ * @version 27 Mar 2018  * @Daniel Caballero.
+ */
 public class PanelMultimediaSearch extends JPanel {
     private JPanel panelDuration;
     private JLabel labelMoreThan;
@@ -30,10 +45,17 @@ public class PanelMultimediaSearch extends JPanel {
     private JLabel labelKbps;
     private JComboBox comboBoxAspectRatio;
 
+    /**
+     * Class constructor.
+     */
     public PanelMultimediaSearch() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Panel Multimedia created");
         initComponents();
     }
 
+    /**
+     * Initializes components.
+     */
     private void initComponents() {
         panelDuration = new JPanel();
         labelMoreThan = new JLabel();

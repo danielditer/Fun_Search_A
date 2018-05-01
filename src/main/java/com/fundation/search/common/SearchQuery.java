@@ -9,6 +9,8 @@
 
 package com.fundation.search.common;
 
+import com.fundation.search.controller.LoggerCreator;
+
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -27,6 +29,7 @@ public class SearchQuery {
      * Class constructor.
      */
     public SearchQuery() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Class SearchQuery created");
         con = SearchConnection.getInstance().getConnection();
     }
 
@@ -42,6 +45,7 @@ public class SearchQuery {
             prep.setString(2, criteriaJson);
             prep.execute();
         } catch (SQLException e) {
+            LoggerCreator.getInstance().error(this.getClass().getName(),e.getMessage(),e);
             e.printStackTrace();
             return "error";
         }
