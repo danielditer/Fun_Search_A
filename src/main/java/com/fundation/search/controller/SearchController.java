@@ -74,6 +74,7 @@ public class SearchController implements Controller {
         saveActionPerformed();
         loadActionPerformed();
         selectActionPerformed();
+        deleteActionPerformed();
     }
 
     /**
@@ -125,6 +126,14 @@ public class SearchController implements Controller {
     public void selectActionPerformed() {
         PanelSearchCriterial panel = (PanelSearchCriterial) mainView.getPanelSearchCriterial();
         panel.getButtonSelect().addActionListener(e -> selectButtonActionListener(panel));
+    }
+
+    /**
+     * Method to delete a criteria.
+     */
+    public void deleteActionPerformed() {
+        PanelSearchCriterial panel = (PanelSearchCriterial) mainView.getPanelSearchCriterial();
+        panel.getButtonDelete().addActionListener(e -> deleteButtonActionListener(panel));
     }
 
     /**
@@ -232,7 +241,9 @@ public class SearchController implements Controller {
             searchCriteriaForDB.setAspectRatio(panelMultimediaSearch.getAspectRatio());
 
             searchFile.setSearchCriteria(searchCriteriaForDB);
-            System.out.println("DB:" + searchFile.saveSearchCriteria());
+            String resultDB = searchFile.saveSearchCriteria();
+            System.out.println("DB:" + resultDB);
+            mainView.displayResult("Save search criteria, " + resultDB);
         }
     }
 
@@ -255,6 +266,20 @@ public class SearchController implements Controller {
         JTable table = panel.getTableResult();
         Object criteriaSelected = table.getValueAt(table.getSelectedRow(), 0);
         fillFields(criteriaSelected);
+    }
+
+    /**
+     * Method to add Action Listener for button ´Delte´.
+     * @param panel
+     */
+    public void deleteButtonActionListener(PanelSearchCriterial panel) {
+        JTable table = panel.getTableResult();
+        if (table.getRowCount() > 0) {
+            Object criteriaSelected = table.getValueAt(table.getSelectedRow(), 0);
+            String key = criteriaSelected.toString();
+            String resultDB = searchFile.deleteSearchCriteria(key);
+            mainView.displayResult("Delete search criteria, " + resultDB);
+        }
     }
 
 
@@ -512,6 +537,10 @@ public class SearchController implements Controller {
         panelMultimediaSearch.setFrameRate(mapSearchCriteriasResults.get(key).getFrameRate());
         panelMultimediaSearch.setBitRate(Double.parseDouble(mapSearchCriteriasResults.get(key).getBitRate()));
         panelMultimediaSearch.setAspectRatio(mapSearchCriteriasResults.get(key).getAspectRatio());
+    }
+
+    public void deleteSearchCriteria(Object criteriaSelected) {
+        int key = (Integer) criteriaSelected;
     }
 }
 
