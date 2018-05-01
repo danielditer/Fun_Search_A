@@ -193,12 +193,6 @@ public class PanelNamePath extends JPanel {
         return textFieldName.getText();
     }
     /**
-     * @return buttonSearch.
-     */
-    public JButton getButtonFileChooser(){
-        return buttonFileChooser;
-    }
-    /**
      * Getter for the Case sensitive file name.
      * @return the boolean of ´checkBoxCaseSensitiveName´ checkbox.
      */
