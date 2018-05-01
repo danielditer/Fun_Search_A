@@ -31,7 +31,7 @@ public class PanelSearchResultsTest {
      */
     @Test
     public void getTableModel() {
-        assertEquals(9, panel.getTableModel().getColumnCount());
+        assertEquals(16, panel.getTableModel().getColumnCount());
     }
     /**
      * getTableModelDistinct test, validate table model.
