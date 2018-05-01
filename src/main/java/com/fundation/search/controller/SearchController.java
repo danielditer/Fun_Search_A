@@ -309,11 +309,11 @@ public class SearchController implements Controller {
             }
 
             if (!validator.isAValidRangeDate(dateFrom, dateTo)) {
-                mainView.displayResult("Date To must be mayor to Date From");
+                mainView.displayResult("Date To must be major to Date From");
                 return false;
             }
         }
-        if (size.compareTo("") != 0 && !validator.isANumber(size)) {
+        if ("".compareTo(size) != 0 && !validator.isANumber(size)) {
             mainView.displayResult("The size must be a number");
             return false;
         }
@@ -537,10 +537,6 @@ public class SearchController implements Controller {
         panelMultimediaSearch.setFrameRate(mapSearchCriteriasResults.get(key).getFrameRate());
         panelMultimediaSearch.setBitRate(Double.parseDouble(mapSearchCriteriasResults.get(key).getBitRate()));
         panelMultimediaSearch.setAspectRatio(mapSearchCriteriasResults.get(key).getAspectRatio());
-    }
-
-    public void deleteSearchCriteria(Object criteriaSelected) {
-        int key = (Integer) criteriaSelected;
     }
 }
 
