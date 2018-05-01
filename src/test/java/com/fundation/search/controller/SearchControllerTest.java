@@ -8,7 +8,13 @@
 package com.fundation.search.controller;
 
 import com.fundation.search.model.SearchFiles;
-import com.fundation.search.view.*;
+import com.fundation.search.view.MainView;
+import com.fundation.search.view.PanelNormalSearch;
+import com.fundation.search.view.PanelNamePath;
+import com.fundation.search.view.PanelMultimediaSearch;
+import com.fundation.search.view.PanelSearchCriterial;
+import com.fundation.search.view.PanelSaveCriterial;
+import com.fundation.search.view.PanelSearchResults;
 import org.junit.Test;
 import java.io.IOException;
 
