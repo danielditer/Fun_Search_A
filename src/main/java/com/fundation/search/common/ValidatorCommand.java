@@ -1,12 +1,13 @@
- package com.fundation.search.common;
+package com.fundation.search.common;
 
- import org.apache.commons.codec.binary.StringUtils;
 
- import java.util.*;
- import java.util.function.Function;
- import java.util.stream.Collectors;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
- /**
+/**
  * Class ValidatorCommand to validate commands introduced by the user.
  *
  * @version 29 Mar 2018  * @Maria Canqui
@@ -85,6 +86,7 @@ public class ValidatorCommand {
     }
 
     static final List<Character> VALID_HIDDEN = new ArrayList<>();
+
     /**
      * static method to fill list with valid hidden values.
      * */
@@ -93,7 +95,9 @@ public class ValidatorCommand {
         VALID_HIDDEN.add('2');
         VALID_HIDDEN.add('3');
     }
+
     static final List<Character> VALID_TYPES = new ArrayList<>();
+
     /**
      * static method to fill list with valid type file values.
      * */
@@ -112,8 +116,8 @@ public class ValidatorCommand {
      */
     public boolean isAValidArgumentAfterCommand(String[] command) {
         for (int i = 0; i < command.length; i += 2) {
-            if(command[i+1].length() > 1) {
-                if (command[i+1].substring(0, 1).equals(INI_COMMAND) ) {
+            if (command[i + 1].length() > 1) {
+                if (command[i + 1].substring(0, 1).equals(INI_COMMAND)) {
                     return false;
                 }
             }
@@ -124,6 +128,7 @@ public class ValidatorCommand {
         }
         return true;
     }
+
     /**
      * Method to validate if the command has a number valid of arguments.
      * @param command command line.
@@ -146,6 +151,7 @@ public class ValidatorCommand {
         }
         return true;
     }
+
     /**
      * Method to valida if the commands are not empty.
      * @param command command line
@@ -154,6 +160,7 @@ public class ValidatorCommand {
     public boolean isNotEmptyCommand(String[] command) {
         return command.length != 0;
     }
+
     /**
      * Method to validate if the command contain a capital letter.
      * @param command Command line.
@@ -167,6 +174,7 @@ public class ValidatorCommand {
         }
         return true;
     }
+
     /**
      * Method to validate if the command contain a path.
      * @param command command line.
@@ -175,6 +183,7 @@ public class ValidatorCommand {
     public static boolean containPath(String[] command) {
         return Arrays.asList(command).contains("-p");
     }
+
     /**
      * Method to validate if the command contain a repeat command.
      * @param command command line.
@@ -182,8 +191,7 @@ public class ValidatorCommand {
      */
     public static boolean containRepeatCommands(String[] command) {
         Set<String> lump = new HashSet<String>();
-        for (int i = 0; i < command.length; i += 2)
-        {
+        for (int i = 0; i < command.length; i += 2) {
             if (lump.contains(command[i])) {
                 return false;
             }
@@ -211,6 +219,19 @@ public class ValidatorCommand {
         }
         return true;
     }
+
+    /**
+     * Methods to validate help message, it should display the help message.
+     *
+     * @param command file name.
+     * @return boolean value is valid.
+     */
+    public boolean isValidHelp(String[] command) {
+        if (Arrays.asList(command).contains("-help")) {
+            return false;
+        }
+        return true;
+    }
     /**
      * Method to validate hidden command.
      * @param command command line.
@@ -224,6 +245,7 @@ public class ValidatorCommand {
         }
         return true;
     }
+
     /**
      * Method to validate read only command.
      * @param command command line.
@@ -252,8 +274,10 @@ public class ValidatorCommand {
         }
         return true;
     }
+
     /**
      * Method to validate case sensitive command have a name.
+     *
      * @param command file name.
      * @return boolean value is valid.
      */
@@ -276,6 +300,7 @@ public class ValidatorCommand {
         }
         return true;
     }
+
     /**
      * Method to validate if is a valid date.
      * @param command file name.
@@ -305,6 +330,7 @@ public class ValidatorCommand {
         }
         return true;
     }
+
     /**
      * Method to validate if the date has a correct range.
      * @param command command line.
@@ -332,7 +358,6 @@ public class ValidatorCommand {
          if (Arrays.asList(command).contains(date)) {
              int positionPath =  Arrays.asList(command).indexOf(date);
              return validRangeDate(command[positionPath + 1]);
-
          }
          return true;
      }
@@ -364,6 +389,7 @@ public class ValidatorCommand {
         }
         return false;
     }
+
     /**
      * Method to validate if a name contain a valid value.
      * @param command command line.

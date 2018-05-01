@@ -27,8 +27,6 @@ public class PanelMultimediaSearch extends JPanel {
     private JComboBox comboBoxAudioCodec;
     private PanelDate panelDate;
     private JPanel panelAudioBitRate;
-    private JCheckBox checkBox5;
-    private JCheckBox checkBox6;
     private PanelButtonSearch panelButtonSearch;
     private JSpinner spinnerAudioBitRate;
     private JLabel labelKbps;
@@ -58,8 +56,6 @@ public class PanelMultimediaSearch extends JPanel {
         comboBoxAudioCodec = new JComboBox();
         panelDate = new PanelDate();
         panelAudioBitRate = new JPanel();
-        checkBox5 = new JCheckBox();
-        checkBox6 = new JCheckBox();
         comboBoxFrameRate = new JComboBox();
         panelButtonSearch = new PanelButtonSearch();
         comboBoxAspectRatio = new JComboBox();
@@ -69,10 +65,6 @@ public class PanelMultimediaSearch extends JPanel {
                 {TableLayout.PREFERRED, TableLayout.PREFERRED},
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED,
                         TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED}}));
-
-        //======== panelNamePath ========
-        /*add(panelNamePath, new TableLayoutConstraints(0, 0, 0, 0,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));*/
 
         //======== panelDuration ========
 
@@ -111,9 +103,9 @@ public class PanelMultimediaSearch extends JPanel {
 
         //---- labelFps ----
         comboBoxFrameRate.addItem("All");
-        comboBoxFrameRate.addItem("23.97");
+        comboBoxFrameRate.addItem("23,97");
         comboBoxFrameRate.addItem("25");
-        comboBoxFrameRate.addItem("29.97");
+        comboBoxFrameRate.addItem("29,97");
         comboBoxFrameRate.addItem("30");
         comboBoxFrameRate.addItem("60");
         labelFps.setText("fps");
@@ -136,9 +128,8 @@ public class PanelMultimediaSearch extends JPanel {
 
         //---- labelVideoCodec ----
         labelVideoCodec.setText("Video codec");
-        comboBoxVideoCodec.setMaximumSize(new Dimension(60,25));
+        comboBoxVideoCodec.setMaximumSize(new Dimension(60, 25));
         comboBoxVideoCodec.addItem("All");
-        comboBoxVideoCodec.addItem("None");
         comboBoxVideoCodec.addItem("FLV(flv1)");
         comboBoxVideoCodec.addItem("H.264(h264)");
         comboBoxVideoCodec.addItem("H.265(hevc)");
@@ -157,6 +148,7 @@ public class PanelMultimediaSearch extends JPanel {
         //---- labelAudioCodec ----
         labelAudioCodec.setText("Audio codec");
         comboBoxAudioCodec.addItem("All");
+        comboBoxAudioCodec.addItem("WAV(pcm_s16le)");
         comboBoxAudioCodec.addItem("MP3(mp3)");
         comboBoxAudioCodec.addItem("AAC(aac)");
         comboBoxAudioCodec.addItem("AC3(ac3)");
@@ -174,7 +166,7 @@ public class PanelMultimediaSearch extends JPanel {
         //======== panelResolution ========
         panelResolution.setBorder(new TitledBorder("Resolution"));
         panelResolution.setLayout(new TableLayout(new double[][]{
-                {TableLayout.PREFERRED,TableLayout.PREFERRED},
+                {TableLayout.PREFERRED, TableLayout.PREFERRED},
                 {TableLayout.PREFERRED}}));
         ((TableLayout) panelResolution.getLayout()).setHGap(5);
         ((TableLayout) panelResolution.getLayout()).setVGap(5);
@@ -194,9 +186,12 @@ public class PanelMultimediaSearch extends JPanel {
         comboBoxResolution.addItem("1366x768");
         comboBoxResolution.addItem("1920x1080");
         comboBoxResolution.addItem("3840x2160");
-		comboBoxAspectRatio.addItem("All");
+        comboBoxAspectRatio.addItem("All");
+        comboBoxAspectRatio.addItem("1:1");
+        comboBoxAspectRatio.addItem("2:1");
+        comboBoxAspectRatio.addItem("3:2");
         comboBoxAspectRatio.addItem("4:3");
-        comboBoxAspectRatio.addItem("16:9");        
+        comboBoxAspectRatio.addItem("16:9");
         panelResolution.add(comboBoxResolution, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
         panelResolution.add(comboBoxAspectRatio, new TableLayoutConstraints(1, 0, 1, 0,
@@ -236,33 +231,48 @@ public class PanelMultimediaSearch extends JPanel {
     public String getName() {
         return panelNamePath.getName();
     }
+
     public String getPath() {
         return panelNamePath.getPath();
     }
+
     public boolean getCaseSensitiveName() {
         return panelNamePath.getCaseSensitive();
     }
+
     public JButton getSearchMultimediaButton() {
         return panelButtonSearch.getButtonSearch();
     }
+
     public String getCodec() {
         return comboBoxVideoCodec.getSelectedItem().toString();
     }
-    public String getAudioCodec(){
+
+    public String getAudioCodec() {
         return comboBoxAudioCodec.getSelectedItem().toString();
     }
+
     public String getResolution() {
         return comboBoxResolution.getSelectedItem().toString();
     }
+
     public String getFrameRate() {
         return comboBoxFrameRate.getSelectedItem().toString();
     }
+
     public String getBitRate() {
         return spinnerAudioBitRate.getValue().toString();
     }
-    public String getAspectRatio(){return  comboBoxAspectRatio.getSelectedItem().toString();}
-    public double getMinorDuration(){return Double.valueOf(String.valueOf(spinnerMinorDuration.getValue()));
+
+    public String getAspectRatio() {
+        return comboBoxAspectRatio.getSelectedItem().toString();
     }
-    public double getMajorDuration(){return Double.valueOf(String.valueOf(spinnerMajorDuration.getValue()));
+
+    public double getMinorDuration() {
+        return Double.valueOf(String.valueOf(spinnerMinorDuration.getValue()));
+    }
+
+    public double getMajorDuration() {
+        return Double.valueOf(String.valueOf(spinnerMajorDuration.getValue()));
     }
 }

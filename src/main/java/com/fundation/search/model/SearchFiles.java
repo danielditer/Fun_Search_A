@@ -74,6 +74,7 @@ public class SearchFiles {
     FFprobe fFprobe;
 
     public SearchFiles() throws IOException {
+        fFprobe = new FFprobe("./bin/ffprobe.exe");
     }
 
     /**
@@ -134,7 +135,7 @@ public class SearchFiles {
                     matchesCriteria = false;
                 }
             }
-            if ((searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate()) && results instanceof ResultFile) {
+            if ((searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate())) {
                 if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
                     matchesCriteria = false;
                 }
@@ -202,7 +203,7 @@ public class SearchFiles {
      * @param path is given in order to obtain all files of a path.
      * @return the array of Files object.
      */
-    public List<Asset> recoverFiles(File path, List<Asset> arrayResultFiles) {
+    private List<Asset> recoverFiles(File path, List<Asset> arrayResultFiles) {
         try {
             for (File fileEntry : path.listFiles()) {
                 /**
@@ -230,7 +231,7 @@ public class SearchFiles {
                             fileEntry.isHidden(), 0.0, !fileEntry.canWrite(), 3,
                             owner.getName().substring(owner.getName().indexOf("\\") + 1),
                             null, directorySize, creationTime, lastAccessTime, lastModifiedTime,
-                            null, null, 0.0, 0, null, null, isFileSystem ));
+                            null, null, 0.0, 0, null, null, isFileSystem));
                 } else if (!isMultimedia(fileEntry)) {
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
 
@@ -240,31 +241,45 @@ public class SearchFiles {
                             extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
                             null, null, 0.0, 0, null, null, isFileSystem));
                 } else if (isMultimedia(fileEntry)) {
-                    fFprobe = new FFprobe("./bin/ffprobe.exe");
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
-                    FFmpegStream multimediaFile = fFprobe.probe(fileEntry.getPath()).getStreams().get(0);
-                    double duration = multimediaFile.duration;
-                    if (!isAudio(fileEntry)) {
-                        String videoSize = multimediaFile.width + "x" + multimediaFile.height;
+                    List<FFmpegStream> streams = fFprobe.probe(fileEntry.getPath()).getStreams();
+                    if (streams.size() >= 1 && !isAudio(fileEntry)) {
+                        String codecVideo = "";
+                        String codecAudio = "";
+                        double frameRate = 0.0;
+                        double duration = 0.0;
+                        String videoSize = "";
+                        int audioBitRate = 0;
+                        String aspectRatio = "";
+                        for (int i = 0; i < streams.size(); i++) {
+                            FFmpegStream stream = fFprobe.probe(fileEntry.getPath()).getStreams().get(i);
+                            if (stream.codec_type.name().equalsIgnoreCase("video")) {
+                                videoSize = stream.width + "x" + stream.height;
+                                codecVideo = stream.codec_name;
+                                frameRate = getFrameRate(stream.r_frame_rate);
+                                aspectRatio = stream.display_aspect_ratio;
+                                duration = stream.duration;
+
+                            }
+                            if (stream.codec_type.name().equalsIgnoreCase("audio")) {
+                                codecAudio = stream.codec_name;
+                                audioBitRate = (int) stream.bit_rate / 1000;
+                            }
+                        }
                         arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
                                 fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
                                 owner.getName().substring(owner.getName().indexOf("\\") + 1),
                                 extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
-                                multimediaFile.codec_name, multimediaFile.codec_name, getFrameRate(multimediaFile.r_frame_rate), 0, videoSize, multimediaFile.display_aspect_ratio , isFileSystem));
-                    } else {
-                        String videoSize = multimediaFile.width + "x" + multimediaFile.height;
-                        arrayResultFiles.add(assetFactory.getAsset("multimedia", fileEntry.getPath(), fileEntry.getName(),
-                                fileEntry.isHidden(), duration, !fileEntry.canWrite(), 2,
-                                owner.getName().substring(owner.getName().indexOf("\\") + 1),
-                                extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
-                                multimediaFile.codec_name, multimediaFile.codec_name, 0.0, (int) multimediaFile.bit_rate / 1000, videoSize, multimediaFile.display_aspect_ratio, isFileSystem));
+                                codecVideo, codecAudio, frameRate, audioBitRate, videoSize, aspectRatio, isFileSystem));
                     }
                 }
             }
+
         } catch (NullPointerException e) {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return arrayResultFiles;
     }
 
@@ -356,6 +371,7 @@ public class SearchFiles {
 
     }
 //
+
     /**
      * Method that returns an array of file system coincidences of a path.
      *
@@ -381,8 +397,6 @@ public class SearchFiles {
                 return true;
             }
         }
-
-
         return false;
     }
 
@@ -547,7 +561,8 @@ public class SearchFiles {
      * @param toDate
      * @return
      */
-    private boolean searchDate(Asset arrayResultFiles, boolean createDate, boolean modifiedDate, boolean accessedDate, String fromDate, String toDate) {
+    private boolean searchDate(Asset arrayResultFiles, boolean createDate, boolean modifiedDate,
+                               boolean accessedDate, String fromDate, String toDate) {
         SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
         boolean dateInRange = true;
         if (createDate || modifiedDate || accessedDate) {
@@ -682,9 +697,9 @@ public class SearchFiles {
      */
     public boolean isMultimedia(File file) {
         String ext = file.getName().substring(file.getName().lastIndexOf(".") + 1);
-        if (ext.equalsIgnoreCase("mp3") || ext.equalsIgnoreCase("mp4") || ext.equalsIgnoreCase("aac") || ext.equalsIgnoreCase("ogg") || ext.equalsIgnoreCase("avi")
-                || ext.equalsIgnoreCase("wma") || ext.equalsIgnoreCase("wav") || ext.equalsIgnoreCase("flac") || ext.equalsIgnoreCase("mpg") || ext.equalsIgnoreCase("flv")
-                || ext.equalsIgnoreCase("m4a") || ext.equalsIgnoreCase("mkv")
+        if (ext.equalsIgnoreCase("mp4") || ext.equalsIgnoreCase("avi")
+                || ext.equalsIgnoreCase("mpg") || ext.equalsIgnoreCase("flv")
+                || ext.equalsIgnoreCase("mkv")
                 || ext.equalsIgnoreCase("mov") || ext.equalsIgnoreCase("wmv")
                 || ext.equalsIgnoreCase("webm") || ext.equalsIgnoreCase("vob")) {
             return true;
@@ -791,6 +806,7 @@ public class SearchFiles {
 
     /**
      * Method to search bit rate.
+     *
      * @param asset
      * @param bitRate
      * @return
@@ -805,6 +821,7 @@ public class SearchFiles {
 
     /**
      * Method to search duration.
+     *
      * @param asset
      * @param majorDuration
      * @param minorDuration

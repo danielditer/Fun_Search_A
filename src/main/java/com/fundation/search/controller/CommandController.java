@@ -16,8 +16,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static jdk.nashorn.internal.objects.NativeString.indexOf;
-
 
 /**
  * Class CommandController execute command introduced by the user.
@@ -45,14 +43,17 @@ public class CommandController implements Controller {
         commandResultView.setResultFileList(searchFiles.getResultResultFiles());
         commandResultView.printResults();
     }
+
     /**
      * Method to verify if the command is valid.
      */
     private void validateCommand() {
-        if(isAValidCommand()) {
+        ValidatorCommand validatorCommand = new ValidatorCommand();
+        if (isAValidCommand()) {
             exeCmd();
         }
     }
+
     /**
      * Method to verify if the command is valid.
      */
@@ -67,7 +68,10 @@ public class CommandController implements Controller {
             commandResultView.displayResult("COMMAND INFO: The command must contain lowercase letters");
             return false;
         }
-
+        if (!validator.isValidHelp(inputCommands)) {
+            helpMessage();
+            return false;
+        }
         if (!validator.containPath(inputCommands)) {
             commandResultView.displayResult("COMMAND INFO: Declare a valid Path");
             return false;
@@ -91,7 +95,7 @@ public class CommandController implements Controller {
             commandResultView.displayResult("COMMAND INFO: Enter a valid command");
             return false;
         }
-        int positionPath =  Arrays.asList(inputCommands).indexOf("-p");
+        int positionPath = Arrays.asList(inputCommands).indexOf("-p");
         if (!validator.validatePath(inputCommands[positionPath + 1])) {
             commandResultView.displayResult("COMMAND INFO: Invalid Path Name");
             return false;
@@ -129,7 +133,7 @@ public class CommandController implements Controller {
             commandResultView.displayResult("COMMAND INFO: Invalid date value");
             return false;
         }
-        if(!validator.isAValidWildCard(inputCommands)){
+        if (!validator.isAValidWildCard(inputCommands)) {
             commandResultView.displayResult("COMMAND INFO: Wildcard should be at the beginning or at the end");
             return false;
         }
@@ -156,25 +160,18 @@ public class CommandController implements Controller {
         commandMap.put("-ad", new CommandSearchAccessedDate());
         commandMap.put("-size", new CommandSearchSize());
 
-        if (inputCommands[0].equals("-help")) { /*Helper*/
-            helpMessage();
-
-        } else {
-
-            for (int i = 0; i < inputCommands.length - 1; i++) {
-                if(commandMap.containsKey(inputCommands[i])){
-                    Context context = new Context(commandMap.get(inputCommands[i]));
-                    context.executeCommand(inputCommands[i], inputCommands,i,searchCriteria);
-                }
-                else{
-                    if(inputCommands[i].contains("")){}
+        for (int i = 0; i < inputCommands.length - 1; i++) {
+            if (commandMap.containsKey(inputCommands[i])) {
+                Context context = new Context(commandMap.get(inputCommands[i]));
+                context.executeCommand(inputCommands[i], inputCommands, i, searchCriteria);
+            } else {
+                if (inputCommands[i].contains("")) {
                 }
             }
-            searchFiles.setSearchCriteria(searchCriteria);
-            searchFiles.init("1");
         }
+        searchFiles.setSearchCriteria(searchCriteria);
+        searchFiles.init("1");
     }
-
 
     /**
      * Method for displaying the help message for the command line.
