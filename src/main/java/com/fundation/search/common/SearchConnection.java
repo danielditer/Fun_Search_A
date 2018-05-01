@@ -9,6 +9,8 @@
 
 package com.fundation.search.common;
 
+import com.fundation.search.controller.LoggerCreator;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -28,11 +30,14 @@ public class SearchConnection {
      * Constructor method.
      */
     private SearchConnection() {
+        LoggerCreator.getInstance().info(searchConn.getClass().getName(),"Class SearchConnection created");
         try {
             init();
         } catch (ClassNotFoundException e) {
+            LoggerCreator.getInstance().error(searchConn.getClass().getName(),e.getMessage(),e);
             e.printStackTrace();
         } catch (SQLException e) {
+            LoggerCreator.getInstance().error(searchConn.getClass().getName(),e.getMessage(),e);
             e.printStackTrace();
         }
     }
