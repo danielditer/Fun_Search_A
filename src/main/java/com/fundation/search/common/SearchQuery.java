@@ -61,4 +61,22 @@ public class SearchQuery {
         ResultSet set = state.executeQuery("SELECT ID, CRITERIAJSON FROM CRITERIA");
         return set;
     }
+
+    /**
+     * Method to delete a search criteria saved in DB.
+     * @param id
+     * @return
+     */
+    public String deleteCriteria(String id) {
+        try {
+            String deleteQuery = "DELETE FROM CRITERIA WHERE ID = (?);";
+            PreparedStatement prep = con.prepareStatement(deleteQuery);
+            prep.setString(1, id);
+            prep.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "error";
+        }
+        return "success";
+    }
 }

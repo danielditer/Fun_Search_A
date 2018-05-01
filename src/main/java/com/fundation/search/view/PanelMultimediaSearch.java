@@ -24,7 +24,6 @@ import java.awt.Dimension;
  * @version 27 Mar 2018  * @Daniel Caballero.
  */
 public class PanelMultimediaSearch extends JPanel {
-    private PanelNamePath panelNamePath;
     private JPanel panelDuration;
     private JLabel labelMoreThan;
     private JSpinner spinnerMinorDuration;
@@ -58,7 +57,6 @@ public class PanelMultimediaSearch extends JPanel {
      * Initializes components.
      */
     private void initComponents() {
-        panelNamePath = new PanelNamePath();
         panelDuration = new JPanel();
         labelMoreThan = new JLabel();
         spinnerMinorDuration = new JSpinner();
@@ -224,7 +222,6 @@ public class PanelMultimediaSearch extends JPanel {
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //======== panelAudioBitRate ========
-
         panelAudioBitRate.setBorder(new TitledBorder("Audio Bit Rate"));
         panelAudioBitRate.setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
@@ -241,76 +238,130 @@ public class PanelMultimediaSearch extends JPanel {
 
         add(panelAudioBitRate, new TableLayoutConstraints(0, 5, 0, 5,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-    }
 
-
-    /**
-     * @return file name.
-     */
-    public String getName() {
-        return panelNamePath.getName();
     }
 
     /**
-     * @return file path.
-     */
-    public String getPath() {
-        return panelNamePath.getPath();
-    }
-
-    /**
-     * @return video codec.
+     * Getter for video codec.
+     *
+     * @return
      */
     public String getCodec() {
         return comboBoxVideoCodec.getSelectedItem().toString();
     }
 
     /**
-     * @return audio codec.
+     * Getter for audio codec.
+     *
+     * @return
      */
     public String getAudioCodec() {
         return comboBoxAudioCodec.getSelectedItem().toString();
     }
 
     /**
-     * @return resolution.
+     * Getter for resolution.
+     *
+     * @return
      */
     public String getResolution() {
         return comboBoxResolution.getSelectedItem().toString();
     }
 
     /**
-     * @return frame rate.
+     * Getter for frame rate.
+     *
+     * @return
      */
     public String getFrameRate() {
         return comboBoxFrameRate.getSelectedItem().toString();
     }
 
     /**
-     * @return bit rate.
+     * Getter for bit rate.
+     *
+     * @return
      */
     public String getBitRate() {
         return spinnerAudioBitRate.getValue().toString();
     }
-
     /**
-     * @return aspect ratio.
+     * Getter for aspect ratio.
+     * @return
      */
     public String getAspectRatio() {
         return comboBoxAspectRatio.getSelectedItem().toString();
     }
-
     /**
-     * @return minor duration.
+     * Getter for minor duration.
+     * @return
      */
     public double getMinorDuration() {
         return Double.valueOf(String.valueOf(spinnerMinorDuration.getValue()));
     }
-
     /**
-     * @return major duration.
+     * Getter for major duration.
+     * @return
      */
     public double getMajorDuration() {
         return Double.valueOf(String.valueOf(spinnerMajorDuration.getValue()));
+    }
+
+
+    /**
+     * Setter for video codec.
+     * @param selectedItem
+     */
+    public void setCodec(String selectedItem) {
+        this.comboBoxVideoCodec.setSelectedItem(selectedItem);
+    }
+    /**
+     * Setter for audio codec.
+     * @param selectedItem
+     */
+    public void setAudioCodec(String selectedItem) {
+        this.comboBoxAudioCodec.setSelectedItem(selectedItem);
+    }
+    /**
+     * Setter for resolution.
+     * @param selectedItem
+     */
+    public void setResolution(String selectedItem) {
+        this.comboBoxResolution.setSelectedItem(selectedItem);
+    }
+    /**
+     * Setter for frame rate.
+     * @param selectedItem
+     */
+    public void setFrameRate(String selectedItem) {
+        this.comboBoxFrameRate.setSelectedItem(selectedItem);
+    }
+    /**
+     * Setter for bit rate.
+     * @param selectedItem
+     */
+    public void setBitRate(double selectedItem) {
+        this.spinnerAudioBitRate.setValue(selectedItem);
+    }
+    /**
+     * Setter for aspect ratio.
+     * @param selectedItem
+     */
+    public void setAspectRatio(String selectedItem) {
+        this.comboBoxAspectRatio.setSelectedItem(selectedItem);
+    }
+    /**
+     * Setter for major duration.
+     * @param selectedItem
+     */
+    public void setMajorDuration(double selectedItem) {
+        this.spinnerMajorDuration.setValue(selectedItem);
+    }
+    /**
+     * Setter for minor duration.
+     * @param selectedItem
+     */
+    public void setMinorDuration(double selectedItem) {
+        this.spinnerMinorDuration.setValue(selectedItem);
     }
 }

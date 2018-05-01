@@ -177,12 +177,7 @@ public class PanelNormalSearch extends JPanel {
     public void setCheckBoxCaseSensitiveContent(boolean checkBoxCaseSensitive) {
         panelFileContents.setCheckBoxCaseSensitive(checkBoxCaseSensitive);
     }
-    /**
-     * Setter for the file type combobox - panelFileContents.
-     */
-    public void setComboTypeFileContent(String comboTypeFile) {
-        panelFileContents.setComboTypeFile(comboTypeFile);
-    }
+
 
     //----------panel attributes
 

@@ -115,16 +115,7 @@ public class PanelFileContent extends JPanel {
         return checkBoxCaseSensitive.isSelected();
     }
 
-    /**
-     * Getter for the combobox size.
-     *
-     * @return ta boolean of ´comboBoxSize´ text field.
-     */
-    public String getComboBoxTypeFile() {
-        return comboTypeFile.getSelectedItem().toString();
-    }
-
-    //setters
+     //setters
     /**
      * Setter for the only content textarea.
      */
@@ -136,12 +127,6 @@ public class PanelFileContent extends JPanel {
      */
     public void setCheckBoxCaseSensitive(boolean checkBoxCaseSensitive) {
         this.checkBoxCaseSensitive.setSelected(checkBoxCaseSensitive);
-    }
-    /**
-     * Setter for the file type combobox.
-     */
-    public void setComboTypeFile(String comboTypeFile) {
-        this.comboTypeFile.setSelectedItem(comboTypeFile);
     }
 
 

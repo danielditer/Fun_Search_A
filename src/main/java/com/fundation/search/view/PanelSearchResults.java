@@ -86,13 +86,5 @@ public class PanelSearchResults extends JPanel {
         this.tableModel = model;
     }
 
-    /**
-     * Setter for the controller to set model filled with results.
-     *
-     * @param model, the TableModel filled with results.
-     */
-    public void clearTableModel(DefaultTableModel model) {
-        model.setRowCount(0);
-    }
 
 }
