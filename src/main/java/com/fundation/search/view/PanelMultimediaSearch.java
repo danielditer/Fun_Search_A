@@ -9,7 +9,6 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class PanelMultimediaSearch extends JPanel {
-    private PanelNamePath panelNamePath;
     private JPanel panelDuration;
     private JLabel labelMoreThan;
     private JSpinner spinnerMinorDuration;
@@ -27,7 +26,6 @@ public class PanelMultimediaSearch extends JPanel {
     private JComboBox comboBoxAudioCodec;
     private PanelDate panelDate;
     private JPanel panelAudioBitRate;
-    private PanelButtonSearch panelButtonSearch;
     private JSpinner spinnerAudioBitRate;
     private JLabel labelKbps;
     private JComboBox comboBoxAspectRatio;
@@ -37,7 +35,6 @@ public class PanelMultimediaSearch extends JPanel {
     }
 
     private void initComponents() {
-        panelNamePath = new PanelNamePath();
         panelDuration = new JPanel();
         labelMoreThan = new JLabel();
         spinnerMinorDuration = new JSpinner();
@@ -57,7 +54,6 @@ public class PanelMultimediaSearch extends JPanel {
         panelDate = new PanelDate();
         panelAudioBitRate = new JPanel();
         comboBoxFrameRate = new JComboBox();
-        panelButtonSearch = new PanelButtonSearch();
         comboBoxAspectRatio = new JComboBox();
 
         //======== this ========
@@ -204,7 +200,6 @@ public class PanelMultimediaSearch extends JPanel {
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //======== panelAudioBitRate ========
-
         panelAudioBitRate.setBorder(new TitledBorder("Audio Bit Rate"));
         panelAudioBitRate.setLayout(new TableLayout(new double[][]{
                 {TableLayout.PREFERRED, TableLayout.PREFERRED, TableLayout.PREFERRED},
@@ -222,57 +217,129 @@ public class PanelMultimediaSearch extends JPanel {
         add(panelAudioBitRate, new TableLayoutConstraints(0, 5, 0, 5,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
-        //======== panelButtonSearch ========
-
-        /*add(panelButtonSearch, new TableLayoutConstraints(0, 7, 0, 7,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));*/
     }
 
-    public String getName() {
-        return panelNamePath.getName();
-    }
-
-    public String getPath() {
-        return panelNamePath.getPath();
-    }
-
-    public boolean getCaseSensitiveName() {
-        return panelNamePath.getCaseSensitive();
-    }
-
-    public JButton getSearchMultimediaButton() {
-        return panelButtonSearch.getButtonSearch();
-    }
-
+    /**
+     * Getter for video codec.
+     *
+     * @return
+     */
     public String getCodec() {
         return comboBoxVideoCodec.getSelectedItem().toString();
     }
 
+    /**
+     * Getter for audio codec.
+     *
+     * @return
+     */
     public String getAudioCodec() {
         return comboBoxAudioCodec.getSelectedItem().toString();
     }
 
+    /**
+     * Getter for resolution.
+     *
+     * @return
+     */
     public String getResolution() {
         return comboBoxResolution.getSelectedItem().toString();
     }
 
+    /**
+     * Getter for frame rate.
+     *
+     * @return
+     */
     public String getFrameRate() {
         return comboBoxFrameRate.getSelectedItem().toString();
     }
 
+    /**
+     * Getter for bit rate.
+     *
+     * @return
+     */
     public String getBitRate() {
         return spinnerAudioBitRate.getValue().toString();
     }
-
+    /**
+     * Getter for aspect ratio.
+     * @return
+     */
     public String getAspectRatio() {
         return comboBoxAspectRatio.getSelectedItem().toString();
     }
-
+    /**
+     * Getter for minor duration.
+     * @return
+     */
     public double getMinorDuration() {
         return Double.valueOf(String.valueOf(spinnerMinorDuration.getValue()));
     }
-
+    /**
+     * Getter for major duration.
+     * @return
+     */
     public double getMajorDuration() {
         return Double.valueOf(String.valueOf(spinnerMajorDuration.getValue()));
+    }
+
+
+    /**
+     * Setter for video codec.
+     * @param selectedItem
+     */
+    public void setCodec(String selectedItem) {
+        this.comboBoxVideoCodec.setSelectedItem(selectedItem);
+    }
+    /**
+     * Setter for audio codec.
+     * @param selectedItem
+     */
+    public void setAudioCodec(String selectedItem) {
+        this.comboBoxAudioCodec.setSelectedItem(selectedItem);
+    }
+    /**
+     * Setter for resolution.
+     * @param selectedItem
+     */
+    public void setResolution(String selectedItem) {
+        this.comboBoxResolution.setSelectedItem(selectedItem);
+    }
+    /**
+     * Setter for frame rate.
+     * @param selectedItem
+     */
+    public void setFrameRate(String selectedItem) {
+        this.comboBoxFrameRate.setSelectedItem(selectedItem);
+    }
+    /**
+     * Setter for bit rate.
+     * @param selectedItem
+     */
+    public void setBitRate(double selectedItem) {
+        this.spinnerAudioBitRate.setValue(selectedItem);
+    }
+    /**
+     * Setter for aspect ratio.
+     * @param selectedItem
+     */
+    public void setAspectRatio(String selectedItem) {
+        this.comboBoxAspectRatio.setSelectedItem(selectedItem);
+    }
+    /**
+     * Setter for major duration.
+     * @param selectedItem
+     */
+    public void setMajorDuration(double selectedItem) {
+        this.spinnerMajorDuration.setValue(selectedItem);
+    }
+    /**
+     * Setter for minor duration.
+     * @param selectedItem
+     */
+    public void setMinorDuration(double selectedItem) {
+        this.spinnerMinorDuration.setValue(selectedItem);
     }
 }

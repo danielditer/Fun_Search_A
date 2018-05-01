@@ -535,7 +535,7 @@ public class SearchFiles {
             }
             return false;
         }
-        if (sizeSign.equalsIgnoreCase("mayor")) {
+        if (sizeSign.equalsIgnoreCase("major")) {
             if (arrayResultFiles.getSize() > size) {
                 return true;
             }
@@ -687,6 +687,10 @@ public class SearchFiles {
         SearchQuery searchQuery = new SearchQuery();
 
         return searchQuery.addCriteria(json);
+    }
+    public String deleteSearchCriteria(String key) {
+        SearchQuery searchQuery = new SearchQuery();
+        return searchQuery.deleteCriteria(key);
     }
 
     /**

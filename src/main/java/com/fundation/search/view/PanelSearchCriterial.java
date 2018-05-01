@@ -27,6 +27,7 @@ public class PanelSearchCriterial extends JPanel {
     private JTable tableResult;
     JButton buttonSelect;
     JButton buttonLoad;
+    JButton buttonDelete;
     /**
      * Class constructor.
      */
@@ -40,6 +41,7 @@ public class PanelSearchCriterial extends JPanel {
 
         buttonSelect = new JButton();
         buttonLoad = new JButton();
+        buttonDelete = new JButton();
         tableResult = new JTable();
         String columnNames[] = new String[]{"Id", "Name"};
 
@@ -72,18 +74,19 @@ public class PanelSearchCriterial extends JPanel {
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
         //---- Button select criterial ----
-        buttonSelect.setText("Select");
-
-        add(buttonSelect, new TableLayoutConstraints(5, 1, 5, 1,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-
-        //---- Button select criterial ----
         buttonLoad.setText("Load");
-
         add(buttonLoad, new TableLayoutConstraints(0, 1, 0, 1,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
+        //---- Button select criterial ----
+        buttonSelect.setText("Select");
+        add(buttonSelect, new TableLayoutConstraints(5, 1, 5, 1,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
+        /**Button delete criteria*/
+        buttonDelete.setText("Delete");
+        add(buttonDelete, new TableLayoutConstraints(1, 1, 1, 1,
+                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
     }
 
     /**
@@ -112,6 +115,9 @@ public class PanelSearchCriterial extends JPanel {
      */
     public JButton getButtonSelect(){
         return buttonSelect;
+    }
+    public JButton getButtonDelete(){
+        return buttonDelete;
     }
     /**
      * method to get the table result
