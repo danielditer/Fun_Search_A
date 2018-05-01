@@ -135,7 +135,7 @@ public class SearchFiles {
                     matchesCriteria = false;
                 }
             }
-            if ((searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate()) && results instanceof ResultFile) {
+            if ((searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate())) {
                 if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
                     matchesCriteria = false;
                 }
