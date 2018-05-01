@@ -7,7 +7,6 @@
 package com.fundation.search.view;
 
 import com.fundation.search.model.Asset;
-import com.fundation.search.model.ResultFile;
 
 import java.util.List;
 
@@ -34,43 +33,41 @@ public class CommandResultView {
      * Method to display search result in command line (cmd).
      */
     public void printResults() {
-//        System.out.println("Search Results:");
         LOGGER.info("Search Results: ");
-        if (resultFileList!= null) {
-            String heading1 = "FilePath";
-            String heading2 = "FileName";
-            String heading3 = "Hidden";
-            String heading4 = "ReadOnly";
-            String heading5 = "Owner";
-            String heading6 = "CreationDate";
-            String heading7 = "ModifiedDate";
-            String heading8 = "AccessedDate";
-            String heading9 = "Size";
-
-            System.out.printf("%-15s %50s %15s %15s %15s %15s %15s %15s %15s %n", heading1, heading2, heading3, heading4, heading5, heading6, heading7, heading8, heading9);
-            String divider = "---------------------------------------------------------------------------------------------------";
-            System.out.println(divider);
+        if (resultFileList != null) {
+            ConsoleStringTable table = new ConsoleStringTable();
+            table.addString(0, 0, "FilePath");
+            table.addString(0, 1, "FileName");
+            table.addString(0, 2, "Hidden");
+            table.addString(0, 3, "Read-Only");
+            table.addString(0, 4, "Owner");
+            table.addString(0, 5, "CreationDate");
+            table.addString(0, 6, "ModifiedDate");
+            table.addString(0, 7, "AccessedDate");
+            table.addString(0, 8, "Size");
+            int i = 1;
             for (Asset results : resultFileList) {
-                System.out.println("");
-                if (results instanceof ResultFile) {
-                    System.out.printf("%-15s %30s %15s %15s %15s %15s %15s %15s %15s",
-                            results.getPath(), results.getFileName(), results.getHidden(), results.getReadOnly(), results.getOwner(), results.getCreationTime(), results.getLastModifiedTime(), results.getLastAccessTime(), results.getSize());
-
-                } else {
-                    System.out.printf("%-15s %30s %15s %15s %15s ",
-                            results.getPath(), results.getFileName(), results.getHidden(), results.getReadOnly(), results.getOwner());
-
-                }
-
+                table.addString(i, 0, results.getPath());
+                table.addString(i, 1, results.getFileName());
+                table.addString(i, 2, String.valueOf(results.getHidden()));
+                table.addString(i, 3, String.valueOf(results.getReadOnly()));
+                table.addString(i, 4, results.getOwner());
+                table.addString(i, 5, results.getCreationTime());
+                table.addString(i, 6, results.getLastModifiedTime());
+                table.addString(i, 7, results.getLastAccessTime());
+                table.addString(i, 8, String.valueOf(results.getSize()));
+                i++;
             }
+            System.out.println(table.toString());
         }
     }
-    /*
+
+    /**
      * method displayResult tp display an error message
+     *
      * @param result that contains the error message
      **/
-    public void displayResult(String result){
+    public void displayResult(String result) {
         System.out.println(result);
     }
-
 }
