@@ -8,6 +8,7 @@ package com.fundation.search.model;
 
 import com.fundation.search.common.Converter;
 import com.fundation.search.common.SearchQuery;
+import com.fundation.search.controller.LoggerCreator;
 import com.google.gson.Gson;
 import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.probe.FFmpegStream;
@@ -276,13 +277,19 @@ public class SearchFiles {
             }
 
         } catch (NullPointerException e) {
+            LoggerCreator.getInstance().error(this.getClass().getName(),"",e);
         } catch (IOException e) {
+            LoggerCreator.getInstance().error(this.getClass().getName(),"",e);
             e.printStackTrace();
         }
 
         return arrayResultFiles;
     }
 
+    /**
+     * @param fileEntry
+     * @return true is a audio file.
+     */
     private boolean isAudio(File fileEntry) {
         String ext = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
         if (ext.equalsIgnoreCase("mp3") || ext.equalsIgnoreCase("aac") || ext.equalsIgnoreCase("ogg")

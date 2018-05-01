@@ -1,13 +1,28 @@
+/**
+ * @(#)PanelMultimediaSearch.java 03/27/18.
+ * Copyright (c) 2018 Jala Foundation.
+ * Cochabamba, Bolivia.
+ * Project Search for Prog102.
+ */
 package com.fundation.search.view;
 
+import com.fundation.search.controller.LoggerCreator;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.swing.*;
-
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
-import java.awt.*;
+import javax.swing.SpinnerNumberModel;
+import java.awt.Dimension;
 
+/**
+ * Class to initialize panel for multimedia search tab.
+ *
+ * @version 27 Mar 2018  * @Daniel Caballero.
+ */
 public class PanelMultimediaSearch extends JPanel {
     private PanelNamePath panelNamePath;
     private JPanel panelDuration;
@@ -27,15 +42,21 @@ public class PanelMultimediaSearch extends JPanel {
     private JComboBox comboBoxAudioCodec;
     private PanelDate panelDate;
     private JPanel panelAudioBitRate;
-    private PanelButtonSearch panelButtonSearch;
     private JSpinner spinnerAudioBitRate;
     private JLabel labelKbps;
     private JComboBox comboBoxAspectRatio;
 
+    /**
+     * Class constructor.
+     */
     public PanelMultimediaSearch() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Panel Multimedia created");
         initComponents();
     }
 
+    /**
+     * Initializes components.
+     */
     private void initComponents() {
         panelNamePath = new PanelNamePath();
         panelDuration = new JPanel();
@@ -57,7 +78,6 @@ public class PanelMultimediaSearch extends JPanel {
         panelDate = new PanelDate();
         panelAudioBitRate = new JPanel();
         comboBoxFrameRate = new JComboBox();
-        panelButtonSearch = new PanelButtonSearch();
         comboBoxAspectRatio = new JComboBox();
 
         //======== this ========
@@ -221,57 +241,75 @@ public class PanelMultimediaSearch extends JPanel {
 
         add(panelAudioBitRate, new TableLayoutConstraints(0, 5, 0, 5,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
-
-        //======== panelButtonSearch ========
-
-        /*add(panelButtonSearch, new TableLayoutConstraints(0, 7, 0, 7,
-                TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));*/
     }
 
+
+    /**
+     * @return file name.
+     */
     public String getName() {
         return panelNamePath.getName();
     }
 
+    /**
+     * @return file path.
+     */
     public String getPath() {
         return panelNamePath.getPath();
     }
 
-    public boolean getCaseSensitiveName() {
-        return panelNamePath.getCaseSensitive();
-    }
-
-    public JButton getSearchMultimediaButton() {
-        return panelButtonSearch.getButtonSearch();
-    }
-
+    /**
+     * @return video codec.
+     */
     public String getCodec() {
         return comboBoxVideoCodec.getSelectedItem().toString();
     }
 
+    /**
+     * @return audio codec.
+     */
     public String getAudioCodec() {
         return comboBoxAudioCodec.getSelectedItem().toString();
     }
 
+    /**
+     * @return resolution.
+     */
     public String getResolution() {
         return comboBoxResolution.getSelectedItem().toString();
     }
 
+    /**
+     * @return frame rate.
+     */
     public String getFrameRate() {
         return comboBoxFrameRate.getSelectedItem().toString();
     }
 
+    /**
+     * @return bit rate.
+     */
     public String getBitRate() {
         return spinnerAudioBitRate.getValue().toString();
     }
 
+    /**
+     * @return aspect ratio.
+     */
     public String getAspectRatio() {
         return comboBoxAspectRatio.getSelectedItem().toString();
     }
 
+    /**
+     * @return minor duration.
+     */
     public double getMinorDuration() {
         return Double.valueOf(String.valueOf(spinnerMinorDuration.getValue()));
     }
 
+    /**
+     * @return major duration.
+     */
     public double getMajorDuration() {
         return Double.valueOf(String.valueOf(spinnerMajorDuration.getValue()));
     }
