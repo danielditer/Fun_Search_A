@@ -569,7 +569,6 @@ public class SearchController implements Controller {
             panel.setDateChooserFromPanel(null);
             panel.setDateChooserToPanel(null);
             LoggerCreator.getInstance().error(this.getClass().getName(),"fillFields date can't be converted: ", e);
-            System.out.println(e.getMessage());
         } catch (NullPointerException e) {
             panel.setDateChooserFromPanel(null);
             panel.setDateChooserToPanel(null);

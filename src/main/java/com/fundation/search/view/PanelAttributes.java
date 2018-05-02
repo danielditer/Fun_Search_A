@@ -79,7 +79,7 @@ public class PanelAttributes extends JPanel{
         radioBoxReadOnly.setText("Read-only");
         radioBoxReadOnly.setActionCommand("1");
 
-        radioBoxReadOnlyNo.setText("No Read-only");
+        radioBoxReadOnlyNo.setText("Not Read-only");
         radioBoxReadOnlyNo.setActionCommand("2");
 
         radioBoxReadOnlyAll.setText("All");
@@ -102,7 +102,7 @@ public class PanelAttributes extends JPanel{
         radioBoxHidden.setText("Hidden");
         radioBoxHidden.setActionCommand("1");
 
-        radioBoxHiddenNo.setText("No Hidden");
+        radioBoxHiddenNo.setText("Not Hidden");
         radioBoxHiddenNo.setActionCommand("2");
 
         radioBoxHiddenAll.setText("All");
