@@ -477,7 +477,7 @@ public class SearchController implements Controller {
                     tableModel.addRow(new Object[]{resultMultimediaFile.getFileName(), resultMultimediaFile.getPath(), resultMultimediaFile.getHidden(), resultMultimediaFile.getReadOnly(), resultMultimediaFile.getOwner(), resultMultimediaFile.getSize(), resultMultimediaFile.getCreationTime(), resultMultimediaFile.getLastModifiedTime(), resultMultimediaFile.getLastAccessTime(), df.format(resultMultimediaFile.getDuration()), resultMultimediaFile.getVideoCodec(), resultMultimediaFile.getAudioCodec(), resultMultimediaFile.getVideoSize(), resultMultimediaFile.getAspectRatio(), df.format(resultMultimediaFile.getFrameRate()), resultMultimediaFile.getAudioBitRate()});
                 }
             }
-            System.out.println(resultFileList.get(i).getFileName() + "\t" + resultFileList.get(i).getPath() + "\t" + resultFileList.get(i).getHidden() + "\t" + resultFileList.get(i).getFileSystem());
+            System.out.println(resultFileList.get(i).getFileName() + "\t" + resultFileList.get(i).getPath() + "\t" + resultFileList.get(i).getHidden() + "\t" + resultFileList.get(i).getFileSystem() + "\t" + resultFileList.get(i).getSize());
         }
         panel.setTableModel(tableModel);
         panel.setTableResultModel();

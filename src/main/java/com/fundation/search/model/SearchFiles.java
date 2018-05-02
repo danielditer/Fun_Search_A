@@ -588,6 +588,9 @@ public class SearchFiles {
             return false;
         }
         if (sizeSign.equalsIgnoreCase("equals")) {
+            if (sizeMeasure.equalsIgnoreCase("bytes")) {
+                return arrayResultFiles.getSize() == size;
+            }
             if (Math.abs(arrayResultFiles.getSize() - size) <= 100.0) {
                 return true;
             }
