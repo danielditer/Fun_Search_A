@@ -7,6 +7,8 @@
  */
 package com.fundation.search.model;
 
+import com.fundation.search.controller.SearchController;
+import com.fundation.search.view.MainView;
 import org.junit.Before;
 import org.junit.Test;
 import org.powermock.reflect.Whitebox;
@@ -1126,6 +1128,30 @@ public class SearchFilesTest {
         File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\test2.docx");
         Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test2.docx", "test2.docx", expected.isHidden(), 0.0, !expected.canWrite(), 1, "Administrator", "docx", 100L, "04-10-2018", "04-25-2018", "04-30-2018", "0.0", "0.0", 0.0, 0, "", "", false);
         assertTrue(Whitebox.invokeMethod(searchFiles, "searchContent", expectedFile, searchCriteria.getContent(), searchCriteria.getContentCaseSensitive()));
+    }
+
+
+    /**
+     * Test search main method.
+     */
+    @Test
+    public void testInit() {
+        SearchController searchController = new SearchController(searchFiles, new MainView());
+        searchController.sendSearchCriteriaToModel("D:\\Fundación JALA\\Prog102\\Search\\Fun_Search_A\\src\\test\\java\\com\\fundation\\search\\pathTest", "test1.txt", "3", "3", 0, false, false, "owner", "txt",
+                "Equals", "100", "Mb", true, true, true, "05-01-2018", "05-01-2018", "", false,
+                0.0, 0.0, "All", "All", "All", "0", "All", "All");
+    }
+
+    /**
+     * Test get results from search.
+     */
+    @Test
+    public void testGetResultResultFiles() {
+        SearchController searchController = new SearchController(searchFiles, new MainView());
+        searchController.sendSearchCriteriaToModel("D:\\Fundación JALA\\Prog102\\Search\\Fun_Search_A\\src\\test\\java\\com\\fundation\\search\\pathTest", "test1.txt", "3", "3", 0, false, false, "", "",
+                "Equals", "", "Mb", false, false, false, "", "", "", false,
+                0.0, 0.0, "All", "All", "All", "0", "All", "All");
+        assertEquals("test1.txt", searchFiles.getResultResultFiles().get(0).getFileName());
     }
 }
 
