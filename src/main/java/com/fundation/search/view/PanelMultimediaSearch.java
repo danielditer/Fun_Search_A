@@ -121,9 +121,9 @@ public class PanelMultimediaSearch extends JPanel {
 
         //---- labelFps ----
         comboBoxFrameRate.addItem("All");
-        comboBoxFrameRate.addItem("23,97");
+        comboBoxFrameRate.addItem("23.97");
         comboBoxFrameRate.addItem("25");
-        comboBoxFrameRate.addItem("29,97");
+        comboBoxFrameRate.addItem("29.97");
         comboBoxFrameRate.addItem("30");
         comboBoxFrameRate.addItem("60");
         labelFps.setText("fps");
