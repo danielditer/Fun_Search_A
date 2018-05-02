@@ -75,7 +75,9 @@ public class SearchFiles {
     FFprobe fFprobe;
 
     public SearchFiles() throws IOException {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Search files instance");
         fFprobe = new FFprobe("./bin/ffprobe.exe");
+        LoggerCreator.getInstance().info(this.getClass().getName(),"FFprobre instance");
     }
 
     /**
@@ -91,57 +93,71 @@ public class SearchFiles {
      * Method to initialize search.
      */
     public void init(String searchType) {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Search files init");
         arrayResultFiles = new ArrayList<>();
         arrayFinalResult = new ArrayList<>();
         assetFactory = new AssetFactory();
         File filePath = null;
 
         if (searchCriteria.getPath() != null) {
+            LoggerCreator.getInstance().debug(this.getClass().getName(),"Search files - create file object");
             filePath = new File(searchCriteria.getPath());
         }
         if (searchCriteria.getPath() != null) {
+            LoggerCreator.getInstance().debug(this.getClass().getName(),"Search files - begin search");
             resultResultFiles = recoverFiles(filePath, arrayResultFiles);
         }
         for (Asset results : resultResultFiles) {
+            LoggerCreator.getInstance().debug(this.getClass().getName(),"Apply criteria to results: " + results.getFileName());
             boolean matchesCriteria = true;
             if (searchCriteria.getName() != null) {
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Search criteria name not null: " + searchCriteria.getNameFileCaseSensitive());
                 if (!searchFile(results, searchCriteria.getNameFileCaseSensitive())) {
                     matchesCriteria = false;
                 }
             }
+            LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by file system: " + searchCriteria.getFileSystem() + ", enters: " + matchesCriteria);
             if (matchesCriteria && !searchFileSystem(results, searchCriteria.getFileSystem())) {
                 matchesCriteria = false;
             }
+            LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by hidden: " + searchCriteria.getHidden() + ", enters: " + matchesCriteria);
             if (matchesCriteria && !searchHiddenFiles(results, searchCriteria.getHidden())) {
                 matchesCriteria = false;
             }
+            LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by read only: " + searchCriteria.getReadOnly() + ", enters: " + matchesCriteria);
             if (matchesCriteria && !searchReadOnlyFiles(results, searchCriteria.getReadOnly())) {
                 matchesCriteria = false;
             }
+            LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by type file: " + searchCriteria.getTypeFile() + ", enters: " + matchesCriteria);
             if (matchesCriteria && !searchFilesOrDirectoriesOnly(results, searchCriteria.getTypeFile())) {
                 matchesCriteria = false;
             }
             if (searchCriteria.getOwner() != null) {
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by owner: " + searchCriteria.getOwner() + ", enters: " + matchesCriteria);
                 if (matchesCriteria && !searchOwner(results, searchCriteria.getOwner())) {
                     matchesCriteria = false;
                 }
             }
             if (searchCriteria.getExtension() != null) {
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by extension: " + searchCriteria.getExtension() + ", enters: " + matchesCriteria);
                 if (matchesCriteria && !searchExtension(results, searchCriteria.getExtension())) {
                     matchesCriteria = false;
                 }
             }
             if (searchCriteria.getSizeRequired() != null) {
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by size, size sign: " + searchCriteria.getSizeSign() + ", size required: " + searchCriteria.getSizeRequired() + ", size measure: " + searchCriteria.getSizeMeasure() + ", enters: " + matchesCriteria);
                 if (matchesCriteria && !searchSize(results, searchCriteria.getSizeSign(), searchCriteria.getSizeRequired(), searchCriteria.getSizeMeasure())) {
                     matchesCriteria = false;
                 }
             }
             if ((searchCriteria.getCreatedDate() || searchCriteria.getModifiedDate() || searchCriteria.getAccessedDate())) {
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by date, check created: " + searchCriteria.getCreatedDate() + ", check modified: " + searchCriteria.getModifiedDate() + ", check accessed: " + searchCriteria.getAccessedDate() + ", from date: " + searchCriteria.getFromDate() + ", to date: " + searchCriteria.getToDate() + ", enters: " + matchesCriteria);
                 if (matchesCriteria && !searchDate(results, searchCriteria.getCreatedDate(), searchCriteria.getModifiedDate(), searchCriteria.getAccessedDate(), searchCriteria.getFromDate(), searchCriteria.getToDate())) {
                     matchesCriteria = false;
                 }
             }
             if (searchCriteria.getContent() != null) {
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by content: " + searchCriteria.getContent() + ", enters: " + matchesCriteria);
                 if (matchesCriteria && !searchContent(results, searchCriteria.getContent(), searchCriteria.getContentCaseSensitive())) {
                     matchesCriteria = false;
                 }
@@ -149,41 +165,49 @@ public class SearchFiles {
             /**
              * Search multimedia files*/
             if (searchCriteria.getVideoCodec() != null) {
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by video codec: " + searchCriteria.getVideoCodec() + ", enters: " + matchesCriteria);
                 if (matchesCriteria && !searchVideoCodec(results, searchCriteria.getVideoCodec())) {
                     matchesCriteria = false;
                 }
             }
             if (searchCriteria.getAudioCodec() != null) {
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by audio codec: " + searchCriteria.getAudioCodec() + ", enters: " + matchesCriteria);
                 if (matchesCriteria && !searchAudioCodec(results, searchCriteria.getAudioCodec())) {
                     matchesCriteria = false;
                 }
             }
             if (searchCriteria.getMajorDuration() > 0.0 || searchCriteria.getMinorDuration() > 0.0) {
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by duration, major: " + searchCriteria.getMajorDuration() + ", minor: " + searchCriteria.getMinorDuration() +  ", enters: " + matchesCriteria);
                 if (matchesCriteria && !searchDuration(results, searchCriteria.getMajorDuration(), searchCriteria.getMinorDuration())) {
                     matchesCriteria = false;
                 }
             }
             if (searchCriteria.getVideoSize() != null) {
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by resolution: " + searchCriteria.getVideoSize() + ", enters: " + matchesCriteria);
                 if (matchesCriteria && !searchResolution(results, searchCriteria.getVideoSize())) {
                     matchesCriteria = false;
                 }
             }
             if (searchCriteria.getAspectRatio() != null) {
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by resolution: " + searchCriteria.getVideoSize() + ", enters: " + matchesCriteria);
                 if (matchesCriteria && !searchAspectRatio(results, searchCriteria.getAspectRatio())) {
                     matchesCriteria = false;
                 }
             }
             if (searchCriteria.getFrameRate() != null) {
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by frame rate: " + searchCriteria.getFrameRate() + ", enters: " + matchesCriteria);
                 if (matchesCriteria && !searchFrameRate(results, searchCriteria.getFrameRate())) {
                     matchesCriteria = false;
                 }
             }
             if (searchCriteria.getBitRate() != null && Double.parseDouble(searchCriteria.getBitRate()) > 0.0) {
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Search by bit rate: " + searchCriteria.getBitRate() + ", enters: " + matchesCriteria);
                 if (matchesCriteria && !searchBitRate(results, searchCriteria.getBitRate())) {
                     matchesCriteria = false;
                 }
             }
             if (matchesCriteria) {
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Passes search criteria: " + results.getFileName());
                 arrayFinalResult.add(results);
             }
         }
@@ -205,27 +229,31 @@ public class SearchFiles {
      * @return the array of Files object.
      */
     private List<Asset> recoverFiles(File path, List<Asset> arrayResultFiles) {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Search files - recoverFiles method");
         try {
             for (File fileEntry : path.listFiles()) {
                 /**
                  * Section to know a files owner.*/
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Path of file");
                 Path path2 = Paths.get(fileEntry.getPath());
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"File attribute to get Owner");
                 FileOwnerAttributeView foav = Files.getFileAttributeView(path2, FileOwnerAttributeView.class);
                 UserPrincipal owner = foav.getOwner();
 
                 /**
                  * Section to know a files dates*/
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"Get File dates");
                 BasicFileAttributes fileAttributes = Files.readAttributes(fileEntry.toPath(), BasicFileAttributes.class);
                 DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
                 String creationTime = dateFormat.format(fileAttributes.creationTime().toMillis());
                 String lastAccessTime = dateFormat.format(fileAttributes.lastAccessTime().toMillis());
                 String lastModifiedTime = dateFormat.format(fileAttributes.lastModifiedTime().toMillis());
-
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"System file");
                 boolean isFileSystem = OS.contains("windows") ? Files.readAttributes(path.toPath(), DosFileAttributes.class).isSystem() : false;
-
 
                 assetFactory = new AssetFactory();
                 if (fileEntry.isDirectory()) {
+                    LoggerCreator.getInstance().debug(this.getClass().getName(),"Directory");
                     long directorySize = FileUtils.sizeOfDirectory(fileEntry);
                     recoverFiles(fileEntry, arrayResultFiles);
                     arrayResultFiles.add(assetFactory.getAsset("directory", fileEntry.getPath(), fileEntry.getName(),
@@ -234,6 +262,7 @@ public class SearchFiles {
                             null, directorySize, creationTime, lastAccessTime, lastModifiedTime,
                             null, null, 0.0, 0, null, null, isFileSystem));
                 } else if (!isMultimedia(fileEntry)) {
+                    LoggerCreator.getInstance().debug(this.getClass().getName(),"File get extension");
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
 
                     arrayResultFiles.add(assetFactory.getAsset("file", fileEntry.getPath(), fileEntry.getName(),
@@ -242,9 +271,12 @@ public class SearchFiles {
                             extension, fileEntry.length(), creationTime, lastAccessTime, lastModifiedTime,
                             null, null, 0.0, 0, null, null, isFileSystem));
                 } else if (isMultimedia(fileEntry)) {
+                    LoggerCreator.getInstance().debug(this.getClass().getName(),"Multimedia file extension");
                     String extension = fileEntry.getName().substring(fileEntry.getName().lastIndexOf(".") + 1);
+                    LoggerCreator.getInstance().debug(this.getClass().getName(),"ffprob get streams");
                     List<FFmpegStream> streams = fFprobe.probe(fileEntry.getPath()).getStreams();
                     if (streams.size() >= 1 && !isAudio(fileEntry)) {
+                        LoggerCreator.getInstance().debug(this.getClass().getName(),"Multimedia is video with values");
                         String codecVideo = "";
                         String codecAudio = "";
                         double frameRate = 0.0;
@@ -253,6 +285,7 @@ public class SearchFiles {
                         int audioBitRate = 0;
                         String aspectRatio = "";
                         for (int i = 0; i < streams.size(); i++) {
+                            LoggerCreator.getInstance().debug(this.getClass().getName(),"Get multimedia attributes");
                             FFmpegStream stream = fFprobe.probe(fileEntry.getPath()).getStreams().get(i);
                             if (stream.codec_type.name().equalsIgnoreCase("video")) {
                                 videoSize = stream.width + "x" + stream.height;
@@ -347,6 +380,7 @@ public class SearchFiles {
             }
             return false;
         } catch (StringIndexOutOfBoundsException ex) {
+            LoggerCreator.getInstance().error(this.getClass().getName(),"searchWildcardCaseSensitive method, ", ex);
             return false;
         }
     }
@@ -373,6 +407,7 @@ public class SearchFiles {
             }
             return false;
         } catch (StringIndexOutOfBoundsException ex) {
+            LoggerCreator.getInstance().error(this.getClass().getName(),"searchWildcardNoCaseSensitive method, ", ex);
             return false;
         }
 
@@ -574,10 +609,15 @@ public class SearchFiles {
         boolean dateInRange = true;
         if (createDate || modifiedDate || accessedDate) {
             try {
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"searchDate method - dates from format");
                 Date dateFromDate = formatDate.parse(fromDate);
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"searchDate method - dates to format");
                 Date dateToDate = formatDate.parse(toDate);
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"searchDate method - date creation format");
                 Date dateCreation = formatDate.parse(arrayResultFiles.getCreationTime());
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"searchDate method - date modification format");
                 Date dateModification = formatDate.parse(arrayResultFiles.getLastModifiedTime());
+                LoggerCreator.getInstance().debug(this.getClass().getName(),"searchDate method - date accessed format");
                 Date dateAccessed = formatDate.parse(arrayResultFiles.getLastAccessTime());
                 if (createDate) {
                     dateInRange = false;
@@ -598,6 +638,7 @@ public class SearchFiles {
                     }
                 }
             } catch (ParseException e) {
+                LoggerCreator.getInstance().error(this.getClass().getName(),"searchDate method, ", e);
                 System.out.println("Exception:" + e.getMessage());
             }
         }
@@ -619,6 +660,7 @@ public class SearchFiles {
                 XWPFWordExtractor extractor = new XWPFWordExtractor(xdoc);
                 return extractor.getText();
             } catch (Exception ex) {
+                LoggerCreator.getInstance().error(this.getClass().getName(),"getFileContent method - docx, ", ex);
                 return null;
             }
         }
@@ -630,6 +672,7 @@ public class SearchFiles {
                     content = in.nextLine();
                 }
             } catch (IOException e) {
+                LoggerCreator.getInstance().error(this.getClass().getName(),"getFileContent method - txt, ", e);
                 e.printStackTrace();
             }
             return content;
@@ -646,6 +689,7 @@ public class SearchFiles {
                     return pdfFileInText.toString();
                 }
             } catch (Exception e) {
+                LoggerCreator.getInstance().error(this.getClass().getName(),"getFileContent method - pdf, ", e);
                 e.getMessage();
             }
 
@@ -690,7 +734,7 @@ public class SearchFiles {
     public String saveSearchCriteria() {
         Gson gson = new Gson();
         String json = gson.toJson(searchCriteria);
-        System.out.println("JSON:" + json);
+        LoggerCreator.getInstance().debug(this.getClass().getName(),"saveSearchCriteria method: " + json);
         SearchQuery searchQuery = new SearchQuery();
 
         return searchQuery.addCriteria(json);
