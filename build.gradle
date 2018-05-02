@@ -40,6 +40,10 @@ dependencies {
     // https://mvnrepository.com/artifact/net.bramp.ffmpeg/ffmpeg
     compile group: 'net.bramp.ffmpeg', name: 'ffmpeg', version: '0.6.2'
 
+    // https://mvnrepository.com/artifact/org.mockito/mockito-all
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.8.4'
+
+
 }
 
 // Checkstyle configuration
