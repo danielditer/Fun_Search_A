@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -309,8 +310,11 @@ public class SearchFiles {
                 }
             }
 
+        } catch (AccessDeniedException e) {
+            LoggerCreator.getInstance().error(this.getClass().getName(),"",e);
         } catch (NullPointerException e) {
             LoggerCreator.getInstance().error(this.getClass().getName(),"",e);
+            e.printStackTrace();
         } catch (IOException e) {
             LoggerCreator.getInstance().error(this.getClass().getName(),"",e);
             e.printStackTrace();
