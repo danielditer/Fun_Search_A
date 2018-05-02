@@ -30,7 +30,6 @@ public class SearchConnection {
      * Constructor method.
      */
     private SearchConnection() {
-        LoggerCreator.getInstance().info(searchConn.getClass().getName(),"Class SearchConnection created");
         try {
             init();
         } catch (ClassNotFoundException e) {

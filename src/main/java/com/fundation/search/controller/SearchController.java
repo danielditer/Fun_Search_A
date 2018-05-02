@@ -8,11 +8,23 @@ package com.fundation.search.controller;
 
 import com.fundation.search.common.SearchQuery;
 import com.fundation.search.common.Validator;
-import com.fundation.search.model.*;
-import com.fundation.search.view.*;
+import com.fundation.search.model.SearchCriteria;
+import com.fundation.search.model.SearchFiles;
+import com.fundation.search.model.Asset;
+import com.fundation.search.model.ResultFile;
+import com.fundation.search.model.ResultMultimediaFile;
+import com.fundation.search.model.ResultDirectory;
+import com.fundation.search.view.PanelMultimediaSearch;
+import com.fundation.search.view.PanelButtonSearch;
+import com.fundation.search.view.PanelNormalSearch;
+import com.fundation.search.view.MainView;
+import com.fundation.search.view.PanelNamePath;
+import com.fundation.search.view.PanelSaveCriterial;
+import com.fundation.search.view.PanelSearchCriterial;
+import com.fundation.search.view.PanelSearchResults;
 import com.google.gson.Gson;
 
-import javax.swing.*;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -440,7 +452,7 @@ public class SearchController implements Controller {
         searchCriteria.setBitRate(bitRate);
         searchCriteria.setAspectRatio(aspectRatio);
         searchFile.setSearchCriteria(searchCriteria);
-        searchFile.init("1");
+        searchFile.init();
         setResultsToTable();
     }
 

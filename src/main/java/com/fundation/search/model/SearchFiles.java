@@ -92,7 +92,7 @@ public class SearchFiles {
     /**
      * Method to initialize search.
      */
-    public void init(String searchType) {
+    public void init() {
         LoggerCreator.getInstance().info(this.getClass().getName(),"Search files init");
         arrayResultFiles = new ArrayList<>();
         arrayFinalResult = new ArrayList<>();

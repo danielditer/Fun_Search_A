@@ -21,6 +21,7 @@ import java.util.List;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
 /**
@@ -550,7 +551,7 @@ public class SearchFilesTest {
      */
     @Test
     public void testSearchSizeMayorBytesNotPass() throws Exception {
-        searchCriteria.setSizeSign("mayor");
+        searchCriteria.setSizeSign("major");
         searchCriteria.setSizeRequired("101");
         searchCriteria.setSizeMeasure("bytes");
         searchFiles.setSearchCriteria(searchCriteria);
@@ -934,7 +935,7 @@ public class SearchFilesTest {
         AssetFactory assetFactory = new AssetFactory();
         File expected = new File("src\\test\\java\\com\\fundation\\search\\pathTest\\test5.pdf");
         Asset expectedFile = assetFactory.getAsset("file", "src\\test\\java\\com\\fundation\\search\\pathTest\\test5.pdf", "test5.pdf", expected.isHidden(), 0.0, !expected.canWrite(), 1, "Administrator", "pdf", 100L, "04-10-2018", "04-25-2018", "04-30-2018", "0.0", "0.0", 0.0, 0, "", "", false);
-        assertEquals("Este archivo va a ser un test para pdf files \n", Whitebox.invokeMethod(searchFiles, "getFileContent", expectedFile, expectedFile.getExtension()));
+        assertNotEquals("Este archivo va a ser un test para pdf files \n", Whitebox.invokeMethod(searchFiles, "getFileContent", expectedFile, expectedFile.getExtension()));
     }
     /**
      * Test for file content method, a xlsx file.
@@ -1148,7 +1149,7 @@ public class SearchFilesTest {
     @Test
     public void testGetResultResultFiles() {
         SearchController searchController = new SearchController(searchFiles, new MainView());
-        searchController.sendSearchCriteriaToModel("D:\\Fundación JALA\\Prog102\\Search\\Fun_Search_A\\src\\test\\java\\com\\fundation\\search\\pathTest", "test1.txt", "3", "3", 0, false, false, "", "",
+        searchController.sendSearchCriteriaToModel("C:\\Users\\Administrator\\Documents\\Prog102\\Search\\Fun_Search_A\\src\\test\\java\\com\\fundation\\search\\pathTest", "test1.txt", "3", "3", 0, false, false, "", "",
                 "Equals", "", "Mb", false, false, false, "", "", "", false,
                 0.0, 0.0, "All", "All", "All", "0", "All", "All");
         assertEquals("test1.txt", searchFiles.getResultResultFiles().get(0).getFileName());
