@@ -60,6 +60,7 @@ public class SearchController implements Controller {
      * @param mainView
      */
     public SearchController(SearchFiles searchFile, MainView mainView) {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Search controller");
         this.searchFile = searchFile;
         this.mainView = mainView;
     }
@@ -69,18 +70,21 @@ public class SearchController implements Controller {
      */
     @Override
     public void init() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Search controller init");
         searchActionPerformed();
         clearActionPerformed();
         saveActionPerformed();
         loadActionPerformed();
         selectActionPerformed();
         deleteActionPerformed();
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Search controller init ends");
     }
 
     /**
      * Method to get values from button search in the View.
      */
     public void searchActionPerformed() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Search controller searchActionPerformed");
         PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
         PanelButtonSearch panelButtonSearch = (PanelButtonSearch) mainView.getPanelButton();
         PanelNamePath panelNamePath = (PanelNamePath) mainView.getPanelNamePath();
@@ -92,6 +96,7 @@ public class SearchController implements Controller {
      * Method to clear values the View.
      */
     public void clearActionPerformed() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Search controller clearActionPerformed");
         PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
         PanelSaveCriterial panelSaveCriterial = (PanelSaveCriterial) mainView.getPanelSaveCriterial();
         PanelSearchResults panelResults = (PanelSearchResults) mainView.getPanelResultList();
@@ -105,6 +110,7 @@ public class SearchController implements Controller {
      * Method to save a criteria in the database using save button on the View.
      */
     public void saveActionPerformed() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Search controller saveActionPerformed");
         PanelSaveCriterial panel = (PanelSaveCriterial) mainView.getPanelSaveCriterial();
         PanelNormalSearch panelMain = (PanelNormalSearch) mainView.getPanel();
         PanelNamePath panelNamePath = (PanelNamePath) mainView.getPanelNamePath();
@@ -116,6 +122,7 @@ public class SearchController implements Controller {
      * Method to load a criteria from the database by using button ´Load´ in the View.
      */
     public void loadActionPerformed() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Search controller loadActionPerformed");
         PanelSearchCriterial panel = (PanelSearchCriterial) mainView.getPanelSearchCriterial();
         panel.getButtonLoad().addActionListener(e -> loadButtonActionListener(panel));
     }
@@ -124,6 +131,7 @@ public class SearchController implements Controller {
      * Method to select a criteria and fill al items.
      */
     public void selectActionPerformed() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Search controller selectActionPerformed");
         PanelSearchCriterial panel = (PanelSearchCriterial) mainView.getPanelSearchCriterial();
         panel.getButtonSelect().addActionListener(e -> selectButtonActionListener(panel));
     }
@@ -132,6 +140,7 @@ public class SearchController implements Controller {
      * Method to delete a criteria.
      */
     public void deleteActionPerformed() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Search controller deleteActionPerformed");
         PanelSearchCriterial panel = (PanelSearchCriterial) mainView.getPanelSearchCriterial();
         panel.getButtonDelete().addActionListener(e -> deleteButtonActionListener(panel));
     }
@@ -142,9 +151,11 @@ public class SearchController implements Controller {
      * @param panel
      */
     public void searchButtonActionListener(PanelNormalSearch panel, PanelNamePath panelNamePath, PanelMultimediaSearch panelMultimediaSearch) {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"searchButtonActionListener");
         String typeFileString = panelNamePath.getBtnGroupTypeFiles();
         int typeFile = Integer.parseInt(typeFileString);
         if (areValidParams(panelNamePath.getPath(), panelNamePath.getName(), panel.getFormattedTextFieldStart(), panel.getFormattedTextFieldEnd(), panel.getCheckBoxCreated(), panel.getCheckBoxModified(), panel.getCheckBoxAccessed(), panel.getTextFieldSize())) {
+            LoggerCreator.getInstance().debug(this.getClass().getName(),"searchButtonActionListener method, valid params");
             sendSearchCriteriaToModel(panelNamePath.getPath(), panelNamePath.getName(), panel.getCheckBoxHidden(), panel.getCheckBoxReadOnly(),
                     typeFile, panelNamePath.getCaseSensitive(), panelNamePath.getFileSystem(), panel.getTextFieldOwner(), panel.getTextFieldExt(),
                     panel.getComboBoxSize(), panel.getTextFieldSize(), panel.getComboBoxType(),
@@ -162,6 +173,7 @@ public class SearchController implements Controller {
      * @param panelMain is the panel that contain all the elements for the normal search
      */
     public void clearButtonActionListener(PanelNormalSearch panelMain, PanelSaveCriterial panelSaveCriterial, PanelSearchResults panelResults, PanelNamePath panelNamePath, PanelMultimediaSearch panelMultimediaSearch) {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"clearButtonActionListener");
         panelSaveCriterial.setTextFieldName("");
         DefaultTableModel tableModel = panelResults.getTableModel();
         tableModel.setRowCount(0);
@@ -203,13 +215,17 @@ public class SearchController implements Controller {
      * @param panelMain
      */
     public void saveButtonActionListener(PanelSaveCriterial panel, PanelNormalSearch panelMain, PanelNamePath panelNamePath, PanelMultimediaSearch panelMultimediaSearch) {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"saveButtonActionListener");
         searchCriteriaForDB = new SearchCriteria();
         String nameSearchCriteria = panel.getName();
         String typeFileString = panelNamePath.getBtnGroupTypeFiles();
         int typeFile = Integer.parseInt(typeFileString);
+        LoggerCreator.getInstance().debug(this.getClass().getName(),"saveButtonActionListener validate params");
         boolean validParams = areValidParams(panelNamePath.getPath(), panelNamePath.getName(), panelMain.getFormattedTextFieldStart(), panelMain.getFormattedTextFieldEnd(), panelMain.getCheckBoxCreated(), panelMain.getCheckBoxModified(), panelMain.getCheckBoxAccessed(), panelMain.getTextFieldSize());
+        LoggerCreator.getInstance().debug(this.getClass().getName(),"saveButtonActionListener validate criteria params");
         boolean validCriterialParams = areValidCriterialParams(panel.getName());
         if (validParams && validCriterialParams) {
+            LoggerCreator.getInstance().debug(this.getClass().getName(),"saveButtonActionListener params ara valid");
             searchCriteriaForDB.setSearchCriteriaName(nameSearchCriteria);
             searchCriteriaForDB.setPath(panelNamePath.getPath());
             searchCriteriaForDB.setName(panelNamePath.getName());
@@ -239,10 +255,11 @@ public class SearchController implements Controller {
             searchCriteriaForDB.setFrameRate(panelMultimediaSearch.getFrameRate());
             searchCriteriaForDB.setBitRate(panelMultimediaSearch.getBitRate());
             searchCriteriaForDB.setAspectRatio(panelMultimediaSearch.getAspectRatio());
-
+            LoggerCreator.getInstance().debug(this.getClass().getName(),"saveButtonActionListener set searchCriteria");
             searchFile.setSearchCriteria(searchCriteriaForDB);
+            LoggerCreator.getInstance().debug(this.getClass().getName(),"saveButtonActionListener save to DB");
             String resultDB = searchFile.saveSearchCriteria();
-            System.out.println("DB:" + resultDB);
+            LoggerCreator.getInstance().info(this.getClass().getName(),"saveButtonActionListener saves to DB:" + resultDB);
             mainView.displayResult("Save search criteria, " + resultDB);
         }
     }
@@ -253,6 +270,7 @@ public class SearchController implements Controller {
      * @param panel
      */
     public void loadButtonActionListener(PanelSearchCriterial panel) {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"loadButtonActionListener");
         getSearchCriterias();
         setSearchCriteriaTable();
     }
@@ -263,8 +281,11 @@ public class SearchController implements Controller {
      * @param panel
      */
     public void selectButtonActionListener(PanelSearchCriterial panel) {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"selectButtonActionListener");
         JTable table = panel.getTableResult();
+        LoggerCreator.getInstance().debug(this.getClass().getName(),"selectButtonActionListener get criteria id");
         Object criteriaSelected = table.getValueAt(table.getSelectedRow(), 0);
+        LoggerCreator.getInstance().debug(this.getClass().getName(),"selectButtonActionListener set criteria to fill fields");
         fillFields(criteriaSelected);
     }
 
@@ -273,11 +294,15 @@ public class SearchController implements Controller {
      * @param panel
      */
     public void deleteButtonActionListener(PanelSearchCriterial panel) {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"deleteButtonActionListener");
         JTable table = panel.getTableResult();
         if (table.getRowCount() > 0) {
+            LoggerCreator.getInstance().debug(this.getClass().getName(),"deleteButtonActionListener get id");
             Object criteriaSelected = table.getValueAt(table.getSelectedRow(), 0);
             String key = criteriaSelected.toString();
+            LoggerCreator.getInstance().debug(this.getClass().getName(),"deleteButtonActionListener delete search criteria");
             String resultDB = searchFile.deleteSearchCriteria(key);
+            LoggerCreator.getInstance().info(this.getClass().getName(),"deleteButtonActionListener search criteria deleted: " + resultDB);
             mainView.displayResult("Delete search criteria, " + resultDB);
         }
     }
@@ -293,6 +318,7 @@ public class SearchController implements Controller {
      * @return
      */
     public boolean areValidParams(String path, String name, String dateFrom, String dateTo, boolean created, boolean modified, boolean accessed, String size) {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"areValidParams");
         Validator validator = new Validator();
         if (!validator.isAValidPath(path)) {
             mainView.displayResult("Invalid Path Name");
@@ -331,6 +357,7 @@ public class SearchController implements Controller {
      * @return true or false
      */
     public boolean areValidCriterialParams(String nameCriterial) {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"areValidCriterialParams");
         Validator validator = new Validator();
         if (!validator.nameCriterialIsNorEmpty(nameCriterial)) {
             mainView.displayResult("Name criterial is empty");
@@ -358,6 +385,7 @@ public class SearchController implements Controller {
                                           boolean create, boolean modified, boolean accessed, String fromDate, String toDate,
                                           String content, boolean contentCaseSensitive,
                                           double majorDuration, double minorDuration, String codec, String resolution, String frameRate, String bitRate, String aspectRatio, String audioCodec) {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"sendSearchCriteriaToModel");
         searchCriteria = new SearchCriteria();
         searchCriteria.setPath(path);
         if (!name.isEmpty()) {
@@ -420,6 +448,7 @@ public class SearchController implements Controller {
      * Method to get Model results and display them.
      */
     public void setResultsToTable() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"setResultsToTable");
         List<Asset> resultFileList = searchFile.getResultResultFiles();
         PanelSearchResults panel = (PanelSearchResults) mainView.getPanelResultList();
         DefaultTableModel tableModel = panel.getTableModel();
@@ -447,6 +476,7 @@ public class SearchController implements Controller {
      * Method for obtain the search criterias saved in the database.
      */
     public void getSearchCriterias() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"getSearchCriterias");
         mapSearchCriteriasResults = new HashMap<>();
         SearchQuery searchQuery = new SearchQuery();
         try {
@@ -455,6 +485,7 @@ public class SearchController implements Controller {
                 mapSearchCriteriasResults.put(Integer.parseInt(resultSet.getString("ID")), jsonToSearchCriteria(resultSet.getString("CRITERIAJSON")));
             }
         } catch (SQLException e) {
+            LoggerCreator.getInstance().error(this.getClass().getName(),"getSearchCriterias exception: ", e);
             System.out.println("Controller SQL:" + e.getMessage());
         }
     }
@@ -466,8 +497,10 @@ public class SearchController implements Controller {
      * @return the search criteria converted.
      */
     private SearchCriteria jsonToSearchCriteria(String json) {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"jsonToSearchCriteria");
         Gson gson = new Gson();
         SearchCriteria criteria = gson.fromJson(json, SearchCriteria.class);
+        LoggerCreator.getInstance().debug(this.getClass().getName(),"jsonToSearchCriteria new search criteria");
         return criteria;
     }
 
@@ -475,6 +508,7 @@ public class SearchController implements Controller {
      * This method puts the search criteria loaded from the Database in a table on the View.
      */
     private void setSearchCriteriaTable() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"setSearchCriteriaTable");
         PanelSearchCriterial panel = (PanelSearchCriterial) mainView.getPanelSearchCriterial();
         DefaultTableModel tableModel = panel.getTableModel();
         tableModel.setRowCount(0);
@@ -494,6 +528,7 @@ public class SearchController implements Controller {
      * @param criteriaSelected
      */
     private void fillFields(Object criteriaSelected) {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"fillFields");
         int key = (Integer) criteriaSelected;
         PanelNormalSearch panel = (PanelNormalSearch) mainView.getPanel();
         PanelNamePath panelNamePath = (PanelNamePath) mainView.getPanelNamePath();
@@ -521,10 +556,12 @@ public class SearchController implements Controller {
         } catch (ParseException e) {
             panel.setDateChooserFromPanel(null);
             panel.setDateChooserToPanel(null);
+            LoggerCreator.getInstance().error(this.getClass().getName(),"fillFields date can't be converted: ", e);
             System.out.println(e.getMessage());
         } catch (NullPointerException e) {
             panel.setDateChooserFromPanel(null);
             panel.setDateChooserToPanel(null);
+            LoggerCreator.getInstance().error(this.getClass().getName(),"fillFields date can't be converted2: ", e);
         }
         panel.setTextAreaContent(mapSearchCriteriasResults.get(key).getContent());
         panel.setCheckBoxCaseSensitiveContent(mapSearchCriteriasResults.get(key).getContentCaseSensitive());
