@@ -6,6 +6,7 @@
  */
 package com.fundation.search.view;
 
+import com.fundation.search.controller.LoggerCreator;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
@@ -56,6 +57,7 @@ public class PanelNamePath extends JPanel {
      * Initializes panel components.
      */
     public void initComponents() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Panel name path created");
         labelName = new JLabel();
         textFieldName = new JTextField();
         labelPath = new JLabel();

@@ -6,6 +6,7 @@
  */
 package com.fundation.search.view;
 
+import com.fundation.search.controller.LoggerCreator;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
@@ -14,7 +15,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Color;
+
 
 
 /**
@@ -38,7 +41,7 @@ public class PanelSearchCriterial extends JPanel {
      * Initializes panel components.
      */
     public void initComponents() {
-
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Panel search criterial created");
         buttonSelect = new JButton();
         buttonLoad = new JButton();
         buttonDelete = new JButton();
@@ -58,7 +61,7 @@ public class PanelSearchCriterial extends JPanel {
 
         //---- table results ----
         tableResult.setModel(tableModel);
-        tableResult.setPreferredScrollableViewportSize(new Dimension(600, 100));
+        tableResult.setPreferredScrollableViewportSize(new Dimension(960, 100));
         tableResult.setFillsViewportHeight(true);
         //tableResult.setEnabled(false);
         //change the header color
@@ -116,6 +119,10 @@ public class PanelSearchCriterial extends JPanel {
     public JButton getButtonSelect(){
         return buttonSelect;
     }
+    /**
+     * method to get delete button
+     * @return getButtonDelete.
+     */
     public JButton getButtonDelete(){
         return buttonDelete;
     }

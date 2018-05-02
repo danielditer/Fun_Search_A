@@ -7,6 +7,7 @@
 
 package com.fundation.search.view;
 
+import com.fundation.search.controller.LoggerCreator;
 import com.toedter.calendar.JDateChooser;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
@@ -46,6 +47,8 @@ public class PanelDate extends JPanel {
      * Initializes panel components.
      */
     public void initComponents() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Panel dates created");
+
         checkBoxCreated = new JCheckBox();
         checkBoxModified = new JCheckBox();
         checkBoxAccessed = new JCheckBox();
