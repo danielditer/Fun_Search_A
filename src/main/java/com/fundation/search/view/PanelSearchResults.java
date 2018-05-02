@@ -6,6 +6,7 @@
  */
 package com.fundation.search.view;
 
+import com.fundation.search.controller.LoggerCreator;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
@@ -39,6 +40,7 @@ public class PanelSearchResults extends JPanel {
      * Initializes panel components.
      */
     public void initComponents() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Panel search results created");
         tableResult = new JTable();
 
         String columnNames[] = new String[]{"File Name", "File Path", "Hidden", "Read Only", "Owner", "Size (bytes)", "Created", "Modified", "Accessed","Duration(sec)","Video Codec","Audio Codec","Resolution","Aspect ratio","Frame rate","Bit rate"};

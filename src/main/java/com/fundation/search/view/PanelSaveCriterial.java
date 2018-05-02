@@ -6,6 +6,7 @@
  */
 package com.fundation.search.view;
 
+import com.fundation.search.controller.LoggerCreator;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
@@ -36,6 +37,8 @@ public class PanelSaveCriterial extends JPanel {
      * Initializes panel components.
      */
     public void initComponents() {
+
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Panel save criterial created");
         labelName = new JLabel();
         textFieldName = new JTextField();
         buttonSave = new JButton();
@@ -47,13 +50,13 @@ public class PanelSaveCriterial extends JPanel {
                 {TableLayout.PREFERRED}}));
         //---- labelName ----
         labelName.setText("Name:");
-        labelName.setPreferredSize(new Dimension(140, 20));
+        labelName.setPreferredSize(new Dimension(240, 20));
         add(labelName, new TableLayoutConstraints(0, 0, 0, 0,
                 TableLayoutConstraints.RIGHT,
                 TableLayoutConstraints.FULL));
         //---- textFieldName ----
-        final Dimension preferredSize = new Dimension(280, 20);
-        textFieldName.setPreferredSize(preferredSize);
+        final Dimension preferredSize = new Dimension(670, 20);
+         textFieldName.setPreferredSize(preferredSize);
         add(textFieldName, new TableLayoutConstraints(1, 0, 1, 0,
                 TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 

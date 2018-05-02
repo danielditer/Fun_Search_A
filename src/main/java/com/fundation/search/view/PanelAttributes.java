@@ -6,6 +6,7 @@
  */
 package com.fundation.search.view;
 
+import com.fundation.search.controller.LoggerCreator;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
@@ -51,6 +52,7 @@ public class PanelAttributes extends JPanel{
      * Initializes panel components.
      */
     public void initComponents(){
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Panel attributes created");
         radioBoxReadOnly = new JRadioButton();
         radioBoxHidden = new JRadioButton();
         radioBoxHiddenNo = new JRadioButton();

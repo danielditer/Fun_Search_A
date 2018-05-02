@@ -6,6 +6,7 @@
  */
 package com.fundation.search.view;
 
+import com.fundation.search.controller.LoggerCreator;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
@@ -19,7 +20,6 @@ import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.awt.Dimension;
 
 /**
  * @version 12 Apr 2018  * @Maria Canqui.
@@ -41,6 +41,8 @@ public class PanelFileContent extends JPanel {
      * Initializes panel components.
      */
     public void initComponents() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Panel file content created");
+
         textAreaContent = new JTextArea(2, 23);
         scrollPaneContent = new JScrollPane();
         checkBoxCaseSensitive = new JCheckBox();

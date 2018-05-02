@@ -6,6 +6,9 @@
  */
 package com.fundation.search.view;
 
+import com.fundation.search.controller.LoggerCreator;
+import com.fundation.search.model.SearchFiles;
+
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -13,7 +16,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Container;
+import java.awt.BorderLayout;
+import java.io.IOException;
+
 
 /**
  * @version
@@ -52,6 +59,11 @@ public class MainView extends JFrame {
      * Initializes variables.
      */
     protected void initComponents() {
+        //setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/icons/icon.png")));
+
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Initialized view");
+
+
         menuBar = new JMenuBar();
         menuHelp = new JMenu();
         tabbedPane = new JTabbedPane();
@@ -76,7 +88,8 @@ public class MainView extends JFrame {
         contentPane.setLayout(new BorderLayout());
         //======== menuHelp ========
         menuHelp.setText("Help");
-        menuBar.add(menuHelp);
+
+        //menuBar.add(menuHelp);
         setJMenuBar(menuBar);
 
 
@@ -107,7 +120,7 @@ public class MainView extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        EmptyBorder borderRes = new EmptyBorder(5,330,10,10);
+        EmptyBorder borderRes = new EmptyBorder(5,365,10,10);
         //======== panel Search Results ========
         panelSaveCrit.setBorder(borderRes);
         panelSaveCrit.add(panelSaveCriterial);
@@ -166,6 +179,13 @@ public class MainView extends JFrame {
     * @param result that contains the error message
     **/
     public void displayResult(String result){
+        SearchFiles searchFile = null;
+        try {
+            searchFile = new SearchFiles();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        LoggerCreator.getInstance().info(searchFile.getClass().getName(), "MESSAGE: " + result);
         JOptionPane.showMessageDialog(null, result, "Message", JOptionPane.INFORMATION_MESSAGE);
     }
 

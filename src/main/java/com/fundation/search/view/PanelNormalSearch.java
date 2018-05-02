@@ -6,6 +6,7 @@
  */
 package com.fundation.search.view;
 
+import com.fundation.search.controller.LoggerCreator;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
@@ -33,6 +34,8 @@ public class PanelNormalSearch extends JPanel {
      * Initializes panel components.
      */
     public void initComponents() {
+
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Panel normal created");
         panelFileContents = new PanelFileContent();
         panelDate = new PanelDate();
         panelAttributes = new PanelAttributes();

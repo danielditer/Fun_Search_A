@@ -6,13 +6,15 @@
  */
 package com.fundation.search.view;
 
+import com.fundation.search.controller.LoggerCreator;
 import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstraints;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 
 /**
  * Class to initialize panel for buttons.
@@ -21,8 +23,8 @@ import java.awt.event.ActionEvent;
  */
 public class PanelButtonSearch extends JPanel {
 
-    private static final String SEPARATOR = System.getProperty("file.separator") ;
-    JButton buttonSearch = new JButton(new ImageIcon(System.getProperty("user.dir") +  SEPARATOR + "resources" + SEPARATOR + "icons" + SEPARATOR + "search.png"));
+
+    JButton buttonSearch = new JButton();
     JButton buttonClear = new JButton();
 
     /**
@@ -35,6 +37,10 @@ public class PanelButtonSearch extends JPanel {
      * Initializes panel components.
      */
     public void initComponents() {
+        LoggerCreator.getInstance().info(this.getClass().getName(),"Panel button search created");
+
+        Icon icon = new ImageIcon(System.getProperty("user.dir")+"/resources/icons/search.png");
+        Icon iconEraser = new ImageIcon(System.getProperty("user.dir")+"/resources/icons/eraser.png");
         buttonSearch = new JButton();
         buttonClear = new JButton();
 
@@ -42,8 +48,13 @@ public class PanelButtonSearch extends JPanel {
                 {TableLayout.PREFERRED, TableLayout.PREFERRED},
                 {TableLayout.PREFERRED}}));
         //---- buttonSearch ----
+        /*buttonSearch.setBackground(Color.BLUE);
+        buttonSearch.setForeground(Color.WHITE);*/
         buttonSearch.setText("Search");
+        buttonSearch.setIcon(icon);
+
         buttonClear.setText("Clear");
+        buttonClear.setIcon(iconEraser);
 
 
         add(buttonSearch, new TableLayoutConstraints(0, 0, 0, 0,
