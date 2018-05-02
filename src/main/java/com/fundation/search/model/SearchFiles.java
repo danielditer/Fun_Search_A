@@ -278,13 +278,13 @@ public class SearchFiles {
                     List<FFmpegStream> streams = fFprobe.probe(fileEntry.getPath()).getStreams();
                     if (streams.size() >= 1 && !isAudio(fileEntry)) {
                         LoggerCreator.getInstance().debug(this.getClass().getName(),"Multimedia is video with values");
-                        String codecVideo = "";
-                        String codecAudio = "";
+                        String codecVideo = "-------------";
+                        String codecAudio = "-------------";
                         double frameRate = 0.0;
                         double duration = 0.0;
-                        String videoSize = "";
+                        String videoSize = "-------------";
                         int audioBitRate = 0;
-                        String aspectRatio = "";
+                        String aspectRatio = "-------------";
                         for (int i = 0; i < streams.size(); i++) {
                             LoggerCreator.getInstance().debug(this.getClass().getName(),"Get multimedia attributes");
                             FFmpegStream stream = fFprobe.probe(fileEntry.getPath()).getStreams().get(i);
@@ -296,7 +296,7 @@ public class SearchFiles {
                                 duration = stream.duration;
 
                             }
-                            if (stream.codec_type.name().equalsIgnoreCase("audio")) {
+                            if (stream.codec_type.name().equalsIgnoreCase("audio")&& !(stream.codec_name =="-------------")) {
                                 codecAudio = stream.codec_name;
                                 audioBitRate = (int) stream.bit_rate / 1000;
                             }
